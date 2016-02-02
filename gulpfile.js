@@ -103,7 +103,7 @@ gulp.task('watch', function() {
 
 gulp.task('connect', function() {
   gconnect.server({
-    root: outputDir,
+    root: '',
     livereload: true
   });
 });

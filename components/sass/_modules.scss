@@ -65,14 +65,17 @@
   background-color: $color-accent4;
   display: block;
   padding: 0;
+  margin: ($space-large / 2) 0;
 
-  li{
+  > li{
     position: relative;
+    font-family: opensans-bold, sans-serif;
+    text-transform: uppercase;
 
     &:after{
       content: "";
       position: absolute;
-      right: -20px;
+      right: -19px;
       top: 0;
       width: 0;
       height: 0;
@@ -117,12 +120,21 @@
       &.active, a{
         padding-left: $space-medium * 2;
       }
+
+      &.blank{
+        width: 20px;
+        min-height: 34px;
+        padding: $space-small ($space-large / 3);
+
+        &:before{
+          content: 'blank';
+          opacity: 0;
+        }
+      }
     }
 
     a{
       display: block;
-      font-family: opensans-bold, sans-serif;
-      text-transform: uppercase;
       text-decoration: none;
       padding: $space-small $space-medium;
       color: $color-light;

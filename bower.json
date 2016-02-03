@@ -43,6 +43,7 @@
     "superfish": "^1.7.7",
     "waypoints": "^4.0.0",
     "jquery.stellar": "stellar#^0.6.2",
-    "highcharts": "^4.2.1"
+    "highcharts": "^4.2.1",
+    "imagefill": "https://github.com/johnpolacek/imagefill.js/"
   }
 }

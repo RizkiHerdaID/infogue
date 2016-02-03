@@ -83,6 +83,10 @@ a:hover, a:focus {
   color: #4dc4d2;
 }
 
+p {
+  line-height: 18px;
+}
+
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
   position: relative;
@@ -223,6 +227,33 @@ a:hover, a:focus {
 }
 .social li a.googleplus:hover {
   background: #d73925;
+}
+
+.featured-news {
+  background-color: #f9fafa;
+  border: 1px solid #dbdbdb;
+}
+.featured-news ol li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.featured-news ol li a {
+  display: block;
+  color: #333333;
+}
+.featured-news ol li a:hover, .featured-news ol li a:hover .number {
+  background-color: #ededed;
+}
+.featured-news ol li a p {
+  padding: 10px;
+}
+.featured-news ol li a p.number {
+  float: left;
+  font-weight: bold;
+  background-color: #f3f5f5;
+  line-height: 36px;
+  margin-right: 10px;
+  font-size: 22px;
+  color: #4dc4d2;
 }
 
 .nav-tabs {

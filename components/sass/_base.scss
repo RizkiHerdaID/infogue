@@ -16,6 +16,7 @@ a{
   background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
   position: relative;
   height: 130px;
+  margin-bottom: $space-large;
 
   .logo{
     height: 90px;

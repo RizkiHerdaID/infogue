@@ -87,6 +87,7 @@ a:hover, a:focus {
   background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
   position: relative;
   height: 130px;
+  margin-bottom: 50px;
 }
 .header .logo {
   height: 90px;
@@ -224,6 +225,42 @@ a:hover, a:focus {
   background: #d73925;
 }
 
+.nav-tabs {
+  background: #00acc1;
+  border: none;
+}
+.nav-tabs.nav-justified > li.active {
+  font-weight: bold;
+}
+.nav-tabs.nav-justified > li.active > a {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background-color: #4dc4d2;
+  color: #ffffff;
+}
+.nav-tabs.nav-justified > li.active > a:hover {
+  background-color: #61cbd7;
+}
+.nav-tabs.nav-justified > li.active > a:focus {
+  background-color: #4dc4d2;
+}
+.nav-tabs.nav-justified > li.active > a, .nav-tabs.nav-justified > li.active > a:hover, .nav-tabs.nav-justified > li.active > a:focus {
+  border: none;
+}
+.nav-tabs.nav-justified > li > a {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  color: #ffffff;
+}
+.nav-tabs.nav-justified > li > a:hover, .nav-tabs.nav-justified > li > a:focus {
+  background-color: #4dc4d2;
+}
+.nav-tabs.nav-justified > li > a, .nav-tabs.nav-justified > li > a:hover, .nav-tabs.nav-justified > li > a:focus {
+  border: none;
+}
+
 .btn {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
@@ -249,7 +286,7 @@ a:hover, a:focus {
 }
 
 .navigation {
-  margin-top: 10px;
+  margin: 10px 0;
 }
 .navigation .sf-menu {
   position: relative;

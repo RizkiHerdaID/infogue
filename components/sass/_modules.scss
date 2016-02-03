@@ -1,0 +1,45 @@
+// TABS
+.nav-tabs {
+  background: $color-accent1;
+  border: none;
+
+  &.nav-justified > li.active {
+    font-weight: bold;
+
+    > a{
+      @include border-radius(0);
+      background-color: $color-accent2;
+      color: $color-light;
+
+      &:hover{
+        background-color: lighten($color-accent2, 5%);
+      }
+
+      &:focus {
+        background-color: $color-accent2;
+      }
+    }
+
+    > a, > a:hover, > a:focus{
+      border: none;
+    }
+  }
+
+  &.nav-justified > li {
+
+    > a {
+      @include border-radius(0);
+      color: $color-light;
+
+      &:hover,
+      &:focus {
+        background-color: $color-accent2;
+      }
+    }
+
+    > a, > a:hover, > a:focus{
+      border: none;
+    }
+  }
+
+}

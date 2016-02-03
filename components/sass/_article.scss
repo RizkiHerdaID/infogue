@@ -1,10 +1,52 @@
+.featured-list{
+  [class*='col-']{
+    padding: 0;
+
+    &:first-child{
+      padding-left: 15px;
+    }
+
+    &:last-child{
+      padding-right: 15px;
+    }
+  }
+}
+
 .article-preview{
 
   .featured-image{
+    height: 200px;
+    min-width: 100px;
     position: relative;
-    background-size: cover;
-    background-position: center center;
     overflow: hidden;
+
+    img{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      @include translate(-50%, -50%);
+      @include transition-property(all);
+      @include transition-duration(.2s);
+      @include transition-timing-function(ease-in);
+      /*
+      position: absolute;
+      top: -9999px;
+      bottom: -9999px;
+      left: -9999px;
+      right: -9999px;
+      margin: auto;
+      */
+
+      &.wide:hover{
+        max-height: 110%;
+        width: auto;
+      }
+
+      &.tall:hover{
+        max-width: 110%;
+        height: auto;
+      }
+    }
   }
 
   .category,
@@ -54,6 +96,26 @@
     }
   }
 
+  .rating-wrapper{
+    float: left;
+    margin-right: $space-small;
+    padding: $space-small 0;
+
+    i{
+      font-size: .9em;
+      color: $color-gray-light;
+
+      &+i{
+        margin-left: $space-small;
+      }
+
+      &.rated{
+        color: $color-accent2;
+      }
+    }
+  }
+
+  // BIG FEATURE ON HOMEPAGE
   &.featured-large{
 
     .featured-image{
@@ -86,6 +148,7 @@
     }
   }
 
+  // MINI FEATURED BELOW MAIN FEATURED
   &.featured-mini{
     border: 1px solid $color-gray-light;
     border-collapse: collapse;
@@ -119,45 +182,13 @@
     }
   }
 
+  // DEFAULT ARTICLE PREVIEW - PORTRAIT
   &.portrait{
     display: block;
     margin-bottom: $space-medium;
 
     .featured-image{
       margin-bottom: $space-small;
-      display: block;
-      text-align: center;
-      height: 200px;
-      min-width: 100px;
-      position: relative;
-
-      img{
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        @include translate(-50%, -50%);
-        @include transition-property(all);
-        @include transition-duration(.2s);
-        @include transition-timing-function(ease-in);
-        /*
-        position: absolute;
-        top: -9999px;
-        bottom: -9999px;
-        left: -9999px;
-        right: -9999px;
-        margin: auto;
-        */
-
-        &.wide:hover{
-          max-height: 110%;
-          width: auto;
-        }
-
-        &.tall:hover{
-          max-width: 110%;
-          height: auto;
-        }
-      }
     }
 
     .category{
@@ -170,37 +201,64 @@
       font-weight: normal;
     }
   }
-}
 
-.rating-wrapper{
-  float: left;
-  margin-right: $space-small;
-  padding: $space-small 0;
+  // DEFAULT ARTICLE PREVIEW - LANDSCAPE
+  &.landscape{
+    display: block;
+    margin-bottom: $space-medium;
 
-  i{
-    font-size: .9em;
-    color: $color-gray-light;
+    &.mini{
+      margin-bottom: $space-medium;
+      max-height: 100px;
 
-    &+i{
-      margin-left: $space-small;
+      [class*='col-']{
+        padding: 0 $space-small 0 15px;
+
+        &:nth-child(2){
+          padding: 0 15px 0 0;
+        }
+      }
+
+      .featured-image{
+        max-width: 110px;
+        max-height: 90px;
+        margin-right: $space-medium;
+      }
+
+      .title{
+        margin-bottom: $space-small / 2;
+        font-size: 1em;
+        line-height: 1.3em;
+      }
+
+      .timestamp{
+        margin-bottom: $space-small;
+      }
+
+      .rating-wrapper {
+        float: none;
+        padding: 0 0 $space-small;
+      }
     }
 
-    &.rated{
-      color: $color-accent2;
-    }
   }
 }
 
-.featured-list{
-  [class*='col-']{
-    padding: 0;
+.tag{
+  font-family: opensans-bold;
+  text-transform: uppercase;
+  display: inline-block;
+  width: auto;
+  background-color: $color-accent3;
+  margin-bottom: $space-small;
 
-    &:first-child{
-      padding-left: 15px;
-    }
-
-    &:last-child{
-      padding-right: 15px;
-    }
+  &.category{
+    padding: $space-small;
+    background-color: $color-accent2;
+    color: $color-light;
+    margin-bottom: $space-medium;
   }
 }
+
+
+

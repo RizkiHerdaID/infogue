@@ -7,6 +7,9 @@ var fill;
 
 fill;
 
+$(function(){
+    $('.dropdown-toggle').dropdown();
+});
 
 $(function () {
     var Mustache = require('mustache');

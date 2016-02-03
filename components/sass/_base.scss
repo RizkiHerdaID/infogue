@@ -1,0 +1,183 @@
+body{
+  font-family: $font-family;
+  font-size: $text-article;
+}
+
+a{
+  color: $color-accent3;
+
+  &:hover, &:focus{
+    text-decoration: none !important;
+    color: $color-accent2;
+  }
+}
+
+.header{
+  background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
+
+  .logo{
+    height: 100px;
+    width: 250px;
+    padding-right: $space-large;
+    float: left;
+    display: block;
+    vertical-align: middle;
+
+    h1{
+      height: 100%;
+      display: block;
+      overflow: hidden;
+      text-indent: 9999px;
+      background: url("../images/misc/logo.png") no-repeat left center;
+      background-size: 100%;
+    }
+  }
+
+  .header-section{
+    @include clearfix;
+    padding-left: 250px;
+    display: block;
+
+    .control-wrapper{
+      overflow: hidden;
+
+      a{
+        color: $color-light;
+
+        &:hover{
+          color: lighten($color-accent3, 20%);
+        }
+      }
+
+      .featured-link{
+        padding-top: $space-medium;
+
+        li{
+          float: left;
+          display: inline-block;
+          margin-right: $space-medium;
+
+          :last-child{
+            margin-right: 0;
+          }
+        }
+      }
+
+      .user-control{
+        float: right;
+        color: $color-light;
+
+        li{
+          display: inline-block;
+
+          &:after{
+            content: "|";
+          }
+
+          &:last-child{
+            &:after{
+              content: "";
+            }
+            a{
+              padding-right: 0;
+            }
+          }
+
+          a{
+            padding: 0 $space-small;
+          }
+        }
+      }
+    }
+
+    .search-wrapper{
+      padding-top: $space-medium;
+
+      .search{
+        float: left;
+
+        .input-search{
+          display: inline-block;
+          position: relative;
+
+          input{
+            width: 320px;
+            display: inline-block;
+            padding-left: 30px;
+          }
+
+          .fa-search{
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: $color-gray-dark;
+          }
+        }
+
+        .dropdown-menu{
+          margin-left: -4px;
+          margin-top: -2px;
+        }
+
+        .filter{
+          margin-left: -2px;
+
+          .btn{
+            min-width: 100px;
+            text-overflow: ellipsis;
+          }
+        }
+
+        button{
+          margin-left: -4px;
+          margin-top: -3px;
+        }
+      }
+
+      .social{
+        float: right;
+      }
+    }
+  }
+}
+
+.social{
+  li{
+    display: inline-block;
+    padding: 2px;
+
+    a{
+      display: block;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 50%;
+      color: $color-light;
+
+      &.facebook{
+        background: $color-facebook;
+
+        &:hover{
+          background: darken($color-facebook, 5%);
+        }
+      }
+
+      &.twitter{
+        background: $color-twitter;
+
+        &:hover{
+          background: darken($color-twitter, 3%);
+        }
+      }
+
+      &.googleplus{
+        background: $color-google;
+
+        &:hover{
+          background: darken($color-google, 5%);
+        }
+      }
+    }
+  }
+}

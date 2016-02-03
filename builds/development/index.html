@@ -31,8 +31,8 @@
                         <h1>InfoGue</h1>
                     </div>
                     <div class="header-section">
-                        <section>
-                            <ul class="featured-link">
+                        <section class="control-wrapper">
+                            <ul class="featured-link visible-md visible-lg">
                                 <li><a href="archive.html">HEADLINE</a></li>
                                 <li><a href="archive.html">LATEST</a></li>
                                 <li><a href="archive.html">TRENDING</a></li>
@@ -43,30 +43,32 @@
                                 <li><a href="register.html">REGISTER</a></li>
                             </ul>
                         </section>
-                        <section>
+                        <section class="search-wrapper">
                             <div class="search">
-                                <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Dropdown
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        <li><a href="#">Action</a></li>
-                                        <li><a href="#">Another action</a></li>
-                                        <li><a href="#">Something else here</a></li>
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="#">Separated link</a></li>
-                                    </ul>
-                                </div>
+                                <form action="#">
+                                    <div class="input-search">
+                                        <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                    <div class="btn-group filter">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            All Data <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">All Data</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="#">Contributor</a></li>
+                                            <li><a href="#">Article</a></li>
+                                        </ul>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">SEARCH</button>
+                                </form>
                             </div>
-                            <div class="social">
-                                <ul>
-                                    <li><a href="http://www.facebook.com/infogue"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="http://www.twitter.com/infogue"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="http://plus.google.com/+infogue"><i class="fa fa-google-plus"></i></a></li>
-                                </ul>
-                            </div>
+                            <ul class="social">
+                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                            </ul>
                         </section>
                     </div>
                 </div>

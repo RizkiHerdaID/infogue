@@ -1,0 +1,7 @@
+.form-control, .dropdown-menu{
+  @include border-radius(0);
+}
+
+.dropdown-menu{
+  margin: 0;
+}

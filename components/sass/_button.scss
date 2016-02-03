@@ -1,0 +1,13 @@
+.btn{
+  @include border-radius(0);
+
+  &.btn-primary{
+    background-color: $color-accent2;
+    border-color: darken($color-accent2, 3%);
+
+    &:hover, &:focus{
+      background-color: darken($color-accent2, 5%);
+      border-color: darken($color-accent2, 7%);
+    }
+  }
+}

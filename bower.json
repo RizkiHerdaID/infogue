@@ -44,6 +44,7 @@
     "waypoints": "^4.0.0",
     "jquery.stellar": "stellar#^0.6.2",
     "highcharts": "^4.2.1",
-    "imagefill": "https://github.com/johnpolacek/imagefill.js/"
+    "imagefill": "https://github.com/johnpolacek/imagefill.js/",
+    "equalize": "^1.0.2"
   }
 }

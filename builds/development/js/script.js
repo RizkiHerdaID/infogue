@@ -8,7 +8,11 @@ var fill;
 fill;
 
 $(function(){
-    $('.dropdown-toggle').dropdown();
+    var navigation = $('#navigation').superfish({
+        speed: 'fast',
+        cssArrows: false,
+        delay: 200
+    });
 });
 
 $(function () {

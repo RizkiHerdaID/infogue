@@ -14,10 +14,13 @@ a{
 
 .header{
   background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
+  position: relative;
+  height: 130px;
 
   .logo{
-    height: 100px;
+    height: 90px;
     width: 250px;
+    margin-top: $space-small;
     padding-right: $space-large;
     float: left;
     display: block;
@@ -29,7 +32,6 @@ a{
       overflow: hidden;
       text-indent: 9999px;
       background: url("../images/misc/logo.png") no-repeat left center;
-      background-size: 100%;
     }
   }
 

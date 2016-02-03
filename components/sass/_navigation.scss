@@ -1,0 +1,110 @@
+.navigation{
+  margin-top: $space-small;
+
+  // main style superfish
+  .sf-menu {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sf-menu .sf-mega {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+  }
+  .sf-menu > li {
+    float: left;
+  }
+  .sf-menu li:hover > .sf-mega,
+  .sf-menu li.sfHover > .sf-mega {
+    display: block;
+  }
+
+  .sf-menu > li > a {
+    display: block;
+    position: relative;
+  }
+
+  // custom style
+  .sf-menu {
+    width: 100%;
+    display: table;
+
+    >li{
+      display: table-cell;
+      float: none;
+      width: 1%;
+      background: $color-accent2;
+      border-bottom: 3px solid $color-accent1;
+      @include transition(background .2s);
+
+      &:hover,
+      &.sfHover,
+      &.active {
+        background: $color-accent3;
+        /* only transition out, not in */
+        @include transition(none);
+      }
+
+      .sf-mega {
+        @include box-shadow(0 3px 5px rgba(0,0,0,.1));
+        width: 100%; /* allow long menu items to determine submenu width */
+      }
+
+      >a {
+        padding: .75em 1em;
+        text-decoration: none;
+        zoom: 1; /* IE7 */
+        color: $color-light;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+    }
+
+    /*** mega menu dropdown ***/
+    .sf-mega {
+      background-color: rgba(0, 0, 0, .8);
+      border-bottom: 3px solid $color-accent2;
+      padding: $space-medium;
+      box-sizing: border-box;
+      width: 100%;
+
+      &::after {
+        content: "";
+        background: url("") no-repeat bottom center;
+        opacity: 0.1;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+        z-index: -1;
+      }
+
+      h2{
+        margin-bottom: $space-small;
+        color: $color-light;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .sf-mega-section {
+        float: left;
+        width: 180px;
+        padding: $space-small;
+        margin-right: $space-medium;
+        border-right: 1px solid rgba(255, 255, 255, .1);
+
+        li{
+          a{
+            padding: $space-small 0;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

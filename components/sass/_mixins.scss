@@ -30,3 +30,21 @@
     clear: both;
   }
 }
+
+@mixin stack($color-accent){
+
+    background-color: $color-accent;
+
+    &:not(.active):hover, &:not(.active):focus{
+      background-color: lighten($color-accent, 3%);
+
+      &:after{
+        border-color: transparent transparent transparent lighten($color-accent, 3%);
+      }
+    }
+
+    &:after{
+      border-color: transparent transparent transparent $color-accent;
+    }
+
+}

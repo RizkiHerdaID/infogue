@@ -391,6 +391,103 @@ article {
   top: 10px;
 }
 
+footer {
+  background: url("../images/backgrounds/footer.jpg") #0099ac no-repeat center center;
+  display: block;
+  height: 500px;
+  padding: 65px 0 50px;
+  color: #ffffff;
+}
+footer h3 {
+  font-family: opensans-bold, sans-serif;
+  margin-bottom: 30px;
+}
+footer a {
+  color: #ffffff;
+}
+footer a:hover {
+  color: #c3eef3;
+}
+footer p {
+  line-height: 1.7em;
+  opacity: .85;
+}
+footer .about {
+  display: block;
+}
+footer .about .logo {
+  max-width: 200px;
+  margin-bottom: 40px;
+}
+footer .quick-links {
+  float: left;
+}
+footer .quick-links:last-child:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+footer .quick-links + .quick-links li {
+  padding-left: 40px;
+}
+footer .quick-links li {
+  opacity: .85;
+}
+footer .quick-links li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+footer .quick-links li a {
+  display: block;
+  padding: 12px 0;
+  text-transform: capitalize;
+}
+footer .subscribe-email {
+  position: relative;
+  margin: 10px 0 40px;
+}
+footer .subscribe-email input {
+  padding-right: 20px;
+  border: none;
+}
+footer .subscribe-email button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: transparent;
+  outline: none;
+  border: none;
+  color: #333333;
+  height: 32px;
+  font-size: 1.25em;
+  padding: 0 10px;
+}
+footer .bottom {
+  margin-top: 70px;
+}
+footer .bottom .featured-link {
+  display: block;
+  text-transform: uppercase;
+  font-family: opensans-bold, sans-serif;
+  margin-bottom: 20px;
+}
+footer .bottom .featured-link li {
+  display: inline-block;
+}
+footer .bottom .featured-link li + li:before {
+  content: "|";
+}
+footer .bottom .featured-link li:first-child a {
+  padding-left: 0;
+}
+footer .bottom .featured-link li a {
+  font-size: .9em;
+  padding: 5px 5px 5px 7px;
+}
+footer .bottom .social {
+  margin-top: 10px;
+  text-align: right;
+}
+
 .nav-tabs {
   background: #00acc1;
   border: none;

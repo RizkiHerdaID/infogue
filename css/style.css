@@ -236,38 +236,6 @@ article {
   float: right;
 }
 
-.social li {
-  display: inline-block;
-  padding: 2px;
-}
-.social li a {
-  display: block;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  line-height: 30px;
-  border-radius: 50%;
-  color: #ffffff;
-}
-.social li a.facebook {
-  background: #3b5998;
-}
-.social li a.facebook:hover {
-  background: #344e86;
-}
-.social li a.twitter {
-  background: #00aced;
-}
-.social li a.twitter:hover {
-  background: #00a1de;
-}
-.social li a.googleplus {
-  background: #dd4b39;
-}
-.social li a.googleplus:hover {
-  background: #d73925;
-}
-
 .featured-wrapper {
   margin-bottom: 20px;
 }
@@ -672,23 +640,69 @@ footer .bottom .social {
   color: #ffffff;
 }
 
-.list-group > .list-group-item:first-child, .list-group > .list-group-item:last-child {
+.list-group > .list-group-item, .list-group h1, .list-group h2, .list-group h3 {
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+}
+.list-group > .list-group-item:first-child, .list-group > .list-group-item:last-child, .list-group h1:first-child, .list-group h1:last-child, .list-group h2:first-child, .list-group h2:last-child, .list-group h3:first-child, .list-group h3:last-child {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
 }
-.list-group > .list-group-item:hover {
+.list-group > .list-group-item:hover, .list-group h1:hover, .list-group h2:hover, .list-group h3:hover {
   background-color: #f7f7f7;
 }
-.list-group > .list-group-item a {
+.list-group > .list-group-item a, .list-group h1 a, .list-group h2 a, .list-group h3 a {
   color: #333333;
 }
-.list-group > .list-group-item a:hover h1, .list-group > .list-group-item a:hover h2, .list-group > .list-group-item a:hover h3 {
+.list-group > .list-group-item a:hover h1, .list-group > .list-group-item a:hover h2, .list-group > .list-group-item a:hover h3, .list-group h1 a:hover h1, .list-group h1 a:hover h2, .list-group h1 a:hover h3, .list-group h2 a:hover h1, .list-group h2 a:hover h2, .list-group h2 a:hover h3, .list-group h3 a:hover h1, .list-group h3 a:hover h2, .list-group h3 a:hover h3 {
   color: #4dc4d2;
 }
-.list-group > .list-group-item a h3 {
+.list-group > .list-group-item a h3, .list-group h1 a h3, .list-group h2 a h3, .list-group h3 a h3 {
   margin-bottom: 10px;
   font-size: 1.1em;
+}
+
+.social li {
+  display: inline-block;
+  padding: 2px;
+}
+.social li a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  color: #ffffff;
+}
+.social li a.facebook {
+  background: #3b5998;
+}
+.social li a.facebook:hover {
+  background: #344e86;
+}
+.social li a.twitter {
+  background: #00aced;
+}
+.social li a.twitter:hover {
+  background: #00a1de;
+}
+.social li a.googleplus {
+  background: #dd4b39;
+}
+.social li a.googleplus:hover {
+  background: #d73925;
 }
 
 .btn {

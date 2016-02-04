@@ -178,47 +178,6 @@ article{
   }
 }
 
-.social{
-  li{
-    display: inline-block;
-    padding: 2px;
-
-    a{
-      display: block;
-      width: 30px;
-      height: 30px;
-      text-align: center;
-      line-height: 30px;
-      border-radius: 50%;
-      color: $color-light;
-
-      &.facebook{
-        background: $color-facebook;
-
-        &:hover{
-          background: darken($color-facebook, 5%);
-        }
-      }
-
-      &.twitter{
-        background: $color-twitter;
-
-        &:hover{
-          background: darken($color-twitter, 3%);
-        }
-      }
-
-      &.googleplus{
-        background: $color-google;
-
-        &:hover{
-          background: darken($color-google, 5%);
-        }
-      }
-    }
-  }
-}
-
 .featured-wrapper {
   margin-bottom: $space-medium;
 

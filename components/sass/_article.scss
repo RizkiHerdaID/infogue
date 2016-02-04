@@ -182,6 +182,15 @@
     border: 1px solid $color-gray-light;
     border-collapse: collapse;
 
+    &.active, &:hover{
+      background: lighten($color-gray-light, 10%);
+      border-bottom: 2px solid $color-accent2;
+    }
+
+    &:hover{
+      background: lighten($color-gray-light, 13%);
+    }
+
     .featured-image{
       height: 125px;
       overflow: hidden;

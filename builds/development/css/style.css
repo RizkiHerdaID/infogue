@@ -1057,6 +1057,13 @@ footer .bottom .social {
   border: 1px solid #dbdbdb;
   border-collapse: collapse;
 }
+.article-preview.featured-mini.active, .article-preview.featured-mini:hover {
+  background: whitesmoke;
+  border-bottom: 2px solid #4dc4d2;
+}
+.article-preview.featured-mini:hover {
+  background: #fcfcfc;
+}
 .article-preview.featured-mini .featured-image {
   height: 125px;
   overflow: hidden;

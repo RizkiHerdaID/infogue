@@ -369,78 +369,71 @@ article{
   }
 }
 
-footer{
+footer {
   background: url("../images/backgrounds/footer.jpg") $background-dark no-repeat center center;
-  display: block;
-  height: 500px;
-  padding: 65px 0 50px;
+  min-height: 500px;
+  padding: 65px 0 45px;
   color: $color-light;
 
-  h3{
+  h3 {
     font-family: opensans-bold, sans-serif;
     margin-bottom: 30px;
   }
 
-  a{
+  a {
     color: $color-light;
 
-    &:hover{
+    &:hover {
       color: lighten($color-accent3, 20%);
     }
   }
 
-  p{
+  p {
     line-height: 1.7em;
     opacity: .85;
   }
 
-  .about{
-    display: block;
-
-    .logo{
-      max-width: 200px;
+  .about {
+    .logo {
+      max-width: 170px;
       margin-bottom: $space-medium * 2;
     }
   }
 
-  .quick-links{
+  .quick-links {
     float: left;
 
-    &:last-child{
-      @include clearfix;
-    }
-
-    &+.quick-links{
-      li{
+    & + .quick-links {
+      li {
         padding-left: $space-medium * 2;
       }
     }
 
-    li{
+    li {
       opacity: .85;
 
-      &+li{
+      & + li {
         border-top: 1px solid rgba(255, 255, 255, .3);
       }
 
-      a{
+      a {
         display: block;
         padding: 12px 0;
-        text-transform: capitalize;
+        text-transform: uppercase;
       }
     }
   }
 
-  .subscribe-email{
+  .subscribe-email {
     position: relative;
     margin: $space-small 0 ($space-medium * 2);
 
-    input{
+    input {
       padding-right: $space-medium;
       border: none;
     }
 
-    button{
+    button {
       position: absolute;
       right: 0;
       top: 0;
@@ -454,37 +447,36 @@ footer{
     }
   }
 
-  .bottom{
-    margin-top: $space-large + $space-medium;
+  .bottom {
+    margin-top: $space-large + $space-small;
 
-    .featured-link{
+    .featured-link {
       display: block;
-      text-transform: uppercase;
       font-family: opensans-bold, sans-serif;
       margin-bottom: $space-medium;
 
-      li{
+      li {
         display: inline-block;
 
-        +li:before{
+        + li:before {
           content: "|";
         }
 
-        &:first-child a{
+        &:first-child a {
           padding-left: 0;
         }
 
-        a{
+        a {
           font-size: .9em;
           padding: 5px 5px 5px 7px;
+          text-transform: uppercase;
         }
       }
     }
 
-    .social{
+    .social {
       margin-top: $space-small;
       text-align: right;
     }
   }
-
 }

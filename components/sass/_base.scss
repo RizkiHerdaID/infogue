@@ -6,6 +6,9 @@ body{
 
 a{
   color: $color-accent2;
+  @include transition-property(all);
+  @include transition-duration(.2s);
+  @include transition-timing-function(ease-in);
 
   &:hover, &:focus{
     text-decoration: none !important;
@@ -216,54 +219,50 @@ article{
   }
 }
 
-.featured-wrapper{
+.featured-wrapper {
   margin-bottom: $space-medium;
-}
 
-.featured-news{
-  background-color: #f9fafa;
-  border: 1px solid $color-gray-light;
+  .featured-news {
+    background-color: #f9fafa;
+    border: 1px solid $color-gray-light;
 
-  ol{
+    ol {
+      li {
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        min-height: 57px;
 
-    li{
-      border-bottom: 1px solid rgba(0, 0, 0, .1);
+        a {
+          display: block;
+          color: $color-dark;
+          @include transition-property(all);
+          @include transition-duration(.2s);
+          @include transition-timing-function(ease-in);
 
-      a{
-        display: block;
-        color: $color-dark;
+          &:hover,
+          &:hover .number {
+            background-color: lighten($color-gray-light, 7%);
+          }
 
-        &:hover,
-        &:hover .number{
-          background-color: lighten($color-gray-light, 7%);
-        }
+          p {
+            padding: $space-small;
 
-        p{
-          padding: $space-small;
-
-          &.number{
-            float: left;
-            font-weight: bold;
-            background-color: darken(#f9fafa, 2%);
-            line-height: $baseline * 2;
-            margin-right: $space-small;
-            font-size: $text-heading2;
-            color: $color-accent2;
+            &.number {
+              float: left;
+              font-weight: bold;
+              background-color: darken(#f9fafa, 2%);
+              line-height: $baseline * 2;
+              margin-right: $space-small;
+              font-size: $text-heading2;
+              color: $color-accent2;
+              @include transition-property(all);
+              @include transition-duration(.2s);
+              @include transition-timing-function(ease-in);
+            }
           }
         }
       }
     }
   }
-}
-
-.wide{
-  max-height: 100%;
-  width: auto;
-}
-
-.tall{
-  max-width: 100%;
-  height: auto;
 }
 
 .mobile {

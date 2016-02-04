@@ -297,6 +297,100 @@ article {
   height: auto;
 }
 
+.mobile {
+  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center/cover;
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  padding: 75px 0;
+  color: #ffffff;
+}
+.mobile h2 {
+  font-size: 1.7em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.mobile h1 {
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.mobile p.lead {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+.mobile img {
+  position: absolute;
+  right: 0;
+  top: -40px;
+}
+.mobile .btn-mobile {
+  min-width: 140px;
+  text-align: left;
+}
+.mobile .btn-mobile + .btn-mobile {
+  margin-left: 10px;
+}
+.mobile .btn-mobile i {
+  font-size: 2.1em;
+  line-height: 1.4;
+  float: left;
+  margin-right: 10px;
+}
+.mobile .btn-mobile h3 {
+  font-size: 1.1em;
+  display: block;
+}
+.mobile .btn-mobile p {
+  font-size: .9em;
+}
+
+.section {
+  display: block;
+  padding: 50px 0;
+}
+.section .title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.section .title h1 {
+  font-size: 26.4px;
+  margin-bottom: 10px;
+}
+.section .title .lead {
+  color: #818181;
+}
+.section .company-list {
+  text-align: center;
+}
+.section .company-list li {
+  padding: 20px;
+  display: inline-block;
+  position: relative;
+  min-width: 180px;
+  min-height: 60px;
+  margin-bottom: 40px;
+}
+.section .company-list li a {
+  position: absolute;
+  display: block;
+  top: 20px;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+}
+.section .company-list li a:hover {
+  top: 10px;
+}
+
 .nav-tabs {
   background: #00acc1;
   border: none;
@@ -492,6 +586,22 @@ article {
 .btn.btn-primary:hover, .btn.btn-primary:focus {
   background-color: #39bdcd;
   border-color: #33b9c9;
+}
+.btn.btn-outline {
+  border: 2px solid #4dc4d2;
+  background-color: transparent;
+}
+.btn.btn-outline:hover, .btn.btn-outline:focus {
+  color: #33b9c9;
+  border-color: #33b9c9;
+}
+.btn.btn-outline.btn-light {
+  border: 2px solid #ffffff;
+  color: #ffffff;
+}
+.btn.btn-outline.btn-light:hover, .btn.btn-outline.btn-light:focus {
+  color: #4dc4d2;
+  border: 2px solid #4dc4d2;
 }
 
 .form-control, .dropdown-menu {

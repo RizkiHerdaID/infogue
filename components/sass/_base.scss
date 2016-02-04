@@ -265,3 +265,106 @@ article{
   max-width: 100%;
   height: auto;
 }
+
+
+.mobile{
+  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center / cover;
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  padding: ($space-large * 1.5) 0;
+  color: $color-light;
+
+  h2{
+    font-size: 1.7em;
+    text-transform: uppercase;
+    margin-bottom: $space-small;
+  }
+
+  h1{
+    text-transform: uppercase;
+    margin-bottom: $space-small;
+  }
+
+  p.lead{
+    margin-top: 0;
+    font-size: 1.2em;
+  }
+
+  img{
+    position: absolute;
+    right: 0;
+    top: -$space-medium * 2;
+  }
+
+  .btn-mobile{
+    min-width: 140px;
+    text-align: left;
+
+    &+.btn-mobile{
+      margin-left: $space-small;
+    }
+
+    i{
+      font-size: 2.1em;
+      line-height: 1.4;
+      float: left;
+      margin-right: $space-small;
+    }
+
+    h3{
+      font-size: 1.1em;
+      display: block;
+    }
+
+    p{
+      font-size: .9em;
+    }
+  }
+
+}
+
+.section{
+  display: block;
+  padding: $space-large 0;
+
+  .title{
+    text-align: center;
+    margin-bottom: $space-medium * 2;
+
+    h1{
+      font-size: $text-heading2 * 1.2;
+      margin-bottom: $space-small;
+    }
+
+    .lead{
+      color: $color-gray-dark;
+    }
+  }
+
+  .company-list{
+    text-align: center;
+
+    li{
+      padding: $space-medium;
+      display: inline-block;
+      position: relative;
+      min-width: 180px;
+      min-height: 60px;
+      margin-bottom: $space-medium * 2;
+
+      a{
+        position: absolute;
+        display: block;
+        top: $space-medium;
+        @include transition-property(all);
+        @include transition-duration(.2s);
+        @include transition-timing-function(ease-in);
+
+        &:hover{
+          top: $space-small;
+        }
+      }
+    }
+  }
+}

@@ -10,4 +10,26 @@
       border-color: darken($color-accent2, 7%);
     }
   }
+
+  &.btn-outline{
+    border: 2px solid $color-accent2;
+    background-color: transparent;
+
+    &:hover, &:focus{
+      color: darken($color-accent2, 7%);;
+      border-color: darken($color-accent2, 7%);
+    }
+
+    &.btn-light{
+      border: 2px solid $color-light;
+      color: $color-light;
+
+      &:hover, &:focus{
+        color: $color-accent2;
+        border: 2px solid $color-accent2;
+      }
+    }
+  }
+
+
 }

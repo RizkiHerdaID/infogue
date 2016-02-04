@@ -324,28 +324,29 @@ article{
 
 }
 
-.section{
+.section {
   display: block;
   padding: $space-large 0;
 
-  .title{
+  .title {
     text-align: center;
     margin-bottom: $space-medium * 2;
 
-    h1{
+    h1 {
       font-size: $text-heading2 * 1.2;
       margin-bottom: $space-small;
     }
 
-    .lead{
-      color: $color-gray-dark;
+    .lead {
+      color: lighten($color-gray-dark, 20%);
+      font-size: 1.25em;
     }
   }
 
-  .company-list{
+  .company-list {
     text-align: center;
 
-    li{
+    li {
       padding: $space-medium;
       display: inline-block;
       position: relative;
@@ -353,7 +354,7 @@ article{
       min-height: 60px;
       margin-bottom: $space-medium * 2;
 
-      a{
+      a {
         position: absolute;
         display: block;
         top: $space-medium;
@@ -361,7 +362,7 @@ article{
         @include transition-duration(.2s);
         @include transition-timing-function(ease-in);
 
-        &:hover{
+        &:hover {
           top: $space-small;
         }
       }

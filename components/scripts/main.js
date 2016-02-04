@@ -41,4 +41,6 @@ $(function () {
             console.log(element, 'has been', op + 'ed')
         }
     });
+
+    $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
 });

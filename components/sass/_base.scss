@@ -1,58 +1,58 @@
-body{
+body {
   font-family: $font-family;
   font-size: $text-article;
   -webkit-font-smoothing: antialiased;
 }
 
-a{
+a {
   color: $color-accent2;
   @include transition-property(all);
   @include transition-duration(.2s);
   @include transition-timing-function(ease-in);
 
-  &:hover, &:focus{
+  &:hover, &:focus {
     text-decoration: none !important;
     color: $color-accent3;
   }
 }
 
-p{
+p {
   line-height: $baseline;
 }
 
-strong{
+strong {
   font-weight: bold;
 }
 
-h1, h2, h3{
+h1, h2, h3 {
   font-weight: bold;
 }
 
-h1{
+h1 {
   font-size: $text-heading1;
 }
 
-h2{
+h2 {
   font-size: $text-heading2;
 }
 
-h3{
+h3 {
   font-size: $text-heading3;
 }
 
-article{
+article {
   margin-bottom: $space-small;
   font-size: $text-article;
   line-height: 1.5;
 }
 
-.header{
+.header {
   background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
   position: relative;
   height: 130px;
   margin-bottom: $space-medium * 2;
 
-  .logo{
+  .logo {
     height: 90px;
     width: 250px;
     margin-top: $space-small;
@@ -61,7 +61,7 @@ article{
     display: block;
     vertical-align: middle;
 
-    h1{
+    h1 {
       height: 100%;
       display: block;
       overflow: hidden;
@@ -70,80 +70,80 @@ article{
     }
   }
 
-  .header-section{
+  .header-section {
     @include clearfix;
     padding-left: 250px;
     display: block;
 
-    .control-wrapper{
+    .control-wrapper {
       overflow: hidden;
 
-      a{
+      a {
         color: $color-light;
 
-        &:hover{
+        &:hover {
           color: lighten($color-accent3, 20%);
         }
       }
 
-      .featured-link{
+      .featured-link {
         padding-top: $space-medium;
 
-        li{
+        li {
           float: left;
           display: inline-block;
           margin-right: $space-medium;
 
-          :last-child{
+          :last-child {
             margin-right: 0;
           }
         }
       }
 
-      .user-control{
+      .user-control {
         float: right;
         color: $color-light;
 
-        li{
+        li {
           display: inline-block;
 
-          &:after{
+          &:after {
             content: "|";
           }
 
-          &:last-child{
-            &:after{
+          &:last-child {
+            &:after {
               content: "";
             }
-            a{
+            a {
               padding-right: 0;
             }
           }
 
-          a{
+          a {
             padding: 0 $space-small;
           }
         }
       }
     }
 
-    .search-wrapper{
+    .search-wrapper {
       padding-top: $space-medium;
 
-      .search{
+      .search {
         float: left;
 
-        .input-search{
+        .input-search {
           display: inline-block;
           position: relative;
 
-          input{
+          input {
             width: 320px;
             display: inline-block;
             padding-left: 30px;
           }
 
-          .fa-search{
+          .fa-search {
             position: absolute;
             left: 10px;
             top: 10px;
@@ -151,27 +151,27 @@ article{
           }
         }
 
-        .dropdown-menu{
+        .dropdown-menu {
           margin-left: -4px;
           margin-top: -2px;
         }
 
-        .filter{
+        .filter {
           margin-left: -2px;
 
-          .btn{
+          .btn {
             min-width: 100px;
             text-overflow: ellipsis;
           }
         }
 
-        button{
+        button {
           margin-left: -4px;
           margin-top: -3px;
         }
       }
 
-      .social{
+      .social {
         float: right;
       }
     }

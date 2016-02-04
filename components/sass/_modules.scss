@@ -141,3 +141,31 @@
     }
   }
 }
+
+// LIST
+.list-group{
+  > .list-group-item{
+    &:first-child, &:last-child{
+      @include border-radius(0);
+    }
+
+    &:hover {
+      background-color: $background-light;
+    }
+
+    a{
+      color: $color-dark;
+
+      &:hover{
+        h1, h2, h3{
+          color: $color-accent2;
+        }
+      }
+
+      h3{
+        margin-bottom: $space-small;
+        font-size: 1.1em;
+      }
+    }
+  }
+}

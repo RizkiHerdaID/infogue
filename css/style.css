@@ -298,7 +298,8 @@ article {
 }
 
 .mobile {
-  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center/cover;
+  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center;
+  width: 100%;
   min-height: 400px;
   position: relative;
   overflow: hidden;
@@ -395,6 +396,7 @@ article {
 footer {
   background: url("../images/backgrounds/footer.jpg") #0099ac no-repeat center center;
   min-height: 500px;
+  width: 100%;
   padding: 65px 0 45px;
   color: #ffffff;
 }

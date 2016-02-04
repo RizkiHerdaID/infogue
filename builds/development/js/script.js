@@ -8,6 +8,23 @@ var fill;
 fill;
 
 $(function () {
+
+    // SMOOTH SCROLL
+    $(function() {
+        $('a[href*="#"]:not([href="#"])').click(function() {
+            if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+
     // STICKY HEADER
     var closed = new Waypoint({
         element: $("header"),
@@ -51,18 +68,6 @@ $(function () {
         delay: 200
     });
 
-    // FILL IMAGE
-    $('.featured-image').find('img').each(function () {
-        var imgClass = (this.width / this.height > 1) ? 'wide' : 'tall';
-        $(this).addClass(imgClass);
-    })
-
-    $('.featured-wrapper .featured-image').each(function (i, counter) {
-        var image = $(this).data('featured');
-        $(this).css('background', "url('" + image + "') center center");
-        $(this).css('background-size', 'cover');
-    })
-
     // RATING
     $('.rating-wrapper').each(function (i, counter) {
         var rating = $(this).data('rating');
@@ -82,28 +87,25 @@ $(function () {
     // PARALLAX EFFECT
     $(window).stellar({responsive: false});
 
-    // IMAGE LAZY LOADING
-    echo.init({
-        offset: 100,
-        throttle: 250,
-        unload: false,
-        callback: function (element, op) {
-            //console.log(element, 'has been', op + 'ed')
-        }
-    });
-
     // EQUALIZE SOMETHING
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
 
+    // INIT FEATURED
+    setLargeFeatured();
+
     // FEATURED SLIDE SHOW
-    var tid = setInterval(changeFeatured, 2000);
-
     var imagesFeatured = new Array();
-    var position = 1;
+    var position = 2;
+    var tid;
 
-    $('.featured-mini .featured-image').each(function (i, counter) {
-        imagesFeatured.push($(this).data("featured"));
+    $('.featured-mini img').each(function () {
+        //console.log($(this).data("echo"));
+        imagesFeatured.push($(this).data("echo"));
     });
+
+    if(imagesFeatured.length > 0){
+        tid = setInterval(changeFeatured, 4000);
+    }
 
     $(".slide").click(function(){
         position = $(".slide").index($(this)) + 1;
@@ -112,13 +114,15 @@ $(function () {
     });
 
     function setFeatured(){
-        $(".featured-mini").removeClass("active");
         var imageSection = $(".featured-list div:nth-child("+position+")").find(".featured-mini");
+
+        $(".featured-mini").removeClass("active");
         imageSection.addClass("active");
 
         var title = imageSection.find(".src-title").text();
         var category = imageSection.find(".src-category").text();
         var description = imageSection.find(".src-description").text();
+        var image = imagesFeatured[position-1];
 
         //console.log("change "+position);
         //console.log("title "+imageSection.find(".src-title").text());
@@ -128,6 +132,17 @@ $(function () {
         $(".slide-title").text(title);
         $(".slide-category").text(category);
         $(".slide-description").text(description);
+        $('.featured-large .featured-image').data("featured", image);
+
+        setLargeFeatured();
+    }
+
+    function setLargeFeatured(){
+        var largeFeature = $('.featured-large .featured-image').fadeIn();
+        var image = largeFeature.data('featured');
+
+        largeFeature.css('background', "url('" + image + "') center center");
+        largeFeature.css('background-size', 'cover');
     }
 
     function changeFeatured() {
@@ -145,6 +160,20 @@ $(function () {
         clearInterval(tid);
     }
 
+    // IMAGE LAZY LOADING
+    echo.init({
+        offset: 100,
+        throttle: 250,
+        unload: false,
+        callback: function (element, op) {
+            //console.log(element, 'has been', op + 'ed')
+            setTimeout(function(){
+                var imgClass = (element.width / element.height > 1) ? 'wide' : 'tall';
+                //console.log(element.width+"  "+element.height +"  "+element.src+"  "+imgClass);
+                $(element).addClass(imgClass);
+            }, 50);
+        }
+    });
 });
 
 $(function () {

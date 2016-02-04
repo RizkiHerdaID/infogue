@@ -46,11 +46,38 @@ article {
   line-height: 1.5;
 }
 
+header {
+  display: block;
+  height: 170px;
+}
+
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
   position: relative;
   height: 130px;
   margin-bottom: $space-medium * 2;
+  top: 0;
+
+  &.transition {
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+
+  &.closed {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    top: -170px;
+  }
+
+  &.sticky {
+    top: -100px;
+
+    &:hover {
+      top: 0;
+    }
+  }
 
   .logo {
     height: 90px;

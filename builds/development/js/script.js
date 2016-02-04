@@ -8,6 +8,40 @@ var fill;
 fill;
 
 $(function () {
+    var closed = new Waypoint({
+        element: $("header"),
+        handler: function() {
+            if($(".header.closed").length){
+                $(".header").addClass("transition");
+                console.log("add transition when closed");
+            }
+            $(".header").toggleClass('closed');
+            console.log(this.element.class + ' closed triggers at ' + this.triggerPoint)
+            if(!$(".header.closed").length){
+                setTimeout(removeTransition, 500);
+            }
+        },
+        offset: -200
+    })
+
+    var sticky = new Waypoint({
+        element: $("header"),
+        handler: function() {
+            if($(".header.closed").length){
+                $(".header").addClass("transition");
+                console.log("add transition when stickied");
+            }
+            $(".header").toggleClass('sticky');
+            console.log(this.element.class + ' triggers at ' + this.triggerPoint)
+        },
+        offset: -300
+    });
+
+    function removeTransition(){
+        $(".header").removeClass("transition");
+        console.log("remove transition when closed");
+    }
+
     var navigation = $('#navigation').superfish({
         speed: 'fast',
         cssArrows: false,
@@ -47,7 +81,7 @@ $(function () {
         throttle: 250,
         unload: false,
         callback: function (element, op) {
-            console.log(element, 'has been', op + 'ed')
+            //console.log(element, 'has been', op + 'ed')
         }
     });
 

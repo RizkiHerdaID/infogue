@@ -126,11 +126,34 @@ article {
   line-height: 1.5;
 }
 
+header {
+  display: block;
+  height: 170px;
+}
+
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
   position: relative;
   height: 130px;
   margin-bottom: 40px;
+  top: 0;
+}
+.header.transition {
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+.header.closed {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  top: -170px;
+}
+.header.sticky {
+  top: -100px;
+}
+.header.sticky:hover {
+  top: 0;
 }
 .header .logo {
   height: 90px;

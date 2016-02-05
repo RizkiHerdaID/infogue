@@ -19,9 +19,12 @@
       left: 50%;
       top: 50%;
       @include translate(-50%, -50%);
-      @include transition-property(all);
-      @include transition-duration(.2s);
-      @include transition-timing-function(ease-in);
+
+      &.transition{
+        @include transition-property(all);
+        @include transition-duration(.2s);
+        @include transition-timing-function(ease-in);
+      }
 
       /*
       position: absolute;
@@ -35,12 +38,12 @@
     }
 
     &:hover img.wide{
-      max-height: 110%;
+      height: 110%;
       width: auto;
     }
 
     &:hover img.tall{
-      max-width: 110%;
+      width: 110%;
       height: auto;
     }
   }
@@ -141,6 +144,10 @@
 
     .featured-image{
       height: 410px;
+      opacity: 1;
+      @include transition-property(all);
+      @include transition-duration(.3s);
+      @include transition-timing-function(ease-in);
 
       .content{
         position: absolute;

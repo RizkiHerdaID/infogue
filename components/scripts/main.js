@@ -1,6 +1,6 @@
 $(function () {
 
-    // SMOOTH SCROLL
+    // SMOOTH SCROLL---------------------------------------------------------------
     $(function() {
         $('a[href*="#"]:not([href="#"])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -16,7 +16,8 @@ $(function () {
         });
     });
 
-    // STICKY HEADER
+
+    // STICKY HEADER---------------------------------------------------------------
     var closed = new Waypoint({
         element: $("header"),
         handler: function () {
@@ -28,11 +29,14 @@ $(function () {
             //console.log(this.element.class + ' closed triggers at ' + this.triggerPoint)
 
             if (!$(".header.closed").length) {
-                setTimeout(removeTransition, 500);
+                setTimeout(function(){
+                    $(".header").removeClass("transition");
+                    //console.log("remove transition when closed");
+                }, 500);
             }
         },
         offset: -200
-    })
+    });
 
     var sticky = new Waypoint({
         element: $("header"),
@@ -47,19 +51,16 @@ $(function () {
         offset: -300
     });
 
-    function removeTransition() {
-        $(".header").removeClass("transition");
-        //console.log("remove transition when closed");
-    }
 
-    // NAVIGATION
+    // NAVIGATION SUPERFISH -------------------------------------------------------
     var navigation = $('#navigation').superfish({
         speed: 'fast',
         cssArrows: false,
         delay: 200
     });
 
-    // RATING
+
+    // RATING ---------------------------------------------------------------------
     $('.rating-wrapper').each(function (i, counter) {
         var rating = $(this).data('rating');
 
@@ -75,19 +76,20 @@ $(function () {
         }
     });
 
-    // PARALLAX EFFECT
+    // PARALLAX EFFECT ------------------------------------------------------------
     $(window).stellar({responsive: false});
 
-    // EQUALIZE SOMETHING
+
+    // EQUALIZE SOMETHING ---------------------------------------------------------
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
 
-    // INIT FEATURED
-    setLargeFeatured();
 
-    // FEATURED SLIDE SHOW
+    // FEATURED SLIDE SHOW --------------------------------------------------------
     var imagesFeatured = new Array();
     var position = 2;
     var tid;
+
+    setLargeFeatured();
 
     $('.featured-mini img').each(function () {
         //console.log($(this).data("echo"));
@@ -95,12 +97,26 @@ $(function () {
     });
 
     if(imagesFeatured.length > 0){
-        tid = setInterval(changeFeatured, 4000);
+        tid = setInterval(changeFeatured, 5000);
+    }
+
+    function changeFeatured() {
+        if(imagesFeatured.length > 0){
+            setFeatured();
+
+            position++;
+            if(position > imagesFeatured.length){
+                position = 1;
+            }
+        }
+    }
+
+    function abortChangeFeatured() { // to be called when you want to stop the timer
+        clearInterval(tid);
     }
 
     $(".slide").click(function(){
         position = $(".slide").index($(this)) + 1;
-        console.log(position);
         setFeatured();
     });
 
@@ -129,54 +145,83 @@ $(function () {
     }
 
     function setLargeFeatured(){
-        var largeFeature = $('.featured-large .featured-image').fadeIn();
+        var largeFeature = $('.featured-large .featured-image');
         var image = largeFeature.data('featured');
 
+        largeFeature.css('opacity', 0);
+        setTimeout(function(){
+            largeFeature.css('opacity', 1);
+        }, 300);
+
+        largeFeature.css('content', ' ');
         largeFeature.css('background', "url('" + image + "') center center");
         largeFeature.css('background-size', 'cover');
     }
 
-    function changeFeatured() {
-        if(imagesFeatured.length > 0){
-            setFeatured();
 
-            position++;
-            if(position > imagesFeatured.length){
-                position = 1;
-            }
-        }
-    }
-
-    function abortChangeFeatured() { // to be called when you want to stop the timer
-        clearInterval(tid);
-    }
-
-    // IMAGE LAZY LOADING
+    // IMAGE LAZY LOADING ---------------------------------------------------------
     echo.init({
         offset: 100,
         throttle: 250,
         unload: false,
         callback: function (element, op) {
             //console.log(element, 'has been', op + 'ed')
+            $(element).css('opacity', '0');
+
             setTimeout(function(){
-                var imgClass = (element.width / element.height > 1) ? 'wide' : 'tall';
-                //console.log(element.width+"  "+element.height +"  "+element.src+"  "+imgClass);
-                $(element).addClass(imgClass);
-            }, 50);
+                if(op === 'load') {
+                    changeClass($(element));
+                    $(element).addClass('transition');
+                    $(element).css('opacity', '1');
+                }
+            }, 100);
         }
     });
 
-    // TO TOP
+    $( window ).resize(function() {
+        $(".featured-image").each(function(){
+            changeClass($(this).find('img'));
+        });
+    });
+
+    function changeClass(element){
+        var containerRatio = element.parent().width() / element.parent().height();
+        var imageRatio = element.width() / element.height();
+
+        var imgClass = (imageRatio > 1) ? 'wide' : 'tall';
+
+        if(imgClass == 'wide'){
+            if(containerRatio > imageRatio){
+                console.log('change to tall');
+                imgClass = 'tall';
+            }
+        }
+        else{
+            if(containerRatio < imageRatio){
+                console.log('change to wide');
+                imgClass = 'wide';
+            }
+        }
+
+        element.removeClass('tall')
+            .removeClass('wide')
+            .addClass(imgClass);
+    }
+
+
+    // TO TOP ---------------------------------------------------------------------
     $('footer').waypoint(function() {
         $('.to-top').toggleClass('visible');
     }, { offset: '140%' });
 
-    // BROWSER UPGRADE
+
+    // BROWSER UPGRADE ------------------------------------------------------------
     $('.browserupgrade').waypoint(function() {
         $('.browserupgrade').toggleClass('bottom');
     }, { offset: "30" });
 
-    // NICE SCROLL
+    
+    // NICE SCROLL ----------------------------------------------------------------
     $("html").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none'

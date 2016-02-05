@@ -7,7 +7,7 @@ body {
 a {
   color: $color-accent2;
   @include transition-property(all);
-  @include transition-duration(.2s);
+  @include transition-duration(.1s);
   @include transition-timing-function(ease-in);
 
   &:hover, &:focus {
@@ -278,7 +278,7 @@ header {
 
   img {
     position: absolute;
-    right: 0;
+    right: -30px;
     top: -$space-medium * 2;
   }
 

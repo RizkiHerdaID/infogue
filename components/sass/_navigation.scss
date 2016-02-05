@@ -85,23 +85,29 @@
       }
 
       h2{
+        font-family: opensans-bold, sans-serif;
         margin-bottom: $space-small;
         color: $color-light;
         text-transform: uppercase;
-        font-weight: bold;
+        font-size: 1.1em;
       }
 
       .sf-mega-section {
         float: left;
-        width: 180px;
-        padding: $space-small;
+        width: 170px;
+        padding: $space-small $space-medium $space-small $space-small;
         margin-right: $space-medium;
         border-right: 1px solid rgba(255, 255, 255, .1);
 
         li{
           a{
-            padding: $space-small 0;
+            padding: $space-small;
             display: block;
+
+            &:hover{
+              background-color: $color-accent2;
+              color: $color-light;
+            }
           }
         }
       }

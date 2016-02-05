@@ -13,6 +13,7 @@
     min-width: 100px;
     position: relative;
     overflow: hidden;
+    background-color: lighten($color-gray-light, 10%);
 
     img{
       position: absolute;

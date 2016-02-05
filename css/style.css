@@ -82,10 +82,10 @@ a {
   -o-transition-property: all;
   -webkit-transition-property: all;
   transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
+  -moz-transition-duration: 0.1s;
+  -o-transition-duration: 0.1s;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
   -moz-transition-timing-function: ease-in;
   -o-transition-timing-function: ease-in;
   -webkit-transition-timing-function: ease-in;
@@ -338,7 +338,7 @@ header {
 }
 .mobile img {
   position: absolute;
-  right: 0;
+  right: -30px;
   top: -40px;
 }
 .mobile .btn-mobile {
@@ -914,21 +914,26 @@ footer .bottom .social {
   z-index: -1;
 }
 .navigation .sf-menu .sf-mega h2 {
+  font-family: opensans-bold, sans-serif;
   margin-bottom: 10px;
   color: #ffffff;
   text-transform: uppercase;
-  font-weight: bold;
+  font-size: 1.1em;
 }
 .navigation .sf-menu .sf-mega .sf-mega-section {
   float: left;
-  width: 180px;
-  padding: 10px;
+  width: 170px;
+  padding: 10px 20px 10px 10px;
   margin-right: 20px;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 .navigation .sf-menu .sf-mega .sf-mega-section li a {
-  padding: 10px 0;
+  padding: 10px;
   display: block;
+}
+.navigation .sf-menu .sf-mega .sf-mega-section li a:hover {
+  background-color: #4dc4d2;
+  color: #ffffff;
 }
 
 .featured-list .slide {
@@ -942,6 +947,7 @@ footer .bottom .social {
   min-width: 100px;
   position: relative;
   overflow: hidden;
+  background-color: whitesmoke;
 }
 .article-preview .featured-image img {
   position: absolute;

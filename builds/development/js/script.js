@@ -185,6 +185,12 @@ $(function () {
         $('.browserupgrade').toggleClass('bottom');
     }, { offset: "30" });
 
+    // NICE SCROLL
+    $("html").niceScroll({
+        cursorcolor: '#4dc4d2',
+        cursorborder: 'none'
+    });
+
 });
 
 $(function () {

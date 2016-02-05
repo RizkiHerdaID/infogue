@@ -222,6 +222,7 @@
   bottom: 100px;
   right: 50px;
   width: 50px;
+  visibility: hidden;
   opacity: 0;
   z-index: 5;
   background-color: $color-accent3;
@@ -230,6 +231,7 @@
   @include transition-timing-function(ease-in);
 
   &.visible{
+    visibility: visible;
     opacity: .5;
   }
 

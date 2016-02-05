@@ -180,6 +180,11 @@ $(function () {
         $('.to-top').toggleClass('visible');
     }, { offset: '140%' });
 
+    // BROWSER UPGRADE
+    $('.browserupgrade').waypoint(function() {
+        $('.browserupgrade').toggleClass('bottom');
+    }, { offset: "30" });
+
 });
 
 $(function () {

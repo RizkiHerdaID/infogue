@@ -760,6 +760,20 @@ footer .bottom .social {
   display: block;
 }
 
+.browserupgrade {
+  display: block;
+  width: 100%;
+  z-index: 11;
+  text-align: center;
+  padding: 10px;
+  background-color: #660000;
+  color: #ffffff;
+}
+.browserupgrade.bottom {
+  position: fixed;
+  bottom: 0;
+}
+
 .btn {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;

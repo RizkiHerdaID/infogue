@@ -358,7 +358,7 @@
     </div>
 </header>
 
-<div class="login">
+<div class="login" data-stellar-background-ratio="0.3" data-stellar-vertical-offset="150">
     <section class="container">
         <div class="row">
             <div class="col-md-4 col-md-push-1 col-sm-5">
@@ -366,12 +366,14 @@
                 <p class="form-subtitle">Login into Contributor profile</p>
                 <form>
                     <div class="mbm">
-                        <a class="btn btn-facebook mrs" href="http://www.facebook.com">
-                            <i class="fa fa-facebook"></i> FACEBOOK
-                        </a>
-                        <a class="btn btn-twitter" href="http://www.twitter.com">
-                            <i class="fa fa-twitter"></i> TWITTER
-                        </a>
+                        <div class="btn-group btn-group-justified" role="group">
+                            <a class="btn btn-facebook" href="http://www.facebook.com">
+                                <i class="fa fa-facebook"></i> FACEBOOK
+                            </a>
+                            <a class="btn btn-twitter" href="http://www.twitter.com">
+                                <i class="fa fa-twitter"></i> TWITTER
+                            </a>
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" placeholder="Email Address or Username">
@@ -379,14 +381,14 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="password" placeholder="Password">
                     </div>
-                    <div class="checkbox pull-left mtn">
-                        <input type="checkbox" id="agree" class="css-checkbox">
-                        <label for="agree" class="css-label">Remember Me</label>
+                    <div class="form-group clearfix">
+                        <div class="checkbox pull-left mtn">
+                            <input type="checkbox" id="agree" class="css-checkbox">
+                            <label for="agree" class="css-label">Remember Me</label>
+                        </div>
+                        <a href="forgot.html" class="forgot clearfix pull-right">Forgot Password?</a>
                     </div>
-                    <label for="agree" class="css-label pull-right">
-                        <a href="forgot.html">Forgot Password</a>
-                    </label>
-                    <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
+                    <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
                 </form>
             </div>
             <div class="col-md-6 col-md-push-2 col-sm-7">

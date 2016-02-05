@@ -570,7 +570,7 @@ footer .bottom .social {
   top: 0;
   width: 0;
   height: 0;
-  z-index: 2;
+  z-index: 1;
   border-style: solid;
   border-width: 34px 0 0 20px;
 }
@@ -1004,6 +1004,7 @@ input[type=checkbox].css-checkbox + label.css-label {
   background-position: 0 0;
   vertical-align: middle;
   cursor: pointer;
+  font-family: opensans-regular, sans-serif;
 }
 
 input[type=checkbox].css-checkbox:checked + label.css-label {
@@ -1026,18 +1027,22 @@ label.css-label {
 }
 
 .form-subtitle {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-.register {
-  background: url("../images/backgrounds/latest2.jpg") no-repeat center center/cover;
+.register,
+.login {
+  background: url("../images/backgrounds/valley.jpg") no-repeat center;
+  background-size: cover;
+  width: 100%;
   margin-top: -80px;
   padding: 150px 0;
   color: #ffffff;
   position: relative;
   z-index: 1;
 }
-.register:before {
+.register:before,
+.login:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -1045,15 +1050,31 @@ label.css-label {
   position: absolute;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
 }
-.register .caption {
+.register .caption,
+.login .caption {
   margin-top: 50px;
   margin-bottom: 5px;
   font-family: opensans-semibold, sans-serif;
 }
-.register button {
-  margin-top: 40px;
+.register button,
+.login button {
+  margin-top: 30px;
+}
+
+.login {
+  background: url("../images/backgrounds/jump.jpg") no-repeat center;
+  background-size: 120%;
+}
+.login:before {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.login .forgot {
+  margin-top: 2px;
+}
+.login button {
+  margin-top: 20px;
 }
 
 .navigation {

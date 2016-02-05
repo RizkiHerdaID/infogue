@@ -40,6 +40,7 @@ input[type=checkbox].css-checkbox + label.css-label {
   background-position: 0 0;
   vertical-align: middle;
   cursor: pointer;
+  font-family: opensans-regular, sans-serif;
 }
 
 input[type=checkbox].css-checkbox:checked + label.css-label {
@@ -67,7 +68,9 @@ label.css-label {
 
 .register,
 .login{
-  background: url("../images/backgrounds/1eoXiP32.jpg") no-repeat center center / cover;
+  background: url("../images/backgrounds/valley.jpg") no-repeat center;
+  background-size: cover;
+  width: 100%;
   margin-top: -80px;
   padding: ($space-large * 3) 0;
   color: $color-light;
@@ -82,7 +85,7 @@ label.css-label {
     position: absolute;
     top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, .8);
   }
 
   .caption{
@@ -92,10 +95,23 @@ label.css-label {
   }
 
   button{
-    margin-top: 40px;
+    margin-top: $space-medium + $space-small;
   }
 }
 
 .login{
-  background: url("../images/backgrounds/keb1nsr1.jpg") no-repeat center center / cover;
+  background: url("../images/backgrounds/jump.jpg") no-repeat center;
+  background-size: 120%;
+
+  &:before{
+    background-color: rgba(0, 0, 0, .7);
+  }
+
+  .forgot{
+    margin-top: 2px;
+  }
+
+  button{
+    margin-top: $space-medium;
+  }
 }

@@ -80,7 +80,7 @@ $(function () {
     }
 
     // PARALLAX EFFECT ------------------------------------------------------------
-    $(window).stellar({responsive: false});
+    $(window).stellar({responsive: false, horizontalScrolling: false});
 
 
     // EQUALIZE SOMETHING ---------------------------------------------------------

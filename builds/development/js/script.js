@@ -174,6 +174,12 @@ $(function () {
             }, 50);
         }
     });
+
+    // TO TOP
+    $('footer').waypoint(function() {
+        $('.to-top').toggleClass('visible');
+    }, { offset: '140%' });
+
 });
 
 $(function () {

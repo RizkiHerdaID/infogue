@@ -728,6 +728,38 @@ footer .bottom .social {
   background: #d73925;
 }
 
+.to-top {
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  width: 50px;
+  opacity: 0;
+  z-index: 5;
+  background-color: #6dd7e3;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.8s;
+  -o-transition-duration: 0.8s;
+  -webkit-transition-duration: 0.8s;
+  transition-duration: 0.8s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+}
+.to-top.visible {
+  opacity: .5;
+}
+.to-top a {
+  text-align: center;
+  font-size: 2em;
+  padding: 10px;
+  color: #ffffff;
+  display: block;
+}
+
 .btn {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;

@@ -215,3 +215,29 @@
     }
   }
 }
+
+// TO TOP
+.to-top{
+  position: fixed;
+  bottom: 100px;
+  right: 50px;
+  width: 50px;
+  opacity: 0;
+  z-index: 5;
+  background-color: $color-accent3;
+  @include transition-property(all);
+  @include transition-duration(.8s);
+  @include transition-timing-function(ease-in);
+
+  &.visible{
+    opacity: .5;
+  }
+
+  a{
+    text-align: center;
+    font-size: 2em;
+    padding: $space-small;
+    color: $color-light;
+    display: block;
+  }
+}

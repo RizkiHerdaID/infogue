@@ -40,7 +40,6 @@ input[type=checkbox].css-checkbox + label.css-label {
   background-position: 0 0;
   vertical-align: middle;
   cursor: pointer;
-
 }
 
 input[type=checkbox].css-checkbox:checked + label.css-label {
@@ -57,7 +56,6 @@ label.css-label {
   user-select: none;
 }
 
-
 .form-title{
   color: $color-accent2;
   margin-bottom: $space-small / 2;
@@ -67,7 +65,8 @@ label.css-label {
   margin-bottom: $space-medium * 1.5;
 }
 
-.register{
+.register,
+.login{
   background: url("../images/backgrounds/1eoXiP32.jpg") no-repeat center center / cover;
   margin-top: -80px;
   padding: ($space-large * 3) 0;
@@ -95,4 +94,8 @@ label.css-label {
   button{
     margin-top: 40px;
   }
+}
+
+.login{
+  background: url("../images/backgrounds/keb1nsr1.jpg") no-repeat center center / cover;
 }

@@ -12,6 +12,10 @@
       background-color: darken($color-accent2, 5%);
       border-color: darken($color-accent2, 7%);
     }
+
+    &.active{
+      background-color: $color-accent1;
+    }
   }
 
   &.btn-outline{
@@ -33,6 +37,4 @@
       }
     }
   }
-
-
 }

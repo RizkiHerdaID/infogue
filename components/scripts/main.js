@@ -166,7 +166,7 @@ $(function () {
     // IMAGE LAZY LOADING ---------------------------------------------------------
     echo.init({
         offset: 50,
-        throttle: 150,
+        throttle: 250,
         unload: false,
         callback: function (element, op) {
             //console.log(element, 'has been', op + 'ed')

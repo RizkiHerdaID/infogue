@@ -227,7 +227,7 @@
     }
 
     .category{
-      margin-bottom: $space-small / 2;
+      margin: $space-small / 2;
     }
 
     > .sub-category{
@@ -240,7 +240,11 @@
   // DEFAULT ARTICLE PREVIEW - LANDSCAPE
   &.landscape{
     display: block;
-    margin-bottom: $space-medium;
+    margin-bottom: $space-medium * 2;
+
+    .category{
+      margin: $space-small 0 ($space-small / 2);
+    }
 
     &.mini{
       margin-bottom: $space-medium;
@@ -282,7 +286,7 @@
 .article-wrapper{
   margin-bottom: $space-large;
 
-  .article-preview{
+  .article-preview.portrait{
     margin-bottom: $space-large;
   }
 }

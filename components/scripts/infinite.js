@@ -1,18 +1,20 @@
 $(function () {
-    var count = 2;
-    var total = 10;
-    var onloading = false;
+    if($('.btn-load-more').length){
+        var count = 2;
+        var total = 10;
+        var onloading = false;
 
-    $(window).scroll(function () {
-        if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onloading) {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onloading) {
+                loadArticle(count);
+            }
+        });
+
+        $('.btn-load-more').click(function (e) {
+            e.preventDefault();
             loadArticle(count);
-        }
-    });
-
-    $('.btn-load-more').click(function (e) {
-        e.preventDefault();
-        loadArticle(count);
-    });
+        });
+    }
 
     function loadArticle(pageNumber) {
         if (count > total) {
@@ -88,7 +90,6 @@ $(function () {
                 }
             });
         }
-
     }
 
     function getRandomInt(min, max) {

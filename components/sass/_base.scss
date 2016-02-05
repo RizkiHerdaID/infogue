@@ -54,6 +54,7 @@ header {
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
   position: relative;
+  z-index: 2;
   height: 130px;
   margin-bottom: $space-medium * 2;
   top: 0;

@@ -227,7 +227,9 @@ $(function () {
 
     // TO TOP ---------------------------------------------------------------------
     $('footer').waypoint(function() {
-        $('.to-top').toggleClass('visible');
+        if($(document).height() > 1500){
+            $('.to-top').toggleClass('visible');
+        }
     }, { offset: '140%' });
 
 

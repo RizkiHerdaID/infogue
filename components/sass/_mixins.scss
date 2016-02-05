@@ -46,5 +46,13 @@
     &:after{
       border-color: transparent transparent transparent $color-accent;
     }
+}
 
+@mixin simple-button($color-base, $color-text){
+  background-color: $color-base;
+  color: $color-text;
+
+  &:hover{
+    background-color: darken($color-base, 5%);
+  }
 }

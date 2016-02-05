@@ -134,6 +134,7 @@ header {
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
   position: relative;
+  z-index: 2;
   height: 130px;
   margin-bottom: 40px;
   top: 0;
@@ -937,6 +938,27 @@ footer .bottom .social {
   color: #4dc4d2;
   border: 2px solid #4dc4d2;
 }
+.btn.btn-facebook {
+  background-color: #3b5998;
+  color: #ffffff;
+}
+.btn.btn-facebook:hover {
+  background-color: #344e86;
+}
+.btn.btn-twitter {
+  background-color: #00aced;
+  color: #ffffff;
+}
+.btn.btn-twitter:hover {
+  background-color: #0099d4;
+}
+.btn.btn-facebook, .btn.btn-twitter {
+  min-width: 70px;
+  font-family: opensans-bold, sans-serif;
+}
+.btn.btn-facebook i, .btn.btn-twitter i {
+  margin-right: 5px;
+}
 
 .form-control:focus {
   border-color: #4dc4d2;
@@ -951,8 +973,87 @@ footer .bottom .social {
   border-radius: 0;
 }
 
+label {
+  margin-bottom: 10px;
+  font-family: opensans-semibold, sans-serif;
+}
+
 .dropdown-menu {
   margin: 0;
+}
+
+input[type=checkbox].css-checkbox {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+  padding-left: 28px;
+  min-height: 18px;
+  display: inline-block;
+  line-height: 18px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+  background-position: 0 -18px;
+}
+
+label.css-label {
+  background-image: url("../images/misc/csscheckbox.png");
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.form-title {
+  color: #4dc4d2;
+  margin-bottom: 5px;
+}
+
+.form-subtitle {
+  margin-bottom: 20px;
+}
+
+.register {
+  background: url("../images/backgrounds/latest2.jpg") no-repeat center center/cover;
+  margin-top: -80px;
+  padding: 150px 0;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+.register:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.register .caption {
+  margin-top: 50px;
+  margin-bottom: 5px;
+  font-family: opensans-semibold, sans-serif;
+}
+.register button {
+  margin-top: 40px;
 }
 
 .navigation {

@@ -258,3 +258,12 @@
     bottom: 0;
   }
 }
+
+// LOADER
+.loading{
+  background: url("../images/misc/preloader.gif") no-repeat center center;
+  display: none;
+  margin: auto;
+  height: 32px;
+  margin: $space-medium;
+}

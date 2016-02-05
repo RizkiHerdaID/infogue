@@ -220,7 +220,7 @@
   // DEFAULT ARTICLE PREVIEW - PORTRAIT
   &.portrait{
     display: block;
-    margin-bottom: $space-medium;
+    margin-bottom: $space-large / 2;
 
     .featured-image{
       margin-bottom: $space-small;
@@ -276,6 +276,14 @@
       }
     }
 
+  }
+}
+
+.article-wrapper{
+  margin-bottom: $space-large;
+
+  .article-preview{
+    margin-bottom: $space-large;
   }
 }
 

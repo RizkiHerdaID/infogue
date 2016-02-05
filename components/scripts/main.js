@@ -56,25 +56,28 @@ $(function () {
     var navigation = $('#navigation').superfish({
         speed: 'fast',
         cssArrows: false,
-        delay: 200
+        delay: 100
     });
 
 
     // RATING ---------------------------------------------------------------------
-    $('.rating-wrapper').each(function (i, counter) {
-        var rating = $(this).data('rating');
+    renderRate();
+    function renderRate(){
+        $('.rating-wrapper').each(function (i, counter) {
+            var rating = $(this).data('rating');
 
-        $(this).html("");
+            $(this).html("");
 
-        for (var index = 0; index < 5; index++) {
-            if (index < rating) {
-                $(this).append("<i class='fa fa-circle rated'></i>")
+            for (var index = 0; index < 5; index++) {
+                if (index < rating) {
+                    $(this).append("<i class='fa fa-circle rated'></i>")
+                }
+                else {
+                    $(this).append("<i class='fa fa-circle'></i>")
+                }
             }
-            else {
-                $(this).append("<i class='fa fa-circle'></i>")
-            }
-        }
-    });
+        });
+    }
 
     // PARALLAX EFFECT ------------------------------------------------------------
     $(window).stellar({responsive: false});
@@ -82,6 +85,7 @@ $(function () {
 
     // EQUALIZE SOMETHING ---------------------------------------------------------
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
+    $('.article-wrapper').equalize({equalize: 'height', children: '.article-preview'});
 
 
     // FEATURED SLIDE SHOW --------------------------------------------------------

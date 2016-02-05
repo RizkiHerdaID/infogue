@@ -7,6 +7,7 @@
 }
 
 .article-preview{
+  display: block;
 
   .featured-image{
     height: 200px;
@@ -142,6 +143,7 @@
 
   // BIG FEATURE ON HOMEPAGE
   &.featured-large{
+    display: block;
 
     .featured-image{
       height: 410px;
@@ -227,7 +229,7 @@
     }
 
     .category{
-      margin: $space-small / 2;
+      margin: ($space-small / 2) 0;
     }
 
     > .sub-category{
@@ -279,7 +281,74 @@
         padding: 0 0 $space-small;
       }
     }
+  }
 
+  &.single-view{
+    .featured-image {
+      height: 400px;
+      max-width: 100%;
+      margin-bottom: $space-medium;
+    }
+
+    .title-wrapper{
+      margin-bottom: $space-large / 2;
+
+      .category{
+        margin-bottom: $space-small;
+      }
+
+      .title{
+        font-size: 1.9em;
+        line-height: 1.3em;
+        margin-bottom: $space-medium;
+      }
+
+      .timestamp-wrapper{
+        padding: $space-small 0;
+        border-top: 1px solid $color-gray-light;
+        border-bottom: 1px solid $color-gray-light;
+        @include clearfix;
+
+        .timestamp{
+          float: left;
+          margin: 0;
+          line-height: 34px;
+
+          .avatar{
+            float: left;
+            width: 35px;
+            height: 35px;
+            margin-right: $space-small;
+          }
+        }
+      }
+
+    }
+
+    article{
+      line-height: 1.8em;
+
+      p{
+        line-height: 2em;
+        margin-bottom: $space-small;
+      }
+
+      h1{
+        font-size: 1.8em;
+      }
+
+      h2{
+        font-size: 1.5em;
+      }
+
+      h3{
+        font-size: 1.2em;
+      }
+
+      h1, h2, h3{
+        margin: $space-medium 0 $space-small;
+      }
+    }
   }
 }
 
@@ -296,13 +365,18 @@
   text-transform: uppercase;
   display: inline-block;
   width: auto;
-  background-color: $color-accent3;
+  background-color: lighten($color-accent3, 10%);
   margin-bottom: $space-small;
+  color: $color-light;
+  padding: ($space-small / 2) $space-small;
+
+  &:hover{
+    color: $color-light;
+    background-color: $color-accent3;
+  }
 
   &.category{
-    padding: $space-small;
     background-color: $color-accent2;
-    color: $color-light;
     margin: $space-medium 0;
   }
 }

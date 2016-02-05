@@ -94,7 +94,7 @@ $(function () {
 
     // EQUALIZE SOMETHING ---------------------------------------------------------
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
-    $('.article-wrapper').equalize({equalize: 'height', children: '.article-preview'});
+    $('.articles').equalize({equalize: 'height', children: '.article-preview'});
 
 
     // FEATURED SLIDE SHOW --------------------------------------------------------

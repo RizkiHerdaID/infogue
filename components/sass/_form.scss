@@ -69,7 +69,8 @@ label.css-label {
 .register,
 .login,
 .reset,
-.forgot{
+.forgot,
+.confirmation{
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -101,6 +102,36 @@ label.css-label {
   }
 }
 
+.confirmation{
+  background: url("../images/backgrounds/mountain-blue.jpg") no-repeat center;
+  background-size: cover;
+  text-align: center;
+
+  i{
+    @include border-radius(50%);
+    border: 4px solid $color-accent2;
+    color: $color-accent2;
+    line-height: 2em;
+    font-size: 4em;
+    min-width: 120px;
+    min-height: 120px;
+    margin-bottom: $space-medium;
+  }
+
+  .text-muted{
+    color: $color-gray-dark;
+  }
+
+  .lead{
+    margin-bottom: $space-small;
+  }
+
+  &:before{
+    background-color: rgba(0, 0, 0, .7);
+  }
+}
+
+
 .login{
   background: url("../images/backgrounds/jump.jpg") no-repeat center;
   background-size: 120%;
@@ -128,7 +159,6 @@ label.css-label {
 }
 
 .reset {
-
   .contributor-profile{
     margin-top: $space-medium;
 

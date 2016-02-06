@@ -67,7 +67,8 @@ label.css-label {
 }
 
 .register,
-.login{
+.login,
+.reset{
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -113,5 +114,30 @@ label.css-label {
 
   button{
     margin-top: $space-medium;
+  }
+}
+
+.reset {
+
+  .contributor-profile{
+    margin-top: $space-medium;
+
+    color: $color-light;
+
+    .name, .statistic a{
+      color: $color-accent2;
+    }
+
+    .about{
+      color: $color-gray-light;
+    }
+
+    .avatar{
+      border: 7px solid rgba(255, 255, 255, .3);
+    }
+  }
+
+  &:before {
+    background-color: rgba(0, 0, 0, .7);
   }
 }

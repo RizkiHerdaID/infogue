@@ -1031,7 +1031,8 @@ label.css-label {
 }
 
 .register,
-.login {
+.login,
+.reset {
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -1042,7 +1043,8 @@ label.css-label {
   z-index: 1;
 }
 .register:before,
-.login:before {
+.login:before,
+.reset:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -1053,13 +1055,15 @@ label.css-label {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .register .caption,
-.login .caption {
+.login .caption,
+.reset .caption {
   margin-top: 50px;
   margin-bottom: 5px;
   font-family: opensans-semibold, sans-serif;
 }
 .register button,
-.login button {
+.login button,
+.reset button {
   margin-top: 30px;
 }
 
@@ -1075,6 +1079,23 @@ label.css-label {
 }
 .login button {
   margin-top: 20px;
+}
+
+.reset .contributor-profile {
+  margin-top: 20px;
+  color: #ffffff;
+}
+.reset .contributor-profile .name, .reset .contributor-profile .statistic a {
+  color: #4dc4d2;
+}
+.reset .contributor-profile .about {
+  color: #dbdbdb;
+}
+.reset .contributor-profile .avatar {
+  border: 7px solid rgba(255, 255, 255, 0.3);
+}
+.reset:before {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .navigation {

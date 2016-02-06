@@ -404,6 +404,10 @@
       font-size: $text-heading2;
       font-family: opensans-semibold, sans-serif;
       color: $color-dark;
+
+      &.small{
+        font-size: 1.3em;
+      }
     }
 
     .panel-body{

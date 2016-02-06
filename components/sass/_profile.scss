@@ -37,4 +37,26 @@
     font-family: opensans-semibold, sans-serif;
     font-size: 1.15em;
   }
+
+  &.mini{
+    .avatar{
+      width: 50px;
+      height: 50px;
+      float: left;
+    }
+
+    .info{
+      padding-left: 70px;
+
+      .name{
+        font-size: 1.1em;
+        line-height: 1.3em;
+        margin-bottom: 5px;
+      }
+
+      .location{
+        color: $color-gray-dark;
+      }
+    }
+  }
 }

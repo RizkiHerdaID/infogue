@@ -105,7 +105,7 @@ strong {
 }
 
 h1, h2, h3 {
-  font-weight: bold;
+  font-family: opensans-semibold, sans-serif, sans-serif;
 }
 
 h1 {
@@ -890,6 +890,7 @@ footer .bottom .social {
 }
 .rating-wrapper i {
   font-size: .85em;
+  color: #dbdbdb;
 }
 .rating-wrapper i + i {
   padding-left: 10px;
@@ -1056,7 +1057,8 @@ label.css-label {
 .login,
 .reset,
 .forgot,
-.confirmation {
+.confirmation,
+.activate {
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -1070,7 +1072,8 @@ label.css-label {
 .login:before,
 .reset:before,
 .forgot:before,
-.confirmation:before {
+.confirmation:before,
+.activate:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -1084,7 +1087,8 @@ label.css-label {
 .login .caption,
 .reset .caption,
 .forgot .caption,
-.confirmation .caption {
+.confirmation .caption,
+.activate .caption {
   margin-top: 50px;
   margin-bottom: 5px;
   font-family: opensans-semibold, sans-serif;
@@ -1093,16 +1097,19 @@ label.css-label {
 .login button,
 .reset button,
 .forgot button,
-.confirmation button {
+.confirmation button,
+.activate button {
   margin-top: 30px;
 }
 
-.confirmation {
+.confirmation,
+.activate {
   background: url("../images/backgrounds/mountain-blue.jpg") no-repeat center;
   background-size: cover;
   text-align: center;
 }
-.confirmation i {
+.confirmation i,
+.activate i {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
@@ -1114,14 +1121,31 @@ label.css-label {
   min-height: 120px;
   margin-bottom: 20px;
 }
-.confirmation .text-muted {
+.confirmation .text-muted,
+.activate .text-muted {
   color: #818181;
 }
-.confirmation .lead {
+.confirmation .lead,
+.activate .lead {
   margin-bottom: 10px;
 }
-.confirmation:before {
+.confirmation:before,
+.activate:before {
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.activate {
+  background: url("../images/backgrounds/afternoon.jpg") no-repeat center;
+  background-size: cover;
+}
+.activate i {
+  border: none;
+  font-size: 5em;
+  min-height: inherit;
+  line-height: inherit;
+}
+.activate:before {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .login {

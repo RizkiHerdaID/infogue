@@ -68,7 +68,8 @@ label.css-label {
 
 .register,
 .login,
-.reset{
+.reset,
+.forgot{
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -105,15 +106,24 @@ label.css-label {
   background-size: 120%;
 
   &:before{
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, .75);
   }
 
-  .forgot{
+  .forgot-link{
     margin-top: 2px;
   }
 
   button{
     margin-top: $space-medium;
+  }
+}
+
+.forgot{
+  background: url("../images/backgrounds/mountain-white.jpg") no-repeat center;
+  background-size: cover;
+
+  &:before{
+    background-color: rgba(0, 0, 0, .6);
   }
 }
 

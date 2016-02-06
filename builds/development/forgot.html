@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Info Gue - Register</title>
+    <title>Info Gue - Forgot Password</title>
     <meta name="description" content="Social news portal gives the most update information">
     <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
     <meta name="author" content="Angga Ari Wijaya">
@@ -358,15 +358,25 @@
     </div>
 </header>
 
-<div class="register" data-stellar-background-ratio=".3" data-stellar-vertical-offset="160">
+<div class="forgot" data-stellar-background-ratio="0.7" data-stellar-vertical-offset="220">
     <section class="container">
         <div class="row">
-            <div class="col-md-7 col-md-push-1 col-sm-7">
-                <h1 class="caption">JOIN WITH US</h1>
-                <p class="lead mbs">Spread the world with limitless information</p>
-                <p>Be a InfoGue’s Contributor, <a href="faq.html">Learn More</a></p>
-                <p class="mbm mtl">Have an account?, <a href="login.html">Sign In here!</a> or connect with</p>
-                <div>
+            <div class="col-md-4 col-md-push-1 col-sm-5">
+                <h2 class="form-title">Reset My Password</h2>
+                <p class="form-subtitle">We will try to recover your account</p>
+                <form action="reset.html">
+                    <div class="form-group">
+                        <label for="email">REGISTERED EMAIL</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email Address">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">RESET</button>
+                </form>
+            </div>
+            <div class="col-md-6 col-md-push-2 col-sm-7">
+                <h2 class="mbs">Recovery Your Account</h2>
+                <p>Still doesn’t know about InfoGue’s feature, <a href="faq.html">Learn More</a></p>
+                <p class="mbm mtl">Remember your credential? <a href="login.html">Sign here!</a> or connect with</p>
+                <div class="mbm">
                     <a class="btn btn-facebook mrs" href="http://www.facebook.com">
                         <i class="fa fa-facebook"></i> FACEBOOK
                     </a>
@@ -374,30 +384,6 @@
                         <i class="fa fa-twitter"></i> TWITTER
                     </a>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-5">
-                <h2 class="form-title">Create an Account</h2>
-                <p class="form-subtitle">Registering yourself as Contributor</p>
-
-                <form action="confirmation.html">
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email Address">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="username" placeholder="Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="retype-password" placeholder="Retype Password">
-                    </div>
-                    <div class="checkbox">
-                        <input type="checkbox" id="agree" class="css-checkbox">
-                        <label for="agree" class="css-label">I agree with all <a href="disclaimer.html">terms</a> and <a href="privacy.html">conditions</a></label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
-                </form>
             </div>
         </div>
     </section>

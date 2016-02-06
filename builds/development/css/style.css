@@ -1032,7 +1032,8 @@ label.css-label {
 
 .register,
 .login,
-.reset {
+.reset,
+.forgot {
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -1044,7 +1045,8 @@ label.css-label {
 }
 .register:before,
 .login:before,
-.reset:before {
+.reset:before,
+.forgot:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -1056,14 +1058,16 @@ label.css-label {
 }
 .register .caption,
 .login .caption,
-.reset .caption {
+.reset .caption,
+.forgot .caption {
   margin-top: 50px;
   margin-bottom: 5px;
   font-family: opensans-semibold, sans-serif;
 }
 .register button,
 .login button,
-.reset button {
+.reset button,
+.forgot button {
   margin-top: 30px;
 }
 
@@ -1072,13 +1076,21 @@ label.css-label {
   background-size: 120%;
 }
 .login:before {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.75);
 }
-.login .forgot {
+.login .forgot-link {
   margin-top: 2px;
 }
 .login button {
   margin-top: 20px;
+}
+
+.forgot {
+  background: url("../images/backgrounds/mountain-white.jpg") no-repeat center;
+  background-size: cover;
+}
+.forgot:before {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .reset .contributor-profile {

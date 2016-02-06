@@ -11,7 +11,7 @@ $(function () {
 
     // SMOOTH SCROLL---------------------------------------------------------------
     $(function() {
-        $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"])').click(function() {
+        $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function() {
             if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                 var target = $(this.hash);
                 target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -58,38 +58,6 @@ $(function () {
             //console.log(this.element.class + ' triggers at ' + this.triggerPoint)
         },
         offset: -300
-    });
-
-
-    // STICKY STATIC NAV ----------------------------------------------------------
-    var staticNav = new Waypoint({
-        element: $('.static-nav'),
-        handler: function() {
-            $('.static-nav').toggleClass('sticky');
-        },
-        offset: 100
-    })
-
-    var topOffset = 0;
-
-    var statisNavRelease = new Waypoint({
-        element: $('.static-nav'),
-        handler: function() {
-            $('.static-nav').toggleClass('release');
-            topOffset = $(window).scrollTop();
-        },
-        offset: - ($('.static-page').height() - 500)
-    })
-
-    $(window).scroll(function () {
-        if ($('.static-nav').hasClass('release')) {
-            $('.static-nav').css('top', 40 - Math.abs(topOffset - $(window).scrollTop()));
-            console.log('release');
-        }
-        else{
-            topOffset = 0;
-            $('.static-nav').removeAttr('style');
-        }
     });
 
 
@@ -328,6 +296,53 @@ $(function () {
     $("html").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none'
+    });
+
+
+    // STICKY STATIC NAV ----------------------------------------------------------
+    if($('.static-page').length){
+        var staticNav = new Waypoint({
+            element: $('.static-nav'),
+            handler: function() {
+                $('.static-nav').toggleClass('sticky');
+            },
+            offset: 100
+        });
+
+        var topNavOffset = 0;
+
+        var statisNavRelease = new Waypoint({
+            element: $('.static-nav'),
+            handler: function() {
+                $('.static-nav').toggleClass('release');
+                topNavOffset = $(window).scrollTop();
+            },
+            offset: - ($('.static-page').height() - 500)
+        })
+
+        $(window).scroll(function () {
+            if ($('.static-nav').hasClass('release')) {
+                $('.static-nav').css('top', 40 - Math.abs(topNavOffset - $(window).scrollTop()));
+            }
+            else{
+                topNavOffset = 0;
+                $('.static-nav').removeAttr('style');
+            }
+        });
+    }
+
+
+    // ACCORDION ---------------------------------------------------------------------
+    $("#accordion .panel-title a").click(function(){
+        $("#accordion .panel-heading").removeClass('active');
+        var heading = $(this).parent().parent();
+        console.log(heading.attr('class'));
+        if(heading.parent().find('.collapse.in').length){
+            heading.removeClass('active');
+        }
+        else{
+            heading.addClass('active');
+        }
     });
 
 });

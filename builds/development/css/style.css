@@ -853,19 +853,87 @@ footer .bottom .social {
   color: #4dc4d2;
 }
 
+.panel-group .panel,
 .panel {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
 }
+.panel-group .panel + .panel,
+.panel + .panel {
+  margin-top: 10px;
+}
+.panel-group .panel .panel-title:after,
+.panel .panel-title:after {
+  font-family: FontAwesome;
+  content: "\f107";
+  display: block;
+  float: right;
+}
+.panel-group .panel .panel-heading,
+.panel .panel-heading {
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-timing-function: ease-in;
+  -webkit-transition-timing-function: ease-in;
+  transition-timing-function: ease-in;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  background-color: white;
+}
+.panel-group .panel .panel-heading a,
+.panel .panel-heading a {
+  color: #333333;
+}
+.panel-group .panel .panel-heading.active,
+.panel .panel-heading.active {
+  border-color: #4dc4d2;
+  background-color: #4dc4d2;
+  color: #ffffff;
+  font-family: opensans-semibold, sans-serif;
+}
+.panel-group .panel .panel-heading.active a,
+.panel .panel-heading.active a {
+  color: #ffffff;
+}
+.panel-group .panel .panel-heading.active .panel-title:after,
+.panel .panel-heading.active .panel-title:after {
+  content: "\f106";
+}
+.panel-group .panel.panel-simple .panel-heading,
 .panel.panel-simple .panel-heading {
   padding: 15px 0;
   border-bottom: 1px solid #dbdbdb;
   font-size: 22px;
   font-family: opensans-semibold, sans-serif;
+  color: #333333;
 }
+.panel-group .panel.panel-simple .panel-body,
 .panel.panel-simple .panel-body {
   padding: 10px 0;
+}
+.panel-group .panel.panel-default,
+.panel.panel-default {
+  border-color: transparent;
+}
+.panel-group .panel.panel-default .panel-heading,
+.panel.panel-default .panel-heading {
+  border: 1px solid #ddd;
+}
+.panel-group .panel.panel-default .panel-heading.active,
+.panel.panel-default .panel-heading.active {
+  border-color: transparent;
 }
 
 .rating .rate-message {

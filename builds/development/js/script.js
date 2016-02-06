@@ -70,9 +70,12 @@ $(function () {
 
 
     // RATING ---------------------------------------------------------------------
+    var rateMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT'];
+    var lastMessage = $(".rating > .rate-message").text();
+
     renderRate();
     function renderRate(){
-        $('.rating-wrapper').each(function (i, counter) {
+        $('.rating-wrapper').each(function () {
             var rating = $(this).data('rating');
 
             $(this).html("");
@@ -82,11 +85,61 @@ $(function () {
                     $(this).append("<i class='fa fa-circle rated'></i>")
                 }
                 else {
-                    $(this).append("<i class='fa fa-circle'></i>")
+                    $(this).append("<i class='fa fa-circle unrated'></i>")
                 }
             }
+
+            $(".rating > .rate-message").text(rateMessage[rating-1]);
         });
     }
+
+    $(".rating-wrapper.control i").click(function(){
+        $(".rating-wrapper.control i")
+            .removeClass('active')
+            .removeClass('inactive');
+
+        var rate = $(".rating-wrapper.control i").index($(this));
+        $(".rating-wrapper.control i").removeClass('rated').removeClass('unrated');
+        for(var i = 0; i < 5; i++){
+            if (i <= rate) {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('rated');
+            }
+            else {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('unrated');
+            }
+        }
+        lastMessage = rateMessage[rate];
+    });
+
+    $(".rating-wrapper.control i").hover(function(){
+        var rate = $(".rating-wrapper.control i").index($(this));
+        for(var i = 0; i < 5; i++){
+            if(i <= rate){
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('active');
+            }
+            else{
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('inactive');
+            }
+        }
+        $(".rating > .rate-message").text(rateMessage[rate]);
+    }, function(){
+        $(".rating-wrapper.control i")
+            .removeClass('active')
+            .removeClass('inactive');
+        $(".rating > .rate-message").text(lastMessage);
+    });
 
     // PARALLAX EFFECT ------------------------------------------------------------
     $(window).stellar({responsive: false, horizontalScrolling: false});

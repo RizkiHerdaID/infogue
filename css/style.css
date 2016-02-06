@@ -138,7 +138,7 @@ header {
 .header {
   background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
   position: relative;
-  z-index: 2;
+  z-index: 5;
   height: 130px;
   margin-bottom: 40px;
   top: 0;
@@ -868,23 +868,41 @@ footer .bottom .social {
   padding: 10px 0;
 }
 
+.rating .rate-message {
+  float: left;
+  margin-top: 10px;
+  color: #4dc4d2;
+}
+
 .rating-wrapper {
   float: left;
   margin-right: 10px;
   padding: 10px 0;
 }
-.rating-wrapper.control i:hover, .rating-wrapper.control i:focus {
-  color: #6dd7e3;
+.rating-wrapper.control i.active {
+  color: #98e3eb;
+}
+.rating-wrapper.control i.inactive {
+  color: #dbdbdb;
+}
+.rating-wrapper.control i:hover {
+  cursor: pointer;
 }
 .rating-wrapper i {
   font-size: .85em;
-  color: #dbdbdb;
 }
 .rating-wrapper i + i {
-  margin-left: 10px;
+  padding-left: 10px;
 }
 .rating-wrapper i.rated {
   color: #4dc4d2;
+}
+.rating-wrapper i.unrated {
+  color: #dbdbdb;
+}
+
+.nicescroll-rails-vr {
+  z-index: 10 !important;
 }
 
 .btn {

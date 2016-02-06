@@ -375,27 +375,48 @@
 
 
 // RATING
+.rating{
+  .rate-message{
+    float: left;
+    margin-top: $space-small;
+    color: $color-accent2;
+  }
+}
 .rating-wrapper{
   float: left;
   margin-right: $space-small;
   padding: $space-small 0;
 
   &.control{
-    i:hover, i:focus{
-      color: $color-accent3;
+    i.active{
+      color: lighten($color-accent3, 10%);
+    }
+    i.inactive{
+      color: $color-gray-light;
+    }
+    i:hover{
+      cursor: pointer;
     }
   }
 
   i{
     font-size: .85em;
-    color: $color-gray-light;
 
     &+i{
-      margin-left: $space-small;
+      padding-left: $space-small;
     }
 
     &.rated{
       color: $color-accent2;
     }
+
+    &.unrated{
+      color: $color-gray-light;
+    }
   }
+}
+
+// MISC
+.nicescroll-rails-vr{
+  z-index: 10 !important;
 }

@@ -69,12 +69,12 @@ $(function () {
             $('.static-nav').toggleClass('release');
             topOffset = $(window).scrollTop();
         },
-        offset: - ($('.static-page').height() - 430)
+        offset: - ($('.static-page').height() - 500)
     })
 
     $(window).scroll(function () {
         if ($('.static-nav').hasClass('release')) {
-            $('.static-nav').css('top', 55 - Math.abs(topOffset - $(window).scrollTop()));
+            $('.static-nav').css('top', 40 - Math.abs(topOffset - $(window).scrollTop()));
             console.log('release');
         }
         else{

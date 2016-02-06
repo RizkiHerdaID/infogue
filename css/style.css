@@ -1792,29 +1792,36 @@ label.css-label {
   line-height: 1.7em;
   margin-bottom: 50px;
 }
+.static-page article li {
+  margin-bottom: 10px;
+}
 .static-page p {
   line-height: 1.7em;
   margin-bottom: 10px;
 }
-.static-page ol {
+.static-page ol, .static-page ul {
   list-style: decimal;
   margin-left: 20px;
   margin-bottom: 10px;
 }
-.static-page ol li {
+.static-page ol li, .static-page ul li {
   padding-left: 10px;
+}
+.static-page ul {
+  list-style: inherit;
 }
 .static-page .static-nav {
   text-align: right;
   margin-right: 30px;
   margin-top: 55px;
+  width: 150px;
 }
 .static-page .static-nav.sticky {
   position: fixed;
   top: 50px;
-  left: 137px;
 }
 .static-page .static-nav li {
+  list-style: none;
   padding: 10px 0;
   font-size: 18px;
 }
@@ -1831,7 +1838,8 @@ label.css-label {
 .static-page .timestamp {
   border-top: 1px solid #dbdbdb;
   border-bottom: 1px solid #dbdbdb;
-  padding: 10px;
+  padding: 10px 0;
+  margin-left: 0;
   display: block;
   line-height: 34px;
 }
@@ -1842,6 +1850,7 @@ label.css-label {
 }
 .static-page .timestamp li {
   display: inline;
+  padding-left: 0;
 }
 .static-page .timestamp .avatar {
   float: left;

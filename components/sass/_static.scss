@@ -99,6 +99,10 @@
   article{
     line-height: 1.7em;
     margin-bottom: $space-large;
+
+    li{
+      margin-bottom: $space-small;
+    }
   }
 
   p{
@@ -106,7 +110,7 @@
     margin-bottom: $space-small;
   }
 
-  ol{
+  ol, ul{
     list-style: decimal;
     margin-left: $space-medium;
     margin-bottom: $space-small;
@@ -116,18 +120,23 @@
     }
   }
 
+  ul{
+    list-style: inherit;
+  }
+
   .static-nav{
     text-align: right;
     margin-right: $space-medium + $space-small;
     margin-top: 55px;
+    width: 150px;
 
     &.sticky{
       position: fixed;
       top: 50px;
-      left: 137px;
     }
 
     li{
+      list-style: none;
       padding: $space-small 0;
       font-size: $text-heading3;
 
@@ -149,13 +158,15 @@
   .timestamp{
     border-top: 1px solid $color-gray-light;
     border-bottom: 1px solid $color-gray-light;
-    padding: $space-small;
+    padding: $space-small 0;
+    margin-left: 0;
     display: block;
     line-height: 34px;
     @include clearfix;
 
     li{
       display: inline;
+      padding-left: 0;
     }
 
     .avatar{

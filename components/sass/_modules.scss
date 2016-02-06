@@ -226,12 +226,12 @@
   z-index: 5;
   background-color: $color-accent3;
   @include transition-property(all);
-  @include transition-duration(.8s);
+  @include transition-duration(.5s);
   @include transition-timing-function(ease-in);
 
   &.visible {
     visibility: visible;
-    opacity: .5;
+    opacity: .8;
   }
 
   a {

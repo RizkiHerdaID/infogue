@@ -121,7 +121,10 @@ $(function () {
 
     $(".slide").click(function(){
         position = $(".slide").index($(this)) + 1;
-        setFeatured();
+        changeFeatured();
+
+        abortChangeFeatured();
+        tid = setInterval(changeFeatured, 5000);
     });
 
     function setFeatured(){

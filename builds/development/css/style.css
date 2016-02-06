@@ -741,10 +741,10 @@ footer .bottom .social {
   -o-transition-property: all;
   -webkit-transition-property: all;
   transition-property: all;
-  -moz-transition-duration: 0.8s;
-  -o-transition-duration: 0.8s;
-  -webkit-transition-duration: 0.8s;
-  transition-duration: 0.8s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
   -moz-transition-timing-function: ease-in;
   -o-transition-timing-function: ease-in;
   -webkit-transition-timing-function: ease-in;
@@ -752,7 +752,7 @@ footer .bottom .social {
 }
 .to-top.visible {
   visibility: visible;
-  opacity: .5;
+  opacity: .8;
 }
 .to-top a {
   text-align: center;
@@ -1195,6 +1195,7 @@ footer .bottom .social {
   padding-right: 6px;
   line-height: 0.9em;
   vertical-align: middle;
+  color: #b4b4b4;
 }
 .article-preview.featured-large {
   display: block;

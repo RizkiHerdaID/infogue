@@ -6,6 +6,10 @@
   }
 }
 
+.article-wrapper{
+  margin-bottom: $space-large;
+}
+
 .article-preview{
   display: block;
 
@@ -122,25 +126,6 @@
     }
   }
 
-  .rating-wrapper{
-    float: left;
-    margin-right: $space-small;
-    padding: $space-small 0;
-
-    i{
-      font-size: .85em;
-      color: $color-gray-light;
-
-      &+i{
-        margin-left: $space-small;
-      }
-
-      &.rated{
-        color: $color-accent2;
-      }
-    }
-  }
-
   // BIG FEATURE ON HOMEPAGE
   &.featured-large{
     display: block;
@@ -219,6 +204,83 @@
     }
   }
 
+  &.single-view{
+    margin-bottom: $space-medium;
+
+    .featured-image {
+      height: 400px;
+      max-width: 100%;
+      margin-bottom: $space-medium;
+    }
+
+    .title-wrapper{
+      margin-bottom: $space-large / 2;
+
+      .category{
+        margin-bottom: $space-small;
+      }
+
+      .title{
+        font-size: 1.9em;
+        line-height: 1.3em;
+        margin-bottom: $space-medium;
+      }
+
+      .timestamp-wrapper{
+        padding: $space-small 0;
+        border-top: 1px solid $color-gray-light;
+        border-bottom: 1px solid $color-gray-light;
+        @include clearfix;
+
+        .timestamp{
+          float: left;
+          margin: 0;
+          line-height: 34px;
+
+          .avatar{
+            float: left;
+            width: 35px;
+            height: 35px;
+            margin-right: $space-small;
+          }
+        }
+      }
+    }
+
+    article{
+      line-height: 1.8em;
+
+      p{
+        line-height: 2em;
+        margin-bottom: $space-small;
+      }
+
+      h1{
+        font-size: 1.8em;
+      }
+
+      h2{
+        font-size: 1.5em;
+      }
+
+      h3{
+        font-size: 1.2em;
+      }
+
+      h1, h2, h3{
+        margin: $space-medium 0 $space-small;
+      }
+    }
+
+    .excerpt{
+      padding: $space-medium;
+      background-color: $color-accent4;
+      margin: $space-medium 0 $space-large;
+      font-style: italic;
+      line-height: 1.4em;
+    }
+  }
+
   // DEFAULT ARTICLE PREVIEW - PORTRAIT
   &.portrait{
     display: block;
@@ -236,6 +298,32 @@
       text-align: right;
       padding: $space-small 0;
       font-weight: normal;
+    }
+
+    &.mini{
+      margin: $space-medium 0 0;
+
+      .featured-image{
+        max-height: 150px;
+      }
+
+      .title-wrapper{
+        margin-bottom: 0;
+
+        .title{
+          margin-bottom: $space-small;
+          font-size: 1em;
+          line-height: 1.3em;
+        }
+      }
+
+      .category{
+        margin: ($space-small / 2) 0;
+      }
+
+      .timestamp{
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -282,77 +370,9 @@
       }
     }
   }
-
-  &.single-view{
-    .featured-image {
-      height: 400px;
-      max-width: 100%;
-      margin-bottom: $space-medium;
-    }
-
-    .title-wrapper{
-      margin-bottom: $space-large / 2;
-
-      .category{
-        margin-bottom: $space-small;
-      }
-
-      .title{
-        font-size: 1.9em;
-        line-height: 1.3em;
-        margin-bottom: $space-medium;
-      }
-
-      .timestamp-wrapper{
-        padding: $space-small 0;
-        border-top: 1px solid $color-gray-light;
-        border-bottom: 1px solid $color-gray-light;
-        @include clearfix;
-
-        .timestamp{
-          float: left;
-          margin: 0;
-          line-height: 34px;
-
-          .avatar{
-            float: left;
-            width: 35px;
-            height: 35px;
-            margin-right: $space-small;
-          }
-        }
-      }
-
-    }
-
-    article{
-      line-height: 1.8em;
-
-      p{
-        line-height: 2em;
-        margin-bottom: $space-small;
-      }
-
-      h1{
-        font-size: 1.8em;
-      }
-
-      h2{
-        font-size: 1.5em;
-      }
-
-      h3{
-        font-size: 1.2em;
-      }
-
-      h1, h2, h3{
-        margin: $space-medium 0 $space-small;
-      }
-    }
-  }
 }
 
-.article-wrapper{
+.sidebar{
   margin-bottom: $space-large;
 
   .article-preview.portrait{

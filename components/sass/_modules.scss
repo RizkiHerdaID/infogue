@@ -329,7 +329,6 @@
 // LIST SEPARATED
 .list-separated {
   display: block;
-  padding: $space-small 0;
 
   li {
     display: inline-block;
@@ -350,6 +349,53 @@
       &:hover{
         color: $color-accent2;
       }
+    }
+  }
+}
+
+// PANEL
+.panel{
+  @include box-shadow(none);
+
+  &.panel-simple{
+
+    .panel-heading{
+      padding: 15px 0;
+      border-bottom: 1px solid $color-gray-light;
+      font-size: $text-heading2;
+      font-family: opensans-semibold, sans-serif;
+    }
+
+    .panel-body{
+      padding: $space-small 0;
+    }
+
+  }
+}
+
+
+// RATING
+.rating-wrapper{
+  float: left;
+  margin-right: $space-small;
+  padding: $space-small 0;
+
+  &.control{
+    i:hover, i:focus{
+      color: $color-accent3;
+    }
+  }
+
+  i{
+    font-size: .85em;
+    color: $color-gray-light;
+
+    &+i{
+      margin-left: $space-small;
+    }
+
+    &.rated{
+      color: $color-accent2;
     }
   }
 }

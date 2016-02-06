@@ -1,0 +1,40 @@
+.contributor-profile{
+  padding: $space-small 0;
+
+  .avatar{
+    width: 120px;
+    height: 120px;
+  }
+
+  .name{
+    color: $color-dark;
+    font-size: 1.4em;
+    margin-bottom: $space-small;
+    font-family: opensans-semibold, sans-serif;
+    display: block;
+
+    &:hover{
+      color: $color-accent2;
+    }
+  }
+
+  .location{
+    margin-bottom: $space-medium;
+  }
+
+  .about{
+    color: $color-gray-dark;
+    margin-bottom: $space-medium;
+  }
+
+  .btn-follow,
+  .btn-unfollow{
+    float: right;
+    margin-bottom: $space-medium;
+  }
+
+  .statistic{
+    font-family: opensans-semibold, sans-serif;
+    font-size: 1.15em;
+  }
+}

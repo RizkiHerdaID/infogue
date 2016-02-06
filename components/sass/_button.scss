@@ -7,7 +7,6 @@
   &.btn-primary{
     background-color: $color-accent2;
     border-color: darken($color-accent2, 3%);
-    color: $color-accent2;
 
     &:hover, &:focus{
       background-color: darken($color-accent2, 5%);
@@ -15,21 +14,27 @@
     }
 
     &.active{
-      background-color: $color-accent1;
-    }
-
-    &.btn-outline:hover{
       color: $color-light;
+      background-color: $color-accent1;
     }
   }
 
   &.btn-outline{
     border: 2px solid $color-accent2;
     background-color: transparent;
+    color: $color-accent2;
 
     &:hover, &:focus{
-      color: darken($color-accent2, 7%);
-      border-color: darken($color-accent2, 7%);
+      background-color: transparent;
+      color: $color-accent1;
+      border-color: $color-accent1;
+    }
+
+    &.active{
+      color: $color-light;
+      background-color: $color-accent2;
+      border-color: $color-accent2;
+      @include box-shadow(none);
     }
 
     &.btn-light{

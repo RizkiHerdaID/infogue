@@ -52,6 +52,38 @@ $(function () {
     });
 
 
+    // STICKY STATIC NAV ----------------------------------------------------------
+    var staticNav = new Waypoint({
+        element: $('.static-nav'),
+        handler: function() {
+            $('.static-nav').toggleClass('sticky');
+        },
+        offset: 100
+    })
+
+    var topOffset = 0;
+
+    var statisNavRelease = new Waypoint({
+        element: $('.static-nav'),
+        handler: function() {
+            $('.static-nav').toggleClass('release');
+            topOffset = $(window).scrollTop();
+        },
+        offset: - ($('.static-page').height() - 430)
+    })
+
+    $(window).scroll(function () {
+        if ($('.static-nav').hasClass('release')) {
+            $('.static-nav').css('top', 55 - Math.abs(topOffset - $(window).scrollTop()));
+            console.log('release');
+        }
+        else{
+            topOffset = 0;
+            $('.static-nav').removeAttr('style');
+        }
+    });
+
+
     // NAVIGATION SUPERFISH -------------------------------------------------------
     var navigation = $('#navigation').superfish({
         speed: 'fast',

@@ -1775,6 +1775,81 @@ label.css-label {
   text-transform: uppercase;
 }
 
+.static-page {
+  margin-bottom: 50px;
+}
+.static-page h1 {
+  font-size: 2em;
+  margin: 10px 0 30px;
+}
+.static-page h2, .static-page h3 {
+  margin: 20px 0 10px;
+}
+.static-page h1 + h1, .static-page h1 + h2, .static-page h1 + h3, .static-page h2 + h1, .static-page h2 + h2, .static-page h2 + h3, .static-page h3 + h1, .static-page h3 + h2, .static-page h3 + h3 {
+  margin-top: 10px;
+}
+.static-page article {
+  line-height: 1.7em;
+  margin-bottom: 50px;
+}
+.static-page p {
+  line-height: 1.7em;
+  margin-bottom: 10px;
+}
+.static-page ol {
+  list-style: decimal;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.static-page ol li {
+  padding-left: 10px;
+}
+.static-page .static-nav {
+  text-align: right;
+  margin-right: 30px;
+  margin-top: 55px;
+}
+.static-page .static-nav.sticky {
+  position: fixed;
+  top: 50px;
+  left: 137px;
+}
+.static-page .static-nav li {
+  padding: 10px 0;
+  font-size: 18px;
+}
+.static-page .static-nav li.active a {
+  color: #4dc4d2;
+  font-family: opensans-bold, sans-serif;
+}
+.static-page .static-nav li a {
+  color: #333333;
+}
+.static-page .static-nav li a:hover {
+  color: #4dc4d2;
+}
+.static-page .timestamp {
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 10px;
+  display: block;
+  line-height: 34px;
+}
+.static-page .timestamp:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.static-page .timestamp li {
+  display: inline;
+}
+.static-page .timestamp .avatar {
+  float: left;
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+}
+
 .wide {
   height: 100%;
   width: auto;

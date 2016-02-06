@@ -322,8 +322,9 @@ header {
     margin-bottom: $space-medium * 2;
 
     h1 {
-      font-size: $text-heading2 * 1.2;
+      font-size: $text-heading2 * 1.5;
       margin-bottom: $space-small;
+      font-family: opensans-regular, sans-serif;
     }
 
     .lead {

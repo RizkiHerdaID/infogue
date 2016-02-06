@@ -71,7 +71,8 @@ label.css-label {
 .reset,
 .forgot,
 .confirmation,
-.activate{
+.activate,
+.map{
   background: url("../images/backgrounds/valley.jpg") no-repeat center;
   background-size: cover;
   width: 100%;
@@ -196,5 +197,13 @@ label.css-label {
 
   &:before {
     background-color: rgba(0, 0, 0, .7);
+  }
+}
+
+.map{
+  height: 400px;
+
+  &:before {
+    background-color: transparent;
   }
 }

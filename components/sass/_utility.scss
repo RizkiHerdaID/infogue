@@ -12,6 +12,14 @@
   margin: $space-small !important;
 }
 
+.mm{
+  margin: $space-medium !important;
+}
+
+.ml{
+  margin: $space-large !important;
+}
+
 .mn{
   margin: 0 !important;
 }
@@ -85,6 +93,14 @@
   padding: $space-small !important;
 }
 
+.pm{
+  padding: $space-medium !important;
+}
+
+.pl{
+  padding: $space-large !important;
+}
+
 .pn{
   padding: 0 !important;
 }
@@ -134,7 +150,7 @@
 }
 
 .prm{
-  padding-right: $space-large !important;
+  padding-right: $space-medium !important;
 }
 
 .pbl{

@@ -1336,6 +1336,9 @@ footer .bottom .social {
 .article-preview.single-view article h1, .article-preview.single-view article h2, .article-preview.single-view article h3 {
   margin: 20px 0 10px;
 }
+.article-preview.single-view article img {
+  margin-bottom: 10px;
+}
 .article-preview.single-view .excerpt {
   padding: 20px;
   background-color: #ecf9fb;
@@ -1425,7 +1428,7 @@ footer .bottom .social {
   text-transform: uppercase;
   display: inline-block;
   width: auto;
-  background-color: #98e3eb;
+  background-color: #dbdbdb;
   margin-bottom: 10px;
   color: #ffffff;
   padding: 5px 10px;

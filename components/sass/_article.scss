@@ -270,6 +270,10 @@
       h1, h2, h3{
         margin: $space-medium 0 $space-small;
       }
+
+      img{
+        margin-bottom: $space-small;
+      }
     }
 
     .excerpt{
@@ -385,7 +389,7 @@
   text-transform: uppercase;
   display: inline-block;
   width: auto;
-  background-color: lighten($color-accent3, 10%);
+  background-color: $color-gray-light;
   margin-bottom: $space-small;
   color: $color-light;
   padding: ($space-small / 2) $space-small;

@@ -1817,6 +1817,33 @@ label.css-label {
   z-index: 1;
 }
 
+.contributor-menu.unauthorized .featured {
+  background: url("../images/backgrounds/morning.jpg") no-repeat center center/cover;
+}
+.contributor-menu.unauthorized .info {
+  position: relative;
+  z-index: 2;
+}
+.contributor-menu.unauthorized .info .title {
+  color: #4dc4d2;
+  font-size: 1.2em;
+  font-family: opensans-semibold, sans-serif;
+  margin-top: 20px;
+}
+.contributor-menu.unauthorized .info .subtitle {
+  color: #dbdbdb;
+  margin-bottom: 10px;
+}
+.contributor-menu.unauthorized .login-form {
+  -moz-box-shadow: #dbdbdb 0 1px 1px;
+  -webkit-box-shadow: #dbdbdb 0 1px 1px;
+  box-shadow: #dbdbdb 0 1px 1px;
+  background-color: #ffffff;
+  padding: 20px;
+}
+.contributor-menu.unauthorized .login-form .form-subtitle {
+  margin-bottom: 10px;
+}
 .contributor-menu .featured {
   padding: 20px;
   position: relative;
@@ -1925,16 +1952,17 @@ label.css-label {
 }
 .account-profile .profile-wrapper .profile .about {
   margin-top: 35px;
-  margin-bottom: 20px;
   line-height: 1.6em;
 }
 .account-profile .profile-wrapper .profile .location {
+  margin-top: 10px;
   color: #818181;
 }
 .account-profile .profile-wrapper .profile .location i {
   margin-right: 10px;
 }
 .account-profile .profile-wrapper .profile .detail {
+  margin-top: 10px;
   color: #818181;
   text-align: right;
   display: block;
@@ -1970,7 +1998,7 @@ label.css-label {
   color: #ffffff;
 }
 .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
-  height: 180px;
+  height: 175px;
   margin-bottom: 0;
   padding: 20px;
   border-bottom: 1px solid #dbdbdb;
@@ -1990,6 +2018,26 @@ label.css-label {
 .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .rating-wrapper {
   float: left;
   padding: 10px 0;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini {
+  padding: 20px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini .info {
+  float: left;
+  padding-left: 20px;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini .info .location {
+  margin-bottom: 5px;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini button {
+  float: right;
+  margin: 5px 0;
 }
 
 .error404 {

@@ -70,6 +70,40 @@
 }
 
 .contributor-menu {
+
+  &.unauthorized{
+    .featured{
+      background: url('../images/backgrounds/morning.jpg') no-repeat center center / cover;
+    }
+
+    .info{
+      position: relative;
+      z-index: 2;
+
+      .title {
+        color: $color-accent2;
+        font-size: 1.2em;
+        font-family: opensans-semibold, sans-serif;
+        margin-top: $space-medium;
+      }
+
+      .subtitle {
+        color: $color-gray-light;
+        margin-bottom: $space-small;
+      }
+    }
+
+    .login-form{
+      @include box-shadow($color-gray-light 0 1px 1px);
+      background-color: $color-light;
+      padding: $space-medium;
+
+      .form-subtitle{
+        margin-bottom: $space-small;
+      }
+    }
+  }
+
   .featured {
     padding: $space-medium;
     position: relative;
@@ -140,7 +174,6 @@
   }
 }
 
-
 .account-profile{
   background-color: $color-light;
 
@@ -181,11 +214,11 @@
 
       .about{
         margin-top: 35px;
-        margin-bottom: $space-medium;
         line-height: 1.6em;
       }
 
       .location{
+        margin-top: $space-small;
         color: $color-gray-dark;
 
         i{
@@ -194,6 +227,7 @@
       }
 
       .detail{
+        margin-top: $space-small;
         color: $color-gray-dark;
         text-align: right;
         display: block;
@@ -240,8 +274,9 @@
 
       .content{
 
+        // ARTICLE CONTENT
         .article-preview.landscape.mini{
-          height: 180px;
+          height: 175px;
           margin-bottom: 0;
           padding: $space-medium;
           border-bottom: 1px solid $color-gray-light;
@@ -264,6 +299,27 @@
           .rating-wrapper{
             float: left;
             padding: $space-small 0;
+          }
+        }
+
+        // CONTRIBUTOR CONTENT
+        .contributor-profile.mini{
+          @include clearfix();
+          padding: $space-medium;
+          border-bottom: 1px solid $color-gray-light;
+
+          .info{
+            float: left;
+            padding-left: $space-medium;
+
+            .location{
+              margin-bottom: 5px;
+            }
+          }
+
+          button{
+            float: right;
+            margin: 5px 0;
           }
         }
       }

@@ -370,28 +370,44 @@
 
         <div class="row">
             <div class="col-md-4">
-                <div class="contributor-menu compact">
-                    <div class="featured" style="background: url('images/covers/231894.jpg') no-repeat center center / cover" data-stellar-background-ratio="0.85" data-stellar-vertical-offset="100">
-                        <div class="contributor-profile mini">
-                            <img src="images/contributors/cici.png" class="avatar img-circle img-responsive" width="80"/>
-                            <div class="info">
-                                <p class="name">Imelda Agustine</p>
-                                <p class="location">Jakarta, Indonesia</p>
-                            </div>
+                <div class="contributor-menu unauthorized">
+                    <div class="featured" data-stellar-background-ratio="0.85" data-stellar-vertical-offset="100">
+                        <div class="info">
+                            <p class="title">Don't have an account?</p>
+                            <p class="subtitle">Let's make it one</p>
+                            <div class="btn btn-primary btn-outline btn-block">REGISTER</div>
                         </div>
-                        <div class="btn btn-primary btn-outline btn-block">CREATE ARTICLE</div>
                     </div>
-                    <nav>
-                        <ul>
-                            <li><a href="contributor_stream.html"><i class="fa fa-desktop"></i>Stream</a></li>
-                            <li><a href="contributor_article.html"><i class="fa fa-file-text"></i>Article</a></li>
-                            <li><a href="contributor_message.html"><i class="fa fa-envelope"></i>Message</a></li>
-                            <li><a href="contributor_followers.html"><i class="fa fa-chevron-left"></i>Follower</a></li>
-                            <li><a href="contrtibutor_following.html"><i class="fa fa-chevron-right"></i>Following</a></li>
-                            <li><a href="contributor_setting.html"><i class="fa fa-wrench"></i>Setting</a></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
-                        </ul>
-                    </nav>
+                    <div class="login-form">
+                        <h2 class="form-title">Sign In</h2>
+                        <p class="form-subtitle">Login into Contributor profile</p>
+                        <form action="account_stream.html">
+                            <div class="mbm">
+                                <div class="btn-group btn-group-justified" role="group">
+                                    <a class="btn btn-facebook" href="http://www.facebook.com">
+                                        <i class="fa fa-facebook"></i> FACEBOOK
+                                    </a>
+                                    <a class="btn btn-twitter" href="http://www.twitter.com">
+                                        <i class="fa fa-twitter"></i> TWITTER
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder="Email Address or Username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="checkbox pull-left mtn">
+                                    <input type="checkbox" id="agree" class="css-checkbox">
+                                    <label for="agree" class="css-label">Remember Me</label>
+                                </div>
+                                <a href="forgot.html" class="forgot-link clearfix pull-right">Forgot Password?</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
@@ -416,10 +432,8 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <p class="about">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum harum, itaque. Culpa
-                                                dolorum illo nesciunt nobis tenetur ullam veniam voluptate!.<a href="#">More</a></p>
+                                                dolorum illo nesciunt nobis tenetur ullam veniam voluptate! <a href="#">More</a></p>
                                         </div>
-                                        <div class="col-md-7"><p class="location"><i class="fa fa-map-marker"></i> Jakarta, Indonesia</p></div>
-                                        <div class="col-md-5"><a href="#" class="detail">Detail Profile</a></div>
                                         <div class="col-md-12">
                                             <ul class="statistic nav-justified">
                                                 <li><a href="profile_following.html"><strong>13</strong>FOLLOWING</a></li>
@@ -432,156 +446,88 @@
                             </div>
                         </section>
                         <section class="list-data">
-                            <h3 class="title">STREAM</h3>
+                            <h3 class="title">FOLLOWERS</h3>
                             <div class="content">
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 8" data-echo="images/featured/image8.jpg"/>
-                                            </div>
+                                <div role="list">
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team01.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Shanon Rean</a>
+                                            <p class="location">Surabaya, Indonesia</p>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Sport</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Bicyclist recommend warming up before exercising
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>By <a href="profile.html">Wanda</a></li>
-                                                    <li>28 April 2016</li>
-                                                    <li>48 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <ul class="social text-right">
-                                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
                                     </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 9" data-echo="images/featured/image9.jpg"/>
-                                            </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/angga.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Angga Ari Wijaya</a>
+                                            <p class="location">Jakarta, Indonesia</p>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Sport</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Extreme sport now more popular lately
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>By <a href="profile.html">Merry Go Raound</a></li>
-                                                    <li>22 April 2016</li>
-                                                    <li>78 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <ul class="social text-right">
-                                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
                                     </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 10" data-echo="images/featured/image10.jpg"/>
-                                            </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team04.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                            <p class="location">Jember, Indonesia</p>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Health</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Young people in Indonesia introduce importance of exercise
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>By <a href="profile.html">Vina Panduwinata</a></li>
-                                                    <li>11 March 2016</li>
-                                                    <li>734 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <ul class="social text-right">
-                                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
                                     </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 11" data-echo="images/featured/image11.jpg"/>
-                                            </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Imelda Agustine</a>
+                                            <p class="location">Jakarta, Indonesia</p>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Science</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        New reality and old one blend to the nature
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>By <a href="profile.html">Dewi Ariyani</a></li>
-                                                    <li>11 February 2016</li>
-                                                    <li>34 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <ul class="social text-right">
-                                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
                                     </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 12" data-echo="images/featured/image12.jpg"/>
-                                            </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/profile.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Brian Vhirdrict</a>
+                                            <p class="location">Boston, USA</p>
                                         </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Economic</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Grand opening new coffee shop at corner of the city of light
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>By <a href="profile.html">Angga Ari Wijaya</a></li>
-                                                    <li>25 January 2016</li>
-                                                    <li>941 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <ul class="social text-right">
-                                                <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team02.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Rendi Beat</a>
+                                            <p class="location">Malang, Indonesia</p>
                                         </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/iyan.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Iyan Budiman</a>
+                                            <p class="location">Banyuwangi, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/lukman.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Lukman Hidayatullah</a>
+                                            <p class="location">Jember, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/vivi.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Vivi Rachkmawati</a>
+                                            <p class="location">Lumajang, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/desi.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Desi Wulandari</a>
+                                            <p class="location">Surabaya, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
                                     </div>
                                 </div>
                             </div>

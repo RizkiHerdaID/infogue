@@ -177,10 +177,10 @@
 .account-profile{
   background-color: $color-light;
 
+  // WIDE AND CENTER FOR DETAIL
   &.detail{
-
     .cover{
-      height: 250px;
+      height: 200px;
     }
 
     .profile-wrapper .profile{
@@ -189,17 +189,21 @@
       text-align: center;
 
       .name{
-        color: $color-dark;
-        margin-bottom: $space-medium;
+        margin-bottom: $space-small;
+
+        a{
+          color: $color-dark;
+        }
       }
 
       .about{
         margin-top: 0;
-        margin-bottom: $space-medium;
+        margin-bottom: $space-small;
       }
     }
   }
 
+  // PROFILE DEFAULT
   .cover{
     height: 350px;
     position: relative;
@@ -232,7 +236,15 @@
 
       .name{
         margin-top: 7px;
-        color: $color-light;
+        color: $color-dark;
+
+        a{
+          color: $color-light;
+
+          &:hover{
+            color: $color-accent2;
+          }
+        }
       }
 
       .about{
@@ -293,6 +305,7 @@
         background: $color-accent2;
         padding: $space-small $space-medium;
         color: $color-light;
+        font-size: 1.1em;
 
         a{
           color: $color-light;
@@ -301,7 +314,6 @@
       }
 
       .content{
-
         // ARTICLE CONTENT
         .article-preview.landscape.mini{
           height: 175px;

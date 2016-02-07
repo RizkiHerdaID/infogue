@@ -1934,7 +1934,7 @@ label.css-label {
   background-color: #ffffff;
 }
 .account-profile.detail .cover {
-  height: 250px;
+  height: 200px;
 }
 .account-profile.detail .profile-wrapper .profile {
   position: relative;
@@ -1942,12 +1942,14 @@ label.css-label {
   text-align: center;
 }
 .account-profile.detail .profile-wrapper .profile .name {
+  margin-bottom: 10px;
+}
+.account-profile.detail .profile-wrapper .profile .name a {
   color: #333333;
-  margin-bottom: 20px;
 }
 .account-profile.detail .profile-wrapper .profile .about {
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .account-profile .cover {
   height: 350px;
@@ -1985,7 +1987,13 @@ label.css-label {
 }
 .account-profile .profile-wrapper .profile .name {
   margin-top: 7px;
+  color: #333333;
+}
+.account-profile .profile-wrapper .profile .name a {
   color: #ffffff;
+}
+.account-profile .profile-wrapper .profile .name a:hover {
+  color: #4dc4d2;
 }
 .account-profile .profile-wrapper .profile .about {
   margin-top: 35px;
@@ -2033,6 +2041,7 @@ label.css-label {
   background: #4dc4d2;
   padding: 10px 20px;
   color: #ffffff;
+  font-size: 1.1em;
 }
 .account-profile .profile-wrapper .list-data h3 a {
   color: #ffffff;

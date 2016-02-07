@@ -501,7 +501,28 @@
   }
 }
 
+// TAGS
+.tag.label-info{
+  background-color: $color-accent3;
+  padding-right: 7px;
+  font-family: opensans-regular, sans-serif;
+
+  &:hover{
+    background-color: $color-accent2;
+  }
+}
+
 // MISC
 .nicescroll-rails-vr{
   z-index: 10 !important;
+}
+
+.note-editor{
+  margin-bottom: $space-small;
+}
+.note-editor.note-frame.fullscreen{
+  z-index: 999;
+}
+.note-editor.note-frame .note-editing-area .note-editable{
+  border: 1px solid $color-gray-light;
 }

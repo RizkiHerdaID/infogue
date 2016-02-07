@@ -345,6 +345,25 @@ $(function () {
         }
     });
 
+    // SUMMERNOTE -------------------------------------------------------------------
+    $('.summernote').summernote({
+        toolbar: [
+            // [groupName, [list of button]]
+            ['font', ['style']],
+            ['style', ['bold', 'italic', 'underline']],
+            ['para', ['ul', 'paragraph']],
+            ['insert', ['picture', 'video', 'link']],
+            ['misc', ['fullscreen']]
+        ],
+        placeholder: 'write here...',
+        height: 200
+    });
+
+    // FILE INPUT -------------------------------------------------------------------
+    $('.file-input').change(function(){
+        $('.file-info').text($(this).val());
+    });
+
 });
 
 $(function () {

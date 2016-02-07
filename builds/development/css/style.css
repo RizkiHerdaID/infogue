@@ -997,8 +997,29 @@ footer .bottom .social {
   float: right;
 }
 
+.tag.label-info {
+  background-color: #6dd7e3;
+  padding-right: 7px;
+  font-family: opensans-regular, sans-serif;
+}
+.tag.label-info:hover {
+  background-color: #4dc4d2;
+}
+
 .nicescroll-rails-vr {
   z-index: 10 !important;
+}
+
+.note-editor {
+  margin-bottom: 10px;
+}
+
+.note-editor.note-frame.fullscreen {
+  z-index: 999;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable {
+  border: 1px solid #dbdbdb;
 }
 
 .btn {
@@ -1100,7 +1121,8 @@ label {
   margin: 0;
 }
 
-input[type=checkbox].css-checkbox {
+input[type=checkbox].css-checkbox,
+input[type=radio].css-radio {
   position: absolute;
   z-index: -1000;
   left: -1000px;
@@ -1113,30 +1135,116 @@ input[type=checkbox].css-checkbox {
   border: 0;
 }
 
-input[type=checkbox].css-checkbox + label.css-label {
+input[type=checkbox].css-checkbox + label.css-label,
+input[type=radio].css-radio + label.css-label {
   padding-left: 28px;
   min-height: 18px;
   display: inline-block;
   line-height: 18px;
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  vertical-align: middle;
-  cursor: pointer;
-  font-family: opensans-regular, sans-serif;
-}
-
-input[type=checkbox].css-checkbox:checked + label.css-label {
-  background-position: 0 -18px;
-}
-
-label.css-label {
-  background-image: url("../images/misc/csscheckbox.png");
+  background: url("../images/misc/csscheckbox.png") no-repeat 0 0;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  vertical-align: middle;
+  cursor: pointer;
+  font-family: opensans-regular, sans-serif;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label,
+input[type=radio].css-radio:checked + label.css-label {
+  background-position: 0 -18px;
+}
+
+input[type=radio].css-radio + label.css-label {
+  background: url("../images/misc/cssradio.png") no-repeat 0 0;
+}
+
+.css-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+label.css-select {
+  position: relative;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+label.css-select:after {
+  font-family: FontAwesome;
+  content: "\f0d7";
+  font-size: 1.2em;
+  color: #818181;
+  right: 8px;
+  top: 4px;
+  padding: 5px;
+  position: absolute;
+  pointer-events: none;
+}
+
+select {
+  text-transform: capitalize;
+}
+select optgroup {
+  color: #333333;
+  font-family: opensans-regular, sans-serif;
+  padding: 10px;
+  text-transform: uppercase;
+}
+select option {
+  font-family: opensans-regular, sans-serif;
+  padding: 5px 10px;
+  color: #818181;
+  text-transform: capitalize;
+}
+
+.css-file {
+  position: relative;
+  border: 1px solid #ccc;
+  height: 34px;
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.css-file button {
+  float: right;
+  height: 34px;
+  position: absolute;
+  right: -1px;
+  top: -1px;
+}
+.css-file button.btn-primary {
+  background-color: #6dd7e3;
+}
+.css-file input[type='file'] {
+  height: 34px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+.css-file .file-info {
+  padding: 0 10px;
+  line-height: 34px;
+  height: 34px;
+  width: 60%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bootstrap-tagsinput {
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  min-height: 34px;
+  display: block;
 }
 
 .form-title {
@@ -1146,6 +1254,24 @@ label.css-label {
 
 .form-subtitle {
   margin-bottom: 30px;
+}
+
+legend {
+  padding: 10px 20px;
+  background-color: #6dd7e3;
+  color: #ffffff;
+}
+
+.form-horizontal .checkbox, .form-horizontal .radio {
+  padding-top: 4px;
+}
+.form-horizontal .radio-inline:first-child {
+  padding-left: 0;
+}
+.form-horizontal.form-strip .form-group {
+  border-bottom: 1px solid #e8e8e8;
+  padding: 10px 20px;
+  margin-bottom: 0;
 }
 
 .register,
@@ -1967,7 +2093,7 @@ label.css-label {
   margin-right: 20px;
 }
 .contributor-menu nav li.active a, .contributor-menu nav li.active a:hover {
-  background-color: #4dc4d2;
+  background-color: #6dd7e3;
   color: #ffffff;
 }
 .contributor-menu nav li + li a {

@@ -1754,6 +1754,16 @@ label.css-label {
   float: none;
   padding: 0 0 10px;
 }
+.article-preview.landscape.mini .control i {
+  min-width: 17px;
+  margin-right: 5px;
+}
+.article-preview.landscape.mini .control .dropdown-menu > li.dropdown-header {
+  margin-top: 10px;
+}
+.article-preview.landscape.mini .control .dropdown-menu > li > a {
+  padding: 7px 20px;
+}
 
 .sidebar {
   margin-bottom: 50px;

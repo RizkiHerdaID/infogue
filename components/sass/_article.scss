@@ -373,6 +373,20 @@
         float: none;
         padding: 0 0 $space-small;
       }
+
+      .control{
+        i{
+          min-width: 17px;
+          margin-right: $space-small / 2;
+        }
+
+        .dropdown-menu>li.dropdown-header{
+          margin-top: $space-small;
+        }
+        .dropdown-menu>li>a {
+          padding: 7px $space-medium;
+        }
+      }
     }
   }
 }

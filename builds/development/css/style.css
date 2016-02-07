@@ -1809,6 +1809,189 @@ label.css-label {
   color: #818181;
 }
 
+.back-gray {
+  background-color: #f7f7f7;
+  margin-top: -80px;
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.contributor-menu .featured {
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  width: 100%;
+}
+.contributor-menu .featured::after {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+}
+.contributor-menu .featured .contributor-profile {
+  position: relative;
+  z-index: 2;
+}
+.contributor-menu .featured .contributor-profile:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.contributor-menu .featured .contributor-profile .name {
+  color: #4dc4d2;
+}
+.contributor-menu .featured .contributor-profile .location {
+  color: #dbdbdb;
+}
+.contributor-menu .featured .btn {
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+}
+.contributor-menu nav {
+  -moz-box-shadow: #dbdbdb 0 1px 1px;
+  -webkit-box-shadow: #dbdbdb 0 1px 1px;
+  box-shadow: #dbdbdb 0 1px 1px;
+  background: #ffffff;
+  border-top: none;
+}
+.contributor-menu nav li + li a {
+  border-top: 1px solid #e8e8e8;
+}
+.contributor-menu nav a {
+  padding: 15px 20px;
+  display: block;
+  font-family: opensans-semibold, sans-serif;
+  font-size: 1.1em;
+  color: #333333;
+}
+.contributor-menu nav a:hover {
+  background-color: #4dc4d2;
+  color: #ffffff;
+}
+.contributor-menu nav a i {
+  text-align: center;
+  min-width: 20px;
+  margin-right: 20px;
+}
+
+.account-profile {
+  background-color: #ffffff;
+}
+.account-profile .cover {
+  height: 350px;
+  position: relative;
+}
+.account-profile .cover:after {
+  content: "";
+  position: absolute;
+  height: 50%;
+  width: 100%;
+  bottom: 0;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMC45Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.9)));
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.9));
+}
+.account-profile .profile-wrapper {
+  -moz-box-shadow: #dbdbdb 0 1px 1px;
+  -webkit-box-shadow: #dbdbdb 0 1px 1px;
+  box-shadow: #dbdbdb 0 1px 1px;
+  background-color: #ffffff;
+}
+.account-profile .profile-wrapper .profile {
+  padding: 20px;
+  margin-top: -85px;
+  color: #333333;
+}
+.account-profile .profile-wrapper .profile .avatar {
+  max-width: 125px;
+  display: block;
+  margin: 0 auto;
+  border: 7px solid rgba(255, 255, 255, 0.3);
+}
+.account-profile .profile-wrapper .profile .name {
+  margin-top: 7px;
+  color: #ffffff;
+}
+.account-profile .profile-wrapper .profile .about {
+  margin-top: 35px;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+.account-profile .profile-wrapper .profile .location {
+  color: #818181;
+}
+.account-profile .profile-wrapper .profile .location i {
+  margin-right: 10px;
+}
+.account-profile .profile-wrapper .profile .detail {
+  color: #818181;
+  text-align: right;
+  display: block;
+}
+.account-profile .profile-wrapper .profile .detail:hover {
+  color: #4dc4d2;
+}
+.account-profile .profile-wrapper .profile .statistic {
+  margin: 20px 0;
+}
+.account-profile .profile-wrapper .profile .statistic li + li {
+  border-left: 1px solid #dbdbdb;
+}
+.account-profile .profile-wrapper .profile .statistic a {
+  color: #4dc4d2;
+  text-align: center;
+  display: block;
+}
+.account-profile .profile-wrapper .profile .statistic a:hover {
+  color: #6dd7e3;
+}
+.account-profile .profile-wrapper .profile .statistic a strong {
+  color: #333333;
+  font-size: 2em;
+  font-style: normal;
+  font-family: opensans-bold, sans-serif;
+  display: block;
+  margin-bottom: 5px;
+}
+.account-profile .profile-wrapper .list-data h3 {
+  background: #4dc4d2;
+  padding: 10px 20px;
+  color: #ffffff;
+}
+.account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
+  height: 180px;
+  margin-bottom: 0;
+  padding: 20px;
+  border-bottom: 1px solid #dbdbdb;
+}
+.account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .featured-image {
+  max-height: 135px;
+  max-width: 100%;
+  margin-right: 20px;
+}
+.account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .category {
+  margin: 0;
+}
+.account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .title {
+  font-size: 1.3em;
+  line-height: 1.5em;
+}
+.account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .rating-wrapper {
+  float: left;
+  padding: 10px 0;
+}
+
 .error404 {
   padding: 50px 0 70px;
   text-align: center;

@@ -1907,10 +1907,10 @@ label.css-label {
   z-index: 2;
   margin-top: 10px;
 }
-.contributor-menu .featured {
+.contributor-menu.default .featured {
   height: 130px;
 }
-.contributor-menu .contributor-profile {
+.contributor-menu.default .contributor-profile {
   -moz-box-shadow: #dbdbdb 0 1px 1px;
   -webkit-box-shadow: #dbdbdb 0 1px 1px;
   box-shadow: #dbdbdb 0 1px 1px;
@@ -1920,18 +1920,18 @@ label.css-label {
   position: relative;
   z-index: 2;
 }
-.contributor-menu .contributor-profile .avatar {
+.contributor-menu.default .contributor-profile .avatar {
   border: 7px solid rgba(255, 255, 255, 0.3);
   margin: 0 auto 10px;
   width: 120px;
   height: 120px;
   float: none;
 }
-.contributor-menu .contributor-profile .info {
+.contributor-menu.default .contributor-profile .info {
   padding: 0;
   margin-bottom: 20px;
 }
-.contributor-menu .contributor-profile .info .name {
+.contributor-menu.default .contributor-profile .info .name {
   font-size: 1.3em;
 }
 .contributor-menu nav {

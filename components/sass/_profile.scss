@@ -151,32 +151,34 @@
 
 
   // DEFAULT SIDEBAR ON ACCOUNT PAGE
-  .featured{
-    height: 130px;
-  }
-
-  .contributor-profile{
-    @include box-shadow($color-gray-light 0 1px 1px);
-    padding: 0 $space-medium $space-medium;
-    text-align: center;
-    margin-top: -60px;
-    position: relative;
-    z-index: 2;
-
-    .avatar{
-      border: 7px solid rgba(255, 255, 255, .3);
-      margin: 0 auto $space-small;
-      width: 120px;
-      height: 120px;
-      float: none;
+  &.default{
+    .featured{
+      height: 130px;
     }
 
-    .info{
-      padding: 0;
-      margin-bottom: $space-medium;
+    .contributor-profile{
+      @include box-shadow($color-gray-light 0 1px 1px);
+      padding: 0 $space-medium $space-medium;
+      text-align: center;
+      margin-top: -60px;
+      position: relative;
+      z-index: 2;
 
-      .name{
-        font-size: 1.3em;
+      .avatar{
+        border: 7px solid rgba(255, 255, 255, .3);
+        margin: 0 auto $space-small;
+        width: 120px;
+        height: 120px;
+        float: none;
+      }
+
+      .info{
+        padding: 0;
+        margin-bottom: $space-medium;
+
+        .name{
+          font-size: 1.3em;
+        }
       }
     }
   }

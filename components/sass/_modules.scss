@@ -335,6 +335,7 @@
 
     + li:before {
       content: "|";
+      margin-right: 2px;
     }
 
     &:first-child a {

@@ -70,7 +70,9 @@
 }
 
 .contributor-menu {
+  background-color: $color-light;
 
+  // UNAUTHORIZED SIDEBAR
   &.unauthorized{
     .featured{
       background: url('../images/backgrounds/morning.jpg') no-repeat center center / cover;
@@ -104,43 +106,78 @@
     }
   }
 
-  .featured {
-    padding: $space-medium;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    width: 100%;
-
-    &::after {
-      position: absolute;
-      top: 0px;
-      left: 0px;
+  // SIDEBAR WHEN VIEW ANOTHER PROFILE
+  &.compact{
+    .featured {
+      padding: $space-medium;
+      position: relative;
+      overflow: hidden;
       z-index: 1;
-      content: "";
       width: 100%;
-      height: 100%;
-      display: block;
-      background: rgba(0, 0, 0, 0.6);
-    }
 
-    .contributor-profile{
-      @include clearfix();
-      position: relative;
-      z-index: 2;
-
-      .name {
-        color: $color-accent2;
+      &::after {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: rgba(0, 0, 0, 0.6);
       }
 
-      .location{
-        color: $color-gray-light;
+      .contributor-profile{
+        @include clearfix();
+        position: relative;
+        z-index: 2;
+
+        .name {
+          color: $color-accent2;
+        }
+
+        .location{
+          color: $color-gray-light;
+        }
+      }
+
+      .btn{
+        position: relative;
+        z-index: 2;
+        margin-top: $space-small;
       }
     }
+  }
 
-    .btn{
-      position: relative;
-      z-index: 2;
-      margin-top: $space-small;
+
+  // DEFAULT SIDEBAR ON ACCOUNT PAGE
+  .featured{
+    height: 130px;
+  }
+
+  .contributor-profile{
+    @include box-shadow($color-gray-light 0 1px 1px);
+    padding: 0 $space-medium $space-medium;
+    text-align: center;
+    margin-top: -60px;
+    position: relative;
+    z-index: 2;
+
+    .avatar{
+      border: 7px solid rgba(255, 255, 255, .3);
+      margin: 0 auto $space-small;
+      width: 120px;
+      height: 120px;
+      float: none;
+    }
+
+    .info{
+      padding: 0;
+      margin-bottom: $space-medium;
+
+      .name{
+        font-size: 1.3em;
+      }
     }
   }
 
@@ -149,31 +186,42 @@
     background: $color-light;
     border-top: none;
 
-    li+li a{
-      border-top: 1px solid lighten($color-gray-light, 5%);
-    }
+    li{
 
-    a{
-      padding: 15px $space-medium;
-      display: block;
-      font-family: opensans-semibold, sans-serif;
-      font-size: 1.1em;
-      color: $color-dark;
+      a{
+        padding: 15px $space-medium;
+        display: block;
+        font-family: opensans-semibold, sans-serif;
+        font-size: 1.1em;
+        color: $color-dark;
 
-      &:hover{
-        background-color: $color-accent2;
-        color: $color-light;
+        &:hover{
+          background-color: lighten($color-gray-light, 10%);
+        }
+
+        i{
+          text-align: center;
+          min-width: $space-medium;
+          margin-right: $space-medium;
+        }
       }
 
-      i{
-        text-align: center;
-        min-width: $space-medium;
-        margin-right: $space-medium;
+      &.active{
+        a, a:hover{
+          background-color: $color-accent2;
+          color: $color-light;
+        }
+      }
+
+      +li a{
+        border-top: 1px solid lighten($color-gray-light, 5%);
       }
     }
   }
 }
 
+
+// PROFILE
 .account-profile{
   background-color: $color-light;
 

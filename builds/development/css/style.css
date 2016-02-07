@@ -975,6 +975,27 @@ footer .bottom .social {
   color: #dbdbdb;
 }
 
+.list-group .list-group-item {
+  padding: 15px 20px;
+}
+.list-group .list-group-item.active {
+  background-color: #6dd7e3;
+  border-color: #6dd7e3;
+  padding: 8px 20px;
+}
+.list-group .list-group-item strong {
+  font-weight: normal;
+  font-family: opensans-bold, sans-serif;
+  text-transform: uppercase;
+}
+.list-group .list-group-item strong i {
+  min-width: 20px;
+  margin-right: 10px;
+}
+.list-group .list-group-item .value {
+  float: right;
+}
+
 .nicescroll-rails-vr {
   z-index: 10 !important;
 }
@@ -1912,6 +1933,22 @@ label.css-label {
 .account-profile {
   background-color: #ffffff;
 }
+.account-profile.detail .cover {
+  height: 250px;
+}
+.account-profile.detail .profile-wrapper .profile {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+.account-profile.detail .profile-wrapper .profile .name {
+  color: #333333;
+  margin-bottom: 20px;
+}
+.account-profile.detail .profile-wrapper .profile .about {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
 .account-profile .cover {
   height: 350px;
   position: relative;
@@ -1996,6 +2033,10 @@ label.css-label {
   background: #4dc4d2;
   padding: 10px 20px;
   color: #ffffff;
+}
+.account-profile .profile-wrapper .list-data h3 a {
+  color: #ffffff;
+  float: right;
 }
 .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
   height: 175px;

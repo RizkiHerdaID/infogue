@@ -471,6 +471,35 @@
   }
 }
 
+
+// LIST GROUP
+.list-group{
+  .list-group-item{
+    padding: 15px 20px;
+
+    &.active{
+      background-color: $color-accent3;
+      border-color: $color-accent3;
+      padding: 8px $space-medium;
+    }
+
+    strong{
+      font-weight: normal;
+      font-family: opensans-bold, sans-serif;
+      text-transform: uppercase;
+
+      i{
+        min-width: 20px;
+        margin-right: $space-small;
+      }
+    }
+
+    .value{
+      float: right;
+    }
+  }
+}
+
 // MISC
 .nicescroll-rails-vr{
   z-index: 10 !important;

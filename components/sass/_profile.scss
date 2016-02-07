@@ -177,6 +177,29 @@
 .account-profile{
   background-color: $color-light;
 
+  &.detail{
+
+    .cover{
+      height: 250px;
+    }
+
+    .profile-wrapper .profile{
+      position: relative;
+      z-index: 2;
+      text-align: center;
+
+      .name{
+        color: $color-dark;
+        margin-bottom: $space-medium;
+      }
+
+      .about{
+        margin-top: 0;
+        margin-bottom: $space-medium;
+      }
+    }
+  }
+
   .cover{
     height: 350px;
     position: relative;
@@ -270,6 +293,11 @@
         background: $color-accent2;
         padding: $space-small $space-medium;
         color: $color-light;
+
+        a{
+          color: $color-light;
+          float: right;
+        }
       }
 
       .content{

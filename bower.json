@@ -46,6 +46,9 @@
     "highcharts": "^4.2.1",
     "imagefill": "https://github.com/johnpolacek/imagefill.js/",
     "equalize": "^1.0.2",
-    "jquery.nicescroll": "nicescroll#^3.6.6"
+    "jquery.nicescroll": "nicescroll#^3.6.6",
+    "jquery-form": "^3.46.0",
+    "blueimp-file-upload": "jquery-file-upload#^9.11.2",
+    "summernote": "^0.8.0"
   }
 }

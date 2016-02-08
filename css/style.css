@@ -1162,19 +1162,15 @@ input[type=radio].css-radio + label.css-label {
   background: url("../images/misc/cssradio.png") no-repeat 0 0;
 }
 
-.css-select select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
 label.css-select {
   position: relative;
   margin-bottom: 0;
   width: 100%;
 }
-
+label.css-select.select-inline {
+  display: inline-block;
+  width: auto;
+}
 label.css-select:after {
   font-family: FontAwesome;
   content: "\f0d7";
@@ -1185,6 +1181,15 @@ label.css-select:after {
   padding: 5px;
   position: absolute;
   pointer-events: none;
+}
+label.css-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+label.css-select select.form-control {
+  padding-right: 25px;
 }
 
 select {
@@ -1230,13 +1235,14 @@ select option {
 }
 .css-file .file-info {
   padding: 0 10px;
-  line-height: 34px;
+  line-height: 32px;
   height: 34px;
   width: 60%;
   display: inline-block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #818181;
 }
 
 .bootstrap-tagsinput {
@@ -1272,6 +1278,11 @@ legend {
   border-bottom: 1px solid #e8e8e8;
   padding: 10px 20px;
   margin-bottom: 0;
+  margin-right: 0;
+  margin-left: 0;
+}
+.form-horizontal.form-strip .help-block {
+  margin-bottom: 5px;
 }
 
 .register,

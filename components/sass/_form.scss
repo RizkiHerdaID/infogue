@@ -62,29 +62,38 @@ input[type=radio].css-radio + label.css-label {
 }
 
 // CUSTOM SELECT
-.css-select select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-}
-
 label.css-select {
   position: relative;
   margin-bottom: 0;
   width: 100%;
-}
 
-label.css-select:after {
-  font-family: FontAwesome;
-  content: "\f0d7";
-  font-size: 1.2em;
-  color: $color-gray-dark;
-  right: 8px;
-  top: 4px;
-  padding: 5px;
-  position: absolute;
-  pointer-events: none;
+  &.select-inline{
+    display: inline-block;
+    width: auto;
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    content: "\f0d7";
+    font-size: 1.2em;
+    color: $color-gray-dark;
+    right: 8px;
+    top: 4px;
+    padding: 5px;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    &.form-control{
+      padding-right: 25px;
+    }
+  }
 }
 
 select{
@@ -133,13 +142,14 @@ select{
 
   .file-info{
     padding: 0 10px;
-    line-height: 34px;
+    line-height: 32px;
     height: 34px;
     width: 60%;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: $color-gray-dark;
   }
 }
 
@@ -179,6 +189,12 @@ legend {
       border-bottom: 1px solid lighten($color-gray-light, 5%);
       padding: $space-small $space-medium;
       margin-bottom: 0;
+      margin-right: 0;
+      margin-left: 0;
+    }
+
+    .help-block{
+      margin-bottom: 5px;
     }
   }
 }

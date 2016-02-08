@@ -352,7 +352,7 @@ $(function () {
 
     // FILE INPUT -------------------------------------------------------------------
     $('.file-input').change(function(){
-        $('.file-info').text($(this).val());
+        $(this).parent().find('.file-info').text($(this).val());
     });
 
 });

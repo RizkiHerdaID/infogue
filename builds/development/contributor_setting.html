@@ -1,0 +1,763 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Info Gue - Setting</title>
+    <meta name="description" content="Social news portal gives the most update information">
+    <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
+    <meta name="author" content="Angga Ari Wijaya">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../bower_components/summernote/dist/summernote.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/modernizr-2.8.3.min.js"></script>
+</head>
+<body id="top">
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<header>
+    <div class="header">
+        <div class="container">
+            <div class="header-wrapper">
+                <div class="logo">
+                    <h1>InfoGue</h1>
+                </div>
+                <div class="header-section">
+                    <section class="control-wrapper">
+                        <ul class="featured-link visible-md visible-lg">
+                            <li><a href="archive.html">HEADLINE</a></li>
+                            <li><a href="archive.html">LATEST</a></li>
+                            <li><a href="archive.html">TRENDING</a></li>
+                            <li><a href="archive.html">RANDOM</a></li>
+                        </ul>
+                        <ul class="user-control">
+                            <li><a href="login.html">Hello Guest! &nbsp; LOGIN</a></li>
+                            <li><a href="register.html">REGISTER</a></li>
+                        </ul>
+                    </section>
+                    <section class="search-wrapper">
+                        <div class="search">
+                            <form action="result.html">
+                                <div class="input-search">
+                                    <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="btn-group filter">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        All Data <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">All Data</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">Contributor</a></li>
+                                        <li><a href="#">Article</a></li>
+                                    </ul>
+                                </div>
+                                <button type="submit" class="btn btn-primary">SEARCH</button>
+                            </form>
+                        </div>
+                        <ul class="social">
+                            <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <nav class="navigation">
+                <ul class="sf-menu" id="navigation" role="menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">News</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Main Feature</h2>
+                                <ul>
+                                    <li><a href="category.html">Politic</a></li>
+                                    <li><a href="category.html">World</a></li>
+                                    <li><a href="category.html">Issues</a></li>
+                                    <li><a href="category.html">Opinion</a></li>
+                                    <li><a href="category.html">Hot</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Light News</h2>
+                                <ul>
+                                    <li><a href="category.html">Regional</a></li>
+                                    <li><a href="category.html">Profile</a></li>
+                                    <li><a href="category.html">Debate</a></li>
+                                    <li><a href="category.html">Interview</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Headline</h2>
+                                <ul>
+                                    <li><a href="category.html">Latest</a></li>
+                                    <li><a href="category.html">Trending</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Economy</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Business</h2>
+                                <ul>
+                                    <li><a href="category.html">Finance</a></li>
+                                    <li><a href="category.html">Stock</a></li>
+                                    <li><a href="category.html">Micro Business</a></li>
+                                    <li><a href="category.html">Management</a></li>
+                                    <li><a href="category.html">Strategy</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>National</h2>
+                                <ul>
+                                    <li><a href="category.html">Government</a></li>
+                                    <li><a href="category.html">Market</a></li>
+                                    <li><a href="category.html">Exchange</a></li>
+                                    <li><a href="category.html">Import</a></li>
+                                    <li><a href="category.html">Export</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Academic</h2>
+                                <ul>
+                                    <li><a href="category.html">Accounting</a></li>
+                                    <li><a href="category.html">Policy</a></li>
+                                    <li><a href="category.html">Book</a></li>
+                                    <li><a href="category.html">Startup</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Entertainment</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Extravaganza</h2>
+                                <ul>
+                                    <li><a href="category.html">International</a></li>
+                                    <li><a href="category.html">Celebrities</a></li>
+                                    <li><a href="category.html">Film</a></li>
+                                    <li><a href="category.html">Music</a></li>
+                                    <li><a href="category.html">Game</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Daily</h2>
+                                <ul>
+                                    <li><a href="category.html">Jokes</a></li>
+                                    <li><a href="category.html">Lifestyle</a></li>
+                                    <li><a href="category.html">Vacation</a></li>
+                                    <li><a href="category.html">Festival</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Hobby</h2>
+                                <ul>
+                                    <li><a href="category.html">Anime</a></li>
+                                    <li><a href="category.html">Handicraft</a></li>
+                                    <li><a href="category.html">Outdoor</a></li>
+                                    <li><a href="category.html">Collector</a></li>
+                                    <li><a href="category.html">Arts</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Others</h2>
+                                <ul>
+                                    <li><a href="category.html">K-pop</a></li>
+                                    <li><a href="category.html">J-pop</a></li>
+                                    <li><a href="category.html">Trend</a></li>
+                                    <li><a href="category.html">Party</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Sport</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Popular</h2>
+                                <ul>
+                                    <li><a href="category.html">Soccer</a></li>
+                                    <li><a href="category.html">Tennis</a></li>
+                                    <li><a href="category.html">MotoGP</a></li>
+                                    <li><a href="category.html">Formula 1</a></li>
+                                    <li><a href="category.html">Basket</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Popular</h2>
+                                <ul>
+                                    <li><a href="category.html">Badminton</a></li>
+                                    <li><a href="category.html">Volley</a></li>
+                                    <li><a href="category.html">Athletic</a></li>
+                                    <li><a href="category.html">Rally</a></li>
+                                    <li><a href="category.html">Bicycle</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Popular</h2>
+                                <ul>
+                                    <li><a href="category.html">Extreme Sport</a></li>
+                                    <li><a href="category.html">Freestyle</a></li>
+                                    <li><a href="category.html">Chess</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Event</h2>
+                                <ul>
+                                    <li><a href="category.html">World cup</a></li>
+                                    <li><a href="category.html">Olympic</a></li>
+                                    <li><a href="category.html">Champion</a></li>
+                                    <li><a href="category.html">Schedule</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Health</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Medic</h2>
+                                <ul>
+                                    <li><a href="category.html">Medication</a></li>
+                                    <li><a href="category.html">Disease</a></li>
+                                    <li><a href="category.html">Symptom</a></li>
+                                    <li><a href="category.html">Knowledge</a></li>
+                                    <li><a href="category.html">Drug</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Life</h2>
+                                <ul>
+                                    <li><a href="category.html">Lifestyle</a></li>
+                                    <li><a href="category.html">Exercise</a></li>
+                                    <li><a href="category.html">Food</a></li>
+                                    <li><a href="category.html">Diet</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Doctor</h2>
+                                <ul>
+                                    <li><a href="category.html">Ask Doctor</a></li>
+                                    <li><a href="category.html">Medical Journal</a></li>
+                                    <li><a href="category.html">Hospital</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Science</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Knowledge</h2>
+                                <ul>
+                                    <li><a href="category.html">Discovery</a></li>
+                                    <li><a href="category.html">Research</a></li>
+                                    <li><a href="category.html">Astronomy</a></li>
+                                    <li><a href="category.html">Human</a></li>
+                                    <li><a href="category.html">Earth</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Knowledge</h2>
+                                <ul>
+                                    <li><a href="category.html">Language</a></li>
+                                    <li><a href="category.html">Chemistry</a></li>
+                                    <li><a href="category.html">Biology</a></li>
+                                    <li><a href="category.html">Physic</a></li>
+                                    <li><a href="category.html">History</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Engineering</h2>
+                                <ul>
+                                    <li><a href="category.html">Communication</a></li>
+                                    <li><a href="category.html">Construction</a></li>
+                                    <li><a href="category.html">Electrical</a></li>
+                                    <li><a href="category.html">Otomotive</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Technology</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Computer</h2>
+                                <ul>
+                                    <li><a href="category.html">IT</a></li>
+                                    <li><a href="category.html">Gadget</a></li>
+                                    <li><a href="category.html">Software</a></li>
+                                    <li><a href="category.html">Hardware</a></li>
+                                    <li><a href="category.html">Internet</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Concept</h2>
+                                <ul>
+                                    <li><a href="category.html">Future</a></li>
+                                    <li><a href="category.html">Programming</a></li>
+                                    <li><a href="category.html">Cyber Security</a></li>
+                                    <li><a href="category.html">Human Interaction</a></li>
+                                    <li><a href="category.html">Social Network</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Handheld</h2>
+                                <ul>
+                                    <li><a href="category.html">Blackberry</a></li>
+                                    <li><a href="category.html">Android</a></li>
+                                    <li><a href="category.html">iOS</a></li>
+                                    <li><a href="category.html">Windows Phone</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="">Photo</a></li>
+                    <li><a href="">Video</a></li>
+                    <li><a href="">Others</a>
+                        <div class="sf-mega">
+                            <div class="sf-mega-section">
+                                <h2>Life</h2>
+                                <ul>
+                                    <li><a href="category.html">Motivation</a></li>
+                                    <li><a href="category.html">Family</a></li>
+                                    <li><a href="category.html">Career</a></li>
+                                    <li><a href="category.html">Couple</a></li>
+                                    <li><a href="category.html">Relationship</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Miscellaneous</h2>
+                                <ul>
+                                    <li><a href="category.html">Life Hack</a></li>
+                                    <li><a href="category.html">The Lounge</a></li>
+                                    <li><a href="category.html">Opinion</a></li>
+                                    <li><a href="category.html">Society</a></li>
+                                    <li><a href="category.html">Education</a></li>
+                                </ul>
+                            </div>
+                            <div class="sf-mega-section">
+                                <h2>Miscellaneous</h2>
+                                <ul>
+                                    <li><a href="category.html">Idea</a></li>
+                                    <li><a href="category.html">Sharing</a></li>
+                                    <li><a href="category.html">Other</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="back-gray">
+    <section class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="contributor-menu default">
+                    <div class="featured" style="background: url('images/covers/231894.jpg') no-repeat center center / cover" data-stellar-background-ratio="0.85" data-stellar-vertical-offset="100"></div>
+                    <div class="contributor-profile mini">
+                        <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
+                        <div class="info">
+                            <p class="name"><a href="profile.html">Imelda Agustine</a></p>
+                            <ul class="list-separated small mts text-muted">
+                                <li>75 FOLLOWERS</li>
+                                <li>54 FOLLOWING</li>
+                            </ul>
+                        </div>
+                        <a href="contributor_article_create.html" class="btn btn-primary btn-outline btn-block">CREATE ARTICLE</a>
+                    </div>
+                    <nav role="navigation">
+                        <ul role="listbox">
+                            <li><a href="contributor_stream.html"><i class="fa fa-desktop"></i>Stream</a></li>
+                            <li><a href="contributor_article.html"><i class="fa fa-file-text"></i>Article</a></li>
+                            <li><a href="contributor_message.html"><i class="fa fa-envelope"></i>Message</a></li>
+                            <li><a href="contributor_followers.html"><i class="fa fa-chevron-left"></i>Follower</a></li>
+                            <li><a href="contributor_following.html"><i class="fa fa-chevron-right"></i>Following</a></li>
+                            <li class="active"><a href="contributor_setting.html"><i class="fa fa-wrench"></i>Setting</a></li>
+                            <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="account-profile">
+                    <div class="profile-wrapper">
+                        <section class="list-data">
+                            <h3 class="title">ACCOUNT SETTING</h3>
+                            <div class="content">
+                                <form class="form-horizontal form-strip">
+                                    <fieldset>
+                                        <legend>INFORMATION</legend>
+                                        <div class="form-group">
+                                            <label for="name" class="col-sm-3 control-label">Full Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="name" placeholder="Your name">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="male" class="col-sm-3 control-label">Gender</label>
+                                            <div class="col-sm-9">
+                                                <div class="radio radio-inline">
+                                                    <input type="radio" name="format" id="male" class="css-radio" checked>
+                                                    <label for="male" class="css-label">Male</label>
+                                                </div>
+                                                <div class="radio radio-inline">
+                                                    <input type="radio" name="format" id="female" class="css-radio">
+                                                    <label for="female" class="css-label">Female</label>
+                                                </div>
+                                                <div class="radio radio-inline">
+                                                    <input type="radio" name="format" id="undefined" class="css-radio">
+                                                    <label for="undefined" class="css-label">Undefined</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date" class="col-sm-3 control-label">Date of Birth</label>
+                                            <div class="col-sm-9">
+                                                <label for="date" class="css-select select-inline">
+                                                    <select name="date" id="date" class="form-control" required>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                        <option value="21">21</option>
+                                                        <option value="22">22</option>
+                                                        <option value="23">23</option>
+                                                        <option value="24">24</option>
+                                                        <option value="25">25</option>
+                                                        <option value="26">26</option>
+                                                        <option value="27">27</option>
+                                                        <option value="28">28</option>
+                                                        <option value="29">29</option>
+                                                        <option value="30">30</option>
+                                                        <option value="31">31</option>
+                                                    </select>
+                                                </label>
+                                                <label for="month" class="css-select select-inline">
+                                                    <select name="month" id="month" class="form-control" required>
+                                                        <option value="1">January</option>
+                                                        <option value="2">February</option>
+                                                        <option value="3">March</option>
+                                                        <option value="4">April</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">June</option>
+                                                        <option value="7">July</option>
+                                                        <option value="8">August</option>
+                                                        <option value="9">September</option>
+                                                        <option value="10">October</option>
+                                                        <option value="11">November</option>
+                                                        <option value="12">December</option>
+                                                    </select>
+                                                </label>
+                                                <label for="year" class="css-select select-inline">
+                                                    <select name="year" id="year" class="form-control" required>
+                                                        <option value="1991">1991</option>
+                                                        <option value="1992">1992</option>
+                                                        <option value="1993">1993</option>
+                                                        <option value="1994">1994</option>
+                                                        <option value="1995">1995</option>
+                                                        <option value="1996">1996</option>
+                                                        <option value="1997">1997</option>
+                                                        <option value="1998">1998</option>
+                                                        <option value="1999">1999</option>
+                                                        <option value="2000">2000</option>
+                                                    </select>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="location" class="col-sm-3 control-label">Location</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="location" placeholder="Current location">
+                                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Eg. Jakarta, Indonesia</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contact" class="col-sm-3 control-label">Contact</label>
+                                            <div class="col-sm-9">
+                                                <input type="tel" class="form-control" id="contact" placeholder="Your contact">
+                                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Your mobile number or fax office</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="about" class="col-sm-3 control-label">About</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" name="excerpt" id="about" cols="30"
+                                                          rows="2" placeholder="Tell about you"></textarea>
+                                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>About will appear on your main profile</span>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend>ACCOUNT</legend>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Username</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control-static">imelda.agustine</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control-static">imelda@gmail.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Member Since</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control-static">January, 2016</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cover" class="col-sm-3 control-label">Cover Image</label>
+                                            <div class="col-sm-9">
+                                                <div class="css-file">
+                                                    <span class="file-info">No file selected</span>
+                                                    <button class="btn btn-primary" type="button">SELECT COVER</button>
+                                                    <input type="file" class="file-input" id="cover" accept="image/*"/>
+                                                </div>
+                                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Cover image for your profile</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="avatar" class="col-sm-3 control-label">Avatar</label>
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="contributor-profile">
+                                                            <img src="images/contributors/cici.png" class="img-circle img-responsive avatar"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p class="mtm">Select and Crop Your Avatar</p>
+                                                        <p class="small text-muted mbs">Format like .png .jpg .gif</p>
+                                                        <div class="css-file">
+                                                            <span class="file-info">No file selected</span>
+                                                            <button class="btn btn-primary" type="button">SELECT AVATAR</button>
+                                                            <input type="file" class="file-input" id="avatar" accept="image/*"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend>SOCIAL NETWORK</legend>
+                                        <div class="form-group">
+                                            <label for="instagram" class="col-sm-3 control-label">Instagram</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="instagram" placeholder="Eg. anggadarkprince">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="facebook" class="col-sm-3 control-label">Facebook</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="facebook" placeholder="Eg. angga.ari">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="twitter" class="col-sm-3 control-label">Twitter</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="twitter" placeholder="Eg. @anggadarkprince">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="googleplus" class="col-sm-3 control-label">Google+</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" id="googleplus" placeholder="Eg. +AnggaAriWijaya">
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend>SUBSCRIPTION</legend>
+                                        <div class="form-group">
+                                            <label for="password" class="col-sm-3 control-label">Notification</label>
+                                            <div class="col-sm-9">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="subscription" id="subscription" class="css-checkbox">
+                                                    <label for="subscription" class="css-label">Subscribe new articles</label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="message" id="message" class="css-checkbox">
+                                                    <label for="message" class="css-label">Email me when I got a message</label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="follow" id="follow" class="css-checkbox">
+                                                    <label for="follow" class="css-label">Email me when people follow me</label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="stream" id="stream" class="css-checkbox">
+                                                    <label for="stream" class="css-label">Email me when people who I follow post new article</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="col-sm-3 control-label">Mobile</label>
+                                            <div class="col-sm-9">
+                                                <div class="checkbox">
+                                                    <input type="checkbox" name="push-notification" id="push-notification" class="css-checkbox">
+                                                    <label for="push-notification" class="css-label">Enable Push Notification</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend>CHANGE PASSWORD</legend>
+                                        <div class="form-group">
+                                            <label for="password" class="col-sm-3 control-label">Password</label>
+                                            <div class="col-sm-9">
+                                                <input type="password" class="form-control" id="password" placeholder="Current password">
+                                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Password is required for save</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="new-password" class="col-sm-3 control-label">New Password</label>
+                                            <div class="col-sm-9">
+                                                <input type="password" class="form-control" id="new-password" placeholder="Create new password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirm-password" class="col-sm-3 control-label">Confirm</label>
+                                            <div class="col-sm-9">
+                                                <input type="password" class="form-control" id="confirm-password" placeholder="Retype new password">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9 pts pbm">
+                                                <button class="btn btn-primary">SAVE CHANGES</button>
+                                                <a href="contributor_stream.html" class="btn btn-danger">DISCARD</a>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<footer data-stellar-background-ratio="0.2" data-stellar-vertical-offset="220">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="about">
+                    <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
+                    <p>The most update web portal news. We always provide latest article and information with high
+                        integrity and truth. Knowledge is beyond among us to share with you.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h3>QUICK LINKS</h3>
+                <ul class="quick-links">
+                    <li><a href="category.html">HEADLINE</a></li>
+                    <li><a href="category.html">TRENDING</a></li>
+                    <li><a href="category.html">POPULAR</a></li>
+                    <li><a href="category.html">RANDOM</a></li>
+                    <li><a href="category.html">COMMENTED</a></li>
+                    <li><a href="category.html">SIGN IN</a></li>
+                </ul>
+                <ul class="quick-links">
+                    <li><a href="category.html">ENTERTAINMENT</a></li>
+                    <li><a href="category.html">TECHNOLOGY</a></li>
+                    <li><a href="category.html">SPORT</a></li>
+                    <li><a href="category.html">NEWS</a></li>
+                    <li><a href="category.html">HEALTH</a></li>
+                    <li><a href="category.html">SCIENCE</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>SUBSCRIBE</h3>
+                <p>Get our latest updates, we don’t spam</p>
+
+                <form action="#" method="post">
+                    <div class="subscribe-email">
+                        <input type="email" class="form-control" placeholder="Email address"/>
+                        <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                    </div>
+                </form>
+
+                <h3>CONTACT</h3>
+                <div class="contact">
+                    <p>Avenue Street 34 - East Java, Indonesia</p>
+                    <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
+                    <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row bottom">
+            <div class="col-sm-8">
+                <ul class="featured-link">
+                    <li><a href="#top">Home</a></li>
+                    <li><a href="editorial.html">Editorial</a></li>
+                    <li><a href="privacy.html">Privacy</a></li>
+                    <li><a href="disclaimer.html">Disclaimer</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="copyright">&copy; Copyright 2016 infgue.com All Rights Reserved.</div>
+            </div>
+            <div class="col-sm-4">
+                <ul class="social">
+                    <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="to-top">
+    <a href="#top"><i class="fa fa-arrow-up"></i></a></h1>
+</div>
+
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../bower_components/summernote/dist/summernote.min.js"></script>
+<script src="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+<script src="../../bower_components/echojs/dist/echo.min.js"></script>
+<script src="../../bower_components/equalize/js/equalize.min.js"></script>
+<script src="../../bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="../../bower_components/jquery.cycle2/index.js"></script>
+<script src="../../bower_components/jquery.fitvids/jquery.fitvids.js"></script>
+<script src="../../bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
+<script src="../../bower_components/jquery.stellar/jquery.stellar.min.js"></script>
+<script src="../../bower_components/superfish/dist/js/superfish.min.js"></script>
+<script src="../../bower_components/superfish/dist/js/hoverIntent.js"></script>
+<script src="../../bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

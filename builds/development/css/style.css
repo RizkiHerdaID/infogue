@@ -1988,6 +1988,7 @@ legend {
 
 .contributor-menu {
   background-color: #ffffff;
+  margin-bottom: 20px;
 }
 .contributor-menu.unauthorized .featured {
   background: url("../images/backgrounds/morning.jpg") no-repeat center center/cover;

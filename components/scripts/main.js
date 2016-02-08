@@ -356,4 +356,13 @@ $(function () {
         $(this).parent().find('.file-info').text($(this).val());
     });
 
+    // CONVERSATION SCROLL ----------------------------------------------------------
+    if($(".message-box").length){
+        $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+        $(".message-box").niceScroll({
+            cursorcolor: '#4dc4d2',
+            cursorborder: 'none'
+        });
+    }
+
 });

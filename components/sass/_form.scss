@@ -120,6 +120,27 @@ select{
   height: 34px;
   @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.075) inset);
 
+  &.attachment{
+    @include box-shadow(none);
+    @include clearfix();
+    border: none;
+    float: left;
+    width: 350px;
+
+    .open-attachment{
+      float: left;
+      padding: 0 10px;
+      line-height: 32px;
+      color: lighten($color-gray-dark, 10%);
+      font-family: opensans-semibold, sans-serif;
+      font-size: 0.9em;
+    }
+
+    .file-info{
+      float: left;
+    }
+  }
+
   button{
     float: right;
     height: 34px;

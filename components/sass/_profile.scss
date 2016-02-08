@@ -64,7 +64,7 @@
 .back-gray {
   background-color: $background-light;
   margin-top: -80px;
-  padding: 80px 0;
+  padding: 80px 0 $space-large;
   position: relative;
   z-index: 1;
 }
@@ -421,12 +421,79 @@
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-              text-wrap: none;
             }
 
             .timestamp{
               color: lighten($color-gray-dark, 10%);
               font-size: 90%;
+            }
+          }
+        }
+
+        .message-box{
+          height: 508px;
+          overflow-y: auto;
+          padding-top: $space-medium;
+          padding-bottom: $space-medium;
+
+          .they, .me{
+            @include clearfix();
+            display: block;
+          }
+
+          .they .contributor-profile, .me .contributor-profile{
+            width: 60%;
+          }
+
+          .me .contributor-profile{
+            float: right;
+          }
+
+          .contributor-profile.mini{
+            border-bottom: none;
+            padding: $space-small $space-medium;
+
+            &.message-list {
+              .message {
+                overflow: visible;
+                text-overflow: clip;
+                white-space: normal;
+                width: auto;
+              }
+
+              .info{
+                float: none;
+                padding-left: 65px;
+              }
+
+              .attachment{
+                padding: $space-small;
+                background-color: lighten($color-gray-light, 10%);
+                margin-bottom: 5px;
+
+                p{
+                  font-family: opensans-semibold, sans-serif;
+                  display: block;
+                  margin-bottom: 5px;
+                }
+              }
+            }
+          }
+        }
+
+        .chat-box{
+          textarea{
+            resize: none;
+            border: none;
+            @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.125) inset);
+          }
+
+          .control{
+            @include clearfix();
+            background-color: lighten($color-gray-light, 10%);
+
+            button{
+              float: right;
             }
           }
         }

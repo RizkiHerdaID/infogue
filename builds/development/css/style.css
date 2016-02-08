@@ -1010,6 +1010,10 @@ footer .bottom .social {
   z-index: 10 !important;
 }
 
+#ascrail2001 {
+  z-index: 1 !important;
+}
+
 .note-editor {
   margin-bottom: 10px;
 }
@@ -1215,6 +1219,30 @@ select option {
   -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
   -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.css-file.attachment {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  float: left;
+  width: 350px;
+}
+.css-file.attachment:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.css-file.attachment .open-attachment {
+  float: left;
+  padding: 0 10px;
+  line-height: 32px;
+  color: #9b9b9b;
+  font-family: opensans-semibold, sans-serif;
+  font-size: 0.9em;
+}
+.css-file.attachment .file-info {
+  float: left;
 }
 .css-file button {
   float: right;
@@ -1981,7 +2009,7 @@ legend {
 .back-gray {
   background-color: #f7f7f7;
   margin-top: -80px;
-  padding: 80px 0;
+  padding: 80px 0 50px;
   position: relative;
   z-index: 1;
 }
@@ -2277,11 +2305,72 @@ legend {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-wrap: none;
 }
 .account-profile .profile-wrapper .list-data .content .contributor-profile.mini.message-list .timestamp {
   color: #9b9b9b;
   font-size: 90%;
+}
+.account-profile .profile-wrapper .list-data .content .message-box {
+  height: 508px;
+  overflow-y: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .they, .account-profile .profile-wrapper .list-data .content .message-box .me {
+  display: block;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .they:after, .account-profile .profile-wrapper .list-data .content .message-box .me:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .they .contributor-profile, .account-profile .profile-wrapper .list-data .content .message-box .me .contributor-profile {
+  width: 60%;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .me .contributor-profile {
+  float: right;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .contributor-profile.mini {
+  border-bottom: none;
+  padding: 10px 20px;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .contributor-profile.mini.message-list .message {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  width: auto;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .contributor-profile.mini.message-list .info {
+  float: none;
+  padding-left: 65px;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .contributor-profile.mini.message-list .attachment {
+  padding: 10px;
+  background-color: whitesmoke;
+  margin-bottom: 5px;
+}
+.account-profile .profile-wrapper .list-data .content .message-box .contributor-profile.mini.message-list .attachment p {
+  font-family: opensans-semibold, sans-serif;
+  display: block;
+  margin-bottom: 5px;
+}
+.account-profile .profile-wrapper .list-data .content .chat-box textarea {
+  resize: none;
+  border: none;
+  -moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.125) inset;
+  -webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.125) inset;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.125) inset;
+}
+.account-profile .profile-wrapper .list-data .content .chat-box .control {
+  background-color: whitesmoke;
+}
+.account-profile .profile-wrapper .list-data .content .chat-box .control:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.account-profile .profile-wrapper .list-data .content .chat-box .control button {
+  float: right;
 }
 
 .error404 {

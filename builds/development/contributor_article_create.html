@@ -408,12 +408,12 @@
                                         <div class="form-group">
                                             <label for="slug" class="col-sm-3 control-label">Slug</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" id="slug" placeholder="Custom Slug for URL Friendly">
+                                                <input type="text" class="form-control" id="slug" placeholder="Custom slug for URL friendly">
                                                 <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Default slug is good enough.</span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="slug" class="col-sm-3 control-label">Post Format</label>
+                                            <label for="standard" class="col-sm-3 control-label">Post Format</label>
                                             <div class="col-sm-9">
                                                 <div class="radio radio-inline">
                                                     <input type="radio" name="format" id="standard" class="css-radio" checked>
@@ -496,12 +496,12 @@
                                     <fieldset>
                                         <legend>ARTICLE</legend>
                                         <div class="form-group">
-                                            <label for="content" class="col-sm-3 control-label">Featured</label>
+                                            <label for="featured" class="col-sm-3 control-label">Featured</label>
                                             <div class="col-sm-9">
                                                 <div class="css-file">
                                                     <span class="file-info">No file selected</span>
                                                     <button class="btn btn-primary" type="button">SELECT FEATURED</button>
-                                                    <input type="file" class="file-input"/>
+                                                    <input type="file" class="file-input" id="featured" accept="image/*"/>
                                                 </div>
                                                 <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Cover image for your post.</span>
                                             </div>
@@ -514,7 +514,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="content" class="col-sm-3 control-label">Excerpt</label>
+                                            <label for="excerpt" class="col-sm-3 control-label">Excerpt</label>
                                             <div class="col-sm-9">
                                                 <textarea class="form-control" name="excerpt" id="excerpt" cols="30"
                                                           rows="2" placeholder="Write an excerpt (optional)"></textarea>
@@ -522,7 +522,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="slug" class="col-sm-3 control-label">Status</label>
+                                            <label for="published" class="col-sm-3 control-label">Status</label>
                                             <div class="col-sm-9">
                                                 <div class="radio radio-inline">
                                                     <input type="radio" name="status" id="published" class="css-radio" checked>

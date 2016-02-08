@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Info Gue - Login</title>
+    <title>Info Gue - Article</title>
     <meta name="description" content="Social news portal gives the most update information">
     <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
     <meta name="author" content="Angga Ari Wijaya">
@@ -358,48 +358,133 @@
     </div>
 </header>
 
-<div class="login" data-stellar-background-ratio="0.3" data-stellar-vertical-offset="150">
+<div class="back-gray">
     <section class="container">
         <div class="row">
-            <div class="col-md-4 col-md-push-1 col-sm-5">
-                <h2 class="form-title">Sign In</h2>
-                <p class="form-subtitle">Login into Contributor profile</p>
-                <form action="contributor_stream.html">
-                    <div class="mbm">
-                        <div class="btn-group btn-group-justified" role="group">
-                            <a class="btn btn-facebook" href="http://www.facebook.com">
-                                <i class="fa fa-facebook"></i> FACEBOOK
-                            </a>
-                            <a class="btn btn-twitter" href="http://www.twitter.com">
-                                <i class="fa fa-twitter"></i> TWITTER
-                            </a>
+            <div class="col-md-4">
+                <div class="contributor-menu default">
+                    <div class="featured" style="background: url('images/covers/231894.jpg') no-repeat center center / cover" data-stellar-background-ratio="0.85" data-stellar-vertical-offset="100"></div>
+                    <div class="contributor-profile mini">
+                        <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
+                        <div class="info">
+                            <p class="name">Imelda Agustine</p>
+                            <ul class="list-separated small mts text-muted">
+                                <li>75 FOLLOWERS</li>
+                                <li>54 FOLLOWING</li>
+                            </ul>
                         </div>
+                        <a href="contributor_article_create.html" class="btn btn-primary btn-outline btn-block">CREATE ARTICLE</a>
                     </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email" placeholder="Email Address or Username">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                    </div>
-                    <div class="form-group clearfix">
-                        <div class="checkbox pull-left mtn">
-                            <input type="checkbox" id="agree" class="css-checkbox">
-                            <label for="agree" class="css-label">Remember Me</label>
-                        </div>
-                        <a href="forgot.html" class="forgot-link clearfix pull-right">Forgot Password?</a>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
-                </form>
+                    <nav role="navigation">
+                        <ul role="listbox">
+                            <li><a href="contributor_stream.html"><i class="fa fa-desktop"></i>Stream</a></li>
+                            <li><a href="contributor_article.html"><i class="fa fa-file-text"></i>Article</a></li>
+                            <li><a href="contributor_message.html"><i class="fa fa-envelope"></i>Message</a></li>
+                            <li class="active"><a href="contributor_followers.html"><i class="fa fa-chevron-left"></i>Follower</a></li>
+                            <li><a href="contributor_following.html"><i class="fa fa-chevron-right"></i>Following</a></li>
+                            <li><a href="contributor_setting.html"><i class="fa fa-wrench"></i>Setting</a></li>
+                            <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="col-md-6 col-md-push-2 col-sm-7">
-                <h1 class="caption">WELCOME BACK</h1>
-                <p class="lead mbs">Never stop writting, makes your brain sharp</p>
-                <p>Still doesn’t know about InfoGue’s feature, <a href="faq.html">Learn More</a></p>
-                <p class="mbm mtl">Don’t have an account?, <a href="register.html">Register here!</a> or connect with</p>
+            <div class="col-md-8">
+                <div class="account-profile">
+                    <div class="profile-wrapper">
+                        <section class="list-data">
+                            <h3 class="title">FOLLOWERS</h3>
+                            <div class="content">
+                                <div role="list">
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team01.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Shanon Rean</a>
+                                            <p class="location">Surabaya, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/angga.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Angga Ari Wijaya</a>
+                                            <p class="location">Jakarta, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team04.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                            <p class="location">Jember, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Imelda Agustine</a>
+                                            <p class="location">Jakarta, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/profile.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Brian Vhirdrict</a>
+                                            <p class="location">Boston, USA</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/team02.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Rendi Beat</a>
+                                            <p class="location">Malang, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/iyan.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Iyan Budiman</a>
+                                            <p class="location">Banyuwangi, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/lukman.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Lukman Hidayatullah</a>
+                                            <p class="location">Jember, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/vivi.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Vivi Rachkmawati</a>
+                                            <p class="location">Lumajang, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow" data-toggle="button" aria-pressed="false" autocomplete="off">FOLLOW</button>
+                                    </div>
+                                    <div class="contributor-profile mini">
+                                        <img src="images/contributors/desi.jpg" class="avatar img-circle img-responsive"/>
+                                        <div class="info">
+                                            <a href="profile.html" class="name">Desi Wulandari</a>
+                                            <p class="location">Surabaya, Indonesia</p>
+                                        </div>
+                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off">UNFOLLOW</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </div>
+
 
 <footer data-stellar-background-ratio="0.2" data-stellar-vertical-offset="220">
     <div class="container">

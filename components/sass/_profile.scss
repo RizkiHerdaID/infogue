@@ -413,6 +413,22 @@
             float: right;
             margin: 5px 0;
           }
+
+          &.message-list{
+            .message{
+              margin-bottom: 5px;
+              width: 85%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              text-wrap: none;
+            }
+
+            .timestamp{
+              color: lighten($color-gray-dark, 10%);
+              font-size: 90%;
+            }
+          }
         }
       }
     }

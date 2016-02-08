@@ -530,3 +530,115 @@
 .note-editor.note-frame .note-editing-area .note-editable{
   border: 1px solid $color-gray-light;
 }
+
+// MODAL
+.modal{
+  text-align: center;
+
+  .modal-content{
+    border: none;
+  }
+
+  &.no-line{
+    .modal-header{
+      border-bottom: none;
+      padding: $space-medium;
+    }
+    .modal-body{
+      padding: 0 $space-medium;
+    }
+    .modal-footer{
+      border-top: none;
+      padding: $space-medium;
+    }
+  }
+
+  &.newsletter .modal-dialog{
+    color: $color-light;
+    text-align: center;
+
+    .modal-content{
+      background: url("../images/backgrounds/stand.jpg") no-repeat center center / cover;
+      min-height: 300px;
+      position: relative;
+
+      &:before{
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: rgba(0 ,0, 0, .4);
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      h3, i{
+        color: $color-accent2;
+      }
+
+      h1{
+        font-size: 4em;
+        font-family: opensans-bold, sans-serif;
+      }
+
+      p{
+        opacity: .7;
+        margin-bottom: $space-medium;
+      }
+
+      .form-group{
+        @include clearfix();
+        margin: 0 auto $space-medium;
+        display: inline-block;
+
+        button.subscribe{
+          float: right;
+          font-family: opensans-bold, sans-serif;
+        }
+
+        input[type='email']{
+          float: right;
+          width: 300px;
+        }
+      }
+
+      a.dismiss{
+        font-family: opensans-semibold, sans-serif;
+        font-size: 1.2em;
+        margin-bottom: $space-medium;
+        display: block;
+      }
+
+      p.small{
+        font-size: 0.9em;
+        color: $color-light;
+        opacity: .7;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.modal-content{
+  @include border-radius(0);
+
+  .modal-title{
+    font-family: opensans-semibold, sans-serif;
+    font-size: 1.2em;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}

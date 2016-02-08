@@ -1316,6 +1316,34 @@
             </div>
         </footer>
 
+        <div class="modal fade newsletter no-line" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">INFOGUE.ID</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h1><i class="fa fa-envelope-o mbs"></i></h1>
+                        <h3>ENTER YOUR EMAIL AND GET</h3>
+                        <h1>NEWSLETTER</h1>
+                        <P>SUBSCRIBE TO OUR NEWSLETTER AND RECEIVE KNOWLEDGE EVERYDAY</P>
+                        <form action="#">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary subscribe">SUBSCRIBE</button>
+                                <input type="email" class="form-control" placeholder="EMAIL ADDRESS"/>
+                            </div>
+                        </form>
+                        <a href="#" data-dismiss="modal" class="dismiss">NO THANKS</a>
+                        <p class="small">We Promise don't spam and use your email for weird purpose</p>
+                        <p class="small">See our policy at <a href="term.html">Terms</a> and <a href="privacy.html">Privacy</a></p>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
         <div class="to-top">
             <a href="#top"><i class="fa fa-arrow-up"></i></a></h1>
         </div>
@@ -1334,6 +1362,11 @@
         <script src="../../bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
 
         <script src="js/script.js"></script>
+        <script>
+            $(function(){
+                $('.newsletter').modal('show');
+            });
+        </script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>

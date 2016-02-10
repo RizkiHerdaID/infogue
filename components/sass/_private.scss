@@ -1,0 +1,84 @@
+body{
+  font-family: opensans-regular, sans-serif;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+a{
+  color: $color-accent2;
+
+  &:hover{
+    text-decoration: none;
+    color: $color-accent3;
+  }
+}
+
+ul, ol{
+  margin: 0;
+  padding: 0;
+}
+
+.login{
+  @include background-cover("../images/backgrounds/selfie.jpg");
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  color: $color-light;
+
+  &:before{
+    content: '';
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    z-index: 0;
+    background: rgba(0, 0, 0, .7);
+  }
+
+  .login-wrapper{
+    margin: $space-medium auto;
+    width: 300px;
+    z-index: 1;
+    position: absolute;
+    @include translate(-50%, -50%);
+    top: 45%;
+    left: 50%;
+
+    h3{
+      color: $color-accent2;
+      margin-top: $space-small;
+      margin-bottom: $space-medium;
+      font-size: $text-heading3;
+      letter-spacing: 1px;
+      font-family: opensans-semibold, sans-serifp;
+      @include background-image(linear-gradient(to right, #209aa6, #48b2a0));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn{
+      font-family: opensans-semibold, sans-serif;
+    }
+  }
+
+  .login-footer{
+    position: absolute;
+    bottom: $space-medium;
+    display: block;
+    width: 100%;
+    opacity: .5;
+
+    .list-separated{
+      margin: ($space-small / 2) $space-small;
+
+      a {
+        color: $color-light;
+
+        &:hover {
+          color: $color-accent2;
+        }
+      }
+    }
+  }
+}

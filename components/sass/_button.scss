@@ -19,6 +19,15 @@
     }
   }
 
+  &.btn-gradient{
+    @include background-image(linear-gradient(to right, #209aa6, #48b2a0));
+
+    &:hover, &:focus{
+      color: $color-light;
+      @include background-image(linear-gradient(to right, #26a2ae, #52c0ad));
+    }
+  }
+
   &.btn-outline{
     border: 2px solid $color-accent2;
     background-color: transparent;

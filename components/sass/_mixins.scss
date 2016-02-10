@@ -56,3 +56,8 @@
     background-color: darken($color-base, 5%);
   }
 }
+
+@mixin background-cover($image){
+  background: url($image) no-repeat center center / cover;
+  display: block;
+}

@@ -1413,151 +1413,6 @@ legend {
   margin-bottom: 5px;
 }
 
-.register,
-.login,
-.reset,
-.forgot,
-.confirmation,
-.activate,
-.map {
-  background: url("../images/backgrounds/valley.jpg") no-repeat center;
-  background-size: cover;
-  width: 100%;
-  margin-top: -80px;
-  padding: 150px 0;
-  color: #ffffff;
-  position: relative;
-  z-index: 1;
-}
-.register:before,
-.login:before,
-.reset:before,
-.forgot:before,
-.confirmation:before,
-.activate:before,
-.map:before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.register .caption,
-.login .caption,
-.reset .caption,
-.forgot .caption,
-.confirmation .caption,
-.activate .caption,
-.map .caption {
-  margin-top: 50px;
-  margin-bottom: 5px;
-  font-family: opensans-semibold, sans-serif;
-}
-.register button,
-.login button,
-.reset button,
-.forgot button,
-.confirmation button,
-.activate button,
-.map button {
-  margin-top: 30px;
-}
-
-.confirmation,
-.activate {
-  background: url("../images/backgrounds/mountain-blue.jpg") no-repeat center;
-  background-size: cover;
-  text-align: center;
-}
-.confirmation i,
-.activate i {
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-  border: 4px solid #4dc4d2;
-  color: #4dc4d2;
-  line-height: 2em;
-  font-size: 4em;
-  min-width: 120px;
-  min-height: 120px;
-  margin-bottom: 20px;
-}
-.confirmation .text-muted,
-.activate .text-muted {
-  color: #818181;
-}
-.confirmation .lead,
-.activate .lead {
-  margin-bottom: 10px;
-}
-.confirmation:before,
-.activate:before {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.activate {
-  background: url("../images/backgrounds/afternoon.jpg") no-repeat center;
-  background-size: cover;
-}
-.activate i {
-  border: none;
-  font-size: 5em;
-  min-height: inherit;
-  line-height: inherit;
-}
-.activate:before {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.login {
-  background: url("../images/backgrounds/jump.jpg") no-repeat center;
-  background-size: 120%;
-}
-.login:before {
-  background-color: rgba(0, 0, 0, 0.75);
-}
-.login .forgot-link {
-  margin-top: 2px;
-}
-.login button {
-  margin-top: 20px;
-}
-
-.forgot {
-  background: url("../images/backgrounds/mountain-white.jpg") no-repeat center;
-  background-size: cover;
-}
-.forgot:before {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.reset .contributor-profile {
-  margin-top: 20px;
-  color: #ffffff;
-}
-.reset .contributor-profile .name, .reset .contributor-profile .statistic a {
-  color: #4dc4d2;
-}
-.reset .contributor-profile .about {
-  color: #dbdbdb;
-}
-.reset .contributor-profile .avatar {
-  border: 7px solid rgba(255, 255, 255, 0.3);
-}
-.reset:before {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-.map {
-  height: 400px;
-}
-.map:before {
-  background-color: transparent;
-}
-
 .navigation {
   margin: 10px 0;
 }
@@ -2624,6 +2479,151 @@ legend {
   width: 35px;
   height: 35px;
   margin-right: 10px;
+}
+
+.register,
+.login,
+.reset,
+.forgot,
+.confirmation,
+.activate,
+.map {
+  background: url("../images/backgrounds/valley.jpg") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  margin-top: -80px;
+  padding: 150px 0;
+  color: #ffffff;
+  position: relative;
+  z-index: 1;
+}
+.register:before,
+.login:before,
+.reset:before,
+.forgot:before,
+.confirmation:before,
+.activate:before,
+.map:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.register .caption,
+.login .caption,
+.reset .caption,
+.forgot .caption,
+.confirmation .caption,
+.activate .caption,
+.map .caption {
+  margin-top: 50px;
+  margin-bottom: 5px;
+  font-family: opensans-semibold, sans-serif;
+}
+.register button,
+.login button,
+.reset button,
+.forgot button,
+.confirmation button,
+.activate button,
+.map button {
+  margin-top: 30px;
+}
+
+.confirmation,
+.activate {
+  background: url("../images/backgrounds/mountain-blue.jpg") no-repeat center;
+  background-size: cover;
+  text-align: center;
+}
+.confirmation i,
+.activate i {
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: 4px solid #4dc4d2;
+  color: #4dc4d2;
+  line-height: 2em;
+  font-size: 4em;
+  min-width: 120px;
+  min-height: 120px;
+  margin-bottom: 20px;
+}
+.confirmation .text-muted,
+.activate .text-muted {
+  color: #818181;
+}
+.confirmation .lead,
+.activate .lead {
+  margin-bottom: 10px;
+}
+.confirmation:before,
+.activate:before {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.activate {
+  background: url("../images/backgrounds/afternoon.jpg") no-repeat center;
+  background-size: cover;
+}
+.activate i {
+  border: none;
+  font-size: 5em;
+  min-height: inherit;
+  line-height: inherit;
+}
+.activate:before {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.login {
+  background: url("../images/backgrounds/jump.jpg") no-repeat center;
+  background-size: 120%;
+}
+.login:before {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+.login .forgot-link {
+  margin-top: 2px;
+}
+.login button {
+  margin-top: 20px;
+}
+
+.forgot {
+  background: url("../images/backgrounds/mountain-white.jpg") no-repeat center;
+  background-size: cover;
+}
+.forgot:before {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.reset .contributor-profile {
+  margin-top: 20px;
+  color: #ffffff;
+}
+.reset .contributor-profile .name, .reset .contributor-profile .statistic a {
+  color: #4dc4d2;
+}
+.reset .contributor-profile .about {
+  color: #dbdbdb;
+}
+.reset .contributor-profile .avatar {
+  border: 7px solid rgba(255, 255, 255, 0.3);
+}
+.reset:before {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.map {
+  height: 400px;
+}
+.map:before {
+  background-color: transparent;
 }
 
 .wide {

@@ -74,10 +74,25 @@
   background-color: $color-light;
   margin-bottom: $space-medium;
 
+  .featured:after {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
   // UNAUTHORIZED SIDEBAR
   &.unauthorized{
     .featured{
       background: url('../images/backgrounds/morning.jpg') no-repeat center center / cover;
+      padding: $space-medium;
+      overflow: hidden;
+      position: relative;
     }
 
     .info{
@@ -117,21 +132,10 @@
       z-index: 1;
       width: 100%;
 
-      &::after {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        z-index: 1;
-        content: "";
-        width: 100%;
-        height: 100%;
-        display: block;
-        background: rgba(0, 0, 0, 0.6);
-      }
-
       .contributor-profile{
         @include clearfix();
         position: relative;
+        padding: 0;
         z-index: 2;
 
         .name {
@@ -146,7 +150,6 @@
       .btn{
         position: relative;
         z-index: 2;
-        margin-top: $space-small;
       }
     }
   }

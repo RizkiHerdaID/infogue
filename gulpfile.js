@@ -51,7 +51,7 @@ jsSources = [
 ];
 jsAdminSources = [
 	'components/scripts/admin.js'
-]
+];
 fileSources = [
 	'builds/development/.htaccess',
 	'builds/development/favicon.ico',
@@ -71,7 +71,7 @@ gulp.task('default', ['file', 'html', 'json', 'font', 'coffee', 'js', 'compass',
 	gutil.log('InfoGue.id is awesome');
 });
 
-gulp.task('admin', ['html', 'jsAdmin', 'compassAdmin', 'watchAdmin', 'connect'], function(){
+gulp.task('admin', ['html', 'jsAdmin', 'compassAdmin', 'connect', 'watchAdmin'], function(){
 	gutil.log('InfoGue.id Admin workflow is awesome')
 });
 
@@ -157,6 +157,12 @@ gulp.task('file', function(){
 		.pipe(gconnect.reload());
 });
 
+gulp.task('watchAdmin', function() {
+	gulp.watch(htmlSources, ['html']);
+	gulp.watch(jsAdminSources, ['jsAdmin']);
+	gulp.watch(sassAllSources, ['compassAdmin']);
+});
+
 gulp.task('jsAdmin', function(){
 	gulp.src(jsAdminSources)
 		.pipe(gif(env === 'production', guglify()))
@@ -176,10 +182,4 @@ gulp.task('compassAdmin', function(){
 		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'css'))
 		.pipe(gconnect.reload());
-});
-
-gulp.task('watchAdmin', function() {
-	gulp.watch(htmlSources, ['html']);
-	gulp.watch(jsSources, ['jsAdmin']);
-	gulp.watch(sassAllSources, ['compassAdmin']);
 });

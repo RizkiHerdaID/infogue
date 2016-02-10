@@ -15,6 +15,8 @@ var gulp = require('gulp'),
 var env,
 	coffeeSources,
 	jsSources,
+	jsAdminSources,
+	sassAdminSources,
 	sassSources,
 	sassAllSources,
 	htmlSources,
@@ -47,6 +49,9 @@ jsSources = [
 	'components/scripts/infinite.js',
 	'components/scripts/template.js'
 ];
+jsAdminSources = [
+	'components/scripts/admin.js'
+]
 fileSources = [
 	'builds/development/.htaccess',
 	'builds/development/favicon.ico',
@@ -55,6 +60,7 @@ fileSources = [
 	'builds/development/*.txt',
 ];
 sassSources = ['components/sass/style.scss'];
+sassAdminSources = ['components/sass/admin.scss'];
 sassAllSources = ['components/sass/*.scss'];
 htmlSources = ['builds/development/*.html'];
 jsonSources = ['builds/development/js/*.json'];
@@ -63,6 +69,10 @@ imageSources = ['builds/development/images/**/*.*'];
 
 gulp.task('default', ['file', 'html', 'json', 'font', 'coffee', 'js', 'compass', 'images', 'connect', 'watch'], function() {
 	gutil.log('InfoGue.id is awesome');
+});
+
+gulp.task('admin', ['html', 'jsAdmin', 'compassAdmin', 'watchAdmin', 'connect'], function(){
+	gutil.log('InfoGue.id Admin workflow is awesome')
 });
 
 gulp.task('coffee', function() {  
@@ -101,7 +111,7 @@ gulp.task('watch', function() {
 	gulp.watch(imageSources, ['images']);
 	gulp.watch(coffeeSources, ['coffee']);
 	gulp.watch(jsSources, ['js']);
-	gulp.watch(sassAllSources, ['compass']);  
+	gulp.watch(sassAllSources, ['compass']);
 });
 
 gulp.task('connect', function() {
@@ -145,4 +155,31 @@ gulp.task('file', function(){
 	gulp.src(fileSources)
 		.pipe(gif(env === 'production', gulp.dest(outputDir)))
 		.pipe(gconnect.reload());
+});
+
+gulp.task('jsAdmin', function(){
+	gulp.src(jsAdminSources)
+		.pipe(gif(env === 'production', guglify()))
+		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		.pipe(gulp.dest(outputDir + 'js'))
+		.pipe(gconnect.reload());
+});
+
+gulp.task('compassAdmin', function(){
+	gulp.src(sassAdminSources)
+		.pipe(gcompass({
+			sass: 'components/sass',
+			image: outputDir + 'images',
+			style: sassStyle
+		}))
+		.on('error', gutil.log)
+		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		.pipe(gulp.dest(outputDir + 'css'))
+		.pipe(gconnect.reload());
+});
+
+gulp.task('watchAdmin', function() {
+	gulp.watch(htmlSources, ['html']);
+	gulp.watch(jsSources, ['jsAdmin']);
+	gulp.watch(sassAllSources, ['compassAdmin']);
 });

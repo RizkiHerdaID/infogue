@@ -38,4 +38,8 @@ $(function () {
         cursorcolor: '#4dc4d2',
         cursorborder: 'none'
     });
+
+    $(".chart .fill").each(function(){
+        $(this).height($(this).data('value'));
+    })
 });

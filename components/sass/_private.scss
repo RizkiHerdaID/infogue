@@ -510,7 +510,137 @@ header{
     }
 
     .description{
-      font-size: 0.85em;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.statistic-box{
+  text-align: center;
+  margin-left: -5px;
+  margin-right: -5px;
+
+  div[class*='col-']{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .box{
+    @include border-image(linear-gradient(to right, #30b5b2, #4dbfaf) 1 stretch);
+    border-width: 2px;
+    display: block;
+    margin-bottom: $space-medium;
+    padding: $space-small / 2;
+
+    h1{
+      margin: 0;
+      font-size: $text-heading1;
+      font-family: opensans-light, sans-serif;
+      font-weight: normal;
+    }
+
+    p{
+      font-family: opensans-semibold, sans-serif;
+      text-transform: uppercase;
+      color: #45bcb0;
+      margin: 0;
+    }
+  }
+}
+
+.legend-left{
+  float: left;
+  margin-right: $space-small;
+  text-align: center;
+  font-size: 0.9;
+  color: $color-gray-dark;
+}
+
+.chart {
+  display: table;
+  table-layout: fixed;
+  min-height: 150px;
+
+  .bar {
+    display: table-cell;
+    float: none;
+    position: relative;
+    height: 180px;
+    text-align: center;
+    width: 40px;
+
+    &:nth-child(2) .bar-wrapper .fill{
+      background-color: #38b8b1;
+    }
+
+    &:nth-child(3) .bar-wrapper .fill{
+      background-color: #40bbb0;
+    }
+
+    &:nth-child(4) .bar-wrapper .fill{
+      background-color: #45bdaf;
+    }
+
+    &:nth-child(5) .bar-wrapper .fill{
+      background-color: #4bbeaf;
+    }
+
+    &:nth-child(6) .bar-wrapper .fill{
+      background-color: #4dbfae;
+    }
+
+    &:nth-child(7) .bar-wrapper .fill{
+      background-color: #48c6b3;
+    }
+
+    .bar-wrapper{
+      left: 35%;
+      position: absolute;
+      height: 150px;
+
+      .base{
+        background-color: #d8e5ed;
+        position: absolute;
+        min-width: 20px;
+        height: 100%;
+      }
+
+      .fill{
+        background-color: #31b5b2;
+        position: absolute;
+        min-width: 20px;
+        height: 50%;
+        bottom: 0;
+      }
+    }
+
+    p{
+      color: $color-dark;
+      font-size: 0.8em;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+}
+
+.legend-bottom{
+  margin-bottom: $space-medium * 2;
+
+  p{
+    margin-bottom: $space-small / 2;
+  }
+
+  li{
+    font-size: 0.9em;
+    line-height: 12px;
+
+    &:first-child{
+      border-left: 13px solid #45bdaf;
+    }
+
+    &:last-child{
+      border-left: 13px solid $color-gray-light;
     }
   }
 

@@ -2,6 +2,8 @@ body{
   font-family: opensans-regular, sans-serif;
   line-height: 1.5;
   font-size: 14px;
+  background-color: #ececec;
+  color: $color-dark;
 }
 
 a{
@@ -243,6 +245,10 @@ ul, ol{
           border-radius: 50%;
           top: -2px;
           right: -5px;
+          animation-duration: 500ms;
+          animation-name: blink;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
         }
       }
     }
@@ -269,4 +275,143 @@ ul, ol{
   @include transition(all 0.5s ease);
   padding-left: 250px;
   width: 100%;
+}
+
+header{
+  height: 70px;
+  position: relative;
+
+  &:before{
+    content: "";
+    background: url("../images/misc/strip-header-left.png") no-repeat left center;
+    width: 175px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+  }
+
+  &:after{
+    content: "";
+    background: url("../images/misc/strip-header-right.png") no-repeat right center;
+    width: 355px;
+    height: 100%;
+    display: block;
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .toggle-nav{
+    font-size: $text-heading2;
+    padding: 0 $space-medium;
+    color: $color-dark;
+    line-height: 70px;
+    position: relative;
+    float: left;
+    z-index: 5;
+  }
+
+  .title{
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+
+    &:after{
+      content: "INFOGUE.ID";
+      color: $color-accent2;
+      vertical-align: baseline;
+      font-family: opensans-regular, sans-serif;
+    }
+
+    h1{
+      display: inline-block;
+      margin-top: 17px;
+      font-size: $text-heading1;
+      font-family: opensans-regular, sans-serif;
+      font-weight: normal;
+    }
+  }
+
+  .control{
+    float: right;
+    position: relative;
+    z-index: 1;
+    margin-top: 15px;
+    padding-right: $space-medium;
+    @include clearfix();
+
+    .account{
+      display: inline-block;
+      margin-right: $space-medium;
+
+      .avatar-wrapper{
+        float: left;
+        position: relative;
+
+        img{
+          width: 40px;
+          height: 40px;
+        }
+
+        .notify{
+          background-color: $color-accent2;
+          color: $color-light;
+          border-radius: 50%;
+          position: absolute;
+          text-align: center;
+          display: block;
+          height: 10px;
+          width: 10px;
+          right: 0;
+          top: 0;
+          animation-duration: 500ms;
+          animation-name: blink;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+        }
+      }
+
+      .avatar-greeting{
+        float: left;
+        margin-left: $space-small;
+        margin-bottom: 0;
+        line-height: 40px;
+
+        strong{
+          font-family: opensans-semibold, sans-serif;
+          font-weight: normal;
+        }
+      }
+    }
+
+    .sign-out{
+      font-family: opensans-semibold, sans-serif;
+      float: right;
+      line-height: 40px;
+      color: $color-dark;
+    }
+  }
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.breadcrumb-wrapper{
+  .breadcrumb{
+    @include background-image(linear-gradient(to right, #4dc4d2, #31afb6));
+
+    li, a{
+      line-height: 14px;
+    }
+  }
 }

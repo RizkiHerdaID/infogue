@@ -22,7 +22,7 @@
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="dashboard.html">
+            <a href="admin_dashboard.html">
                 <img src="images/misc/logo-administrator.png">
             </a>
         </div>
@@ -57,20 +57,33 @@
 
     <!-- Page Content -->
     <div id="content-wrapper">
-        <header class="header">
-            <a href="#menu-toggle" class="toggle-nav" id="menu-toggle"><i class="fa fa-bars"></i></a>
-            <div class="avatar">
-                <div class="avatar-wrapper">
-                    <img src="../assets/img/avatar/angga.jpg" class="img-responsive">
-                </div>
-                <div class="notify">5</div>
+        <header>
+            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
+            <div class="title">
+                <h1>Dashboard</h1>
             </div>
-            <p class="avatar-greeting pull-left">Hello, <strong>Angga Ari Wijaya</strong></p>
             <div class="control">
-                <a href="#" class="btn-circle"><i class="fa fa-comments"></i></a>
-                <a href="#" class="btn-circle"><i class="fa fa-sign-out"></i></a>
+                <div class="account clearfix">
+                    <div class="avatar-wrapper">
+                        <img src="images/contributors/cici.png" class="img-circle img-rounded">
+                        <div class="notify"></div>
+                    </div>
+                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                </div>
+                <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
         </header>
+        <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb mtn">
+                <li><a href="index.html">INFOGUE.ID</a></li>
+                <li><a href="admin_dashboard.html">Dashboard</a></li>
+                <li class="blank"></li>
+            </ol>
+            <div class="control">
+                <a class="btn btn-primary control-left" href="#"><i class="fa fa-chevron-left"></i></a>
+                <a class="btn btn-primary control-right" href="#"><i class="fa fa-chevron-right"></i></a>
+            </div>
+        </div>
         <div class="title-section">
             <div class="title">
                 <h1>About Us <i class="fa fa-heart" style="color: #ff6363"></i></h1>

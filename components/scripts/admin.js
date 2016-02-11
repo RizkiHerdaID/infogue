@@ -1,7 +1,7 @@
 $(function () {
 
     // Toggle script ------------------------------------------------------------------------
-    $("#menu-toggle").click(function(e) {
+    $(".toggle-nav").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });

@@ -29,6 +29,11 @@ $(function () {
         }
     });
 
+    $("html").niceScroll({
+        cursorcolor: '#4dc4d2',
+        cursorborder: 'none'
+    });
+
     $("#sidebar-wrapper").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none'

@@ -194,6 +194,11 @@ legend {
   padding: $space-small $space-medium;
   background-color: $color-accent3;
   color: $color-light;
+  font: inherit;
+  line-height: 14px;
+  vertical-align: baseline;
+  border: none;
+  margin-bottom: 0;
 }
 
 .form-horizontal {
@@ -212,10 +217,18 @@ legend {
       margin-bottom: 0;
       margin-right: 0;
       margin-left: 0;
+
+      &.no-line{
+        border-bottom: none;
+      }
     }
 
     .help-block{
       margin-bottom: 5px;
+    }
+
+    label{
+      line-height: 16px;
     }
   }
 }

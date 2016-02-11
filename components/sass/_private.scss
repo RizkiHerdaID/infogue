@@ -474,7 +474,7 @@ header{
   }
 }
 
-.content-section{
+.content-section, .title-section{
   position: relative;
   z-index: 1;
 }
@@ -643,6 +643,12 @@ header{
       border-left: 13px solid $color-gray-light;
     }
   }
+}
 
+.form-strip{
+  margin: 0 -30px;
 
+  legend{
+    @include background-image(linear-gradient(to right, #4dc4d2, #31afb6));
+  }
 }

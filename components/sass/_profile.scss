@@ -159,6 +159,8 @@
   &.default{
     .featured{
       height: 130px;
+      position: relative;
+      overflow: hidden;
     }
 
     .contributor-profile{

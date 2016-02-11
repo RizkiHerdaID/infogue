@@ -34,6 +34,11 @@ $(function () {
         cursorborder: 'none'
     });
 
+    if($("#wrapper").height() < $(window).height()){
+        $("#wrapper").css('position', 'absolute').css('height', '100%');
+        $(".content").css('min-height', $(window).height() - $('header').height() - $('breadcrumb-wrapper').height() - 40 - 40);
+    }
+
     $("#sidebar-wrapper").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none'
@@ -41,5 +46,5 @@ $(function () {
 
     $(".chart .fill").each(function(){
         $(this).height($(this).data('value'));
-    })
+    });
 });

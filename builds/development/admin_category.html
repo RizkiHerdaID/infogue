@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Info Gue - Category</title>
+    <meta name="description" content="Social news portal gives the most update information">
+    <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
+    <meta name="author" content="Angga Ari Wijaya">
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="admin_dashboard.html">
+                <img src="images/misc/logo-administrator.png">
+            </a>
+        </div>
+        <div class="sidebar-statistic">
+            <div>
+                <h3>345K</h3>
+                <p>ARTICLES</p>
+            </div>
+            <div>
+                <h3>63K</h3>
+                <p>MEMBERS</p>
+            </div>
+        </div>
+        <nav role="navigation">
+            <ul>
+                <li><a href="admin_dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
+                <li><a href="admin_setting.html"><i class="fa fa-wrench"></i>Setting<span class="badge pull-right new">42</span></a></li>
+                <li><a href="admin_contributor.html"><i class="fa fa-child"></i>Contributor</a></li>
+                <li><a href="admin_article.html"><i class="fa fa-file-text-o"></i>Article</a></li>
+                <li class="active"><a href="admin_category.html"><i class="fa fa-bars"></i>Category</a></li>
+                <li><a href="admin_feedback.html"><i class="fa fa-comments-o"></i>Feedback</a></li>
+                <li><a href="admin_about.html"><i class="fa fa-info-circle"></i>About</a></li>
+            </ul>
+        </nav>
+
+        <div class="copyright">
+            <img src="images/misc/logo-small.png"/>
+            <p>&copy; 2016 All Rights Reserved.</p>
+        </div>
+    </div>
+    <!-- End of sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="content-wrapper">
+        <header>
+            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
+            <div class="title">
+                <h1>About</h1>
+            </div>
+            <div class="control">
+                <div class="account clearfix">
+                    <div class="avatar-wrapper">
+                        <img src="images/contributors/cici.png" class="img-circle img-rounded">
+                        <div class="notify"></div>
+                    </div>
+                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                </div>
+                <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
+            </div>
+        </header>
+        <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb mtn">
+                <li><a href="index.html">INFOGUE.ID</a></li>
+                <li><a href="admin_dashboard.html">Dashboard</a></li>
+                <li class="active">Category</li>
+            </ol>
+            <div class="control">
+                <a href="#" class="link"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="#create" data-toggle="modal" class="link"><i class="fa fa-plus"></i> CREATE CATEGORY</a>
+            </div>
+        </div>
+        <div class="content">
+            <div class="title-section">
+                <h1 class="title">Category
+                    <div class="pull-right" style="margin-left: 6px">
+                        <div class="dropdown select">
+                            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                TIMESTAMP
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                <li class="dropdown-header">SORT BY</li>
+                                <li><a href="#"><i class="fa fa-clock-o"></i> Timestamp</a></li>
+                                <li><a href="#"><i class="fa fa-font"></i> Name</a></li>
+                                <li><a href="#"><i class="fa fa-star-o"></i> Popularity</a></li>
+                                <li><a href="#"><i class="fa fa-file-text-o"></i> Article</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown select">
+                            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                ASCENDING
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                <li class="dropdown-header">METHOD</li>
+                                <li><a href="#"><i class="fa fa-arrow-up"></i> Ascending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-down"></i> Descending</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pull-right group-control">
+                        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                    </div>
+                </h1>
+                <p class="subtitle">Article grouping and tagging</a></p>
+            </div>
+            <div class="content-section">
+                <table class="table table-responsive table-striped table-hover table-condensed mbs">
+                    <thead>
+                    <tr>
+                        <th width="40">
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-all" class="css-checkbox">
+                                <label for="check-all" class="css-label"></label>
+                            </div>
+                        </th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
+                        <th>Article Total</th>
+                        <th class="text-center">Popularity</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td width="40">
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-1" class="css-checkbox">
+                                <label for="check-1" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">News</a></td>
+                        <td>18 Subs</td>
+                        <td>656 Articles</td>
+                        <td class="text-center">10%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-2" class="css-checkbox">
+                                <label for="check-2" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Economic</a></td>
+                        <td>35 Subs</td>
+                        <td>542 Articles</td>
+                        <td class="text-center">5%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-3" class="css-checkbox">
+                                <label for="check-3" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Entertainment</a></td>
+                        <td>8 Subs</td>
+                        <td>7843 Articles</td>
+                        <td class="text-center">15%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-4" class="css-checkbox">
+                                <label for="check-4" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Sport</a></td>
+                        <td>12 Subs</td>
+                        <td>885 Articles</td>
+                        <td class="text-center">20%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-5" class="css-checkbox">
+                                <label for="check-5" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Health</a></td>
+                        <td>7 Subs</td>
+                        <td>235 Articles</td>
+                        <td class="text-center">5%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-6" class="css-checkbox">
+                                <label for="check-6" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Science</a></td>
+                        <td>15 Subs</td>
+                        <td>854 Articles</td>
+                        <td class="text-center">10%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-7" class="css-checkbox">
+                                <label for="check-7" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Technology</a></td>
+                        <td>8 Subs</td>
+                        <td>9632 Articles</td>
+                        <td class="text-center">12%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-8" class="css-checkbox">
+                                <label for="check-8" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Photo</a></td>
+                        <td>12 Subs</td>
+                        <td>743 Articles</td>
+                        <td class="text-center">8%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-9" class="css-checkbox">
+                                <label for="check-9" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Video</a></td>
+                        <td>2 Subs</td>
+                        <td>545 Articles</td>
+                        <td class="text-center">5%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="checkbox">
+                                <input type="checkbox" name="check-all" id="check-10" class="css-checkbox">
+                                <label for="check-10" class="css-label"></label>
+                            </div>
+                        </td>
+                        <td><a href="category.html" target="_blank">Others</a></td>
+                        <td>12 Subs</td>
+                        <td>6784 Articles</td>
+                        <td class="text-center">10%</td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    ACTION
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                    <li class="dropdown-header">CONTROL</li>
+                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                    <li><a href="#edit" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
+                                    <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="table-footer">
+                    <div class="status pull-left">
+                        <p class="text-muted">3/120 Rows selected</p>
+                        <p>Showing 1 to 10 of 40 entries</p>
+                    </div>
+                    <div class="pull-right text-right">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="First">FIRST</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-label="Previous">PREV</a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li class="active"><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">NEXT</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-label="Last">LAST</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End of page-content-wrapper -->
+</div> <!-- End of wrapper -->
+
+<div class="modal fade color" id="create" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#" class="form-strip form-horizontal">
+                <input type="hidden" class="form-control" value="0"/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-navicon"></i> CREATE CATEGORY</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="category">CATEGORY</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" id="category" class="form-control" placeholder="Category name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="keywords">KEYWORDS</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" id="keywords" class="form-control" placeholder="Separated by coma" data-role="tagsinput"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="description">DESCRIPTION</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea name="description" class="form-control" id="description" cols="30" rows="5" placeholder="Short category description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
+                    <button type="submit" class="btn btn-primary">CREATE CATEGORY</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade color" id="edit" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#" class="form-strip form-horizontal">
+                <input type="hidden" class="form-control" value="0"/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-navicon"></i> EDIT CATEGORY</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="cateogry-edit">CATEGORY</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" id="cateogry-edit" class="form-control" placeholder="Category name" value="Entertainment"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="keywords-edit">KEYWORDS</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" id="keywords-edit" class="form-control" placeholder="Separated by coma" data-role="tagsinput" value="Game, Music, Film"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="description-edit">DESCRIPTION</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <textarea name="description" class="form-control" id="description-edit" cols="30" rows="5" placeholder="Short category description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias atque consequatur cupiditate explicabo impedit magnam maxime minus, molestias, neque nihil porro quaerat quam sequi tempora tempore vel veniam voluptas.
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
+                    <button type="submit" class="btn btn-primary">UPDATE CATEGORY</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade no-line" id="delete" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE CATEGORY</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="mbn">Are you sure delete this category?</label>
+                    <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
+                    <input type="hidden" class="form-control" value="0"/>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
+                    <button type="submit" class="btn btn-danger">DELETE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+<script src="../../bower_components/echojs/dist/echo.min.js"></script>
+<script src="../../bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="../../bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
+<script src="../../bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

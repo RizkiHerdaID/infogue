@@ -79,10 +79,10 @@ $(function () {
         });
 
         if(isChecked){
-            $('.group-control').fadeIn();
+            $('.group-control').fadeIn(200);
         }
         else{
-            $('.group-control').fadeOut();
+            $('.group-control').fadeOut(200);
         }
     }
 

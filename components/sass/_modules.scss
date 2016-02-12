@@ -734,25 +734,6 @@
       }
     }
   }
-
-  .dropdown{
-    .btn.btn-primary{
-      background-color: #77d5d4;
-      border: none;
-    }
-
-    i{
-      min-width: 17px;
-      margin-right: $space-small / 2;
-    }
-
-    .dropdown-menu>li.dropdown-header{
-      margin-top: $space-small;
-    }
-    .dropdown-menu>li>a {
-      padding: 7px $space-medium;
-    }
-  }
 }
 
 .table-footer{
@@ -773,5 +754,4 @@
   .pagination{
     margin-top: $space-small;
   }
-
 }

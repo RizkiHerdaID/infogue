@@ -476,6 +476,9 @@ header{
 
 .content-section, .title-section{
   position: relative;
+}
+
+.content-section{
   z-index: 1;
 }
 
@@ -650,5 +653,29 @@ header{
 
   legend{
     @include background-image(linear-gradient(to right, #4dc4d2, #31afb6));
+  }
+}
+
+.dropdown{
+  .btn.btn-primary{
+    background-color: #77d5d4;
+    border: none;
+  }
+
+  i{
+    min-width: 17px;
+    margin-right: $space-small / 2;
+  }
+
+  .dropdown-menu>li.dropdown-header{
+    margin-top: $space-small;
+  }
+  .dropdown-menu>li>a {
+    padding: 7px $space-medium;
+  }
+
+  .dropdown-menu{
+    font-weight: normal;
+    font-family: opensans-regular, sans-serif;
   }
 }

@@ -85,4 +85,10 @@ $(function () {
             $('.group-control').fadeOut();
         }
     }
+
+    $(".dropdown.select a").click(function(e){
+        e.preventDefault();
+        var text = $(this).text().toUpperCase()+" <span class='caret'></span>";
+        $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
+    });
 });

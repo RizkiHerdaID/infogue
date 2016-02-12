@@ -555,14 +555,37 @@
     border: none;
   }
 
+  &.color{
+    .modal-header{
+      @include background-image(linear-gradient(to right, #4dc4d2, #77d5d4));
+      color: $color-light;
+      padding: $space-small $space-medium;
+      border-bottom: none;
+
+      .close{
+        margin-top: 2px;
+      }
+    }
+
+    .modal-body{
+      padding: $space-medium;
+    }
+
+    .modal-footer{
+      padding: $space-medium;
+    }
+  }
+
   &.no-line{
     .modal-header{
       border-bottom: none;
       padding: $space-medium;
     }
+
     .modal-body{
       padding: 0 $space-medium;
     }
+
     .modal-footer{
       border-top: none;
       padding: $space-medium;

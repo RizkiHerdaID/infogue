@@ -82,7 +82,7 @@
                 <li class="active">Feedback</li>
             </ol>
             <div class="control">
-                <a href="#" class="link"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="#search" data-toggle="modal" class="link"><i class="fa fa-search"></i> SEARCH</a>
                 <a href="#" class="link"><i class="fa fa-print"></i> PRINT</a>
             </div>
         </div>
@@ -535,6 +535,27 @@
                     <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
                     <button type="submit" class="btn btn-danger">DELETE</button>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade no-line" id="search" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-search"></i> SEARCH QUERY</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="mbs">Search in Contributor Data</label>
+                    <div class="search">
+                        <input type="search" class="form-control pull-left" placeholder="Type keywords here"/>
+                        <button type="submit" class="btn btn-primary pull-right">SEARCH</button>
+                    </div>
+                </div>
+                <div class="modal-footer"></div>
             </form>
         </div>
     </div>

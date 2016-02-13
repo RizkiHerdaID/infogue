@@ -150,7 +150,7 @@ ul, ol{
   > .sidebar-statistic{
     display: table;
     padding: 0 30px;
-    margin-bottom: 30px;
+    margin-bottom: $space-medium;
     table-layout: fixed;
     position: relative;
     z-index: 1;
@@ -170,6 +170,17 @@ ul, ol{
         font-family: opensans-bold, sans-serif;
         margin: 0;
       }
+    }
+  }
+
+  > a.create{
+    margin: 0 30px $space-medium;
+    display: block;
+
+    &:hover{
+      border-color: $color-light;
+      background-color: $color-light;
+      color: $color-accent2;
     }
   }
 
@@ -205,7 +216,6 @@ ul, ol{
       }
 
       a {
-        font-family: opensans-semibold, sans-serif;
         display: block;
         padding: ($space-small / 2) $space-small;
         color: $color-light;

@@ -129,4 +129,32 @@ $(function () {
             .addClass("label-danger")
             .text("SUSPEND");
     });
+
+    $(".headline").click(function(e){
+        e.preventDefault();
+        var row = $(this).closest("tr");
+        row.removeClass('warning');
+        row.toggleClass('danger');
+        if(row.hasClass('danger')){
+            $(this).html("<i class='fa fa-star'></i> Remove Headline");
+            $(this).closest("ul").find(".trending").html("<i class='fa fa-trophy'></i> Trending</a>");
+        }
+        else{
+            $(this).html("<i class='fa fa-star'></i> Headline");
+        }
+    });
+
+    $(".trending").click(function(e){
+        e.preventDefault();
+        var row = $(this).closest("tr");
+        row.removeClass('danger');
+        row.toggleClass('warning');
+        if(row.hasClass('warning')){
+            $(this).html("<i class='fa fa-trophy'></i> Remove Trending");
+            $(this).closest("ul").find(".headline").html("<i class='fa fa-star'></i> Headline");
+        }
+        else{
+            $(this).html("<i class='fa fa-trophy'></i> Trending</a>");
+        }
+    });
 });

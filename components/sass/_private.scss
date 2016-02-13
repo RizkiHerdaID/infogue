@@ -704,3 +704,20 @@ header{
     line-height: 30px;
   }
 }
+
+.search{
+  @include clearfix();
+  position: relative;
+  min-height: 40px;
+
+  input[type='search']{
+    position: absolute;
+    padding-right: 90px;
+    width: 100%;
+  }
+
+  .btn{
+    position: absolute;
+    right: 0;
+  }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Info Gue - Article Create</title>
+    <meta name="description" content="Social news portal gives the most update information">
+    <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
+    <meta name="author" content="Angga Ari">
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="admin_dashboard.html">
+                <img src="images/misc/logo-administrator.png">
+            </a>
+        </div>
+        <div class="sidebar-statistic">
+            <div>
+                <h3>345K</h3>
+                <p>ARTICLES</p>
+            </div>
+            <div>
+                <h3>63K</h3>
+                <p>MEMBERS</p>
+            </div>
+        </div>
+        <a href="admin_article_create.html" class="btn btn-outline btn-light create">CREATE ARTICLE</a>
+        <nav role="navigation">
+            <ul>
+                <li><a href="admin_dashboard.html"><i class="fa fa-home"></i>Dashboard</a></li>
+                <li><a href="admin_setting.html"><i class="fa fa-wrench"></i>Setting<span class="badge pull-right new">42</span></a></li>
+                <li><a href="admin_contributor.html"><i class="fa fa-child"></i>Contributor</a></li>
+                <li class="active"><a href="admin_article.html"><i class="fa fa-file-text-o"></i>Article</a></li>
+                <li><a href="admin_category.html"><i class="fa fa-bars"></i>Category</a></li>
+                <li><a href="admin_feedback.html"><i class="fa fa-comments-o"></i>Feedback</a></li>
+                <li><a href="admin_about.html"><i class="fa fa-info-circle"></i>About</a></li>
+            </ul>
+        </nav>
+
+        <div class="copyright">
+            <img src="images/misc/logo-small.png"/>
+            <p>&copy; 2016 All Rights Reserved.</p>
+        </div>
+    </div>
+    <!-- End of sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="content-wrapper">
+        <header>
+            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
+            <div class="title">
+                <h1>Article</h1>
+            </div>
+            <div class="control">
+                <div class="account clearfix">
+                    <div class="avatar-wrapper">
+                        <img src="images/contributors/cici.png" class="img-circle img-rounded">
+                        <div class="notify"></div>
+                    </div>
+                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                </div>
+                <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
+            </div>
+        </header>
+        <div class="breadcrumb-wrapper">
+            <ol class="breadcrumb mtn">
+                <li><a href="index.html">INFOGUE.ID</a></li>
+                <li><a href="admin_article.html">Article</a></li>
+                <li class="active">Create</li>
+            </ol>
+        </div>
+        <div class="content">
+            <div class="title-section">
+                <h1 class="title">Create Article</h1>
+                <p class="subtitle">Administrator create article and post <a href="#" class="pull-right">RESET FORM</a></p>
+            </div>
+            <div class="content-section">
+                <form class="form-horizontal form-strip">
+                    <fieldset>
+                        <legend>INFORMATION</legend>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="title" placeholder="Post Title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="slug" class="col-sm-3 control-label">Slug</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="slug" placeholder="Custom slug for URL friendly">
+                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Default slug is good enough.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="standard" class="col-sm-3 control-label">Post Format</label>
+                            <div class="col-sm-9">
+                                <div class="radio radio-inline">
+                                    <input type="radio" name="format" id="standard" class="css-radio" checked>
+                                    <label for="standard" class="css-label">Standard</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" name="format" id="photo" class="css-radio">
+                                    <label for="photo" class="css-label">Photo</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" name="format" id="video" class="css-radio">
+                                    <label for="video" class="css-label">Video</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>CATEGORY & TAGS</legend>
+                        <div class="form-group">
+                            <label for="category" class="col-sm-3 control-label">Category</label>
+                            <div class="col-sm-9">
+                                <label for="category" class="css-select">
+                                    <select name="category" id="category" class="form-control">
+                                        <option value="1">News</option>
+                                        <option value="2">Economic</option>
+                                        <option value="5">Entertainment</option>
+                                        <option value="4">Sport</option>
+                                        <option value="4">Health</option>
+                                        <option value="4">Science</option>
+                                        <option value="4">Technology</option>
+                                        <option value="4">Photo</option>
+                                        <option value="4">Video</option>
+                                        <option value="4">Others</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subcategory" class="col-sm-3 control-label">Sub Category</label>
+                            <div class="col-sm-9">
+                                <label for="subcategory" class="css-select">
+                                    <select name="subcategory" id="subcategory" class="form-control">
+                                        <optgroup label="Popular">
+                                            <option value="1">Soccer</option>
+                                            <option value="2">Tennis</option>
+                                            <option value="2">Basket</option>
+                                            <option value="2">Badminton</option>
+                                            <option value="2">Volley</option>
+                                            <option value="2">Athletic</option>
+                                            <option value="2">Bicycle</option>
+                                        </optgroup>
+                                        <optgroup label="Racing">
+                                            <option value="2">MotoGP</option>
+                                            <option value="2">Formula 1</option>
+                                            <option value="2">Rally</option>
+                                        </optgroup>
+                                        <optgroup label="Hardcore">
+                                            <option value="2">Extreme</option>
+                                            <option value="2">Freestyle</option>
+                                            <option value="2">Plane Jump</option>
+                                            <option value="2">Weight Lifting</option>
+                                        </optgroup>
+                                        <optgroup label="Event">
+                                            <option value="2">World Cup</option>
+                                            <option value="2">Olympic</option>
+                                            <option value="2">Champion</option>
+                                            <option value="2">Schedule</option>
+                                        </optgroup>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags" class="col-sm-3 control-label">Tags</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="tags" placeholder="Tag separated by coma" data-role="tagsinput">
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>ARTICLE</legend>
+                        <div class="form-group">
+                            <label for="featured" class="col-sm-3 control-label">Featured</label>
+                            <div class="col-sm-9">
+                                <div class="css-file">
+                                    <span class="file-info">No file selected</span>
+                                    <button class="btn btn-primary" type="button">SELECT FEATURED</button>
+                                    <input type="file" class="file-input" id="featured" accept="image/*"/>
+                                </div>
+                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Cover image for your post.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-sm-3 control-label">Content</label>
+                            <div class="col-sm-9">
+                                                <textarea class="form-control summernote" name="content" id="content" cols="30"
+                                                          rows="10" placeholder="Write article here"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="excerpt" class="col-sm-3 control-label">Excerpt</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="excerpt" id="excerpt" cols="30" rows="2" placeholder="Write an excerpt (optional)"></textarea>
+                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Add footer text for conclusion or quote.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="published" class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <div class="radio radio-inline">
+                                    <input type="radio" name="status" id="published" class="css-radio" checked>
+                                    <label for="published" class="css-label">Published</label>
+                                </div>
+                                <div class="radio radio-inline">
+                                    <input type="radio" name="status" id="draft" class="css-radio">
+                                    <label for="draft" class="css-label">Draft</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group no-line">
+                            <div class="col-sm-offset-3 col-sm-9 pts pbm">
+                                <button class="btn btn-primary">CREATE ARTICLE</button>
+                                <a href="#discard" data-toggle="modal" class="btn btn-danger">DISCARD</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div> <!-- End of page-content-wrapper -->
+</div> <!-- End of wrapper -->
+
+<div class="modal fade no-line" id="discard" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="#">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-save"></i> DISCARD ARTICLE</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="mbn">Are you sure want to discard this article?</label>
+                    <p class="mbn"><small class="text-muted">All filled content will be lost.</small></p>
+                    <input type="hidden" class="form-control" value="0"/>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary">NO</a>
+                    <a href="admin_article.html" class="btn btn-danger">YES</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../bower_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+<script src="../../bower_components/echojs/dist/echo.min.js"></script>
+<script src="../../bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="../../bower_components/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
+<script src="../../bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+
+<script src="js/admin.js"></script>
+
+</body>
+</html>

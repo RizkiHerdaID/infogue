@@ -87,7 +87,7 @@ gulp.task('js', function(){
 		.pipe(gconcat('script.js'))
 		.pipe(gbrowserify())
 		.pipe(gif(env === 'production', guglify()))
-		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		//.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'js'))		
 		.pipe(gconnect.reload());
 });
@@ -100,7 +100,7 @@ gulp.task('compass', function(){
 			style: sassStyle
 		}))
 		.on('error', gutil.log)
-		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		//.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'css'))
 		.pipe(gconnect.reload());
 });
@@ -123,7 +123,7 @@ gulp.task('connect', function() {
 
 gulp.task('html', function(){
 	gulp.src(htmlSources)
-		.pipe(gif(env === 'production', gminifyHTML()))
+		//.pipe(gif(env === 'production', gminifyHTML()))
 		.pipe(gif(env === 'production', gulp.dest(outputDir)))
 		.pipe(gconnect.reload());
 });
@@ -166,7 +166,7 @@ gulp.task('watchAdmin', function() {
 gulp.task('jsAdmin', function(){
 	gulp.src(jsAdminSources)
 		.pipe(gif(env === 'production', guglify()))
-		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		//.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'js'))
 		.pipe(gconnect.reload());
 });
@@ -179,7 +179,7 @@ gulp.task('compassAdmin', function(){
 			style: sassStyle
 		}))
 		.on('error', gutil.log)
-		.pipe(gif(env === 'production', grename({ suffix: '.min' })))
+		//.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'css'))
 		.pipe(gconnect.reload());
 });

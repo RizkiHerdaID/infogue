@@ -91,4 +91,42 @@ $(function () {
         var text = $(this).text().toUpperCase()+" <span class='caret'></span>";
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
+
+    // RATING ------------------------------------------------------------------------
+    renderRate();
+    function renderRate() {
+        $('.rating-wrapper').each(function () {
+            var rating = $(this).data('rating');
+
+            $(this).html("");
+
+            for (var index = 0; index < 5; index++) {
+                if (index < rating) {
+                    $(this).append("<i class='fa fa-circle rated'></i>")
+                }
+                else {
+                    $(this).append("<i class='fa fa-circle unrated'></i>")
+                }
+            }
+        });
+    }
+
+
+    // APPROVE
+    $(".approve").click(function(e){
+        e.preventDefault();
+        $(this).closest("tr").find(".label")
+            .removeClass()
+            .addClass("label")
+            .addClass("label-success")
+            .text("PUBLISHED");
+    });
+    $(".suspend").click(function(e){
+        e.preventDefault();
+        $(this).closest("tr").find(".label")
+            .removeClass()
+            .addClass("label")
+            .addClass("label-danger")
+            .text("SUSPEND");
+    });
 });

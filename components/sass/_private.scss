@@ -679,3 +679,18 @@ header{
     font-family: opensans-regular, sans-serif;
   }
 }
+
+.people{
+  @include clearfix();
+  img{
+    width: 28px;
+    height: 28px;
+    float: left;
+    @include border-radius(50%);
+  }
+  a, p{
+    padding-left: 35px;
+    display: block;
+    line-height: 30px;
+  }
+}

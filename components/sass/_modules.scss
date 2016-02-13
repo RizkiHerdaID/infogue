@@ -528,6 +528,27 @@
   }
 }
 
+.tag{
+  font-family: opensans-bold;
+  text-transform: uppercase;
+  display: inline-block;
+  width: auto;
+  background-color: $color-gray-light;
+  margin-bottom: $space-small;
+  color: $color-light;
+  padding: ($space-small / 2) $space-small;
+
+  &:hover{
+    color: $color-light;
+    background-color: $color-accent3;
+  }
+
+  &.category{
+    background-color: $color-accent2;
+    margin: $space-medium 0;
+  }
+}
+
 // MISC
 .nicescroll-rails-vr{
   z-index: 10 !important;
@@ -561,6 +582,10 @@
       color: $color-light;
       padding: $space-small $space-medium;
       border-bottom: none;
+
+      i{
+        margin-right: 5px;
+      }
 
       .close{
         margin-top: 2px;

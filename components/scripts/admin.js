@@ -130,6 +130,7 @@ $(function () {
             .text("SUSPEND");
     });
 
+    // HEADLINE & TRENDING FUNCTIONALITY ---------------------------------
     $(".headline").click(function(e){
         e.preventDefault();
         var row = $(this).closest("tr");
@@ -157,4 +158,20 @@ $(function () {
             $(this).html("<i class='fa fa-trophy'></i> Trending</a>");
         }
     });
+
+
+    // SUMMERNOTE -------------------------------------------------------------------
+    if ($('.summernote').length) {
+        $('.summernote').summernote({
+            toolbar: [
+                ['font', ['style']],
+                ['style', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'paragraph']],
+                ['insert', ['picture', 'video', 'link']],
+                ['misc', ['fullscreen']]
+            ],
+            placeholder: 'write here...',
+            height: 200
+        });
+    }
 });

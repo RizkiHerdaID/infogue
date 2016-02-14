@@ -61,7 +61,7 @@
           font-size: 1em;
           font-weight: normal;
           position: absolute;
-          left: 0;
+          left: 10px;
           line-height: 24px;
         }
       }
@@ -101,9 +101,13 @@
     font-size: 1.8em;
   }
 
-  .modal-dialog {
-    display: block;
-    margin: 0;
+  .modal{
+    padding-left: 0 !important;
+
+
+    .modal-dialog {
+      display: block;
+    }
   }
 
   .breadcrumb-wrapper > .control {

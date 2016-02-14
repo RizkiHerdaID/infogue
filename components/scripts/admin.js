@@ -143,6 +143,12 @@ $(function () {
         $(this).removeClass('focus');
     });
 
+    
+    // FILE INPUT -------------------------------------------------------------------
+    $('.file-input').change(function () {
+        $(this).parent().find('.file-info').text($(this).val());
+    });
+
 
     // SUMMERNOTE -------------------------------------------------------------------
     if ($('.summernote').length) {

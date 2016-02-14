@@ -177,4 +177,36 @@ $(function () {
             $(".note-btn.btn-fullscreen").tooltip('show');
         }, 1000);
     }
+
+    $("a[href='#']").click(function(e){
+        e.preventDefault();
+
+        if($(this).hasClass("reset-setting")){
+            $("#website").val("InfoGue.id");
+            $('#keywords').tagsinput('add', 'news');
+            $('#keywords').tagsinput('add', 'technology');
+            $('#keywords').tagsinput('add', 'science');
+            $('#keywords').tagsinput('add', 'sport');
+            $('#keywords').tagsinput('add', 'life');
+            $('#keywords').tagsinput('add', 'health');
+            $('#keywords').tagsinput('add', 'lifestyle');
+            $('#keywords').tagsinput('add', 'entertainment');
+            $("#online").prop("checked", true);
+            $("#address").val("Avenue Street 23 Jakarta, Indonesia");
+            $("#contact").val("+6285655479868");
+            $("#email").val("anggadarkprince@gmail.com");
+            $("#description").val("Public social news feeder");
+            $("#owner").val("Angga Ari Wijaya");
+            $("#latitude").val("0.34574576574");
+            $("#longitude").val("0.45734573457");
+            $("#facebook").val("angga.ari");
+            $("#twitter").val("@anggadarkprince");
+            $("#google").val("+AnggaAriWijaya");
+            $("#article").prop("checked", true);
+            $("#feedback").prop("checked", true);
+            $("#member").prop("checked", true);
+            $("#yes").prop("checked", true);
+            $("#name").val("Adminisrtator");
+        }
+    });
 });

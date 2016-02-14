@@ -1,14 +1,11 @@
 $(function () {
 
-    // Toggle script ------------------------------------------------------------------------
-    $(".toggle-nav").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+
 
     $("html").niceScroll({
         cursorcolor: '#4dc4d2',
-        cursorborder: 'none'
+        cursorborder: 'none',
+        horizrailenabled: false
     });
 
     if($("#wrapper").height() < $(window).height()){

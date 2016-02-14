@@ -4,6 +4,7 @@ body{
   font-size: 14px;
   background-color: #ececec;
   color: $color-dark;
+  overflow-x: hidden;
 }
 
 a{
@@ -425,6 +426,7 @@ header{
 
   .breadcrumb{
     @include background-image(linear-gradient(to right, #4dc4d2, #31afb6));
+    margin-bottom: 0;
 
     li, a{
       line-height: 14px;
@@ -490,6 +492,7 @@ header{
 
 .content-section{
   z-index: 1;
+  margin-bottom: $space-medium;
 }
 
 .list-activity{
@@ -562,19 +565,22 @@ header{
 }
 
 .legend-left{
-  float: left;
-  margin-right: $space-small;
+  margin: 0 auto;
   text-align: center;
-  font-size: 0.9;
+  font-size: 0.9em;
+  line-height: 1.8em;
   color: $color-gray-dark;
 }
 
 .chart {
+  @include transition(all 0.5s ease);
   display: table;
   table-layout: fixed;
   min-height: 150px;
+  width: 100%;
 
   .bar {
+    @include transition(all 0.5s ease);
     display: table-cell;
     float: none;
     position: relative;
@@ -604,6 +610,22 @@ header{
 
     &:nth-child(7) .bar-wrapper .fill{
       background-color: #48c6b3;
+    }
+
+    &:nth-child(8) .bar-wrapper .fill{
+      background-color: lighten(#48c6b3, 3%);
+    }
+
+    &:nth-child(9) .bar-wrapper .fill{
+      background-color: lighten(#48c6b3, 6%);
+    }
+
+    &:nth-child(10) .bar-wrapper .fill{
+      background-color: lighten(#48c6b3, 9%);
+    }
+
+    &:nth-child(11) .bar-wrapper .fill{
+      background-color: lighten(#48c6b3, 12%);
     }
 
     .bar-wrapper{
@@ -638,7 +660,8 @@ header{
 }
 
 .legend-bottom{
-  margin-bottom: $space-medium * 2;
+  display: block;
+  margin-bottom: 30px;
 
   p{
     margin-bottom: $space-small / 2;

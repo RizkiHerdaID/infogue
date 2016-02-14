@@ -1,8 +1,33 @@
 @media(max-width:767px){
-
   .login-footer > .copyright{
     font-size: .9em;
     margin-bottom: $space-small;
+  }
+
+  header{
+    height: 50px;
+
+    .toggle-nav{
+      line-height: 50px;
+    }
+
+    .title h1{
+      margin-top: 12px;
+      font-size: 1.8em;
+    }
+  }
+
+  .content{
+    margin: 0;
+    padding: 15px 20px;
+  }
+
+  .legend-bottom{
+    font-size: 0.9em;
+  }
+
+  .statistic-box .box h1{
+    font-size: 1.8em;
   }
 }
 @media(min-width:768px){

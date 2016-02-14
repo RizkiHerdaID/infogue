@@ -46,6 +46,7 @@
                 <li><a href="admin_category.html"><i class="fa fa-bars"></i>Category</a></li>
                 <li><a href="admin_feedback.html"><i class="fa fa-comments-o"></i>Feedback</a></li>
                 <li><a href="admin_about.html"><i class="fa fa-info-circle"></i>About</a></li>
+                <li class="visible-xs"><a href="admin_login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
             </ul>
         </nav>
 
@@ -63,13 +64,13 @@
             <div class="title">
                 <h1>Dashboard</h1>
             </div>
-            <div class="control">
+            <div class="control hidden-xs">
                 <div class="account clearfix">
                     <div class="avatar-wrapper">
                         <img src="images/contributors/cici.png" class="img-circle img-rounded">
                         <div class="notify"></div>
                     </div>
-                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>Imelda Agustine</strong></p>
                 </div>
                 <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
@@ -153,69 +154,95 @@
                         <p class="subtitle">Web visitor statistic <a href="#" class="pull-right">View History</a></p>
                     </div>
                     <div class="content-section">
-                        <div class="legend-left">
-                            <ul class="list-unstyled">
-                                <li>70</li>
-                                <li>60</li>
-                                <li>50</li>
-                                <li>40</li>
-                                <li>30</li>
-                                <li>20</li>
-                                <li>10</li>
-                            </ul>
+                        <div class="row">
+                            <div class="col-sm-1 col-xs-2 prn">
+                                <div class="legend-left">
+                                    <ul class="list-unstyled">
+                                        <li>70</li>
+                                        <li>60</li>
+                                        <li>50</li>
+                                        <li>40</li>
+                                        <li>30</li>
+                                        <li>20</li>
+                                        <li>10</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-11 col-xs-10 pln">
+                                <div class="chart">
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="35"></div>
+                                        </div>
+                                        <p>04/02</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="54"></div>
+                                        </div>
+                                        <p>05/02</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="72"></div>
+                                        </div>
+                                        <p>06/02</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="80"></div>
+                                        </div>
+                                        <p>07/02</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="74"></div>
+                                        </div>
+                                        <p>08/02</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="34"></div>
+                                        </div>
+                                        <p>09/02</p>
+                                    </div>
+                                    <div class="bar md-screen sm-screen">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="23"></div>
+                                        </div>
+                                        <p>10/02</p>
+                                    </div>
+                                    <div class="bar md-screen sm-screen">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="50"></div>
+                                        </div>
+                                        <p>11/02</p>
+                                    </div>
+                                    <div class="bar sm-screen">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="35"></div>
+                                        </div>
+                                        <p>12/02</p>
+                                    </div>
+                                    <div class="bar sm-screen">
+                                        <div class="bar-wrapper">
+                                            <div class="base"></div>
+                                            <div class="fill" data-value="70"></div>
+                                        </div>
+                                        <p>13/02</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="chart">
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="35"></div>
-                                </div>
-                                <p>04/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="54"></div>
-                                </div>
-                                <p>05/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="72"></div>
-                                </div>
-                                <p>06/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="80"></div>
-                                </div>
-                                <p>07/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="74"></div>
-                                </div>
-                                <p>08/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="34"></div>
-                                </div>
-                                <p>09/02</p>
-                            </div>
-                            <div class="bar">
-                                <div class="bar-wrapper">
-                                    <div class="base"></div>
-                                    <div class="fill" data-value="48"></div>
-                                </div>
-                                <p>09/02</p>
-                            </div>
-                        </div>
-
                         <div class="legend-bottom">
                             <p class="center-block text-center">Daily Visitor report <strong>4 February - 13 February</strong></p>
                             <ul class="list-inline center-block text-center">
@@ -230,37 +257,37 @@
                     </div>
                     <div class="content-section">
                         <div class="row statistic-box">
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>346K</h1>
                                     <p>ARTICLES</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>674</h1>
                                     <p>MEMBERS</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>62</h1>
                                     <p>CATEGORIES</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>76K</h1>
                                     <p>MESSAGES</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>875K</h1>
                                     <p>FEEDBACK</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-xs-6">
                                 <div class="box">
                                     <h1>734K</h1>
                                     <p>VISITORS</p>

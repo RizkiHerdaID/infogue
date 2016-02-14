@@ -143,7 +143,7 @@ $(function () {
         $(this).removeClass('focus');
     });
 
-    
+
     // FILE INPUT -------------------------------------------------------------------
     $('.file-input').change(function () {
         $(this).parent().find('.file-info').text($(this).val());
@@ -213,6 +213,18 @@ $(function () {
             $("#member").prop("checked", true);
             $("#yes").prop("checked", true);
             $("#name").val("Adminisrtator");
+        }
+
+        if($(this).hasClass("reset-article")){
+            $("#title").val("");
+            $("#slug").val("");
+            $('#tags').tagsinput('removeAll');
+            $('#category').val('');
+            $('#subcategory').val('');
+            $(".note-editable").text("");
+            $("#excerpt").val("");
+            $("#standard").prop("checked", true);
+            $("#published").prop("checked", true);
         }
 
         if($(this).hasClass("print")){

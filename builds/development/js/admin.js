@@ -208,7 +208,23 @@ $(function () {
             $("#yes").prop("checked", true);
             $("#name").val("Adminisrtator");
         }
+
+        if($(this).hasClass("print")){
+            printDiv("content");
+        }
     });
+
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
 });
 /**
  * Created by Workstation on 2/14/2016.

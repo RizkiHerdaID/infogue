@@ -1,7 +1,4 @@
 $(function () {
-
-
-
     $("html").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none',
@@ -32,6 +29,7 @@ $(function () {
         checkboxs_check();
     });
 
+    $('.group-control').hide();
     $("thead .css-checkbox").change(function(){
         if($(this).is(':checked')){
             $("tbody .css-checkbox").prop('checked', true);
@@ -46,7 +44,7 @@ $(function () {
 
     function checkboxs_check(){
         var isChecked = false;
-        $("tbody .css-checkbox").each(function(index, count){
+        $("tbody .css-checkbox").each(function(){
             if($(this).is(':checked')){
                 isChecked = true;
             }

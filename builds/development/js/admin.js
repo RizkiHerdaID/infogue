@@ -1,7 +1,4 @@
 $(function () {
-
-
-
     $("html").niceScroll({
         cursorcolor: '#4dc4d2',
         cursorborder: 'none',
@@ -32,6 +29,7 @@ $(function () {
         checkboxs_check();
     });
 
+    $('.group-control').hide();
     $("thead .css-checkbox").change(function(){
         if($(this).is(':checked')){
             $("tbody .css-checkbox").prop('checked', true);
@@ -46,7 +44,7 @@ $(function () {
 
     function checkboxs_check(){
         var isChecked = false;
-        $("tbody .css-checkbox").each(function(index, count){
+        $("tbody .css-checkbox").each(function(){
             if($(this).is(':checked')){
                 isChecked = true;
             }
@@ -153,24 +151,67 @@ $(function () {
  * Created by Workstation on 2/14/2016.
  */
 
-// Resize event to check browser viewport
+var isLarge = false;
+var isMedium = false;
+var isSmall = false;
+var isExtraSmall = false;
+
 var wrapper = $("#wrapper");
 
-setLayout(0);
+setDevice();
+setLayout();
 resizeContentWrapper();
+resizeTable();
 
 $(window).resize(function () {
-    setLayout(300);
+    setDevice();
+    setLayout();
 });
 
-$(".content").click(function(){
-    if($(window).width() <= 767){
+// GLOBAL LAYOUT --------------------------------------------------------------
+function setDevice(){
+    var viewportWidth = $(window).width();
+    isLarge = (viewportWidth >= 1200);
+    isMedium = (viewportWidth >= 993 && viewportWidth <= 1199);
+    isSmall = (viewportWidth >= 768 && viewportWidth <= 992);
+    isExtraSmall = (viewportWidth <= 767);
+}
+
+function setLayout(){
+    resizeTable();
+
+    if($(window).height() < 450){
+        $(".login-footer").fadeOut(300);
+    }
+    else{
+        $(".login-footer").fadeIn(300);
+    }
+
+    if(isExtraSmall){
         if(!wrapper.hasClass('toggled')){
             wrapper.addClass('toggled');
+            wrapper.find("#content-wrapper").removeAttr('style');
         }
     }
-});
+    else{
+        if(wrapper.hasClass('toggled')){
+            wrapper.removeClass('toggled');
+        }
+    }
 
+    if(isSmall){
+        $(".bar.sm-screen").css('display', 'table-cell');
+    }
+    else{
+        $(".bar.sm-screen").css('display', 'none');
+    }
+}
+
+
+
+
+
+// NAVIGATION -----------------------------------------------------------------
 $(".toggle-nav").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
@@ -187,33 +228,13 @@ $(".toggle-nav").click(function(e) {
     resizeContentWrapper();
 });
 
-function setLayout(duration){
-    if($(window).height() < 450){
-        $(".login-footer").fadeOut(duration);
-    }
-    else{
-        $(".login-footer").fadeIn(duration);
-    }
-
+$(".content").click(function(){
     if($(window).width() <= 767){
         if(!wrapper.hasClass('toggled')){
             wrapper.addClass('toggled');
-            wrapper.find("#content-wrapper").removeAttr('style');
         }
     }
-    else{
-        if(wrapper.hasClass('toggled')){
-            wrapper.removeClass('toggled');
-        }
-    }
-
-    if($(window).width() >=768 && $(window).width() <=992){
-        $(".bar.sm-screen").css('display', 'table-cell');
-    }
-    else{
-        $(".bar.sm-screen").css('display', 'none');
-    }
-}
+});
 
 function resizeContentWrapper(){
     if($(window).width() <= 767){
@@ -223,5 +244,29 @@ function resizeContentWrapper(){
         else{
             wrapper.find("#content-wrapper").removeAttr('style');
         }
+    }
+}
+
+
+
+// TABLE ---------------------------------------------------------------------
+function resizeTable(){
+    if(isSmall || isExtraSmall){
+        var heading = $(".table th").map(function(){
+            var text = $.trim($(this).text()).toUpperCase();
+            if(text == ''){
+                text = 'SELECT'
+            }
+            return text;
+        }).get();
+
+        $(".table tbody tr").each(function(){
+            for(var i = 0; i < heading.length; i++){
+                $(this).children().eq(i).prepend("<span class='label'>"+heading[i]+"</span>");
+            }
+        });
+    }
+    else{
+        $(".table tbody td").find(".label").remove();
     }
 }

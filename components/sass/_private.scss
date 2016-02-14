@@ -470,8 +470,26 @@ header{
 }
 
 .title-section{
+  @include clearfix();
   margin-bottom: $space-medium;
   display: block;
+
+  > .title-wrapper{
+    float: left;
+  }
+
+  > .control{
+    float: right;
+
+    > div{
+      float: right;
+
+      &.group-control{
+        display: none;
+        margin-right: 5px;
+      }
+    }
+  }
 
   .title{
     margin: 0;
@@ -743,4 +761,9 @@ header{
     position: absolute;
     right: 0;
   }
+}
+
+.rating-wrapper {
+  float: none !important;
+  min-height: 30px;
 }

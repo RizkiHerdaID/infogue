@@ -64,13 +64,13 @@
             <div class="title">
                 <h1>Contributor</h1>
             </div>
-            <div class="control">
+            <div class="control hidden-xs">
                 <div class="account clearfix">
                     <div class="avatar-wrapper">
                         <img src="images/contributors/cici.png" class="img-circle img-rounded">
                         <div class="notify"></div>
                     </div>
-                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>Imelda Agustine</strong></p>
                 </div>
                 <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
@@ -78,7 +78,7 @@
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="index.html">INFOGUE.ID</a></li>
-                <li><a href="admin_dashboard.html">Dashboard</a></li>
+                <li class="hidden-sm"><a href="admin_dashboard.html">Dashboard</a></li>
                 <li class="active">Contributor</li>
             </ol>
             <div class="control">
@@ -88,8 +88,12 @@
         </div>
         <div class="content">
             <div class="title-section">
-                <h1 class="title">Contributor
-                    <div class="pull-right" style="margin-left: 6px">
+                <div class="title-wrapper">
+                    <h1 class="title">Contributor</h1>
+                    <p class="subtitle">List of article contributor</a></p>
+                </div>
+                <div class="control">
+                    <div class="filter">
                         <div class="dropdown select">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 TIMESTAMP
@@ -115,14 +119,13 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="pull-right group-control">
+                    <div class="group-control">
                         <a href="#delete" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
                     </div>
-                </h1>
-                <p class="subtitle">List of article contributor</a></p>
+                </div>
             </div>
             <div class="content-section">
-                <table class="table table-responsive table-striped table-hover table-condensed mbs">
+                <table class="table table-striped table-hover table-condensed mbs">
                     <thead>
                     <tr>
                         <th width="40">
@@ -154,7 +157,7 @@
                         </td>
                         <td><a href="mailto:zizi@gmail.com">zizi@gmail.com</a></td>
                         <td>21 Articles</td>
-                        <td class="text-center"><div class="rating-wrapper pn" data-rating="2"></div></td>
+                        <td><div class="rating-wrapper pn" data-rating="2"></div></td>
                         <td class="text-center">
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -452,11 +455,11 @@
                     </tbody>
                 </table>
                 <div class="table-footer">
-                    <div class="status pull-left">
+                    <div class="status">
                         <p class="text-muted">3/120 Rows selected</p>
                         <p>Showing 1 to 10 of 40 entries</p>
                     </div>
-                    <div class="pull-right text-right">
+                    <div class="pagination-wrapper">
                         <ul class="pagination">
                             <li>
                                 <a href="#" aria-label="First">FIRST</a>

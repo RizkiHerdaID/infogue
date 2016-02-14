@@ -227,6 +227,7 @@ $(function () {
             $("#excerpt").val("");
             $("#standard").prop("checked", true);
             $("#published").prop("checked", true);
+            $("#slug").removeClass('changed');
         }
 
         if($(this).hasClass("reset-contributor")){
@@ -253,6 +254,27 @@ $(function () {
             $(".note-btn.btn-fullscreen").tooltip('hide');
             printDiv("content");
         }
+    });
+
+    function createSlug(str) {
+        var $slug;
+        var trimmed = $.trim(str);
+        $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+            replace(/-+/g, '-').
+            replace(/^-|-$/g, '');
+        return $slug.toLowerCase();
+    }
+
+
+    $("#title").keyup(function(){
+        if(!$("#slug").hasClass('changed')){
+            $("#slug").val(createSlug($(this).val()));
+        }
+    });
+
+
+    $("#slug").keyup(function(){
+        $(this).addClass('changed');
     });
 
 

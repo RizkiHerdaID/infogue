@@ -50,7 +50,8 @@ jsSources = [
 	'components/scripts/template.js'
 ];
 jsAdminSources = [
-	'components/scripts/admin.js'
+	'components/scripts/admin.js',
+	'components/scripts/admin-resize.js'
 ];
 fileSources = [
 	'builds/development/.htaccess',
@@ -165,6 +166,7 @@ gulp.task('watchAdmin', function() {
 
 gulp.task('jsAdmin', function(){
 	gulp.src(jsAdminSources)
+		.pipe(gconcat('admin.js'))
 		.pipe(gif(env === 'production', guglify()))
 		//.pipe(gif(env === 'production', grename({ suffix: '.min' })))
 		.pipe(gulp.dest(outputDir + 'js'))

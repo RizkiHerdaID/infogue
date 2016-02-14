@@ -51,7 +51,8 @@ jsSources = [
 ];
 jsAdminSources = [
 	'components/scripts/admin.js',
-	'components/scripts/admin-resize.js'
+	'components/scripts/admin-resize.js',
+	'components/scripts/admin-validate.js'
 ];
 fileSources = [
 	'builds/development/.htaccess',

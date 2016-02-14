@@ -136,6 +136,13 @@ $(function () {
         }
     });
 
+    $('.bootstrap-tagsinput').focusin(function() {
+        $(this).addClass('focus');
+    });
+    $('.bootstrap-tagsinput').focusout(function() {
+        $(this).removeClass('focus');
+    });
+
 
     // SUMMERNOTE -------------------------------------------------------------------
     if ($('.summernote').length) {
@@ -175,134 +182,186 @@ $(function () {
  * Created by Workstation on 2/14/2016.
  */
 
-var isLarge = false;
-var isMedium = false;
-var isSmall = false;
-var isExtraSmall = false;
+$(function () {
+    var isLarge = false;
+    var isMedium = false;
+    var isSmall = false;
+    var isExtraSmall = false;
 
-var wrapper = $("#wrapper");
+    var wrapper = $("#wrapper");
 
-setDevice();
-setLayout();
-resizeContentWrapper();
-resizeTable();
-
-$(window).resize(function () {
     setDevice();
     setLayout();
-});
-
-// GLOBAL LAYOUT --------------------------------------------------------------
-function setDevice(){
-    var viewportWidth = $(window).width();
-    isLarge = (viewportWidth >= 1200);
-    isMedium = (viewportWidth >= 993 && viewportWidth <= 1199);
-    isSmall = (viewportWidth >= 768 && viewportWidth <= 992);
-    isExtraSmall = (viewportWidth <= 767);
-}
-
-function setLayout(){
+    resizeContentWrapper();
     resizeTable();
 
-    if($(window).height() < 450){
-        $(".login-footer").fadeOut(300);
-    }
-    else{
-        $(".login-footer").fadeIn(300);
+    $(window).resize(function () {
+        setDevice();
+        setLayout();
+    });
+
+// GLOBAL LAYOUT --------------------------------------------------------------
+    function setDevice(){
+        var viewportWidth = $(window).width();
+        isLarge = (viewportWidth >= 1200);
+        isMedium = (viewportWidth >= 993 && viewportWidth <= 1199);
+        isSmall = (viewportWidth >= 768 && viewportWidth <= 992);
+        isExtraSmall = (viewportWidth <= 767);
     }
 
-    if(isExtraSmall){
-        if(!wrapper.hasClass('toggled')){
-            wrapper.addClass('toggled');
-            wrapper.find("#content-wrapper").removeAttr('style');
-        }
-    }
-    else{
-        if(wrapper.hasClass('toggled')){
-            wrapper.removeClass('toggled');
-        }
-    }
+    function setLayout(){
+        resizeTable();
 
-    if(isSmall){
-        $(".bar.sm-screen").css('display', 'table-cell');
+        if($(window).height() < 450){
+            $(".login-footer").fadeOut(300);
+        }
+        else{
+            $(".login-footer").fadeIn(300);
+        }
+
+        if(isExtraSmall){
+            if(!wrapper.hasClass('toggled')){
+                wrapper.addClass('toggled');
+                wrapper.find("#content-wrapper").removeAttr('style');
+            }
+        }
+        else{
+            if(wrapper.hasClass('toggled')){
+                wrapper.removeClass('toggled');
+            }
+        }
+
+        if(isSmall){
+            $(".bar.sm-screen").css('display', 'table-cell');
+        }
+        else{
+            $(".bar.sm-screen").css('display', 'none');
+        }
     }
-    else{
-        $(".bar.sm-screen").css('display', 'none');
-    }
-}
 
 
 
 
 
 // NAVIGATION -----------------------------------------------------------------
-$(".toggle-nav").click(function(e) {
-    e.preventDefault();
-    $("#wrapper").toggleClass("toggled");
+    $(".toggle-nav").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
 
-    if($(window).width() >= 992){
-        if(wrapper.hasClass('toggled')){
-            $(".md-screen").fadeIn(300).css('display', 'table-cell');
+        if($(window).width() >= 992){
+            if(wrapper.hasClass('toggled')){
+                $(".md-screen").fadeIn(300).css('display', 'table-cell');
+            }
+            else{
+                $(".bar.sm-screen").fadeOut(300);
+            }
         }
-        else{
-            $(".bar.sm-screen").fadeOut(300);
+
+        resizeContentWrapper();
+    });
+
+    $(".content").click(function(){
+        if($(window).width() <= 767){
+            if(!wrapper.hasClass('toggled')){
+                wrapper.addClass('toggled');
+                resizeContentWrapper();
+            }
+        }
+    });
+
+    function resizeContentWrapper(){
+        if($(window).width() <= 767){
+            if(!wrapper.hasClass('toggled')){
+                wrapper.find("#content-wrapper").width($("#content-wrapper").width() + $("#sidebar-wrapper").width());
+            }
+            else{
+                wrapper.find("#content-wrapper").removeAttr('style');
+            }
         }
     }
-
-    resizeContentWrapper();
-});
-
-$(".content").click(function(){
-    if($(window).width() <= 767){
-        if(!wrapper.hasClass('toggled')){
-            wrapper.addClass('toggled');
-            resizeContentWrapper();
-        }
-    }
-});
-
-function resizeContentWrapper(){
-    if($(window).width() <= 767){
-        if(!wrapper.hasClass('toggled')){
-            wrapper.find("#content-wrapper").width($("#content-wrapper").width() + $("#sidebar-wrapper").width());
-        }
-        else{
-            wrapper.find("#content-wrapper").removeAttr('style');
-        }
-    }
-}
 
 
 
 // TABLE ---------------------------------------------------------------------
-function resizeTable(){
-    if(isSmall || isExtraSmall){
-        var heading = $(".table th").map(function(){
-            var text = $.trim($(this).text()).toUpperCase();
-            if(text == ''){
-                text = 'SELECT'
+    function resizeTable(){
+        if(isSmall || isExtraSmall){
+            var heading = $(".table th").map(function(){
+                var text = $.trim($(this).text()).toUpperCase();
+                if(text == ''){
+                    text = 'SELECT'
+                }
+                return text;
+            }).get();
+
+            $(".table tbody td").find(".label-title").remove();
+            $(".table tbody tr").each(function(){
+                for(var i = 0; i < heading.length; i++){
+                    $(this).children().eq(i).prepend("<span class='label-title'>"+heading[i]+"</span>");
+                }
+            });
+        }
+        else{
+            $(".table tbody td").find(".label-title").remove();
+        }
+
+        if(isExtraSmall){
+            $(".filter ul.dropdown-menu").removeClass("dropdown-menu-right").addClass("dropdown-menu-left");
+        }
+        else{
+            $(".filter ul.dropdown-menu").removeClass("dropdown-menu-left").addClass("dropdown-menu-right");
+        }
+    }
+});
+
+
+/**
+ * Created by Workstation on 2/14/2016.
+ */
+
+$.validator.setDefaults({
+    highlight: function (element) {
+        $(element).closest('.form-group').addClass('has-error');
+    },
+    unhighlight: function (element) {
+        $(element).closest('.form-group').removeClass('has-error');
+    },
+    errorElement: 'span',
+    errorClass: 'help-block',
+    errorPlacement: function (error, element) {
+        if (element.parent('.input-group').length) {
+            error.insertAfter(element.parent());
+        } else {
+            error.insertAfter(element);
+        }
+    }
+});
+
+$.validator.addMethod("checkTags", function (value) {
+    return ($("#keywords").find(".tag").length > 0);
+});
+
+$(function () {
+    $("#form-setting").validate({
+        rules: {
+            "keywords-dummy": "checkTags",
+            "new-password": {
+                minlength: 8,
+                maxlength: 20
+            },
+            "confirm-password": {
+                minlength: 8,
+                maxlength: 20,
+                equalTo: "#new-password"
             }
-            return text;
-        }).get();
-
-        $(".table tbody td").find(".label-title").remove();
-        $(".table tbody tr").each(function(){
-            for(var i = 0; i < heading.length; i++){
-                $(this).children().eq(i).prepend("<span class='label-title'>"+heading[i]+"</span>");
-            }
-        });
-    }
-    else{
-        $(".table tbody td").find(".label-title").remove();
-    }
-
-    if(isExtraSmall){
-        $(".filter ul.dropdown-menu").removeClass("dropdown-menu-right").addClass("dropdown-menu-left");
-    }
-    else{
-        $(".filter ul.dropdown-menu").removeClass("dropdown-menu-left").addClass("dropdown-menu-right");
-    }
-
-    //$("tr").find(".dropdown").removeClass("dropup");
-    //$("tr:last-child").find(".dropdown").addClass("dropup");
-}
+        },
+        messages: {
+            "keywords-dummy": "Keywords are required",
+            password: "Password is required for saving",
+            address: "Address is required",
+            email: "Email address is required",
+            contact: "Contact or Fax is required",
+            description: "Description is required",
+            website: "Website name is required"
+        }
+    });
+})

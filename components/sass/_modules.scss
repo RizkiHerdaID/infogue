@@ -562,13 +562,34 @@
 
 .note-editor{
   margin-bottom: $space-small;
+
+  &.note-frame{
+    .note-editing-area .note-editable{
+      border: 1px solid $color-gray-light;
+
+      ul, ol{
+        margin-left: $space-medium;
+      }
+    }
+  }
+
+  .link-dialog{
+    .checkbox{
+      margin-top: $space-small;
+      padding-left: $space-medium;
+
+      input{
+        margin-top: 2px;
+      }
+    }
+
+    .modal-body{
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
-.note-editor.note-frame.fullscreen{
-  z-index: 999;
-}
-.note-editor.note-frame .note-editing-area .note-editable{
-  border: 1px solid $color-gray-light;
-}
+
 
 // MODAL
 .modal{
@@ -779,12 +800,5 @@
     float: right;
     text-align: right;
     margin-top: $space-small;
-  }
-}
-
-.note-editable{
-
-  ul{
-    margin-left: $space-medium;
   }
 }

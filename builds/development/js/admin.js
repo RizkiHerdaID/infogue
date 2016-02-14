@@ -150,6 +150,25 @@ $(function () {
             placeholder: 'write here...',
             height: 200
         });
+
+        $(".note-group-select-from-files").find(".note-image-input").remove();
+        var inputFile = "<div class='css-file'>" +
+            "<span class='file-info'>No file selected</span>" +
+            "<button class='btn btn-primary' type='button'>SELECT<span class='hidden-xs'> IMAGE</span></button>" +
+            "<input type='file' class='file-input note-image-input form-control' name='files' accept='image/*' multiple='multiple'/>" +
+            "</div>";
+        $(".note-group-select-from-files").append(inputFile);
+
+        $(".link-dialog .checkbox").remove();
+        var inputCheckbox = "<div class='checkbox'>" +
+            "<input type='checkbox' name='link' id='link' class='css-checkbox' checked>" +
+            "<label for='link' class='css-label'>Open in new window</label>" +
+            "</div>";
+        $(".link-dialog .modal-body").append(inputCheckbox);
+
+        setTimeout(function(){
+            $(".note-btn.btn-fullscreen").tooltip('show');
+        }, 1000);
     }
 });
 /**
@@ -237,6 +256,7 @@ $(".content").click(function(){
     if($(window).width() <= 767){
         if(!wrapper.hasClass('toggled')){
             wrapper.addClass('toggled');
+            resizeContentWrapper();
         }
     }
 });

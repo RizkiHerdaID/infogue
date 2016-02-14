@@ -83,6 +83,7 @@ $(".content").click(function(){
     if($(window).width() <= 767){
         if(!wrapper.hasClass('toggled')){
             wrapper.addClass('toggled');
+            resizeContentWrapper();
         }
     }
 });

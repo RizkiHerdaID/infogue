@@ -21,13 +21,19 @@
 <div class="login text-center">
     <div class="login-wrapper">
         <img src="images/misc/logo-color.png"/>
-        <h3>FORGOT PASSWORD</h3>
+        <h3>RESET PASSWORD</h3>
 
-        <form action="admin_reset.html">
+        <form action="admin_login.html">
             <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email address"/>
+                <input type="email" class="form-control" name="email" placeholder="Email address" value="anggadarkprince@gmail.com" readonly/>
             </div>
-            <button class="btn btn-gradient btn-block">RESET MY PASSWORD</button>
+            <div class="form-group">
+                <input type="password" class="form-control" name="new-password" placeholder="New password"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="retype-password" placeholder="Re-type password"/>
+            </div>
+            <button class="btn btn-gradient btn-block">CHANGE PASSWORD</button>
             <p class="mtm">Remember your credential? <a href="admin_login.html">Sign here!</a></p>
         </form>
     </div>

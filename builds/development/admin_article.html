@@ -64,13 +64,13 @@
             <div class="title">
                 <h1>Article</h1>
             </div>
-            <div class="control">
+            <div class="control hidden-xs">
                 <div class="account clearfix">
                     <div class="avatar-wrapper">
                         <img src="images/contributors/cici.png" class="img-circle img-rounded">
                         <div class="notify"></div>
                     </div>
-                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>Imelda Agustine</strong></p>
                 </div>
                 <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
@@ -78,18 +78,23 @@
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="index.html">INFOGUE.ID</a></li>
-                <li><a href="admin_dashboard.html">Dashboard</a></li>
+                <li class="hidden-sm hidden-xs"><a href="admin_dashboard.html">Dashboard</a></li>
                 <li class="active">Article</li>
             </ol>
             <div class="control">
                 <a href="#search" data-toggle="modal" class="link"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="admin_article_create.html" class="link visible-xs"><i class="fa fa-plus"></i> CREATE ARTICLE</a>
                 <a href="#" class="link"><i class="fa fa-print"></i> PRINT</a>
             </div>
         </div>
         <div class="content">
             <div class="title-section">
-                <h1 class="title">Article
-                    <div class="pull-right" style="margin-left: 6px">
+                <div class="title-wrapper">
+                    <h1 class="title">Article</h1>
+                    <p class="subtitle">List of people post</p>
+                </div>
+                <div class="control">
+                    <div class="filter">
                         <div class="dropdown select">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 TIMESTAMP
@@ -98,10 +103,9 @@
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">SORT BY</li>
                                 <li><a href="#"><i class="fa fa-clock-o"></i> Timestamp</a></li>
-                                <li><a href="#"><i class="fa fa-font"></i> Title</a></li>
-                                <li><a href="#"><i class="fa fa-eye"></i> Views</a></li>
-                                <li><a href="#"><i class="fa fa-star"></i> Rating</a></li>
-                                <li><a href="#"><i class="fa fa-exclamation-triangle"></i> Status</a></li>
+                                <li><a href="#"><i class="fa fa-font"></i> Name</a></li>
+                                <li><a href="#"><i class="fa fa-trophy"></i> Popularity</a></li>
+                                <li><a href="#"><i class="fa fa-file-text"></i> Article</a></li>
                             </ul>
                         </div>
                         <div class="dropdown select">
@@ -116,12 +120,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="pull-right group-control">
-                        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                    <div class="group-control">
+                        <a href="#delete" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> APPROVE</a>
                     </div>
-                </h1>
-                <p class="subtitle">List of people post</a></p>
+                </div>
             </div>
             <div class="content-section">
                 <table class="table table-responsive table-striped table-hover table-condensed mbs">
@@ -165,11 +168,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -201,11 +203,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -237,11 +238,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -273,11 +273,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -309,11 +308,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -336,7 +334,7 @@
                         </td>
                         <td class="text-center"><span class="label label-success">PUBLISHED</span></td>
                         <td class="text-center">
-                            <div class="dropdown dropup">
+                            <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     ACTION
                                     <span class="caret"></span>
@@ -345,11 +343,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -372,7 +369,7 @@
                         </td>
                         <td class="text-center"><span class="label label-success">PUBLISHED</span></td>
                         <td class="text-center">
-                            <div class="dropdown dropup">
+                            <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                     ACTION
                                     <span class="caret"></span>
@@ -381,11 +378,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -417,11 +413,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -453,11 +448,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>
@@ -489,11 +483,10 @@
                                     <li class="dropdown-header">QUICK ACTION</li>
                                     <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
                                     <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
-                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Trending</a></li>
-                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Headline</a></li>
+                                    <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
+                                    <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                     <li class="dropdown-header">CONTROL</li>
                                     <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
-                                    <li><a href="article.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                     <li><a href="admin_article_edit.html"><i class="fa fa-pencil"></i> Edit</a></li>
                                     <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                 </ul>

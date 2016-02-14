@@ -54,7 +54,7 @@
           text-align: left;
         }
 
-        .label {
+        .label-title {
           position: absolute;
           color: $color-dark;
           font-family: opensans-semibold, sans-serif;
@@ -162,5 +162,9 @@
         }
       }
     }
+  }
+
+  .breadcrumb-wrapper .control .link{
+    display: inline-block!important;
   }
 }

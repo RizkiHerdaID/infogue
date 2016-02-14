@@ -260,13 +260,24 @@ function resizeTable(){
             return text;
         }).get();
 
+        $(".table tbody td").find(".label-title").remove();
         $(".table tbody tr").each(function(){
             for(var i = 0; i < heading.length; i++){
-                $(this).children().eq(i).prepend("<span class='label'>"+heading[i]+"</span>");
+                $(this).children().eq(i).prepend("<span class='label-title'>"+heading[i]+"</span>");
             }
         });
     }
     else{
-        $(".table tbody td").find(".label").remove();
+        $(".table tbody td").find(".label-title").remove();
     }
+
+    if(isExtraSmall){
+        $(".filter ul.dropdown-menu").removeClass("dropdown-menu-right").addClass("dropdown-menu-left");
+    }
+    else{
+        $(".filter ul.dropdown-menu").removeClass("dropdown-menu-left").addClass("dropdown-menu-right");
+    }
+
+    //$("tr").find(".dropdown").removeClass("dropup");
+    //$("tr:last-child").find(".dropdown").addClass("dropup");
 }

@@ -221,12 +221,32 @@ $(function () {
             $("#title").val("");
             $("#slug").val("");
             $('#tags').tagsinput('removeAll');
-            $('#category').val('');
-            $('#subcategory').val('');
+            $('#category').val("");
+            $('#subcategory').val("");
             $(".note-editable").text("");
             $("#excerpt").val("");
             $("#standard").prop("checked", true);
             $("#published").prop("checked", true);
+        }
+
+        if($(this).hasClass("reset-contributor")){
+            $("#name").val("");
+            $('#date').val("");
+            $('#month').val("");
+            $('#year').val("");
+            $("#male").prop("checked", true);
+            $("#location").val("");
+            $("#contact").val("");
+            $("#about").val("");
+            $("#instagram").val("");
+            $("#facebook").val("");
+            $("#twitter").val("");
+            $("#googleplus").val("");
+            $("#subscribe").prop("checked", true);
+            $("#message").prop("checked", true);
+            $("#follow").prop("checked", true);
+            $("#stream").prop("checked", true);
+            $("#push-notification").prop("checked", true);
         }
 
         if($(this).hasClass("print")){
@@ -428,7 +448,7 @@ $(function () {
         },
         messages: {
             "keywords-dummy": "Keywords are required",
-            password: "Password is required for saving",
+            password: "Password is required to save",
             address: "Address is required",
             email: "Email address is required",
             contact: "Contact or Fax is required",
@@ -463,6 +483,40 @@ $(function () {
             subcategory: "Sub Category is required",
             featured: "Featured is required",
             content: "Post content name is required"
+        }
+    });
+
+    $("#form-contributor").validate({
+        groups: {
+            birthday: "date month year"
+        },
+        errorPlacement: function(error, element) {
+            if (element.attr("id") == "date" || element.attr("id") == "month" || element.attr("id") == "year") {
+                element.closest('div').append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: {
+            "new-password": {
+                minlength: 8,
+                maxlength: 20
+            },
+            "confirm-password": {
+                minlength: 8,
+                maxlength: 20,
+                equalTo: "#new-password"
+            }
+        },
+        messages: {
+            name: "Name is required",
+            contact: "Contact is required",
+            about: "About is required",
+            location: "Location is required",
+            date: "Please complete the birthday",
+            month: "Please complete the birthday",
+            year: "Please complete the birthday",
+            password: "Password is required to update"
         }
     });
 })

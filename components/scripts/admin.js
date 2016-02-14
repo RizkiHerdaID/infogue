@@ -221,12 +221,32 @@ $(function () {
             $("#title").val("");
             $("#slug").val("");
             $('#tags').tagsinput('removeAll');
-            $('#category').val('');
-            $('#subcategory').val('');
+            $('#category').val("");
+            $('#subcategory').val("");
             $(".note-editable").text("");
             $("#excerpt").val("");
             $("#standard").prop("checked", true);
             $("#published").prop("checked", true);
+        }
+
+        if($(this).hasClass("reset-contributor")){
+            $("#name").val("");
+            $('#date').val("");
+            $('#month').val("");
+            $('#year').val("");
+            $("#male").prop("checked", true);
+            $("#location").val("");
+            $("#contact").val("");
+            $("#about").val("");
+            $("#instagram").val("");
+            $("#facebook").val("");
+            $("#twitter").val("");
+            $("#googleplus").val("");
+            $("#subscribe").prop("checked", true);
+            $("#message").prop("checked", true);
+            $("#follow").prop("checked", true);
+            $("#stream").prop("checked", true);
+            $("#push-notification").prop("checked", true);
         }
 
         if($(this).hasClass("print")){

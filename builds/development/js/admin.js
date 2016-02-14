@@ -163,11 +163,19 @@ $(window).resize(function () {
     setLayout(300);
 });
 
+$(".content").click(function(){
+    if($(window).width() <= 767){
+        if(!wrapper.hasClass('toggled')){
+            wrapper.addClass('toggled');
+        }
+    }
+});
+
 $(".toggle-nav").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
 
-    if($(window).width() >=992){
+    if($(window).width() >= 992){
         if(wrapper.hasClass('toggled')){
             $(".md-screen").fadeIn(300).css('display', 'table-cell');
         }

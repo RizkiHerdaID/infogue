@@ -188,6 +188,7 @@ $(function () {
         e.preventDefault();
 
         if($(this).hasClass("reset-setting")){
+            $(".note-btn.btn-fullscreen").tooltip('hide');
             $("#website").val("InfoGue.id");
             $('#keywords').tagsinput('add', 'news');
             $('#keywords').tagsinput('add', 'technology');
@@ -216,6 +217,7 @@ $(function () {
         }
 
         if($(this).hasClass("reset-article")){
+            $(".note-btn.btn-fullscreen").tooltip('hide');
             $("#title").val("");
             $("#slug").val("");
             $('#tags').tagsinput('removeAll');
@@ -228,6 +230,7 @@ $(function () {
         }
 
         if($(this).hasClass("print")){
+            $(".note-btn.btn-fullscreen").tooltip('hide');
             printDiv("content");
         }
     });

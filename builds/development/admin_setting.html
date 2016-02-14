@@ -64,13 +64,13 @@
             <div class="title">
                 <h1>Setting</h1>
             </div>
-            <div class="control">
+            <div class="control hidden-xs">
                 <div class="account clearfix">
                     <div class="avatar-wrapper">
                         <img src="images/contributors/cici.png" class="img-circle img-rounded">
                         <div class="notify"></div>
                     </div>
-                    <p class="avatar-greeting pull-left">Hi, <strong>Imelda Agustine</strong></p>
+                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>Imelda Agustine</strong></p>
                 </div>
                 <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
@@ -78,14 +78,14 @@
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="index.html">INFOGUE.ID</a></li>
-                <li><a href="admin_dashboard.html">Dashboard</a></li>
+                <li class="hidden-xs"><a href="admin_dashboard.html">Dashboard</a></li>
                 <li class="active">Setting</li>
             </ol>
         </div>
         <div class="content">
             <div class="title-section">
                 <h1 class="title">Website Setting</h1>
-                <p class="subtitle">Basic web configuration and contact <a href="#" class="pull-right">RESET DEFAULT</a></p>
+                <p class="subtitle">Basic web configuration and contact <a href="#" class="pull-right hidden-xs">RESET DEFAULT</a></p>
             </div>
             <div class="content-section">
                 <form class="form-horizontal form-strip">
@@ -152,10 +152,10 @@
                             <label for="latitude" class="col-sm-3 control-label">Location</label>
                             <div class="col-sm-9">
                                 <div class="row">
-                                    <div class="col-xs-6">
-                                        <input type="text" class="form-control" id="latitude" placeholder="Latitude coordinate">
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control mbs" id="latitude" placeholder="Latitude coordinate">
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-sm-6">
                                         <input type="text" class="form-control" id="longitude" placeholder="Longitude coordinate">
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                             <div class="col-sm-9">
                                 <div class="css-file">
                                     <span class="file-info">No file selected</span>
-                                    <button class="btn btn-primary" type="button">SELECT FAVICON</button>
+                                    <button class="btn btn-primary" type="button">SELECT<span class="hidden-xs"> FAVICON</span></button>
                                     <input type="file" class="file-input" id="favicon" accept="image/*"/>
                                 </div>
                                 <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Small icon on browser tab</span>
@@ -201,7 +201,7 @@
                             <div class="col-sm-9">
                                 <div class="css-file">
                                     <span class="file-info">No file selected</span>
-                                    <button class="btn btn-primary" type="button">SELECT BACKGROUND</button>
+                                    <button class="btn btn-primary" type="button">SELECT<span class="hidden-xs"> BACKGROUND</span></button>
                                     <input type="file" class="file-input" id="background" accept="image/*"/>
                                 </div>
                                 <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Optional background (not necessary)</span>
@@ -275,7 +275,7 @@
                                         <p class="small text-muted mbs">Format like .png .jpg .gif</p>
                                         <div class="css-file">
                                             <span class="file-info">No file selected</span>
-                                            <button class="btn btn-primary" type="button">SELECT AVATAR</button>
+                                            <button class="btn btn-primary" type="button">SELECT<span class="hidden-xs"> AVATAR</span></button>
                                             <input type="file" class="file-input" id="avatar" accept="image/*"/>
                                         </div>
                                     </div>

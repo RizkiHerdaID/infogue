@@ -448,31 +448,30 @@ $(function(){
         $("#navigation").toggleClass("open");
     });
 
-    $('html').click(function() {
-        $(".level-1").html("").addClass("blank").css("width", "40px");;
-        $(".level-2").html("").addClass("blank").css("width", "40px");;
-        $("#navigation").slideUp(200);
-    });
-
-    $('.navigation').click(function(event){
-        event.stopPropagation();
-    });
-
     function setLayout(){
         // NAVIGATION
         if(isSmall || isExtraSmall){
-            console.log('destroy superfish');
             navigation.superfish('destroy');
             $("#navigation").hide();
+
+            $('html').click(function() {
+                $(".level-1").html("").addClass("blank").css("width", "40px");;
+                $(".level-2").html("").addClass("blank").css("width", "40px");;
+                $("#navigation").slideUp(200);
+            });
+
+            $('.navigation').click(function(event){
+                event.stopPropagation();
+            });
         }
         else{
-            console.log('init superfish');
             navigation.superfish({
                 speed: 'fast',
                 cssArrows: false,
                 delay: 100
             });
             $("#navigation").removeClass("open").css("display", "block");
+            $('html').unbind("click");
         }
     }
 });

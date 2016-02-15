@@ -21,6 +21,11 @@ ul, ol{
   padding: 0;
 }
 
+.no-backgroundcliptext .login .login-wrapper h3{
+  background-image: none;
+  color: #48b2a0;
+}
+
 .login{
   @include background-cover("../images/backgrounds/selfie.jpg");
   height: 100%;

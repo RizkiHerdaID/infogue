@@ -46,6 +46,7 @@ coffeeSources = [
 jsSources = [
 	'components/scripts/tagline.js',
 	'components/scripts/main.js',
+	'components/scripts/resize.js',
 	'components/scripts/infinite.js',
 	'components/scripts/template.js'
 ];

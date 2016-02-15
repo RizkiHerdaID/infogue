@@ -52,14 +52,6 @@ $(function () {
     });
 
 
-    // NAVIGATION SUPERFISH -------------------------------------------------------
-    var navigation = $('#navigation').superfish({
-        speed: 'fast',
-        cssArrows: false,
-        delay: 100
-    });
-
-
     // RATING ---------------------------------------------------------------------
     var rateMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT'];
     var lastMessage = $(".rating > .rate-message").text();
@@ -364,5 +356,9 @@ $(function () {
             cursorborder: 'none'
         });
     }
+
+    $("a[href='#']").click(function(e) {
+        e.preventDefault();
+    });
 
 });

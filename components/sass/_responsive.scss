@@ -11,9 +11,151 @@
 }
 
 @media screen and (max-width: 992px) {
+  .header-wrapper{
+    margin-bottom: $space-medium;
 
+    .logo{
+      width: 200px;
+      height: 60px;
+      padding-right: $space-medium;
+      margin-top: $space-medium;
+
+      h1{
+        background-size: 100%;
+      }
+    }
+
+    .header-section{
+      padding-left: 200px;
+
+      .search-wrapper{
+        .search{
+          .input-search input {
+            width: 220px;
+          }
+        }
+
+      }
+    }
+  }
+
+  .navigation {
+    position: relative;
+
+    .breadcrumb{
+      background-color: lighten($color-accent2, 5%);
+      margin: 0;
+
+      li{
+        height: 34px;
+
+        &:first-child{
+          width: 160px;
+        }
+        &:nth-child(1n + 2){
+          width: 40px;
+        }
+        &.level-dummy{
+          width: auto;
+        }
+
+        a{
+          white-space: nowrap;
+        }
+      }
+
+      i{
+        margin-right: $space-small;
+      }
+    }
+
+    .sf-menu{
+      display: none;
+
+      >li{
+        display: block;
+        width: 180px;
+        border-bottom: 1px solid $color-accent1;
+
+        > a{
+          text-align: left;
+        }
+
+        .sf-mega{
+          position: absolute;
+          width: auto;
+          top: 0;
+          bottom: 0;
+          left: 180px;
+          padding: 15px;
+
+          .sf-mega-section{
+            width: 150px;
+            min-height: 185px;
+
+            &:nth-child(3n+3){
+              border-right: none;
+            }
+
+            li{
+              &.active a{
+                background: none;
+                color: $color-accent2;
+              }
+
+              a {
+                padding: 7px 0;
+
+                &:hover{
+                  background: none;
+                  color: $color-accent3;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {
+  .section .title{
+    h1{
+      font-size: 2em;
+    }
+    .lead{
+      font-size: 1em;
+    }
+  }
 
+  .map {
+    height: 250px;
+    padding: $space-medium 0;
+  }
+  .contact-social{
+    margin: 0;
+
+    li{
+      padding: $space-medium $space-small 0 !important;
+    }
+  }
+
+  footer{
+    .about{
+      .logo{
+        margin-bottom: $space-medium;
+      }
+      p{
+        margin-bottom: $space-medium * 2;
+      }
+    }
+    h3{
+      margin-bottom: $space-small;
+    }
+    .bottom .social{
+      margin-top: $space-medium;
+      text-align: left;
+    }
+  }
 }

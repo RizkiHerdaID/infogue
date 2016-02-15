@@ -108,6 +108,7 @@ header {
     display: block;
 
     .control-wrapper {
+      @include clearfix();
       overflow: hidden;
 
       a {
@@ -119,10 +120,10 @@ header {
       }
 
       .featured-link {
+        float: left;
         padding-top: $space-medium;
 
         li {
-          float: left;
           display: inline-block;
           margin-right: $space-medium;
 
@@ -134,6 +135,7 @@ header {
 
       .user-control {
         float: right;
+        padding-top: $space-medium;
         color: $color-light;
 
         li {
@@ -160,6 +162,7 @@ header {
     }
 
     .search-wrapper {
+      @include clearfix();
       padding-top: $space-medium;
 
       .search {
@@ -361,7 +364,7 @@ header {
 }
 
 footer {
-  background: url("../images/backgrounds/footer.jpg") $background-dark no-repeat center center;
+  background: url("../images/backgrounds/footer.jpg") 50% 0% / cover;
   min-height: 500px;
   width: 100%;
   padding: 65px 0 45px;
@@ -386,6 +389,8 @@ footer {
   }
 
   .about {
+    margin-bottom: $space-medium;
+
     .logo {
       max-width: 170px;
       margin-bottom: $space-medium * 2;
@@ -394,6 +399,7 @@ footer {
 
   .quick-links {
     float: left;
+    margin-bottom: $space-medium;
 
     & + .quick-links {
       li {
@@ -440,7 +446,7 @@ footer {
   }
 
   .bottom {
-    margin-top: $space-large + $space-small;
+    margin-top: 40px;
 
     .featured-link {
       display: block;

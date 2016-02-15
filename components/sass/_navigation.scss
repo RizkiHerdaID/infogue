@@ -57,10 +57,11 @@
       >a {
         padding: .75em 0.8em;
         text-decoration: none;
+        text-align: center;
         zoom: 1; /* IE7 */
         color: $color-light;
         text-transform: uppercase;
-        font-weight: bold;
+        font-family: opensans-semibold, sans-serif;
       }
     }
 
@@ -72,7 +73,7 @@
       box-sizing: border-box;
       width: 100%;
 
-      &::after {
+      &:after {
         content: "";
         background: url("") no-repeat bottom center;
         opacity: 0.1;
@@ -85,7 +86,8 @@
       }
 
       h2{
-        font-family: opensans-bold, sans-serif;
+        font-family: opensans-semibold, sans-serif;
+        font-weight: normal;
         margin-bottom: $space-small;
         color: $color-light;
         text-transform: uppercase;

@@ -82,11 +82,13 @@
   margin: ($space-large / 2) 0;
 
   > li {
+    @include transition(width 0.2s ease);
     position: relative;
     font-family: opensans-bold, sans-serif;
     text-transform: uppercase;
 
     &:after {
+      @include transition(width 0.2s ease);
       content: "";
       position: absolute;
       right: -19px;

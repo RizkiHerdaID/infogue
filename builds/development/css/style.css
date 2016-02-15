@@ -3091,6 +3091,189 @@ legend {
   }
 }
 @media screen and (max-width: 767px) {
+  header {
+    height: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+  header .header {
+    height: 60px;
+    margin-bottom: 0;
+  }
+  header .header .container {
+    padding: 0;
+  }
+
+  .header-wrapper {
+    margin-bottom: 0;
+  }
+  .header-wrapper .logo {
+    width: 190px;
+    height: 28px;
+    padding-right: 20px;
+    margin-top: 15px;
+  }
+  .header-wrapper .logo .toggle-nav {
+    color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+    float: left;
+    padding: 5px;
+    margin: 0 10px;
+  }
+  .header-wrapper .logo h1 {
+    background-size: 100%;
+    background-position: top;
+    margin-top: 2px;
+  }
+  .header-wrapper .header-section {
+    padding-left: 0;
+  }
+  .header-wrapper .header-section .search-wrapper {
+    padding: 15px;
+    margin-top: 0;
+    background-color: #00acc1;
+    display: none;
+  }
+  .header-wrapper .header-section .search-wrapper .search {
+    width: 100%;
+    display: block;
+    text-align: right;
+    position: relative;
+  }
+  .header-wrapper .header-section .search-wrapper .search .input-search {
+    width: 100%;
+  }
+  .header-wrapper .header-section .search-wrapper .search .input-search input {
+    width: 100%;
+    padding-right: 80px;
+  }
+  .header-wrapper .header-section .search-wrapper .search button {
+    position: absolute;
+    margin: 0;
+    right: 0;
+    top: 0;
+  }
+  .header-wrapper .header-section .control-wrapper .user-control {
+    padding: 0;
+  }
+  .header-wrapper .header-section .control-wrapper .user-control li:last-child a {
+    padding: 15px;
+  }
+  .header-wrapper .header-section .control-wrapper .user-control .mobile-search {
+    display: block;
+    font-size: 22px;
+    text-align: center;
+    height: 60px;
+    width: 60px;
+  }
+  .header-wrapper .header-section .control-wrapper .user-control .mobile-search.open, .header-wrapper .header-section .control-wrapper .user-control .mobile-search:hover {
+    background-color: #00acc1;
+    color: #ffffff;
+  }
+
+  .navigation {
+    -moz-transition: left 0.5s ease;
+    -o-transition: left 0.5s ease;
+    -webkit-transition: left 0.5s ease;
+    transition: left 0.5s ease;
+    margin: 0;
+    overflow-y: auto;
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    left: -220px;
+  }
+  .navigation .overlay {
+    width: 200%;
+    height: 100%;
+    position: fixed;
+    background-color: #333333;
+    display: none;
+    opacity: .7;
+  }
+  .navigation.open {
+    left: 0;
+  }
+  .navigation.open .overlay {
+    display: block;
+  }
+  .navigation .sidebar-profile {
+    background-color: #00a3b7;
+    padding: 20px;
+    z-index: 1;
+    position: relative;
+    height: 80px;
+  }
+  .navigation .sidebar-profile img {
+    float: left;
+    width: 35px;
+    height: 35px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+  .navigation .sidebar-profile .info {
+    color: #ffffff;
+    padding-left: 45px;
+  }
+  .navigation .sidebar-profile .info .name {
+    font-family: opensans-semibold, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .navigation .sidebar-profile .info .location {
+    font-size: 0.9em;
+  }
+  .navigation .sf-menu {
+    background-color: #00acc1;
+    overflow-y: auto;
+    height: 100%;
+    display: block;
+    padding-bottom: 140px;
+  }
+  .navigation .sf-menu > li {
+    background-color: #00acc1;
+    width: 220px;
+  }
+  .navigation .sf-menu > li:hover > .sf-mega, .navigation .sf-menu > li.sfHover > .sf-mega {
+    display: none;
+  }
+  .navigation .sf-menu > li > a {
+    padding: 10px 20px;
+  }
+  .navigation .sf-menu > li > a i {
+    float: right;
+  }
+  .navigation .sf-menu > li .sf-mega {
+    position: static;
+    background-color: #4dc4d2;
+  }
+  .navigation .sf-menu > li .sf-mega .sf-mega-section {
+    float: none;
+    min-height: inherit;
+    border: none;
+  }
+  .navigation .sf-menu > li .sf-mega .sf-mega-section li a {
+    color: #333333;
+  }
+  .navigation .sf-menu > li .sf-mega .sf-mega-section li a:hover {
+    color: #ecf9fb;
+  }
+
+  .register,
+  .login,
+  .reset,
+  .forgot,
+  .confirmation,
+  .activate,
+  .map {
+    margin-top: 60px;
+  }
+
   .section .title h1 {
     font-size: 2em;
   }
@@ -3099,7 +3282,7 @@ legend {
   }
 
   .map {
-    height: 250px;
+    height: 150px;
     padding: 20px 0;
   }
 

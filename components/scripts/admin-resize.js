@@ -63,7 +63,7 @@ $(function () {
 
 
 
-// NAVIGATION -----------------------------------------------------------------
+    // NAVIGATION -----------------------------------------------------------------
     $(".toggle-nav").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");

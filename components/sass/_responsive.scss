@@ -120,6 +120,215 @@
 }
 
 @media screen and (max-width: 767px) {
+  header{
+    height: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    .header{
+      height: 60px;
+      margin-bottom: 0;
+
+      .container {
+        padding: 0;
+      }
+    }
+  }
+
+  .header-wrapper{
+    margin-bottom: 0;
+
+    .logo{
+      width: 190px;
+      height: 28px;
+      padding-right: $space-medium;
+      margin-top: 15px;
+
+      .toggle-nav{
+        color: $color-light;
+        font-size: $text-heading2;
+        cursor: pointer;
+        float: left;
+        padding: 5px;
+        margin: 0 $space-small;
+      }
+
+      h1{
+        background-size: 100%;
+        background-position: top;
+        margin-top: 2px;
+      }
+    }
+
+    .header-section{
+      padding-left: 0;
+
+      .search-wrapper{
+        padding: 15px;
+        margin-top: 0;
+        background-color: $color-accent1;
+        display: none;
+
+        .search{
+          width: 100%;
+          display: block;
+          text-align: right;
+          position: relative;
+
+          .input-search{
+            width: 100%;
+
+            input {
+              width: 100%;
+              padding-right: 80px;
+            }
+          }
+          button{
+            position: absolute;
+            margin: 0;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+
+      .control-wrapper .user-control {
+        padding: 0;
+
+        li:last-child a{
+          padding: 15px;;
+        }
+        .mobile-search{
+          display: block;
+          font-size: $text-heading2;
+          text-align: center;
+          height: 60px;
+          width: 60px;
+
+          &.open, &:hover{
+            background-color: $color-accent1;
+            color: $color-light;
+          }
+        }
+      }
+    }
+  }
+
+  .navigation {
+    @include transition(left 0.5s ease);
+    margin: 0;
+    overflow-y: auto;
+    height: 100%;
+    width: 220px;
+    position: fixed;
+    left: -220px;
+
+    .overlay{
+      width: 200%;
+      height: 100%;
+      position: fixed;
+      background-color: $color-dark;
+      display: none;
+      opacity: .7;
+    }
+
+    &.open{
+      left: 0;
+
+      .overlay{
+        display: block;
+      }
+    }
+
+    .sidebar-profile{
+      background-color: darken($color-accent1, 2%);
+      padding: $space-medium;
+      z-index: 1;
+      position: relative;
+      height: 80px;
+
+      img{
+        float: left;
+        width: 35px;
+        height: 35px;
+        @include border-radius(50%)
+      }
+
+      .info{
+        color: $color-light;
+        padding-left: 45px;
+
+        .name{
+          font-family: opensans-semibold, sans-serif;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .location{
+          font-size: 0.9em;
+        }
+      }
+    }
+
+    .sf-menu{
+      background-color: $color-accent1;
+      overflow-y: auto;
+      height: 100%;
+      display: block;
+      padding-bottom: 140px;
+
+      > li{
+        background-color: $color-accent1;
+        width: 220px;
+
+        &:hover > .sf-mega,
+        &.sfHover > .sf-mega {
+          display: none;
+        }
+
+        > a{
+          padding: $space-small $space-medium;
+
+          i{
+            float: right;
+          }
+        }
+
+        .sf-mega {
+          position: static;
+          background-color: $color-accent2;
+
+          .sf-mega-section {
+            float: none;
+            min-height: inherit;
+            border: none;
+
+            li a{
+              color: $color-dark;
+
+              &:hover{
+                color: $color-accent4;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .register,
+  .login,
+  .reset,
+  .forgot,
+  .confirmation,
+  .activate,
+  .map {
+    margin-top: 60px;
+  }
+
   .section .title{
     h1{
       font-size: 2em;
@@ -130,7 +339,7 @@
   }
 
   .map {
-    height: 250px;
+    height: 150px;
     padding: $space-medium 0;
   }
   .contact-social{

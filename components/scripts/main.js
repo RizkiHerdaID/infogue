@@ -17,41 +17,6 @@ $(function () {
     });
 
 
-    // STICKY HEADER---------------------------------------------------------------
-    var closed = new Waypoint({
-        element: $("header"),
-        handler: function () {
-            if ($(".header.closed").length) {
-                $(".header").addClass("transition");
-                //console.log("add transition when closed");
-            }
-            $(".header").toggleClass('closed');
-            //console.log(this.element.class + ' closed triggers at ' + this.triggerPoint)
-
-            if (!$(".header.closed").length) {
-                setTimeout(function () {
-                    $(".header").removeClass("transition");
-                    //console.log("remove transition when closed");
-                }, 500);
-            }
-        },
-        offset: -200
-    });
-
-    var sticky = new Waypoint({
-        element: $("header"),
-        handler: function () {
-            if ($(".header.closed").length) {
-                $(".header").addClass("transition");
-                //console.log("add transition when stickied");
-            }
-            $(".header").toggleClass('sticky');
-            //console.log(this.element.class + ' triggers at ' + this.triggerPoint)
-        },
-        offset: -300
-    });
-
-
     // RATING ---------------------------------------------------------------------
     var rateMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT'];
     var lastMessage = $(".rating > .rate-message").text();
@@ -125,7 +90,7 @@ $(function () {
     });
 
     // PARALLAX EFFECT ------------------------------------------------------------
-    $(window).stellar({responsive: false, horizontalScrolling: false});
+    $(window).stellar({responsive: true, horizontalScrolling: false});
 
 
     // EQUALIZE SOMETHING ---------------------------------------------------------
@@ -281,6 +246,16 @@ $(function () {
         cursorborder: 'none'
     });
 
+    $(".navigation").niceScroll({
+        cursorcolor: '#6dd7e3',
+        cursorborder: 'none',
+        cursoropacitymax: 0
+    });
+
+    $("#navigation").niceScroll({
+        cursorcolor: '#6dd7e3',
+        cursorborder: 'none'
+    });
 
     // STICKY STATIC NAV ----------------------------------------------------------
     if ($('.static-page').length) {
@@ -360,5 +335,7 @@ $(function () {
     $("a[href='#']").click(function(e) {
         e.preventDefault();
     });
+
+
 
 });

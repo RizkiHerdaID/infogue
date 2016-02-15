@@ -40,16 +40,14 @@ $(function(){
             $(".level-1").removeClass("blank");
             $(".level-1").html(wrapper);
             $(".level-1").css("width", $(".level-dummy").width());
-        }, 100);
+        }, 0);
     }, function(){
         $(".level-dummy").addClass("blank");
         $(".level-dummy").html("");
 
-        setTimeout(function(){
-            $(".level-1").addClass("blank");
-            $(".level-1").html("");
-            $(".level-1").css("width", "40px");
-        }, 50);
+        $(".level-1").addClass("blank");
+        $(".level-1").html("");
+        $(".level-1").css("width", "40px");
     });
 
     $('#navigation .sf-mega a').hover(function(){
@@ -61,42 +59,46 @@ $(function(){
             $(".level-2").removeClass("blank");
             $(".level-2").html(wrapper);
             $(".level-2").css("width", $(".level-dummy").width());
-        }, 150);
+        }, 0);
     }, function(){
         $(".level-dummy").addClass("blank");
         $(".level-dummy").html("");
 
-        setTimeout(function(){
-            $(".level-2").addClass("blank");
-            $(".level-2").html("");
-            $(".level-2").css("width", "40px");
-        }, 50);
+        $(".level-2").addClass("blank");
+        $(".level-2").html("");
+        $(".level-2").css("width", "40px");
+    });
+
+    $(".navigation-toggle").click(function(){
+        $("#navigation").slideToggle(200);
+        $("#navigation").toggleClass("open");
+    });
+
+    $('html').click(function() {
+        $(".level-1").html("").addClass("blank").css("width", "40px");;
+        $(".level-2").html("").addClass("blank").css("width", "40px");;
+        $("#navigation").slideUp(200);
+    });
+
+    $('.navigation').click(function(event){
+        event.stopPropagation();
     });
 
     function setLayout(){
         // NAVIGATION
         if(isSmall || isExtraSmall){
+            console.log('destroy superfish');
             navigation.superfish('destroy');
-
-            $(".navigation-toggle").click(function(){
-                $("#navigation").slideToggle();
-                $("#navigation").toggleClass("open");
-            });
-
-            $('html').click(function() {
-                $("#navigation").slideUp();
-            });
-
-            $('.navigation').click(function(event){
-                event.stopPropagation();
-            });
+            $("#navigation").hide();
         }
         else{
+            console.log('init superfish');
             navigation.superfish({
                 speed: 'fast',
                 cssArrows: false,
                 delay: 100
             });
+            $("#navigation").removeClass("open").css("display", "block");
         }
     }
 });

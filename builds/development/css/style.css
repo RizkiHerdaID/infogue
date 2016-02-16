@@ -3134,6 +3134,26 @@ legend {
   .article-preview.landscape article {
     margin: 0;
   }
+
+  .account-profile .cover {
+    height: 250px;
+  }
+  .account-profile .profile-wrapper .profile {
+    text-align: center;
+  }
+  .account-profile .profile-wrapper .profile .name {
+    margin-bottom: 20px;
+  }
+  .account-profile .profile-wrapper .profile .name a {
+    color: #4dc4d2;
+  }
+  .account-profile .profile-wrapper .profile .about {
+    margin-top: 10px;
+  }
+  .account-profile .profile-wrapper .profile .statistic li {
+    display: table-cell;
+    width: 1%;
+  }
 }
 @media screen and (max-width: 767px) {
   header {
@@ -3481,6 +3501,17 @@ legend {
     margin: 0;
   }
 
+  .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
+    height: 150px;
+  }
+  .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .title {
+    font-size: 1em;
+    line-height: 1.3em;
+  }
+  .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .featured-image {
+    max-height: 110px;
+  }
+
   .section .title h1 {
     font-size: 2em;
   }
@@ -3544,6 +3575,10 @@ legend {
   }
   .contact-social li {
     padding: 20px 10px 0 !important;
+  }
+
+  .no-padding-mobile {
+    padding: 0;
   }
 
   footer .about .logo {

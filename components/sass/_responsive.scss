@@ -167,6 +167,38 @@
       margin: 0;
     }
   }
+
+  .account-profile{
+    .cover{
+      height: 250px;
+    }
+
+    .profile-wrapper{
+      .profile{
+        text-align: center;
+
+        .name{
+          margin-bottom: $space-medium;
+
+          a {
+            color: $color-accent2;
+          }
+        }
+
+        .about{
+          margin-top: $space-small;
+        }
+
+        .statistic{
+          li{
+            display: table-cell;
+            width: 1%;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 @media screen and (max-width: 767px) {
@@ -552,6 +584,19 @@
     }
   }
 
+  .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini{
+    height: 150px;
+
+    .title{
+      font-size: 1em;
+      line-height: 1.3em;
+    }
+
+    .featured-image{
+      max-height: 110px;
+    }
+  }
+
 
   .section .title{
     h1{
@@ -626,6 +671,10 @@
     li{
       padding: $space-medium $space-small 0 !important;
     }
+  }
+
+  .no-padding-mobile{
+    padding: 0;
   }
 
   footer{

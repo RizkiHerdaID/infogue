@@ -3336,8 +3336,18 @@ legend {
 
   .article-wrapper {
     margin-top: 75px;
+    margin-bottom: 40px;
   }
 
+  .article-preview.single-view .featured-image {
+    height: 230px;
+  }
+  .article-preview.single-view .title-wrapper .title {
+    font-size: 1.5em;
+  }
+  .article-preview.single-view .title-wrapper .timestamp-wrapper .timestamp {
+    float: none;
+  }
   .article-preview.landscape .category {
     margin: 10px 0 5px;
   }
@@ -3350,6 +3360,29 @@ legend {
   }
   .section .title .lead {
     font-size: 1em;
+  }
+
+  .contributor-profile {
+    text-align: center;
+  }
+  .contributor-profile .btn-follow, .contributor-profile .btn-unfollow {
+    float: none;
+  }
+
+  .sidebar {
+    margin-bottom: 0;
+  }
+
+  .panel-simple .rating {
+    margin-bottom: 10px;
+  }
+  .panel-simple .rating:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .panel-simple .social {
+    text-align: left;
   }
 
   .error404 h1 {

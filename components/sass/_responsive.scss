@@ -361,6 +361,10 @@
     i{
       margin-bottom: $space-small;
     }
+
+    a > i{
+      margin-bottom: 0;
+    }
   }
 
   .confirmation i{
@@ -370,6 +374,10 @@
     min-height: inherit;
     min-width: inherit;
     margin-bottom: $space-medium;
+  }
+
+  .forgot{
+    padding: $space-large 0;
   }
 
 

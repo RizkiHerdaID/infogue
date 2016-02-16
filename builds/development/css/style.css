@@ -3318,6 +3318,15 @@ legend {
   .map i {
     margin-bottom: 10px;
   }
+  .register a > i,
+  .login a > i,
+  .reset a > i,
+  .forgot a > i,
+  .confirmation a > i,
+  .activate a > i,
+  .map a > i {
+    margin-bottom: 0;
+  }
 
   .confirmation i {
     line-height: 1.6em;
@@ -3326,6 +3335,10 @@ legend {
     min-height: inherit;
     min-width: inherit;
     margin-bottom: 20px;
+  }
+
+  .forgot {
+    padding: 50px 0;
   }
 
   .content-wrapper {

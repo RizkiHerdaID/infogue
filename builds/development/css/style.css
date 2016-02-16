@@ -3014,7 +3014,12 @@ legend {
   padding-right: 50px !important;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 992px) {
+  .more-info {
+    display: none;
+  }
+}
+@media screen and (max-width: 991px) {
   .header-wrapper {
     margin-bottom: 20px;
   }
@@ -3153,6 +3158,9 @@ legend {
   .account-profile .profile-wrapper .profile .statistic li {
     display: table-cell;
     width: 1%;
+  }
+  .account-profile .profile-wrapper .profile .more-info {
+    display: inline-block;
   }
 }
 @media screen and (max-width: 767px) {

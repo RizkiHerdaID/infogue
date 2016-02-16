@@ -146,6 +146,19 @@
     }
   }
 
+  .reset{
+    .contributor-profile{
+      margin-top: 0;
+      text-align: center;
+
+      .avatar{
+        height: 100px;
+        width: 100px;
+        margin-bottom: $space-small;
+      }
+    }
+  }
+
   .article-preview.landscape {
     .category{
       margin: 0 0 5px;
@@ -448,6 +461,29 @@
 
   .register{
     margin-top: $space-medium * 2;
+  }
+
+  .reset{
+    padding-top: $space-medium * 2;
+    text-align: center;
+
+    .contributor-profile{
+      margin-bottom: $space-medium;
+
+      .avatar{
+        height: 120px;
+        width: 120px;
+      }
+
+      .location{
+        margin-bottom: $space-small;
+      }
+
+      .statistic li{
+        padding: 3px;
+        font-size: 0.85em;
+      }
+    }
   }
 
   .content-wrapper{

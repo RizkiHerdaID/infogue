@@ -115,7 +115,7 @@ $(function(){
             $(window).data('plugin_stellar').destroy();
 
             setTimeout(function(){
-                $("div[data-stellar-background-ratio]").removeAttr("style");
+                $("div[data-stellar-background-ratio]").not(".reset").removeAttr("style");
             }, 50);
 
             if(sticky != null){

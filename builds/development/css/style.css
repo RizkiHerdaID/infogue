@@ -3118,6 +3118,16 @@ legend {
     font-size: 1.2em;
   }
 
+  .reset .contributor-profile {
+    margin-top: 0;
+    text-align: center;
+  }
+  .reset .contributor-profile .avatar {
+    height: 100px;
+    width: 100px;
+    margin-bottom: 10px;
+  }
+
   .article-preview.landscape .category {
     margin: 0 0 5px;
   }
@@ -3398,6 +3408,25 @@ legend {
 
   .register {
     margin-top: 40px;
+  }
+
+  .reset {
+    padding-top: 40px;
+    text-align: center;
+  }
+  .reset .contributor-profile {
+    margin-bottom: 20px;
+  }
+  .reset .contributor-profile .avatar {
+    height: 120px;
+    width: 120px;
+  }
+  .reset .contributor-profile .location {
+    margin-bottom: 10px;
+  }
+  .reset .contributor-profile .statistic li {
+    padding: 3px;
+    font-size: 0.85em;
   }
 
   .content-wrapper {

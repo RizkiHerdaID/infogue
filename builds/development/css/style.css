@@ -3274,11 +3274,35 @@ legend {
     margin-top: 60px;
   }
 
+  .content-wrapper {
+    margin-top: 60px;
+  }
+
   .section .title h1 {
     font-size: 2em;
   }
   .section .title .lead {
     font-size: 1em;
+  }
+
+  .error404 h1 {
+    font-size: 3.5em;
+  }
+  .error404 h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+  .error404 p.lead {
+    font-size: 1.1em;
+  }
+  .error404 .search-wrapper .search .input-search {
+    display: block;
+    max-width: 300px;
+    margin: auto;
+  }
+  .error404 .search-wrapper .search .input-search input {
+    width: 100%;
+    display: block;
   }
 
   .map {

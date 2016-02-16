@@ -329,12 +329,40 @@
     margin-top: 60px;
   }
 
+
+  .content-wrapper{
+    margin-top: 60px;
+  }
+
   .section .title{
     h1{
       font-size: 2em;
     }
     .lead{
       font-size: 1em;
+    }
+  }
+
+  .error404{
+    h1{
+      font-size: 3.5em;
+    }
+    h2{
+      font-size: 1.8em;
+      margin-bottom: $space-small;
+    }
+    p.lead{
+      font-size: 1.1em;
+    }
+    .search-wrapper .search .input-search {
+      display: block;
+      max-width: 300px;
+      margin: auto;
+
+      input{
+        width: 100%;
+        display: block;
+      }
     }
   }
 

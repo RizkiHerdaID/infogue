@@ -104,7 +104,6 @@ $(function () {
 
     // EQUALIZE SOMETHING ---------------------------------------------------------
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
-    $('.articles, #articles').equalize({equalize: 'height', children: '.article-preview'});
 
 
     // FEATURED SLIDE SHOW --------------------------------------------------------
@@ -421,7 +420,7 @@ $(function(){
     var closed;
     var sticky;
     function setLayout(){
-        console.log('set layout');
+        $('.articles, #articles').equalize({equalize: 'height', children: '.article-preview'});
 
         if(isLarge || isMedium || isSmall){
             $(window).data('plugin_stellar').init();

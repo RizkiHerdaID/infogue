@@ -3439,6 +3439,10 @@ legend {
     margin-top: 20px;
   }
 
+  .panel + .article-wrapper {
+    margin-top: 10px;
+  }
+
   .data-filter {
     margin-bottom: 20px;
     background: rgba(255, 255, 255, 0.8);
@@ -3464,6 +3468,12 @@ legend {
   .article-preview.single-view .title-wrapper .timestamp-wrapper .timestamp {
     float: none;
   }
+  .article-preview.single-view .contributor-profile {
+    text-align: center;
+  }
+  .article-preview.single-view .contributor-profile .btn-follow, .article-preview.single-view .contributor-profile .btn-unfollow {
+    float: none;
+  }
   .article-preview.landscape .category {
     margin: 10px 0 5px;
   }
@@ -3476,13 +3486,6 @@ legend {
   }
   .section .title .lead {
     font-size: 1em;
-  }
-
-  .contributor-profile {
-    text-align: center;
-  }
-  .contributor-profile .btn-follow, .contributor-profile .btn-unfollow {
-    float: none;
   }
 
   .sidebar {

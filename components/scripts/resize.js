@@ -70,7 +70,7 @@ $(function(){
     var closed;
     var sticky;
     function setLayout(){
-        console.log('set layout');
+        $('.articles, #articles').equalize({equalize: 'height', children: '.article-preview'});
 
         if(isLarge || isMedium || isSmall){
             $(window).data('plugin_stellar').init();

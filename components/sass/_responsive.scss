@@ -498,6 +498,10 @@
     }
   }
 
+  .panel + .article-wrapper{
+    margin-top: $space-small;
+  }
+
   .data-filter{
     margin-bottom: $space-medium;
     background: rgba(255, 255, 255, .8);
@@ -529,6 +533,13 @@
           }
         }
       }
+      .contributor-profile{
+        text-align: center;
+
+        .btn-follow, .btn-unfollow{
+          float: none;
+        }
+      }
     }
 
     &.landscape {
@@ -548,14 +559,6 @@
     }
     .lead{
       font-size: 1em;
-    }
-  }
-
-  .contributor-profile{
-    text-align: center;
-
-    .btn-follow, .btn-unfollow{
-      float: none;
     }
   }
 

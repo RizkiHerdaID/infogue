@@ -424,6 +424,8 @@ $(function(){
         console.log('set layout');
 
         if(isLarge || isMedium || isSmall){
+            $(window).data('plugin_stellar').init();
+
             closed = new Waypoint({
                 element: $("header"),
                 handler: function () {
@@ -461,6 +463,12 @@ $(function(){
         }
 
         if(isExtraSmall){
+            $(window).data('plugin_stellar').destroy();
+
+            setTimeout(function(){
+                $("div[data-stellar-background-ratio]").removeAttr("style");
+            }, 50);
+
             if(sticky != null){
                 sticky.remove();
             }

@@ -2799,7 +2799,7 @@ legend {
 
 .login {
   background: url("../images/backgrounds/jump.jpg") no-repeat center;
-  background-size: 120%;
+  background-size: cover;
 }
 .login:before {
   background-color: rgba(0, 0, 0, 0.75);
@@ -3394,10 +3394,6 @@ legend {
     min-height: inherit;
     min-width: inherit;
     margin-bottom: 20px;
-  }
-
-  .forgot {
-    padding: 50px 0;
   }
 
   .content-wrapper {

@@ -1,26 +1,26 @@
-.error404{
+.error404 {
   padding: $space-large 0 ($space-large + $space-medium);
   text-align: center;
 
-  h1{
+  h1 {
     font-size: 5em;
     font-family: opensans-light, sans-serif;
     font-weight: normal;
     color: $color-accent2;
 
-    strong{
+    strong {
       font-family: opensans-bold, sans-serif;
     }
   }
 
-  h2{
+  h2 {
     font-family: opensans-light, sans-serif;
     font-weight: normal;
     font-size: $text-heading1;
     margin-bottom: $space-medium;
   }
 
-  .lead{
+  .lead {
     font-size: $text-heading3;
     margin-bottom: $space-small;
   }
@@ -78,84 +78,84 @@
   }
 }
 
-.static-page{
+.static-page {
   margin-bottom: $space-large;
 
-  h1{
+  h1 {
     font-size: 2em;
     margin: $space-small 0 ($space-medium + $space-small);
   }
 
-  h2, h3{
+  h2, h3 {
     margin: $space-medium 0 $space-small;
   }
 
-  h1, h2, h3{
-    +h1, +h2, +h3{
+  h1, h2, h3 {
+    + h1, + h2, + h3 {
       margin-top: $space-small;
     }
   }
 
-  article{
+  article {
     line-height: 1.7em;
     margin-bottom: $space-large;
 
-    li{
+    li {
       margin-bottom: $space-small;
     }
   }
 
-  p{
+  p {
     line-height: 1.7em;
     margin-bottom: $space-small;
   }
 
-  ol, ul{
+  ol, ul {
     list-style: decimal;
     margin-left: $space-medium;
     margin-bottom: $space-small;
 
-    li{
+    li {
       padding-left: $space-small;
     }
   }
 
-  ul{
+  ul {
     list-style: inherit;
   }
 
-  .static-nav{
+  .static-nav {
     text-align: right;
     margin-right: $space-medium + $space-small;
     margin-top: 55px;
     width: 150px;
 
-    &.sticky{
+    &.sticky {
       position: fixed;
       top: 50px;
     }
 
-    li{
+    li {
       list-style: none;
       padding: $space-small 0;
       font-size: $text-heading3;
 
-      &.active a{
+      &.active a {
         color: $color-accent2;
         font-family: opensans-bold, sans-serif;
       }
 
-      a{
+      a {
         color: $color-dark;
 
-        &:hover{
+        &:hover {
           color: $color-accent2;
         }
       }
     }
   }
 
-  .timestamp{
+  .timestamp {
     border-top: 1px solid $color-gray-light;
     border-bottom: 1px solid $color-gray-light;
     padding: $space-small 0;
@@ -164,12 +164,12 @@
     line-height: 34px;
     @include clearfix;
 
-    li{
+    li {
       display: inline;
       padding-left: 0;
     }
 
-    .avatar{
+    .avatar {
       float: left;
       width: 35px;
       height: 35px;
@@ -264,7 +264,7 @@
 
 .login {
   background: url("../images/backgrounds/jump.jpg") no-repeat center;
-  background-size: 120%;
+  background-size: cover;
 
   &:before {
     background-color: rgba(0, 0, 0, .75);

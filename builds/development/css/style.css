@@ -3401,7 +3401,7 @@ legend {
   }
 
   .static-page article h1 {
-    margin-top: 40px;
+    margin-top: 0;
   }
 
   .error404 h1 {

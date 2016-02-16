@@ -773,6 +773,44 @@
     }
   }
 
+  .account-profile .profile-wrapper .list-data .content .message-box{
+    margin-bottom: 110px;
+    height: auto;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    top: 95px;
+
+
+    .they .contributor-profile,
+    .me .contributor-profile{
+      width: auto;
+    }
+
+    .me .contributor-profile{
+      float: none;
+    }
+  }
+
+  .chat-box{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+
+    .control{
+      position: relative;
+
+      .css-file .file-info{
+        width: 40%;
+      }
+
+      button[type=submit]{
+        position: fixed;
+        right: 0;
+      }
+    }
+  }
+
   .to-top {
     right: 30px;
     bottom: 140px;

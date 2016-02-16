@@ -129,6 +129,15 @@
       font-size: 1.2em;
     }
   }
+
+  .article-preview.landscape {
+    .category{
+      margin: 0 0 5px;
+    }
+    article{
+      margin: 0;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -356,6 +365,30 @@
 
   .content-wrapper{
     margin-top: 60px;
+  }
+
+  .data-filter{
+    margin-bottom: $space-medium;
+    background: rgba(255, 255, 255, .8);
+    position: fixed;
+    top: 60px;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+    padding: $space-small 15px;
+  }
+
+  .article-wrapper{
+    margin-top: 75px;
+  }
+
+  .article-preview.landscape {
+    .category{
+      margin: $space-small 0 5px;
+    }
+    article{
+      margin: 0;
+    }
   }
 
   .section .title{

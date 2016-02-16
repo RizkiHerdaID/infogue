@@ -3651,6 +3651,27 @@ legend {
     padding: 0;
   }
 
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.message-list {
+    position: relative;
+  }
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.message-list:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.message-list .info {
+    float: none;
+    padding-left: 70px;
+  }
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.message-list .info .message {
+    width: 75%;
+  }
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.message-list button {
+    position: absolute;
+    right: 15px;
+    top: 25px;
+  }
+
   .to-top {
     right: 30px;
     bottom: 140px;

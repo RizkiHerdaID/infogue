@@ -3406,6 +3406,9 @@ legend {
   .static-page .member {
     margin-bottom: 20px;
   }
+  .static-page .faq h4.panel-title {
+    font-size: 1.1em;
+  }
 
   .error404 h1 {
     font-size: 3.5em;

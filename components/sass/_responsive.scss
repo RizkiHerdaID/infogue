@@ -469,6 +469,12 @@
     .member{
       margin-bottom: $space-medium;
     }
+
+    .faq{
+      h4.panel-title{
+        font-size: 1.1em;
+      }
+    }
   }
 
   .error404{

@@ -3356,25 +3356,22 @@ legend {
     margin-bottom: 0;
   }
 
-  .modal.newsletter:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
+  .modal.newsletter .modal-dialog {
+    margin-top: 100px;
   }
   .modal.newsletter .modal-dialog .modal-content h3 {
     font-size: 1.2em;
   }
   .modal.newsletter .modal-dialog .modal-content h1 {
     font-size: 2.5em;
-    margin-bottom: 10px;
-  }
-  .modal.newsletter .modal-dialog .modal-content h1 + p {
-    font-size: .95em;
-    width: 300px !important;
+    margin-bottom: 20px;
   }
   .modal.newsletter .modal-dialog .modal-content .form-group input[type='email'] {
     width: 200px;
+  }
+  .modal.newsletter .modal-dialog .modal-content i {
+    color: #ffffff;
+    line-height: 20px;
   }
 
   .register,
@@ -3501,6 +3498,9 @@ legend {
   .article-preview.single-view .contributor-profile .btn-follow, .article-preview.single-view .contributor-profile .btn-unfollow {
     float: none;
   }
+  .article-preview.landscape.mini .featured-image {
+    min-width: 90px;
+  }
   .article-preview.landscape .category {
     margin: 10px 0 5px;
   }
@@ -3548,6 +3548,14 @@ legend {
   }
   .section .title .lead {
     font-size: 1em;
+  }
+  .section .company-list li {
+    padding: 0;
+    min-width: 120px;
+    margin: 0 20px 30px;
+  }
+  .section .company-list li img {
+    width: 100%;
   }
 
   .sidebar {

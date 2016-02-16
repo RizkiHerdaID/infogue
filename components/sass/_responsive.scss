@@ -117,6 +117,18 @@
       }
     }
   }
+
+  .register,
+  .login,
+  .reset,
+  .forgot,
+  .confirmation,
+  .activate,
+  .map {
+    p.subtitle{
+      font-size: 1.2em;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -327,8 +339,20 @@
   .activate,
   .map {
     margin-top: 60px;
-  }
+    padding: ($space-large * 2) 0;
 
+    h1{
+      font-size: 2em;
+    }
+
+    p.subtitle{
+      font-size: 1.1em;
+    }
+
+    i{
+      margin-bottom: $space-small;
+    }
+  }
 
   .content-wrapper{
     margin-top: 60px;

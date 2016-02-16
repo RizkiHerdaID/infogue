@@ -3089,6 +3089,16 @@ legend {
     background: none;
     color: #6dd7e3;
   }
+
+  .register p.subtitle,
+  .login p.subtitle,
+  .reset p.subtitle,
+  .forgot p.subtitle,
+  .confirmation p.subtitle,
+  .activate p.subtitle,
+  .map p.subtitle {
+    font-size: 1.2em;
+  }
 }
 @media screen and (max-width: 767px) {
   header {
@@ -3272,6 +3282,34 @@ legend {
   .activate,
   .map {
     margin-top: 60px;
+    padding: 100px 0;
+  }
+  .register h1,
+  .login h1,
+  .reset h1,
+  .forgot h1,
+  .confirmation h1,
+  .activate h1,
+  .map h1 {
+    font-size: 2em;
+  }
+  .register p.subtitle,
+  .login p.subtitle,
+  .reset p.subtitle,
+  .forgot p.subtitle,
+  .confirmation p.subtitle,
+  .activate p.subtitle,
+  .map p.subtitle {
+    font-size: 1.1em;
+  }
+  .register i,
+  .login i,
+  .reset i,
+  .forgot i,
+  .confirmation i,
+  .activate i,
+  .map i {
+    margin-bottom: 10px;
   }
 
   .content-wrapper {

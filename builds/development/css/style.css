@@ -3385,6 +3385,10 @@ legend {
     text-align: left;
   }
 
+  .static-page article h1 {
+    margin-top: 40px;
+  }
+
   .error404 h1 {
     font-size: 3.5em;
   }

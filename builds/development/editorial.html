@@ -28,19 +28,21 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
+                    <i class="fa fa-navicon visible-xs toggle-nav"></i>
                     <h1>InfoGue</h1>
                 </div>
                 <div class="header-section">
                     <section class="control-wrapper">
-                        <ul class="featured-link visible-md visible-lg">
+                        <ul class="featured-link hidden-xs">
                             <li><a href="archive.html">HEADLINE</a></li>
                             <li><a href="archive.html">LATEST</a></li>
                             <li><a href="archive.html">TRENDING</a></li>
                             <li><a href="archive.html">RANDOM</a></li>
                         </ul>
                         <ul class="user-control">
-                            <li><a href="login.html">Hello Guest! &nbsp; LOGIN</a></li>
-                            <li><a href="register.html">REGISTER</a></li>
+                            <li class="hidden-xs"><a href="login.html"><span class="hidden-sm hidden-xs">Hello Guest! &nbsp; </span>LOGIN</a></li>
+                            <li class="hidden-xs"><a href="register.html">REGISTER</a></li>
+                            <li class="visible-xs"><a href="#" class="mobile-search"><i class="fa fa-search"></i></a></li>
                         </ul>
                     </section>
                     <section class="search-wrapper">
@@ -50,7 +52,7 @@
                                     <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
                                     <i class="fa fa-search"></i>
                                 </div>
-                                <div class="btn-group filter">
+                                <div class="btn-group filter  hidden-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         All Data <span class="caret"></span>
                                     </button>
@@ -64,7 +66,7 @@
                                 <button type="submit" class="btn btn-primary">SEARCH</button>
                             </form>
                         </div>
-                        <ul class="social">
+                        <ul class="social hidden-xs">
                             <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
@@ -73,6 +75,22 @@
                 </div>
             </div>
             <nav class="navigation">
+                <div class="overlay"></div>
+                <div class="breadcrumb-wrapper visible-sm">
+                    <ol class="breadcrumb">
+                        <li><a href="#" class="navigation-toggle"><i class="fa fa-navicon"></i>NAVIGATION</a></li>
+                        <li class="level-1 blank"></li>
+                        <li class="level-2 blank"></li>
+                        <li class="level-dummy blank invisible"></li>
+                    </ol>
+                </div>
+                <div class="sidebar-profile visible-xs">
+                    <img src="images/contributors/cici.png"/>
+                    <div class="info">
+                        <p class="name">Angga Ari Wijaya</p>
+                        <p class="location">Jakarta, Indonesia</p>
+                    </div>
+                </div>
                 <ul class="sf-menu" id="navigation" role="menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#">News</a>
@@ -105,7 +123,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Economy</a>
+                    <li><a href="#">Economy</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Business</h2>
@@ -138,7 +156,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Entertainment</a>
+                    <li><a href="#">Entertainment</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Extravaganza</h2>
@@ -180,7 +198,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Sport</a>
+                    <li><a href="#">Sport</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Popular</h2>
@@ -221,7 +239,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Health</a>
+                    <li><a href="#">Health</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Medic</h2>
@@ -252,7 +270,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Science</a>
+                    <li><a href="#">Science</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Knowledge</h2>
@@ -285,7 +303,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Technology</a>
+                    <li><a href="#">Technology</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Computer</h2>
@@ -303,7 +321,7 @@
                                     <li><a href="category.html">Future</a></li>
                                     <li><a href="category.html">Programming</a></li>
                                     <li><a href="category.html">Cyber Security</a></li>
-                                    <li><a href="category.html">Human Interaction</a></li>
+                                    <li><a href="category.html">UI Interaction</a></li>
                                     <li><a href="category.html">Social Network</a></li>
                                 </ul>
                             </div>
@@ -318,9 +336,9 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Photo</a></li>
-                    <li><a href="">Video</a></li>
-                    <li><a href="">Others</a>
+                    <li><a href="#">Photo</a></li>
+                    <li><a href="#">Video</a></li>
+                    <li><a href="#">Others</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Life</h2>
@@ -358,14 +376,14 @@
     </div>
 </header>
 
-<section class="container">
+<section class="container content-wrapper">
     <div class="breadcrumb-wrapper">
         <ol class="breadcrumb mtn">
             <li><a href="archive.html">Archive</a></li>
             <li class="active">Editorial</li>
             <li class="blank"></li>
         </ol>
-        <div class="control">
+        <div class="control hidden-xs">
             <a class="btn btn-primary control-left" href="contact.html"><i class="fa fa-chevron-left"></i></a>
             <a class="btn btn-primary control-right" href="privacy.html"><i class="fa fa-chevron-right"></i></a>
         </div>
@@ -373,7 +391,7 @@
 
     <div class="row static-page">
         <div class="col-md-3">
-            <nav class="static-nav">
+            <nav class="static-nav hidden-xs hidden-sm">
                 <ul>
                     <li class="active"><a href="editorial.html">Editorial</a></li>
                     <li><a href="privacy.html">Privacy</a></li>
@@ -396,28 +414,28 @@
                     senior management bellow. Former senior InfoGue.id staff are aggregated on the archive page</p>
 
                 <div class="row mtm mbm">
-                    <div class="col-md-3">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="member text-center">
                             <img src="images/contributors/team01.jpg" width="120" class="img-circle img-responsive center-block"/>
                             <h3 class="mbn">Freddie Arif</h3>
                             <p class="text-muted">Lead Editor</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="member text-center">
                             <img src="images/contributors/team02.jpg" width="120" class="img-circle img-responsive center-block"/>
                             <h3 class="mbn">Shaka Bellen</h3>
                             <p class="text-muted">Web Developer</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="member text-center">
                             <img src="images/contributors/team03.jpg" width="120" class="img-circle img-responsive center-block"/>
                             <h3 class="mbn">Dewi Andriane</h3>
                             <p class="text-muted">Digital Artist</p>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-sm-3 col-xs-6">
                         <div class="member text-center">
                             <img src="images/contributors/team04.jpg" width="120" class="img-circle img-responsive center-block"/>
                             <h3 class="mbn">Rendi Afrana</h3>
@@ -473,23 +491,23 @@
 
             <ul class="timestamp">
                 <li class="pull-left"><img src="images/contributors/angga.jpg" class="avatar img-circle"/> By <a href="profile.html">Administrator</a></li>
-                <li class="pull-right">Last Updated At 23 January 2016</li>
+                <li class="pull-right"><span class="hidden-xs">Last Updated</span> At 23 January 2016</li>
             </ul>
         </div>
     </div>
 </section>
 
-<footer data-stellar-background-ratio="0.2" data-stellar-vertical-offset="220">
+<footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 hidden-sm">
                 <div class="about">
                     <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
                     <p>The most update web portal news. We always provide latest article and information with high
                         integrity and truth. Knowledge is beyond among us to share with you.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 hidden-xs clearfix">
                 <h3>QUICK LINKS</h3>
                 <ul class="quick-links">
                     <li><a href="category.html">HEADLINE</a></li>
@@ -508,28 +526,33 @@
                     <li><a href="category.html">SCIENCE</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h3>SUBSCRIBE</h3>
-                <p>Get our latest updates, we don’t spam</p>
+            <div class="col-md-4 col-sm-6">
+                <div class="row">
+                    <div class="col-md-12 hidden-xs">
+                        <h3>SUBSCRIBE</h3>
+                        <p>Get our latest updates, we don’t spam</p>
 
-                <form action="#" method="post">
-                    <div class="subscribe-email">
-                        <input type="email" class="form-control" placeholder="Email address"/>
-                        <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                        <form action="#" method="post">
+                            <div class="subscribe-email">
+                                <input type="email" class="form-control" placeholder="Email address"/>
+                                <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-
-                <h3>CONTACT</h3>
-                <div class="contact">
-                    <p>Avenue Street 34 - East Java, Indonesia</p>
-                    <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
-                    <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                    <div class="col-md-12">
+                        <h3>CONTACT</h3>
+                        <div class="contact">
+                            <p>Avenue Street 34 - East Java, Indonesia</p>
+                            <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
+                            <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row bottom">
             <div class="col-sm-8">
-                <ul class="featured-link">
+                <ul class="featured-link hidden-xs">
                     <li><a href="#top">Home</a></li>
                     <li><a href="editorial.html">Editorial</a></li>
                     <li><a href="privacy.html">Privacy</a></li>
@@ -537,7 +560,7 @@
                     <li><a href="faq.html">FAQ</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                <div class="copyright">&copy; Copyright 2016 infgue.com All Rights Reserved.</div>
+                <div class="copyright">&copy; Copyright 2016 infogue.com All Rights Reserved.</div>
             </div>
             <div class="col-sm-4">
                 <ul class="social">
@@ -551,7 +574,7 @@
 </footer>
 
 <div class="to-top">
-    <a href="#top"><i class="fa fa-arrow-up"></i></a></h1>
+    <a href="#top"><i class="fa fa-arrow-up"></i></a>
 </div>
 
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>

@@ -3511,6 +3511,9 @@ legend {
   .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .featured-image {
     max-height: 110px;
   }
+  .account-profile .cover {
+    height: 200px;
+  }
 
   .section .title h1 {
     font-size: 2em;

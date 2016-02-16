@@ -317,9 +317,8 @@
       width: 200%;
       height: 100%;
       position: fixed;
-      background-color: $color-dark;
+      background-color: rgba(0, 0, 0, .7);
       display: none;
-      opacity: .7;
     }
 
     &.open{
@@ -597,6 +596,7 @@
   .account-profile {
     .profile-wrapper .list-data .content .article-preview.landscape.mini{
       height: 150px;
+      padding: 15px;
 
       [class*='col-xs-5'] {
         padding: 0 0 0 15px;
@@ -609,6 +609,22 @@
 
       .featured-image{
         max-height: 110px;
+      }
+
+      .rating-wrapper{
+        margin-right: 0;
+
+        i + i {
+          padding-left: 8px;
+        }
+      }
+
+      .social li a{
+        margin-top: 2px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 0.8em;
       }
     }
 
@@ -698,7 +714,14 @@
     padding: 0;
   }
 
+  .to-top {
+    right: 30px;
+    bottom: 140px;
+  }
+
   footer{
+    min-height: inherit;
+    padding: 30px 0 $space-medium;
     .about{
       .logo{
         margin-bottom: $space-medium;
@@ -711,9 +734,13 @@
     h3{
       margin-bottom: $space-small;
     }
-    .bottom .social{
-      margin-top: $space-medium;
-      text-align: left;
+    .bottom{
+      margin-top: 0;
+
+      .social{
+        margin-top: $space-medium;
+        text-align: left;
+      }
     }
   }
 }

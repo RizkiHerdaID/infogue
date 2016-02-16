@@ -365,6 +365,14 @@
 
   .content-wrapper{
     margin-top: 60px;
+
+    .breadcrumb-wrapper{
+      margin-top: $space-medium;
+
+      + .article-wrapper{
+        margin-top: $space-medium;
+      }
+    }
   }
 
   .data-filter{

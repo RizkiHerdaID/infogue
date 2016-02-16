@@ -45,7 +45,7 @@ $(function () {
     function generateDummy(){
         for(var i = 0; i < 6; i++){
             var image = getRandomInt(1, 25);
-            var template = '<div class="col-md-4">' +
+            var template = '<div class="col-md-4 col-sm-6">' +
                 '<div class="article-preview portrait">' +
                 '<div class="featured-image">' +
                 '<img src="images/misc/preloader.gif" alt="Featured 25" data-echo="images/featured/image'+image+'.jpg"/>' +

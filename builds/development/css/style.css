@@ -3322,6 +3322,12 @@ legend {
   .content-wrapper {
     margin-top: 60px;
   }
+  .content-wrapper .breadcrumb-wrapper {
+    margin-top: 20px;
+  }
+  .content-wrapper .breadcrumb-wrapper + .article-wrapper {
+    margin-top: 20px;
+  }
 
   .data-filter {
     margin-bottom: 20px;

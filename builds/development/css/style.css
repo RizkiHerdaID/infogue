@@ -2422,6 +2422,12 @@ legend {
   display: block;
   margin-bottom: 5px;
 }
+.account-profile .profile-wrapper .list-data .data-filter .data {
+  margin-left: 20px;
+}
+.account-profile .profile-wrapper .list-data .data-filter .sort {
+  margin-right: 20px;
+}
 .account-profile .profile-wrapper .list-data h3 {
   background: #4dc4d2;
   padding: 10px 20px;
@@ -3515,6 +3521,15 @@ legend {
     padding-bottom: 0;
   }
 
+  .account-profile .profile-wrapper .list-data .data-filter {
+    position: static;
+  }
+  .account-profile .profile-wrapper .list-data .data-filter .data {
+    margin-left: 0;
+  }
+  .account-profile .profile-wrapper .list-data .data-filter .sort {
+    margin-right: 0;
+  }
   .account-profile .profile-wrapper .list-data .content .contributor-profile.mini {
     padding: 15px;
   }

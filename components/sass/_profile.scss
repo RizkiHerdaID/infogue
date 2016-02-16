@@ -358,6 +358,14 @@
     }
 
     .list-data{
+      .data-filter{
+        .data{
+          margin-left: $space-medium;
+        }
+        .sort{
+          margin-right: $space-medium;
+        }
+      }
       h3{
         background: $color-accent2;
         padding: $space-small $space-medium;

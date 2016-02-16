@@ -28,19 +28,21 @@
         <div class="container">
             <div class="header-wrapper">
                 <div class="logo">
+                    <i class="fa fa-navicon visible-xs toggle-nav"></i>
                     <h1>InfoGue</h1>
                 </div>
                 <div class="header-section">
                     <section class="control-wrapper">
-                        <ul class="featured-link visible-md visible-lg">
+                        <ul class="featured-link hidden-xs">
                             <li><a href="archive.html">HEADLINE</a></li>
                             <li><a href="archive.html">LATEST</a></li>
                             <li><a href="archive.html">TRENDING</a></li>
                             <li><a href="archive.html">RANDOM</a></li>
                         </ul>
                         <ul class="user-control">
-                            <li><a href="login.html">Hello Guest! &nbsp; LOGIN</a></li>
-                            <li><a href="register.html">REGISTER</a></li>
+                            <li class="hidden-xs"><a href="login.html"><span class="hidden-sm hidden-xs">Hello Guest! &nbsp; </span>LOGIN</a></li>
+                            <li class="hidden-xs"><a href="register.html">REGISTER</a></li>
+                            <li class="visible-xs"><a href="#" class="mobile-search"><i class="fa fa-search"></i></a></li>
                         </ul>
                     </section>
                     <section class="search-wrapper">
@@ -50,7 +52,7 @@
                                     <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
                                     <i class="fa fa-search"></i>
                                 </div>
-                                <div class="btn-group filter">
+                                <div class="btn-group filter  hidden-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         All Data <span class="caret"></span>
                                     </button>
@@ -64,7 +66,7 @@
                                 <button type="submit" class="btn btn-primary">SEARCH</button>
                             </form>
                         </div>
-                        <ul class="social">
+                        <ul class="social hidden-xs">
                             <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
@@ -73,6 +75,22 @@
                 </div>
             </div>
             <nav class="navigation">
+                <div class="overlay"></div>
+                <div class="breadcrumb-wrapper visible-sm">
+                    <ol class="breadcrumb">
+                        <li><a href="#" class="navigation-toggle"><i class="fa fa-navicon"></i>NAVIGATION</a></li>
+                        <li class="level-1 blank"></li>
+                        <li class="level-2 blank"></li>
+                        <li class="level-dummy blank invisible"></li>
+                    </ol>
+                </div>
+                <div class="sidebar-profile visible-xs">
+                    <img src="images/contributors/cici.png"/>
+                    <div class="info">
+                        <p class="name">Angga Ari Wijaya</p>
+                        <p class="location">Jakarta, Indonesia</p>
+                    </div>
+                </div>
                 <ul class="sf-menu" id="navigation" role="menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#">News</a>
@@ -105,7 +123,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Economy</a>
+                    <li><a href="#">Economy</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Business</h2>
@@ -138,7 +156,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Entertainment</a>
+                    <li><a href="#">Entertainment</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Extravaganza</h2>
@@ -180,7 +198,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Sport</a>
+                    <li><a href="#">Sport</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Popular</h2>
@@ -221,7 +239,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Health</a>
+                    <li><a href="#">Health</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Medic</h2>
@@ -252,7 +270,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Science</a>
+                    <li><a href="#">Science</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Knowledge</h2>
@@ -285,7 +303,7 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Technology</a>
+                    <li><a href="#">Technology</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Computer</h2>
@@ -303,7 +321,7 @@
                                     <li><a href="category.html">Future</a></li>
                                     <li><a href="category.html">Programming</a></li>
                                     <li><a href="category.html">Cyber Security</a></li>
-                                    <li><a href="category.html">Human Interaction</a></li>
+                                    <li><a href="category.html">UI Interaction</a></li>
                                     <li><a href="category.html">Social Network</a></li>
                                 </ul>
                             </div>
@@ -318,9 +336,9 @@
                             </div>
                         </div>
                     </li>
-                    <li><a href="">Photo</a></li>
-                    <li><a href="">Video</a></li>
-                    <li><a href="">Others</a>
+                    <li><a href="#">Photo</a></li>
+                    <li><a href="#">Video</a></li>
+                    <li><a href="#">Others</a>
                         <div class="sf-mega">
                             <div class="sf-mega-section">
                                 <h2>Life</h2>
@@ -359,9 +377,9 @@
 </header>
 
 <div class="back-gray">
-    <section class="container">
+    <section class="container content-wrapper">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 hidden-sm hidden-xs">
                 <div class="contributor-menu default">
                     <div class="featured" style="background: url('images/covers/231894.jpg') no-repeat center center / cover" data-stellar-background-ratio="0.85" data-stellar-vertical-offset="100"></div>
                     <div class="contributor-profile mini">
@@ -388,14 +406,14 @@
                     </nav>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 no-padding-mobile">
                 <div class="account-profile">
                     <div class="profile-wrapper">
                         <section class="list-data">
                             <h3 class="title">ARTICLE</h3>
                             <div class="data-filter mbn">
-                                <div class="data plm">
-                                    <p>Data Filter</p>
+                                <div class="data">
+                                    <p class="hidden-xs">Data Filter</p>
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-data" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             All Data
@@ -423,8 +441,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="sort prm">
-                                    <p>Sort By</p>
+                                <div class="sort">
+                                    <p class="hidden-xs">Sort By</p>
                                     <div class="dropdown">
                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-sort-type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                             Date
@@ -453,14 +471,14 @@
                             <div class="content">
                                 <div class="article-preview landscape mini">
                                     <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 col-xs-5">
                                             <div class="featured-image">
                                                 <img src="images/misc/preloader.gif" alt="Featured 9" data-echo="images/featured/image9.jpg"/>
                                             </div>
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-8 col-xs-7">
                                             <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Sport</a></p>
+                                                <p class="category hidden-xs"><a href="category.html">Sport</a></p>
                                                 <h1 class="title">
                                                     <a href="article.html">
                                                         Extreme sport now more popular lately
@@ -469,7 +487,7 @@
                                                 <ul class="timestamp">
                                                     <li>Extreme Sport</li>
                                                     <li>22 April 2016</li>
-                                                    <li>78 Views</li>
+                                                    <li class="hidden-xs">34 Views</li>
                                                 </ul>
                                             </div>
                                             <div class="rating-wrapper" data-rating="2"></div>
@@ -495,14 +513,14 @@
                                 </div>
                                 <div class="article-preview landscape mini">
                                     <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 col-xs-5">
                                             <div class="featured-image">
                                                 <img src="images/misc/preloader.gif" alt="Featured 10" data-echo="images/featured/image10.jpg"/>
                                             </div>
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-8 col-xs-7">
                                             <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Health</a></p>
+                                                <p class="category hidden-xs"><a href="category.html">Health</a></p>
                                                 <h1 class="title">
                                                     <a href="article.html">
                                                         Young people in Indonesia introduce importance of exercise
@@ -511,7 +529,7 @@
                                                 <ul class="timestamp">
                                                     <li>Lifestyle</li>
                                                     <li>11 March 2016</li>
-                                                    <li>734 Views</li>
+                                                    <li class="hidden-xs">734 Views</li>
                                                 </ul>
                                             </div>
                                             <div class="rating-wrapper" data-rating="2"></div>
@@ -537,56 +555,14 @@
                                 </div>
                                 <div class="article-preview landscape mini">
                                     <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="featured-image">
-                                                <img src="images/misc/preloader.gif" alt="Featured 11" data-echo="images/featured/image11.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-8">
-                                            <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Science</a></p>
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        New reality and old one blend to the nature
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>Research</li>
-                                                    <li>11 February 2016</li>
-                                                    <li>34 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                            <div class="text-right control">
-                                                <div class="dropdown">
-                                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdown-sort-type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        ACTION
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
-                                                        <li class="dropdown-header">CONTROL</li>
-                                                        <li><a href="#"><i class="fa fa-eye"></i> View</a></li>
-                                                        <li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
-                                                        <li class="dropdown-header">QUICK ACTION</li>
-                                                        <li><a href="#"><i class="fa fa-edit"></i> Set as Draft</a></li>
-                                                        <li><a href="#"><i class="fa fa-share-alt"></i> Share</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-4 col-xs-5">
                                             <div class="featured-image">
                                                 <img src="images/misc/preloader.gif" alt="Featured 12" data-echo="images/featured/image12.jpg"/>
                                             </div>
                                         </div>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-8 col-xs-7">
                                             <div class="title-wrapper">
-                                                <p class="category"><a href="category.html">Economic</a></p>
+                                                <p class="category hidden-xs"><a href="category.html">Economic</a></p>
                                                 <h1 class="title">
                                                     <a href="article.html">
                                                         Grand opening new coffee shop at corner of the city of light
@@ -595,7 +571,91 @@
                                                 <ul class="timestamp">
                                                     <li>Finance</li>
                                                     <li>25 January 2016</li>
-                                                    <li>941 Views</li>
+                                                    <li class="hidden-xs">941 Views</li>
+                                                </ul>
+                                            </div>
+                                            <div class="rating-wrapper" data-rating="2"></div>
+                                            <div class="text-right control">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdown-sort-type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        ACTION
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                                        <li class="dropdown-header">CONTROL</li>
+                                                        <li><a href="#"><i class="fa fa-eye"></i> View</a></li>
+                                                        <li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                        <li class="dropdown-header">QUICK ACTION</li>
+                                                        <li><a href="#"><i class="fa fa-edit"></i> Set as Draft</a></li>
+                                                        <li><a href="#"><i class="fa fa-share-alt"></i> Share</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="article-preview landscape mini">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-5">
+                                            <div class="featured-image">
+                                                <img src="images/misc/preloader.gif" alt="Featured 11" data-echo="images/featured/image11.jpg"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-xs-7">
+                                            <div class="title-wrapper">
+                                                <p class="category hidden-xs"><a href="category.html">Science</a></p>
+                                                <h1 class="title">
+                                                    <a href="article.html">
+                                                        New reality and old one blend to the nature
+                                                    </a>
+                                                </h1>
+                                                <ul class="timestamp">
+                                                    <li>Research</li>
+                                                    <li>11 February 2016</li>
+                                                    <li class="hidden-xs">34 Views</li>
+                                                </ul>
+                                            </div>
+                                            <div class="rating-wrapper" data-rating="2"></div>
+                                            <div class="text-right control">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" id="dropdown-sort-type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                        ACTION
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                                        <li class="dropdown-header">CONTROL</li>
+                                                        <li><a href="#"><i class="fa fa-eye"></i> View</a></li>
+                                                        <li><a href="#"><i class="fa fa-pencil"></i> Edit</a></li>
+                                                        <li><a href="#"><i class="fa fa-trash"></i> Delete</a></li>
+                                                        <li class="dropdown-header">QUICK ACTION</li>
+                                                        <li><a href="#"><i class="fa fa-edit"></i> Set as Draft</a></li>
+                                                        <li><a href="#"><i class="fa fa-share-alt"></i> Share</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="article-preview landscape mini">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-xs-5">
+                                            <div class="featured-image">
+                                                <img src="images/misc/preloader.gif" alt="Featured 22" data-echo="images/featured/image22.jpg"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-xs-7">
+                                            <div class="title-wrapper">
+                                                <p class="category hidden-xs"><a href="category.html">Health</a></p>
+                                                <h1 class="title">
+                                                    <a href="article.html">
+                                                        Doctor is the one of exellent job can make you rich
+                                                    </a>
+                                                </h1>
+                                                <ul class="timestamp">
+                                                    <li>Lifestyle</li>
+                                                    <li>22 January 2016</li>
+                                                    <li class="hidden-xs">941 Views</li>
                                                 </ul>
                                             </div>
                                             <div class="rating-wrapper" data-rating="2"></div>
@@ -650,17 +710,22 @@
 </div>
 
 
-<footer data-stellar-background-ratio="0.2" data-stellar-vertical-offset="220">
+<footer>
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 hidden-sm">
                 <div class="about">
+                    <ul class="social pull-right visible-xs">
+                        <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
                     <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
-                    <p>The most update web portal news. We always provide latest article and information with high
+                    <p class="hidden-xs">The most update web portal news. We always provide latest article and information with high
                         integrity and truth. Knowledge is beyond among us to share with you.</p>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-6 hidden-xs clearfix">
                 <h3>QUICK LINKS</h3>
                 <ul class="quick-links">
                     <li><a href="category.html">HEADLINE</a></li>
@@ -679,28 +744,33 @@
                     <li><a href="category.html">SCIENCE</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h3>SUBSCRIBE</h3>
-                <p>Get our latest updates, we don’t spam</p>
+            <div class="col-md-4 col-sm-6 hidden-xs">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>SUBSCRIBE</h3>
+                        <p>Get our latest updates, we don’t spam</p>
 
-                <form action="#" method="post">
-                    <div class="subscribe-email">
-                        <input type="email" class="form-control" placeholder="Email address"/>
-                        <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                        <form action="#" method="post">
+                            <div class="subscribe-email">
+                                <input type="email" class="form-control" placeholder="Email address"/>
+                                <button type="submit"><i class="fa fa-envelope-o"></i></button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-
-                <h3>CONTACT</h3>
-                <div class="contact">
-                    <p>Avenue Street 34 - East Java, Indonesia</p>
-                    <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
-                    <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                    <div class="col-md-12">
+                        <h3>CONTACT</h3>
+                        <div class="contact">
+                            <p>Avenue Street 34 - East Java, Indonesia</p>
+                            <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
+                            <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row bottom">
             <div class="col-sm-8">
-                <ul class="featured-link">
+                <ul class="featured-link hidden-xs">
                     <li><a href="#top">Home</a></li>
                     <li><a href="editorial.html">Editorial</a></li>
                     <li><a href="privacy.html">Privacy</a></li>
@@ -708,10 +778,10 @@
                     <li><a href="faq.html">FAQ</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
-                <div class="copyright">&copy; Copyright 2016 infgue.com All Rights Reserved.</div>
+                <div class="copyright">&copy; <span class="hidden-xs">Copyright</span> 2016 infogue.com All Rights Reserved.</div>
             </div>
             <div class="col-sm-4">
-                <ul class="social">
+                <ul class="social hidden-xs">
                     <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
                     <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
                     <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>

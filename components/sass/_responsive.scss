@@ -596,6 +596,17 @@
   }
 
   .account-profile {
+    .profile-wrapper .list-data .data-filter{
+      position: static;
+
+      .data{
+        margin-left: 0;
+      }
+      .sort{
+        margin-right: 0;
+      }
+    }
+
     .profile-wrapper .list-data .content{
       .contributor-profile.mini{
         padding: 15px;

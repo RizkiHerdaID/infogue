@@ -3515,6 +3515,9 @@ legend {
     padding-bottom: 0;
   }
 
+  .account-profile .profile-wrapper .list-data .content .contributor-profile.mini {
+    padding: 15px;
+  }
   .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
     height: 150px;
     padding: 15px;

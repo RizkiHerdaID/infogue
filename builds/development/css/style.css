@@ -3498,6 +3498,9 @@ legend {
   .article-preview.single-view .contributor-profile .btn-follow, .article-preview.single-view .contributor-profile .btn-unfollow {
     float: none;
   }
+  .article-preview.single-view .contributor-profile .statistic {
+    font-size: 1em;
+  }
   .article-preview.landscape.mini .featured-image {
     min-width: 90px;
   }

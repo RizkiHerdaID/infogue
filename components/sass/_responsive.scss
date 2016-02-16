@@ -363,6 +363,16 @@
     }
   }
 
+  .confirmation i{
+    line-height: 1.6em;
+    height: 100px;
+    width: 100px;
+    min-height: inherit;
+    min-width: inherit;
+    margin-bottom: $space-medium;
+  }
+
+
   .content-wrapper{
     margin-top: 60px;
 

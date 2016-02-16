@@ -3319,6 +3319,15 @@ legend {
     margin-bottom: 10px;
   }
 
+  .confirmation i {
+    line-height: 1.6em;
+    height: 100px;
+    width: 100px;
+    min-height: inherit;
+    min-width: inherit;
+    margin-bottom: 20px;
+  }
+
   .content-wrapper {
     margin-top: 60px;
   }

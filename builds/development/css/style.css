@@ -3512,6 +3512,7 @@ legend {
 
   footer .about .logo {
     margin-bottom: 20px;
+    max-width: 140px;
   }
   footer .about p {
     margin-bottom: 40px;

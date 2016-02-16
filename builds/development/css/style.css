@@ -3647,6 +3647,9 @@ legend {
   .form-horizontal.form-strip .form-group {
     padding: 10px 5px;
   }
+  .form-horizontal.form-strip .form-group .contributor-profile {
+    padding: 0;
+  }
 
   .to-top {
     right: 30px;

@@ -747,6 +747,10 @@
 
   .form-horizontal.form-strip .form-group {
     padding: $space-small 5px;
+
+    .contributor-profile{
+      padding: 0;
+    }
   }
 
   .to-top {

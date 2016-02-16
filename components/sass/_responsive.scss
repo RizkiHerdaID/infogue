@@ -118,6 +118,22 @@
     }
   }
 
+  .featured-wrapper{
+    .featured-list{
+      margin-bottom: $space-medium;
+    }
+
+    .featured-news ol li a p{
+      line-height: 36px;
+    }
+  }
+
+  .modal.newsletter{
+    .modal-content{
+      border: 1px solid #777;
+    }
+  }
+
   .register,
   .login,
   .reset,
@@ -336,6 +352,60 @@
             }
           }
         }
+      }
+    }
+  }
+
+  .featured-wrapper{
+
+    .row > .col-md-8{
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .article-preview.featured-large .featured-image{
+      height: 280px;
+    }
+
+    .featured-list .slide{
+      width: 50%;
+    }
+
+    .featured-news ol li a{
+      height: 57px;
+      p {
+        line-height: 18px;
+      }
+    }
+    .nav-tabs.nav-justified>li>a {
+      margin-bottom: 0;
+    }
+  }
+
+  .modal.newsletter{
+
+    &:before {
+      display: inline-block;
+      vertical-align: middle;
+      content: " ";
+      height: 100%;
+    }
+
+    .modal-dialog .modal-content{
+      h3{
+        font-size: 1.2em;
+      }
+      h1{
+        font-size: 2.5em;
+        margin-bottom: $space-small;
+
+        + p{
+          font-size: .95em;
+          width: 300px !important;
+        }
+      }
+      .form-group input[type='email'] {
+        width: 200px;
       }
     }
   }

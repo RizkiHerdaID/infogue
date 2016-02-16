@@ -1,4 +1,6 @@
 .featured-list{
+  @include clearfix();
+
   .slide{
     float: left;
     width: 25%;
@@ -139,6 +141,7 @@
       @include transition-timing-function(ease-in);
 
       .content{
+        width: 100%;
         position: absolute;
         bottom: 0;
         padding: $space-medium + 10 $space-medium + 10;

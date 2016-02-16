@@ -1093,6 +1093,7 @@ footer .bottom .social {
 }
 
 .modal {
+  padding-left: 0 !important;
   text-align: center;
 }
 .modal .modal-content {
@@ -1749,6 +1750,11 @@ legend {
   display: block;
 }
 
+.featured-list:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .featured-list .slide {
   float: left;
   width: 25%;
@@ -1902,6 +1908,7 @@ legend {
   transition-timing-function: ease-in;
 }
 .article-preview.featured-large .featured-image .content {
+  width: 100%;
   position: absolute;
   bottom: 0;
   padding: 30px 30px;
@@ -3090,6 +3097,17 @@ legend {
     color: #6dd7e3;
   }
 
+  .featured-wrapper .featured-list {
+    margin-bottom: 20px;
+  }
+  .featured-wrapper .featured-news ol li a p {
+    line-height: 36px;
+  }
+
+  .modal.newsletter .modal-content {
+    border: 1px solid #777;
+  }
+
   .register p.subtitle,
   .login p.subtitle,
   .reset p.subtitle,
@@ -3279,6 +3297,47 @@ legend {
   }
   .navigation .sf-menu > li .sf-mega .sf-mega-section li a:hover {
     color: #ecf9fb;
+  }
+
+  .featured-wrapper .row > .col-md-8 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .featured-wrapper .article-preview.featured-large .featured-image {
+    height: 280px;
+  }
+  .featured-wrapper .featured-list .slide {
+    width: 50%;
+  }
+  .featured-wrapper .featured-news ol li a {
+    height: 57px;
+  }
+  .featured-wrapper .featured-news ol li a p {
+    line-height: 18px;
+  }
+  .featured-wrapper .nav-tabs.nav-justified > li > a {
+    margin-bottom: 0;
+  }
+
+  .modal.newsletter:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+  .modal.newsletter .modal-dialog .modal-content h3 {
+    font-size: 1.2em;
+  }
+  .modal.newsletter .modal-dialog .modal-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  .modal.newsletter .modal-dialog .modal-content h1 + p {
+    font-size: .95em;
+    width: 300px !important;
+  }
+  .modal.newsletter .modal-dialog .modal-content .form-group input[type='email'] {
+    width: 200px;
   }
 
   .register,

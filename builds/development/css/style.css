@@ -3644,6 +3644,10 @@ legend {
     padding: 0;
   }
 
+  .form-horizontal.form-strip .form-group {
+    padding: 10px 5px;
+  }
+
   .to-top {
     right: 30px;
     bottom: 140px;

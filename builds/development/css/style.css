@@ -3516,6 +3516,9 @@ legend {
   .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini {
     height: 150px;
   }
+  .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini [class*='col-xs-5'] {
+    padding: 0 0 0 15px;
+  }
   .account-profile .profile-wrapper .list-data .content .article-preview.landscape.mini .title {
     font-size: 1em;
     line-height: 1.3em;

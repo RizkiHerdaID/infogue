@@ -20,7 +20,7 @@ $(function () {
         setLayout();
     });
 
-// GLOBAL LAYOUT --------------------------------------------------------------
+    // GLOBAL LAYOUT --------------------------------------------------------------
     function setDevice(){
         var viewportWidth = $(window).width();
         isLarge = (viewportWidth >= 1200);
@@ -61,8 +61,6 @@ $(function () {
 
 
 
-
-
     // NAVIGATION -----------------------------------------------------------------
     $(".toggle-nav").click(function(e) {
         e.preventDefault();
@@ -89,6 +87,7 @@ $(function () {
         }
     });
 
+    
     function resizeContentWrapper(){
         if($(window).width() <= 767){
             if(!wrapper.hasClass('toggled')){
@@ -102,7 +101,7 @@ $(function () {
 
 
 
-// TABLE ---------------------------------------------------------------------
+    // TABLE ---------------------------------------------------------------------
     function resizeTable(){
         if(isSmall || isExtraSmall){
             var heading = $(".table th").map(function(){

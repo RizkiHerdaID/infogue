@@ -27,9 +27,13 @@ $(function () {
     $("tbody .css-checkbox").change(function(){
         if($(this).is(':checked')){
             $(this).closest("tr").addClass('success');
+            $(this).closest("tbody").next(".sub-table").find(".css-checkbox").prop('checked', true);
+            $(this).closest("tbody").next(".sub-table").find("tr").addClass('success');
         }
         else{
             $(this).closest("tr").removeClass('success');
+            $(this).closest("tbody").next(".sub-table").find(".css-checkbox").prop('checked', false);
+            $(this).closest("tbody").next(".sub-table").find("tr").removeClass('success');
         }
         checkboxs_check();
     });
@@ -183,6 +187,15 @@ $(function () {
             $(".note-btn.btn-fullscreen").tooltip('show');
         }, 1000);
     }
+
+    // SUB TABLE --------------------------------------------------------------------
+    $(".table-multiple tbody:not(.sub-table) > tr > td").not(":last-child").click(function(){
+        $(this).closest("tr").toggleClass("active");
+
+        $(".table-multiple")
+            .find($(this).closest("tr").data("target"))
+            .toggleClass("open");
+    });
 
     $("a[href='#']").click(function(e){
         e.preventDefault();

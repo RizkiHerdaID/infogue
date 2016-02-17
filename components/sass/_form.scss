@@ -64,7 +64,7 @@ input[type=radio].css-radio + label.css-label {
   min-height: 18px;
   display: inline-block;
   line-height: 18px;
-  background: url("../images/misc/csscheckbox.png") no-repeat 0 0;
+  position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -75,15 +75,30 @@ input[type=radio].css-radio + label.css-label {
   cursor: pointer;
   font-family: opensans-regular, sans-serif;
 }
+input[type=checkbox].css-checkbox + label.css-label:before{
+  content: "";
+  background: url("../images/misc/csscheckbox.png") no-repeat 0 0;
+  position: absolute;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  overflow: hidden;
+}
 
-input[type=checkbox].css-checkbox:checked + label.css-label,
-input[type=radio].css-radio:checked + label.css-label {
+input[type=checkbox].css-checkbox:checked + label.css-label:before,
+input[type=radio].css-radio:checked + label.css-label:before {
   background-position: 0 -18px;
 }
 
 // CUSTOM RADIO
-input[type=radio].css-radio + label.css-label {
+input[type=radio].css-radio + label.css-label:before {
+  content: "";
   background: url("../images/misc/cssradio.png") no-repeat 0 0;
+  position: absolute;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  overflow: hidden;
 }
 
 // CUSTOM SELECT

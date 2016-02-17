@@ -378,7 +378,7 @@ $(function () {
         }
     });
 
-    
+
     function resizeContentWrapper(){
         if($(window).width() <= 767){
             if(!wrapper.hasClass('toggled')){

@@ -186,6 +186,10 @@ $(function () {
         setTimeout(function(){
             $(".note-btn.btn-fullscreen").tooltip('show');
         }, 1000);
+
+        setTimeout(function(){
+            $(".note-btn.btn-fullscreen").tooltip('hide');
+        }, 5000);
     }
 
     // SUB TABLE --------------------------------------------------------------------
@@ -201,7 +205,6 @@ $(function () {
         e.preventDefault();
 
         if($(this).hasClass("reset-setting")){
-            $(".note-btn.btn-fullscreen").tooltip('hide');
             $("#website").val("InfoGue.id");
             $('#keywords').tagsinput('add', 'news');
             $('#keywords').tagsinput('add', 'technology');
@@ -230,7 +233,6 @@ $(function () {
         }
 
         if($(this).hasClass("reset-article")){
-            $(".note-btn.btn-fullscreen").tooltip('hide');
             $("#title").val("");
             $("#slug").val("");
             $('#tags').tagsinput('removeAll');
@@ -264,7 +266,6 @@ $(function () {
         }
 
         if($(this).hasClass("print")){
-            $(".note-btn.btn-fullscreen").tooltip('hide');
             printDiv("content");
         }
     });
@@ -300,6 +301,7 @@ $(function () {
         window.print();
 
         document.body.innerHTML = originalContents;
+        location.reload();
     }
 });
 /**
@@ -408,7 +410,7 @@ $(function () {
     // TABLE ---------------------------------------------------------------------
     function resizeTable(){
         if(isSmall || isExtraSmall){
-            var heading = $(".table th").map(function(){
+            var heading = $(".table > thead th").map(function(){
                 var text = $.trim($(this).text()).toUpperCase();
                 if(text == ''){
                     text = 'SELECT'
@@ -416,15 +418,33 @@ $(function () {
                 return text;
             }).get();
 
-            $(".table tbody td").find(".label-title").remove();
-            $(".table tbody tr").each(function(){
+            $(".table tbody:not(.sub-table) td").find(".label-title").remove();
+            $(".table tbody:not(.sub-table) tr").each(function(){
                 for(var i = 0; i < heading.length; i++){
                     $(this).children().eq(i).prepend("<span class='label-title'>"+heading[i]+"</span>");
                 }
             });
+
+            // SUB TABLE
+            var headingSub = $(".table > tbody.sub-table .sub-head th").map(function(){
+                var text = $.trim($(this).text()).toUpperCase();
+                if(text == ''){
+                    text = 'ACTION'
+                }
+                return text;
+            }).get();
+            headingSub[0] = '';
+
+            $(".table tbody.sub-table td").find(".label-title").remove();
+            $(".table tbody.sub-table tr:not(.sub-head)").each(function(){
+                for(var i = 0; i < heading.length; i++){
+                    $(this).children().eq(i).prepend("<span class='label-title'>"+headingSub[i]+"</span>");
+                }
+            });
         }
         else{
-            $(".table tbody td").find(".label-title").remove();
+            $(".table tbody:not(.sub-table) td").find(".label-title").remove();
+            $(".table tbody.sub-table td").find(".label-title").remove();
         }
 
         if(isExtraSmall){

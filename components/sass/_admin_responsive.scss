@@ -19,7 +19,7 @@
   .table.table-striped {
     border: none;
 
-    thead tr {
+    thead tr, &.table-multiple .sub-head {
       position: absolute;
       top: -9999px;
       left: -9999px;
@@ -62,7 +62,52 @@
           font-weight: normal;
           position: absolute;
           left: 10px;
-          line-height: 24px;
+          line-height: 30px;
+        }
+      }
+    }
+
+    &.table-multiple {
+      tbody + tbody{
+        border-top: 0;
+      }
+
+      tbody{
+        tr.active{
+          margin-bottom: 0;
+          border-bottom: none;
+
+          td{
+            border-color: $color-accent2;
+          }
+
+          .label-title{
+            color: $color-light;
+          }
+        }
+      }
+
+      .sub-table {
+        margin-left: 20px;
+        border-left: 1px solid $color-accent1;
+        border-right: 1px solid $color-accent1;
+
+        tr:not(.sub-head) > td:first-child{
+          display: none;
+        }
+
+        tr{
+          margin-bottom: 0;
+          border-bottom: 1px solid $color-accent1;
+          border-top: none;
+
+          td:last-child{
+            border-bottom: none;
+          }
+        }
+
+        &.open {
+          display: block;
         }
       }
     }

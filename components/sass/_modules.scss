@@ -801,8 +801,6 @@
       }
 
       >tr{
-        font-size: 0.9em;
-
         td{
           background-color: $color-light;
         }
@@ -830,7 +828,7 @@
 
         &.active{
           > td{
-            background-color: #3fb9c4;
+            background-color: $color-accent1;
             color: $color-light;
 
             > a{

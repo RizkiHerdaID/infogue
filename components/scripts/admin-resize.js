@@ -104,7 +104,7 @@ $(function () {
     // TABLE ---------------------------------------------------------------------
     function resizeTable(){
         if(isSmall || isExtraSmall){
-            var heading = $(".table th").map(function(){
+            var heading = $(".table > thead th").map(function(){
                 var text = $.trim($(this).text()).toUpperCase();
                 if(text == ''){
                     text = 'SELECT'
@@ -112,15 +112,33 @@ $(function () {
                 return text;
             }).get();
 
-            $(".table tbody td").find(".label-title").remove();
-            $(".table tbody tr").each(function(){
+            $(".table tbody:not(.sub-table) td").find(".label-title").remove();
+            $(".table tbody:not(.sub-table) tr").each(function(){
                 for(var i = 0; i < heading.length; i++){
                     $(this).children().eq(i).prepend("<span class='label-title'>"+heading[i]+"</span>");
                 }
             });
+
+            // SUB TABLE
+            var headingSub = $(".table > tbody.sub-table .sub-head th").map(function(){
+                var text = $.trim($(this).text()).toUpperCase();
+                if(text == ''){
+                    text = 'ACTION'
+                }
+                return text;
+            }).get();
+            headingSub[0] = '';
+
+            $(".table tbody.sub-table td").find(".label-title").remove();
+            $(".table tbody.sub-table tr:not(.sub-head)").each(function(){
+                for(var i = 0; i < heading.length; i++){
+                    $(this).children().eq(i).prepend("<span class='label-title'>"+headingSub[i]+"</span>");
+                }
+            });
         }
         else{
-            $(".table tbody td").find(".label-title").remove();
+            $(".table tbody:not(.sub-table) td").find(".label-title").remove();
+            $(".table tbody.sub-table td").find(".label-title").remove();
         }
 
         if(isExtraSmall){

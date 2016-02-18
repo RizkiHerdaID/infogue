@@ -796,7 +796,6 @@ $(function(){
              * disable navigation sticky after scrolling because on mobile header will always be sticky
              */
             if(sticky !== undefined){
-                console.log(sticky);
                 sticky.destroy();
             }
             if(closed !== undefined){

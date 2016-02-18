@@ -376,6 +376,11 @@
           display: block;
           color: $color-light;
 
+          &.btn:hover, &.btn:focus{
+            color: $color-accent4;
+            border-color: $color-accent4;
+          }
+
           &.link-login{
             font-size: 1.3em;
             font-family: opensans-semibold, sans-serif;

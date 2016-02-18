@@ -10,6 +10,9 @@ $(function(){
     var closed;
     var sticky;
 
+    initSidebarMenu();
+    initSlideMenu();
+
     setDevice();
     setLayout();
 
@@ -33,8 +36,6 @@ $(function(){
      * Navigation & breadcrumb on desktop / medium / large device
      */
     function initMegaMenu(){
-        console.log('init mega menu');
-
         /**
          * init superfish plugin
          */
@@ -55,7 +56,6 @@ $(function(){
     }
 
     function destroyMegaMenu(){
-        console.log('destroy mega menu');
         $('#navigation').superfish('destroy');
     }
 
@@ -64,7 +64,6 @@ $(function(){
      * Navigation & breadcrumb on tablet / small device
      */
     function initSidebarMenu(){
-        console.log('init sidebar menu');
         /**
          * slide effect when click on navigation toggle
          * animation duration 200ms and toggle class 'open' to set mark the navigation status
@@ -72,18 +71,6 @@ $(function(){
         $(".navigation-toggle").click(function(){
             $("#navigation").stop(true).slideToggle(200);
             $("#navigation").toggleClass("open");
-        });
-
-        /**
-         * loop through navigation li
-         * add icon arrow right on list which has sub menu
-         */
-        $("#navigation > li").each(function(){
-            if($(this).find(".sf-mega").length){
-                if(!$(this).find("a").first().find("i.fa-angle-right").length){
-                    $(this).find("a").first().append("<i class='fa fa-angle-right'></i>");
-                }
-            }
         });
 
         /**
@@ -148,19 +135,15 @@ $(function(){
         });
 
         /**
-         * make sure navigation is hidden, waiting for user click the navigation menu
-         * by default it's hidden by css media query, but it's okay to recheck
-         */
-        $("#navigation").hide();
-
-        /**
          * close navigation menu when user clicks outside the navigation itself
          * reset all navigation breadcrumb level
          */
         $('html').click(function() {
-            $(".level-1").html("").addClass("blank").css("width", "40px");;
-            $(".level-2").html("").addClass("blank").css("width", "40px");;
-            $("#navigation").slideUp(200);
+            if(isSmall){
+                $(".level-1").html("").addClass("blank").css("width", "40px");;
+                $(".level-2").html("").addClass("blank").css("width", "40px");;
+                $("#navigation").slideUp(200);
+            }
         });
 
         /**
@@ -168,7 +151,9 @@ $(function(){
          * prevent event reach the root (html) as closed the navigation
          */
         $('.navigation').click(function(event){
-            event.stopPropagation();
+            if(isSmall) {
+                event.stopPropagation();
+            }
         });
     }
 
@@ -176,7 +161,6 @@ $(function(){
      * Destroy navigation & breadcrumb on tablet / small device
      */
     function destroySidebarMenu(){
-        console.log('destroy sidebar menu');
         /**
          * remove all registered event for sidebar navigation
          */
@@ -192,22 +176,52 @@ $(function(){
     }
 
     /**
-     * Slide navigation mobile / extra small device
+     * add arrow on small device
+     * make sure navigation is hidden
      */
-    function initSlideMenu(){
-        console.log('init side menu');
+    function createRightArrow(){
+        /**
+         * make sure navigation is hidden, waiting for user click the navigation menu
+         * by default it's hidden by css media query, but it's okay to recheck
+         */
+        $("#navigation").hide();
+
         /**
          * loop through navigation li
-         * add icon arrow down on list which has sub menu
+         * add icon arrow right on list which has sub menu
          */
         $("#navigation > li").each(function(){
             if($(this).find(".sf-mega").length){
-                if(!$(this).find("a").first().find("i.fa-angle-down").length){
-                    $(this).find("a").first().append("<i class='fa fa-angle-down'></i>");
+                if(!$(this).find("a").first().find("i.fa-angle-right").length){
+                    $(this).find("a").first().append("<i class='fa fa-angle-right'></i>");
                 }
             }
         });
+    }
 
+    /**
+     * remove right arrow on first level of navigation which has sub menu
+     * make sure navigation is visible in case device turns into larger or smaller
+     */
+    function removeRightArrow(){
+        /**
+         * show first level menu
+         * in case change size from small into medium / large (mega menu)
+         */
+        $("#navigation").show();
+
+        /**
+         * remove left arrow on sidebar menu
+         * in case change size from small into extra small (slide menu) or medium / large (mega menu)
+         */
+        $("#navigation > li > a").find("i.fa-angle-right").remove();
+
+    }
+
+    /**
+     * Slide navigation mobile / extra small device
+     */
+    function initSlideMenu(){
         /**
          * add toggle functionality to slide right (visible) and slide left (invisible)
          * change icon burger into arrow and reverse
@@ -235,16 +249,18 @@ $(function(){
          * check if one of li has open the close and open the another
          */
         $("#navigation > li > a").click(function(){
-            if($(this).parent().hasClass('active')) {
-                $("#navigation > li").removeClass('active');
-                $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
-            }
-            else{
-                $("#navigation > li").removeClass('active');
-                $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
+            if(isExtraSmall){
+                if($(this).parent().hasClass('active')) {
+                    $("#navigation > li").removeClass('active');
+                    $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
+                }
+                else{
+                    $("#navigation > li").removeClass('active');
+                    $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
 
-                $(this).parent().addClass('active');
-                $(this).next('.sf-mega').stop(true).slideDown().addClass("open");
+                    $(this).parent().addClass('active');
+                    $(this).next('.sf-mega').stop(true).slideDown().addClass("open");
+                }
             }
         });
 
@@ -266,6 +282,7 @@ $(function(){
             $(".list-menu").stop(true).slideUp(100);
 
         });
+
         $(".user-dropdown").click(function(){
             $(this).toggleClass('active');
             $(this).next(".list-menu").stop(true).slideToggle(100);
@@ -276,14 +293,19 @@ $(function(){
             }
         });
 
-
         /**
          * close search box when click the outside of the search box itself
          * remove class open on button search toggle
          */
         $('html').click(function() {
-            $(".mobile-search").removeClass("active");
-            $(".header-section > .search-wrapper").stop(true).fadeOut(100);
+            /**
+             * hide search on mobile only, because on mobile search act like a drop down
+             * remove active class too
+             */
+            if(isExtraSmall){
+                $(".mobile-search").removeClass("active");
+                $(".header-section > .search-wrapper").stop(true).fadeOut(100);
+            }
 
             $(".user-dropdown").removeClass("active");
             $(".list-menu").stop(true).slideUp(100);
@@ -299,8 +321,11 @@ $(function(){
         });
     }
 
+    /**
+     * destroy slide menu if necessary
+     * unbind all events and remove arrow on first level menu which has sub menu
+     */
     function destroySlideMenu(){
-        console.log('destroy side menu');
         $("#navigation > li > a").find("i.fa-angle-down").remove();
         $("#navigation > li > a").unbind('click');
         $("nav.navigation .overlay").unbind('click');
@@ -311,6 +336,41 @@ $(function(){
         $("html").unbind('click');
     }
 
+    /**
+     * if device turns smaller add down arrow icon on first menu which has sub menu
+     * reset search state of search on mobile
+     */
+    function createDownArrow(){
+        $(".mobile-search").removeClass("active");
+        $(".header-section > .search-wrapper").hide();
+
+        /**
+         * loop through navigation li
+         * add icon arrow down on list which has sub menu
+         */
+        $("#navigation > li").each(function(){
+            if($(this).find(".sf-mega").length){
+                if(!$(this).find("a").first().find("i.fa-angle-down").length){
+                    $(this).find("a").first().append("<i class='fa fa-angle-down'></i>");
+                }
+            }
+        });
+    }
+
+    /**
+     * remove arrow on first level which has sub menu
+     * this function called if device turns larger and make sure search wrapper is visible
+     */
+    function removeDownArrow(){
+        $("#navigation > li > a").find("i.fa-angle-down").remove();
+        $(".header-section > .search-wrapper").show();
+    }
+
+
+    /**
+     * reposition and re-adjusting layout component like navigation based on device size
+     * activate sticky header and reset navigation status
+     */
     function setLayout(){
         // equalize the article preview height
         $('.articles, #articles').equalize({equalize: 'height', children: '.article-preview'});
@@ -323,7 +383,7 @@ $(function(){
             $(window).data('plugin_stellar').init();
 
             /**
-             * init waypoint to check scroll offset at -200px
+             * init waypoint.js to check scroll offset at -200px
              * add class 'closed' to make header position fixed out of the screen by css
              * do not add transition first because css will make y-translation start from  top 0
              * add transition when it has 'closed' class after 500ms delay and header has moved out off the screen
@@ -371,8 +431,6 @@ $(function(){
                     offset: -300
                 });
             }
-
-            //$("#navigation li .sf-mega").find("a").first().find("i").remove();
         }
         else{
             /**
@@ -398,21 +456,42 @@ $(function(){
         }
 
         if(isLarge || isMedium){
-            destroySidebarMenu();
-            destroySlideMenu();
             initMegaMenu();
+            removeRightArrow();
+            removeDownArrow();
         }
         else if(isSmall){
             destroyMegaMenu();
-            destroySlideMenu();
-            initSidebarMenu();
+            createRightArrow();
+            removeDownArrow();
         }
         else{
             destroyMegaMenu();
-            destroySidebarMenu();
-            initSlideMenu();
+            removeRightArrow();
+            createDownArrow();
         }
     }
 
+    /**
+     * create fade away side by sde between text login and button create on mobile device
+     * @type {number}
+     */
+    var counter = 0;
+    setInterval(function(){
+        if(isExtraSmall){
+            if(counter++%2 == 0){
+                $(".sidebar-profile .link-text").fadeOut(200);
+                setTimeout(function(){
+                    $(".sidebar-profile .btn").fadeIn(200);
+                }, 500);
+            }
+            else{
+                $(".sidebar-profile .btn").fadeOut(200);
+                setTimeout(function(){
+                    $(".sidebar-profile .link-text").fadeIn(200);
+                }, 500);
+            }
+        }
+    }, 4000);
 
 });

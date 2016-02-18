@@ -3431,6 +3431,10 @@ legend {
     display: block;
     color: #ffffff;
   }
+  .navigation .sidebar-profile > .unauthorized a.btn:hover, .navigation .sidebar-profile > .unauthorized a.btn:focus {
+    color: #ecf9fb;
+    border-color: #ecf9fb;
+  }
   .navigation .sidebar-profile > .unauthorized a.link-login {
     font-size: 1.3em;
     font-family: opensans-semibold, sans-serif;

@@ -837,15 +837,15 @@ $(function(){
     setInterval(function(){
         if(isExtraSmall){
             if(counter++%2 == 0){
-                $(".sidebar-profile .link-text").fadeOut(200);
+                $(".sidebar-profile .unauthorized:not(.logged-in) .link-text").fadeOut(200);
                 setTimeout(function(){
-                    $(".sidebar-profile .btn").fadeIn(200);
+                    $(".sidebar-profile .unauthorized:not(.logged-in) .btn").fadeIn(200);
                 }, 500);
             }
             else{
-                $(".sidebar-profile .btn").fadeOut(200);
+                $(".sidebar-profile .unauthorized:not(.logged-in) .btn").fadeOut(200);
                 setTimeout(function(){
-                    $(".sidebar-profile .link-text").fadeIn(200);
+                    $(".sidebar-profile .unauthorized:not(.logged-in) .link-text").fadeIn(200);
                 }, 500);
             }
         }

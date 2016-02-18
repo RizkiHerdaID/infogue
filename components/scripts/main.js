@@ -245,16 +245,23 @@ $(function () {
         cursorborder: 'none'
     });
 
+    /*
     $(".navigation").niceScroll({
         cursorcolor: '#6dd7e3',
         cursorborder: 'none',
-        cursoropacitymax: 0
+        cursoropacitymax: 0,
+        scrollspeed: 75,
+        smoothscroll: false
     });
+
 
     $("#navigation").niceScroll({
         cursorcolor: '#6dd7e3',
-        cursorborder: 'none'
+        cursorborder: 'none',
+        scrollspeed: 75,
+        smoothscroll: false
     });
+    */
 
     // STICKY STATIC NAV ----------------------------------------------------------
     if ($('.static-page').length) {
@@ -334,6 +341,7 @@ $(function () {
     $("a[href='#']").click(function(e) {
         e.preventDefault();
     });
+
 
 
 

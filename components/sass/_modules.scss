@@ -318,6 +318,10 @@
     border-color: $color-accent1;
   }
 }
+.dropdown-menu {
+  border: none;
+  @include box-shadow($color-gray-light 0 1px 5px);
+}
 
 // FILTER
 .data-filter{

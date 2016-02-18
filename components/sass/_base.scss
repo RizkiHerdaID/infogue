@@ -99,17 +99,21 @@ header {
       overflow: hidden;
       text-indent: 9999px;
       background: url("../images/misc/logo.png") no-repeat left center;
+
+      a{
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 
   .header-section {
-    @include clearfix;
     padding-left: 250px;
     display: block;
 
     .control-wrapper {
-      @include clearfix();
-      overflow: hidden;
+      height: 35px;
 
       a {
         color: $color-light;
@@ -138,17 +142,14 @@ header {
         padding-top: $space-medium;
         color: $color-light;
 
-        li {
+        > ul li {
           display: inline-block;
 
-          &:after {
+          + li:before {
             content: "|";
           }
 
           &:last-child {
-            &:after {
-              content: "";
-            }
             a {
               padding-right: 0;
             }
@@ -156,6 +157,69 @@ header {
 
           a {
             padding: 0 $space-small;
+          }
+        }
+      }
+
+      .user-menu{
+        display: block;
+        position: relative;
+
+        > a{
+          padding: 5px 10px;
+
+          &.active{
+            background-color: $color-accent1;
+          }
+
+          &.mobile-search{
+            display: none;
+          }
+
+          strong{
+            font-weight: normal;
+            font-family: opensans-semibold, sans-serif;
+          }
+        }
+
+        i{
+          margin-right: 8px;
+          font-size: 0.9em;
+        }
+
+        .list-menu{
+          @include box-shadow($color-gray-light 0 1px 5px);
+          background-color: $color-light;
+          position: absolute;
+          width: 100%;
+          min-width: 150px;
+          right: 0;
+          top: 27px;
+          padding: 7px;
+          z-index: 1000;
+          display: none;
+
+          .menu-label{
+            font-family: opensans-semibold, sans-serif;
+            color: $color-accent2;
+            font-size: 0.8em;
+            padding: $space-small $space-small 5px;
+          }
+
+          a{
+            display: block;
+            color: $color-dark;
+            padding: 8px 10px;
+
+            &:hover{
+              background-color: $color-accent2;
+              color: $color-light;
+            }
+
+            i{
+              text-align: center;
+              min-width: 20px;
+            }
           }
         }
       }

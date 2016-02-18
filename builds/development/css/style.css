@@ -3156,6 +3156,12 @@ legend {
     display: none;
   }
 }
+@media screen and (min-width: 768px) {
+  .modal .form-horizontal.form-strip .form-group {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
 @media screen and (max-width: 991px) {
   .header-wrapper {
     margin-bottom: 20px;
@@ -3881,6 +3887,10 @@ legend {
 
   .modal .modal-dialog {
     display: block;
+  }
+
+  .modal .form-horizontal.form-strip .form-group {
+    padding: 10px 20px;
   }
 
   .to-top {

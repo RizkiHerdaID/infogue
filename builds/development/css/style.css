@@ -104,6 +104,10 @@ strong {
   font-weight: bold;
 }
 
+small {
+  font-size: 85%;
+}
+
 h1, h2, h3 {
   font-family: opensans-semibold, sans-serif, sans-serif;
 }
@@ -2591,7 +2595,14 @@ legend {
   float: right;
   margin: 5px 0;
 }
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini.message-list:hover {
+  background-color: whitesmoke;
+}
+.account-profile .profile-wrapper .list-data .content .contributor-profile.mini.message-list .name {
+  color: #333333;
+}
 .account-profile .profile-wrapper .list-data .content .contributor-profile.mini.message-list .message {
+  color: #333333;
   margin-bottom: 5px;
   width: 85%;
   overflow: hidden;
@@ -3857,6 +3868,10 @@ legend {
   .chat-box .control button[type=submit] {
     position: fixed;
     right: 0;
+  }
+
+  .modal .modal-dialog {
+    display: block;
   }
 
   .to-top {

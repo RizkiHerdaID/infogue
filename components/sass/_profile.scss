@@ -428,7 +428,17 @@
           }
 
           &.message-list{
+
+            &:hover{
+              background-color: lighten($color-gray-light, 10%);
+            }
+
+            .name{
+              color: $color-dark;
+            }
+
             .message{
+              color: $color-dark;
               margin-bottom: 5px;
               width: 85%;
               overflow: hidden;

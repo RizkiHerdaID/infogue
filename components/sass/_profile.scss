@@ -524,3 +524,13 @@
     }
   }
 }
+
+.message-box .message-list{
+  &:hover{
+    background-color: transparent !important;
+  }
+
+  .name:hover{
+    color: $color-accent2 !important;
+  }
+}

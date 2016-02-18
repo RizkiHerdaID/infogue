@@ -1652,6 +1652,7 @@ select option {
   color: #9b9b9b;
   font-family: opensans-semibold, sans-serif;
   font-size: 0.9em;
+  cursor: pointer;
 }
 .css-file.attachment .file-info {
   float: left;
@@ -1672,6 +1673,7 @@ select option {
   position: absolute;
   top: 0;
   opacity: 0;
+  cursor: pointer;
 }
 .css-file .file-info {
   padding: 0 10px;
@@ -2674,6 +2676,13 @@ legend {
 }
 .account-profile .profile-wrapper .list-data .content .chat-box .control button {
   float: right;
+}
+
+.message-box .message-list:hover {
+  background-color: transparent !important;
+}
+.message-box .message-list .name:hover {
+  color: #4dc4d2 !important;
 }
 
 .error404 {

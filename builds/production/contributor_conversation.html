@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Info Gue - Imelda Agustine</title>
+    <title>Info Gue - Conversation</title>
     <meta name="description" content="Social news portal gives the most update information">
     <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
     <meta name="author" content="Angga Ari Wijaya">
@@ -100,14 +100,14 @@
                     </ol>
                 </div>
                 <div class="sidebar-profile visible-xs">
-                    <a href="contributor_stream.html" class="hidden">
+                    <a href="contributor_stream.html">
                         <img src="images/contributors/cici.png"/>
                         <div class="info">
                             <p class="name">Angga Ari Wijaya</p>
                             <p class="location">Jakarta, Indonesia</p>
                         </div>
                     </a>
-                    <div class="unauthorized">
+                    <div class="unauthorized hidden">
                         <a href="register.html" class="btn btn-outline btn-light">CREATE ARTICLE</a>
                         <div class="link-text" style="display: none">
                             <a href="login.html" class="link-login">Welcome, Sign In</a>
@@ -402,185 +402,164 @@
 
 <div class="back-gray">
     <section class="container content-wrapper">
-        <div class="breadcrumb-wrapper hidden-xs">
-            <ol class="breadcrumb mtn">
-                <li><a href="archive.html">Archive</a></li>
-                <li><a href="contributor.html">Contributor</a></li>
-                <li class="active">Imelda Agustine</li>
-            </ol>
-        </div>
-
         <div class="row">
             <div class="col-md-4 hidden-sm hidden-xs">
-                <div class="contributor-menu unauthorized">
-                    <div class="featured">
+                <div class="contributor-menu default">
+                    <div class="featured" style="background: url('images/covers/231894.jpg') no-repeat center center / cover"></div>
+                    <div class="contributor-profile mini">
+                        <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
                         <div class="info">
-                            <p class="title">Don't have an account?</p>
-                            <p class="subtitle">Let's make it one</p>
-                            <div class="btn btn-primary btn-outline btn-block">REGISTER</div>
+                            <p class="name">Imelda Agustine</p>
+                            <ul class="list-separated small mts text-muted">
+                                <li>75 FOLLOWERS</li>
+                                <li>54 FOLLOWING</li>
+                            </ul>
                         </div>
+                        <a href="contributor_article_create.html" class="btn btn-primary btn-outline btn-block">CREATE ARTICLE</a>
                     </div>
-                    <div class="login-form">
-                        <h2 class="form-title">Sign In</h2>
-                        <p class="form-subtitle">Login into Contributor profile</p>
-                        <form action="contributor_stream.html">
-                            <div class="mbm">
-                                <div class="btn-group btn-group-justified" role="group">
-                                    <a class="btn btn-facebook" href="http://www.facebook.com">
-                                        <i class="fa fa-facebook"></i> FACEBOOK
-                                    </a>
-                                    <a class="btn btn-twitter" href="http://www.twitter.com">
-                                        <i class="fa fa-twitter"></i> TWITTER
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="email" placeholder="Email Address or Username">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="password" placeholder="Password">
-                            </div>
-                            <div class="form-group clearfix">
-                                <div class="checkbox pull-left mtn">
-                                    <input type="checkbox" id="agree" class="css-checkbox">
-                                    <label for="agree" class="css-label">Remember Me</label>
-                                </div>
-                                <a href="forgot.html" class="forgot-link clearfix pull-right">Forgot Password?</a>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
-                        </form>
-                    </div>
+                    <nav role="navigation">
+                        <ul role="listbox">
+                            <li><a href="contributor_stream.html"><i class="fa fa-desktop"></i>Stream</a></li>
+                            <li><a href="contributor_article.html"><i class="fa fa-file-text"></i>Article</a></li>
+                            <li class="active"><a href="contributor_message.html"><i class="fa fa-envelope"></i>Message</a></li>
+                            <li><a href="contributor_followers.html"><i class="fa fa-chevron-left"></i>Follower</a></li>
+                            <li><a href="contributor_following.html"><i class="fa fa-chevron-right"></i>Following</a></li>
+                            <li><a href="contributor_setting.html"><i class="fa fa-wrench"></i>Setting</a></li>
+                            <li><a href="login.html"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-md-8 no-padding-mobile">
                 <div class="account-profile">
-                    <div class="cover" style="background: url('images/backgrounds/beach.jpg') no-repeat center / cover"></div>
                     <div class="profile-wrapper">
-                        <section class="profile">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img src="images/contributors/team03.jpg" class="avatar img-circle"/>
-                                    <div class="text-center hidden-sm hidden-xs">
-                                        <a class="btn btn-primary btn-outline mtm" href="profile_detail.html">MORE INFO</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row mts">
-                                        <div class="col-md-7">
-                                            <h2 class="name"><a href="profile.html">Diah Ayu Permata</a></h2>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <a class="btn btn-primary btn-outline more-info" href="profile_detail.html">MORE INFO</a>
-                                            <a class="btn btn-primary btn-outline" href="#">FOLLOW</a>
-                                            <a class="btn btn-primary btn-outline" href="#" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope-o"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="about">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum harum, itaque. Culpa
-                                                dolorum illo nesciunt nobis tenetur ullam veniam voluptate!.<a href="profile_detail.html">More</a></p>
-                                            <p class="location"><i class="fa fa-map-marker"></i> Gresik, Indonesia</p>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <ul class="statistic nav-justified">
-                                                <li><a href="profile_following.html"><strong>13</strong>FOLLOWING</a></li>
-                                                <li><a href="profile_article.html"><strong>54</strong>ARTICLES</a></li>
-                                                <li><a href="profile_follower.html"><strong>63</strong>FOLLOWERS</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
                         <section class="list-data">
-                            <h3 class="title">FOLLOWING <a href="profile.html">BACK TO PROFILE</a></h3>
+                            <h3 class="title">MESSAGES : WENDI ADITYA WIJAYA</h3>
                             <div class="content">
-                                <div role="list">
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/bita.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Bita Diflia</a>
-                                            <p class="location">Surabaya, Indonesia</p>
+                                <div role="list" class="message-box">
+                                    <div class="loading" style="display: block"></div>
+                                    <div class="they">
+                                        <div class="contributor-profile mini message-list">
+                                            <img src="images/contributors/team04.jpg" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                                <p class="message">Hei what’s up, it’s long time never see you again since</p>
+                                                <p class="timestamp">4 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/cindy.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Cindy Sriani</a>
-                                            <p class="location">Situbondo, Indonesia</p>
+                                    <div class="me">
+                                        <div class="contributor-profile mini message-list">
+                                            <img src="images/contributors/cici.png" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Imelda Agustine</a>
+                                                <p class="message">Actually I’m sick...
+                                                    but i’m going to work tomorrow</p>
+                                                <p class="timestamp">3 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/eta.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Margareta Ester</a>
-                                            <p class="location">Jember, Indonesia</p>
+                                    <div class="me">
+                                        <div class="contributor-profile mini message-list me">
+                                            <img src="images/contributors/cici.png" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Imelda Agustine</a>
+                                                <p class="message">How about the project?
+                                                    doesn’t it going well?</p>
+                                                <p class="timestamp">3 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/hadi.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Hadi Subroto</a>
-                                            <p class="location">Jember, Indonesia</p>
+                                    <div class="they">
+                                        <div class="contributor-profile mini message-list they">
+                                            <img src="images/contributors/team04.jpg" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                                <p class="message">Ok, no problem, btw I sent you email yasterday</p>
+                                                <p class="timestamp">3 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/lisna.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Lisna Wardiantika</a>
-                                            <p class="location">Lumajang, Indonesia</p>
+                                    <div class="me">
+                                        <div class="contributor-profile mini message-list me">
+                                            <img src="images/contributors/cici.png" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Imelda Agustine</a>
+                                                <p class="message">Oh, I don’t check it yet..
+                                                    hmm I have some problem about work</p>
+                                                <p class="timestamp">3 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/pras.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Risha Preasetya</a>
-                                            <p class="location">Malang, Indonesia</p>
+                                    <div class="they">
+                                        <div class="contributor-profile mini message-list they">
+                                            <img src="images/contributors/team04.jpg" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                                <p class="message">Oh I see...</p>
+                                                <p class="timestamp">1 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/vivi.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Vivi Rachkmawati</a>
-                                            <p class="location">Lumajang, Indonesia</p>
+                                    <div class="they">
+                                        <div class="contributor-profile mini message-list they">
+                                            <img src="images/contributors/team04.jpg" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                                <p class="message">Do you have a question about your tasks?</p>
+                                                <p class="timestamp">1 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/ratna.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Ratna Agustin</a>
-                                            <p class="location">Probolinggo, Indonesia</p>
+                                    <div class="they">
+                                        <div class="contributor-profile mini message-list they">
+                                            <img src="images/contributors/team04.jpg" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Wendi Aditya Wijaya</a>
+                                                <p class="message">We can discuss it at office tomorrow</p>
+                                                <p class="timestamp">1 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/zizi.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Nur Azizi</a>
-                                            <p class="location">Bondowoso, Indonesia</p>
+                                    <div class="me">
+                                        <div class="contributor-profile mini message-list me">
+                                            <img src="images/contributors/cici.png" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Imelda Agustine</a>
+                                                <p class="message">But it’s urgent, i will send you document,
+                                                    I hope you can help me immedietely..</p>
+                                                <p class="timestamp">1 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
-                                    <div class="contributor-profile mini">
-                                        <img src="images/contributors/angga.jpg" class="avatar img-circle img-responsive"/>
-                                        <div class="info">
-                                            <a href="profile.html" class="name">Angga Ari Wijaya</a>
-                                            <p class="location">Gresik, Indonesia</p>
+                                    <div class="me">
+                                        <div class="contributor-profile mini message-list me">
+                                            <img src="images/contributors/cici.png" class="avatar img-circle"/>
+                                            <div class="info">
+                                                <a href="profile.html" class="name">Imelda Agustine</a>
+                                                <p class="message">This is a PHP code based on Laravel..</p>
+                                                <div class="attachment">
+                                                    <p>Attachment</p>
+                                                    <a href="#">PHP_source_code.zip</a>
+                                                </div>
+                                                <p class="timestamp">1 days ago</p>
+                                            </div>
                                         </div>
-                                        <button class="btn btn-primary btn-outline btn-follow active" data-toggle="button" aria-pressed="true" autocomplete="off"><i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">UNFOLLOW</span></button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-center pm">
-                                <div class="loading"></div>
-                                <a href="#" class="btn btn-primary btn-load-more">LOAD MORE</a>
+                                <div class="chat-box">
+                                    <form action="#">
+                                        <textarea name="message" id="message" cols="30" rows="3" placeholder="Type a message here" class="form-control"></textarea>
+                                        <div class="control">
+                                            <div class="css-file attachment">
+                                                <a class="open-attachment"><i class="fa fa-file mrs"></i>ATTACHMENT</a>
+                                                <span class="file-info"></span>
+                                                <input type="file" class="file-input" id="attachment" />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary plm prm">SEND</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -588,118 +567,6 @@
             </div>
         </div>
     </section>
-</div>
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-6 hidden-sm">
-                <div class="about">
-                    <ul class="social pull-right visible-xs">
-                        <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
-                    <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
-                    <p class="hidden-xs">The most update web portal news. We always provide latest article and information with high
-                        integrity and truth. Knowledge is beyond among us to share with you.</p>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 hidden-xs clearfix">
-                <h3>QUICK LINKS</h3>
-                <ul class="quick-links">
-                    <li><a href="category.html">HEADLINE</a></li>
-                    <li><a href="category.html">TRENDING</a></li>
-                    <li><a href="category.html">POPULAR</a></li>
-                    <li><a href="category.html">RANDOM</a></li>
-                    <li><a href="category.html">COMMENTED</a></li>
-                    <li><a href="category.html">SIGN IN</a></li>
-                </ul>
-                <ul class="quick-links">
-                    <li><a href="category.html">ENTERTAINMENT</a></li>
-                    <li><a href="category.html">TECHNOLOGY</a></li>
-                    <li><a href="category.html">SPORT</a></li>
-                    <li><a href="category.html">NEWS</a></li>
-                    <li><a href="category.html">HEALTH</a></li>
-                    <li><a href="category.html">SCIENCE</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 col-sm-6 hidden-xs">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>SUBSCRIBE</h3>
-                        <p>Get our latest updates, we don’t spam</p>
-
-                        <form action="#" method="post">
-                            <div class="subscribe-email">
-                                <input type="email" class="form-control" placeholder="Email address"/>
-                                <button type="submit"><i class="fa fa-envelope-o"></i></button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-12">
-                        <h3>CONTACT</h3>
-                        <div class="contact">
-                            <p>Avenue Street 34 - East Java, Indonesia</p>
-                            <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
-                            <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row bottom">
-            <div class="col-sm-8">
-                <ul class="featured-link hidden-xs">
-                    <li><a href="#top">Home</a></li>
-                    <li><a href="editorial.html">Editorial</a></li>
-                    <li><a href="privacy.html">Privacy</a></li>
-                    <li><a href="disclaimer.html">Disclaimer</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-                <div class="copyright">&copy; <span class="hidden-xs">Copyright</span> 2016 infogue.com All Rights Reserved.</div>
-            </div>
-            <div class="col-sm-4">
-                <ul class="social hidden-xs">
-                    <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<div class="to-top">
-    <a href="#top"><i class="fa fa-arrow-up"></i></a>
-</div>
-
-<div class="modal fade color" id="send-message" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="#" class="form-strip form-horizontal">
-                <input type="hidden" class="form-control" value="0"/>
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="fa fa-envelope-o"></i> SEND MESSAGE</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>SEND TO : </label> DIAH AYU PERMATA
-                    </div>
-                    <div class="form-group">
-                        <label for="message" class="mbs">MESSAGE : </label>
-                        <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Type message here"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
-                    <button type="submit" class="btn btn-primary">SEND</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 
 <script src="../../bower_components/jquery/dist/jquery.min.js"></script>

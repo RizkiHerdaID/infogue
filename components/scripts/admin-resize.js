@@ -51,7 +51,7 @@ $(function () {
             }
         }
 
-        if(isSmall){
+        if(isSmall || isLarge){
             $(".bar.sm-screen").css('display', 'table-cell');
         }
         else{
@@ -66,7 +66,7 @@ $(function () {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
 
-        if($(window).width() >= 992){
+        if(isMedium){
             if(wrapper.hasClass('toggled')){
                 $(".md-screen").fadeIn(300).css('display', 'table-cell');
             }

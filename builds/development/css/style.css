@@ -140,7 +140,7 @@ header {
 }
 
 .header {
-  background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center;
+  background: url("../images/backgrounds/header.jpg") no-repeat #0099ac top center/cover;
   position: relative;
   z-index: 5;
   height: 130px;
@@ -381,7 +381,7 @@ header {
 }
 
 .mobile {
-  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center;
+  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center/cover;
   width: 100%;
   min-height: 400px;
   position: relative;
@@ -3154,6 +3154,15 @@ legend {
 @media screen and (min-width: 992px) {
   .more-info {
     display: none;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .header .header-section .search-wrapper .search .input-search input {
+    width: 420px;
+  }
+
+  .header .header-section {
+    padding-left: 280px;
   }
 }
 @media screen and (min-width: 768px) {

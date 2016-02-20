@@ -60,7 +60,7 @@ header {
 }
 
 .header {
-  background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center;
+  background: url("../images/backgrounds/header.jpg") no-repeat $background-dark top center / cover;
   position: relative;
   z-index: 5;
   height: 130px;
@@ -328,7 +328,7 @@ header {
 }
 
 .mobile {
-  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center;
+  background: url("../images/backgrounds/snow_mountain.jpg") no-repeat center center / cover;
   width: 100%;
   min-height: 400px;
   position: relative;

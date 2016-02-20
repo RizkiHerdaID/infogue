@@ -5,7 +5,12 @@
 }
 
 @media screen and (min-width: 1200px) {
-
+  .header .header-section .search-wrapper .search .input-search input {
+    width: 420px;
+  }
+  .header .header-section {
+    padding-left: 280px;
+  }
 }
 
 @media screen and (min-width: 768px) {

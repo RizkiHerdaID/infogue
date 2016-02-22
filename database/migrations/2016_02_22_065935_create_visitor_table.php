@@ -15,8 +15,8 @@ class CreateVisitorTable extends Migration
         Schema::create('visitors', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->integer('hit');
-            $table->integer('unique');
+            $table->integer('hit')->default(0);
+            $table->integer('unique')->default(0);
             $table->timestamps();
         });
     }

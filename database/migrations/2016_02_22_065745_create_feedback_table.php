@@ -17,6 +17,7 @@ class CreateFeedbackTable extends Migration
             $table->string('name', 50);
             $table->string('email', 50);
             $table->text('message');
+            $table->enum('label', ['general', 'important', 'archived']);
             $table->timestamps();
         });
     }

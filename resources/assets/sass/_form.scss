@@ -1,0 +1,300 @@
+.form-control {
+  @include box-shadow(none);
+}
+
+.form-control:focus,
+.bootstrap-tagsinput.focus {
+  border-color: $color-accent2;
+  outline: 0;
+  @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(77, 196, 210, .6));
+}
+
+.bootstrap-tagsinput input {
+  width: 100%;
+}
+
+.has-error .bootstrap-tagsinput {
+  border-color: #a94442;
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.075));
+}
+
+.form-control-dummy {
+  visibility: hidden;
+  height: 0;
+  display: block;
+  float: left;
+  width: 100%;
+}
+
+.form-control, .dropdown-menu {
+  @include border-radius(0);
+}
+
+label {
+  margin-bottom: $space-small;
+  font-family: opensans-semibold, sans-serif;
+}
+
+textarea {
+  resize: none;
+}
+
+.dropdown-menu {
+  margin: 0;
+}
+
+// CUSTOM CHECKBOX / RADIO
+input[type=checkbox].css-checkbox,
+input[type=radio].css-radio {
+  position: absolute;
+  z-index: -1000;
+  left: -1000px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label,
+input[type=radio].css-radio + label.css-label {
+  padding-left: 28px;
+  min-height: 18px;
+  display: inline-block;
+  line-height: 18px;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  cursor: pointer;
+  font-family: opensans-regular, sans-serif;
+}
+input[type=checkbox].css-checkbox + label.css-label:before{
+  content: "";
+  background: url("../images/misc/csscheckbox.png") no-repeat 0 0;
+  position: absolute;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  overflow: hidden;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label:before,
+input[type=radio].css-radio:checked + label.css-label:before {
+  background-position: 0 -18px;
+}
+
+// CUSTOM RADIO
+input[type=radio].css-radio + label.css-label:before {
+  content: "";
+  background: url("../images/misc/cssradio.png") no-repeat 0 0;
+  position: absolute;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  overflow: hidden;
+}
+
+// CUSTOM SELECT
+label.css-select {
+  position: relative;
+  margin-bottom: 0;
+  width: 100%;
+
+  &.select-inline {
+    display: inline-block;
+    width: auto;
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    content: "\f0d7";
+    font-size: 1.2em;
+    color: $color-gray-dark;
+    right: 8px;
+    top: 4px;
+    padding: 5px;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+
+    &.form-control {
+      padding-right: 25px;
+    }
+  }
+}
+
+select {
+  text-transform: capitalize;
+
+  optgroup {
+    color: $color-dark;
+    font-family: opensans-regular, sans-serif;
+    padding: $space-small;
+    text-transform: uppercase;
+  }
+  option {
+    font-family: opensans-regular, sans-serif;
+    padding: 5px $space-small;
+    color: $color-gray-dark;
+    text-transform: capitalize;
+  }
+}
+
+// CUSTOM INPUT
+.css-file {
+  position: relative;
+  border: 1px solid #ccc;
+  height: 34px;
+  @include box-shadow(0px 1px 1px rgba(0, 0, 0, 0.075) inset);
+
+  &.attachment {
+    @include box-shadow(none);
+    @include clearfix();
+    border: none;
+    float: left;
+    width: 350px;
+
+    .open-attachment {
+      float: left;
+      padding: 0 10px;
+      line-height: 32px;
+      color: lighten($color-gray-dark, 10%);
+      font-family: opensans-semibold, sans-serif;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .file-info {
+      float: left;
+    }
+  }
+
+  button {
+    float: right;
+    height: 34px;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+
+    &.btn-primary {
+      background-color: $color-accent3;
+    }
+  }
+
+  input[type='file'] {
+    height: 34px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .file-info {
+    padding: 0 10px;
+    line-height: 32px;
+    height: 34px;
+    width: 60%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: $color-gray-dark;
+  }
+}
+
+// TAGS INPUT
+.bootstrap-tagsinput {
+  @include border-radius(0);
+  min-height: 34px;
+  display: block;
+}
+
+.form-title {
+  color: $color-accent2;
+  margin-bottom: $space-small / 2;
+}
+
+.form-subtitle {
+  margin-bottom: $space-medium * 1.5;
+}
+
+legend {
+  padding: $space-small $space-medium;
+  background-color: $color-accent3;
+  color: $color-light;
+  font: inherit;
+  line-height: 14px;
+  vertical-align: baseline;
+  border: none;
+  margin-bottom: 0;
+}
+
+.form-horizontal {
+  .checkbox, .radio {
+    padding-top: 4px;
+  }
+
+  .radio-inline:first-child {
+    padding-left: 0;
+  }
+
+  &.form-strip {
+    .form-group {
+      border-bottom: 1px solid lighten($color-gray-light, 5%);
+      padding: $space-small $space-medium;
+      margin-bottom: 0;
+      margin-right: 0;
+      margin-left: 0;
+
+      &.no-line {
+        border-bottom: none;
+      }
+    }
+
+    .help-block {
+      margin-bottom: 5px;
+    }
+
+    label {
+      line-height: 16px;
+    }
+  }
+}
+
+.modal {
+  .form-horizontal.form-strip {
+    margin: 0;
+
+    .form-group {
+      margin-left: -20px;
+      margin-right: -20px;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+
+        p, label {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

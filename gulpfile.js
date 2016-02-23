@@ -12,5 +12,20 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass('style.scss');
+
+    mix.scripts([
+        'library/jquery/dist/jquery.js',
+        'main.js',
+        'resize.js',
+        'infinite.js'
+    ]).scripts([
+        'library/jquery/dist/jquery.js',
+        'admin.js',
+        'admin-resize.js',
+        'admin-validate.js'
+    ]);
+
+    mix.browserSync();
+
 });

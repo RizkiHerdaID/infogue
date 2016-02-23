@@ -892,3 +892,32 @@
     </div>
 
 @endsection
+
+
+<div class="modal fade newsletter no-line" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">INFOGUE.ID</h4>
+            </div>
+            <div class="modal-body">
+                <h1 class="hidden-xs"><i class="fa fa-envelope-o mbs"></i></h1>
+                <h3>ENTER YOUR EMAIL AND GET</h3>
+                <h1>NEWSLETTER</h1>
+                <P>Subscribe to our Newsletter and receive knowledge everyday</P>
+                <form action="#">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary subscribe"><i class="fa fa-envelope-o visible-xs"></i><span class="hidden-xs">SUBSCRIBE</span></button>
+                        <input type="email" class="form-control" placeholder="EMAIL ADDRESS"/>
+                    </div>
+                </form>
+                <a href="#" data-dismiss="modal" class="dismiss">NO THANKS</a>
+                <p class="small">We Promise don't spam<span class="hidden-xs"> and use your email for weird purpose</span></p>
+                <p class="small">See our policy at <a href="term.html">Terms</a> and <a href="privacy.html">Privacy</a></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

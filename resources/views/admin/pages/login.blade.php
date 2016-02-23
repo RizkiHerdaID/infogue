@@ -44,14 +44,14 @@
     </div>
     <div class="login-footer">
         <ul class="list-separated hidden-xs">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="editorial.html">Editorial</a></li>
-            <li><a href="privacy.html">Privacy</a></li>
-            <li><a href="disclaimer.html">Disclaimer</a></li>
-            <li><a href="term.html">Term</a></li>
-            <li><a href="career.html">Career</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/editorial">Editorial</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/disclaimer">Disclaimer</a></li>
+            <li><a href="/terms">Term</a></li>
+            <li><a href="/career">Career</a></li>
+            <li><a href="/faq">FAQ</a></li>
+            <li><a href="/contact">Contact</a></li>
         </ul>
         <div class="copyright">&copy; Copyright 2016 infogue.com All Rights Reserved.</div>
     </div>

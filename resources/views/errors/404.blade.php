@@ -24,11 +24,11 @@
             <p class="mbs hidden-xs">InfoGue.id was supported by awesome startups and companies</p>
             <ul class="featured-link hidden-xs">
                 <li><a href="#top">Home</a></li>
-                <li><a href="editorial.html">Editorial</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="disclaimer.html">Disclaimer</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="/editorial">Editorial</a></li>
+                <li><a href="/privacy">Privacy</a></li>
+                <li><a href="/disclaimer">Disclaimer</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contact">Contact</a></li>
             </ul>
             <p><i class="fa fa-angle-left mrs"></i>Back to <a href="index.html">Home Page</a> and or <a href="contributor_stream.html">Stream</a></p>
         </div>

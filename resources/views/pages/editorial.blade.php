@@ -21,13 +21,13 @@
             <div class="col-md-3">
                 <nav class="static-nav hidden-xs hidden-sm">
                     <ul>
-                        <li class="active"><a href="editorial.html">Editorial</a></li>
-                        <li><a href="privacy.html">Privacy</a></li>
-                        <li><a href="disclaimer.html">Disclaimer</a></li>
-                        <li><a href="term.html">Terms</a></li>
-                        <li><a href="career.html">Career</a></li>
-                        <li><a href="faq.html">FAQ</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li class="active"><a href="/editorial">Editorial</a></li>
+                        <li><a href="/privacy">Privacy</a></li>
+                        <li><a href="/disclaimer">Disclaimer</a></li>
+                        <li><a href="/terms">Terms</a></li>
+                        <li><a href="/career">Career</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                        <li><a href="/contact">Contact</a></li>
                     </ul>
                 </nav>
             </div>

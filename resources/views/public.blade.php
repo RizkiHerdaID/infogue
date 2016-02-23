@@ -470,12 +470,12 @@
         <div class="row bottom">
             <div class="col-sm-8">
                 <ul class="featured-link hidden-xs">
-                    <li><a href="#top">Home</a></li>
-                    <li><a href="editorial.html">Editorial</a></li>
-                    <li><a href="privacy.html">Privacy</a></li>
-                    <li><a href="disclaimer.html">Disclaimer</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/editorial">Editorial</a></li>
+                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
                 <div class="copyright">&copy; <span class="hidden-xs">Copyright</span> 2016 infogue.com All Rights Reserved.</div>
             </div>
@@ -489,34 +489,6 @@
         </div>
     </div>
 </footer>
-
-<div class="modal fade newsletter no-line" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">INFOGUE.ID</h4>
-            </div>
-            <div class="modal-body">
-                <h1 class="hidden-xs"><i class="fa fa-envelope-o mbs"></i></h1>
-                <h3>ENTER YOUR EMAIL AND GET</h3>
-                <h1>NEWSLETTER</h1>
-                <P>Subscribe to our Newsletter and receive knowledge everyday</P>
-                <form action="#">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary subscribe"><i class="fa fa-envelope-o visible-xs"></i><span class="hidden-xs">SUBSCRIBE</span></button>
-                        <input type="email" class="form-control" placeholder="EMAIL ADDRESS"/>
-                    </div>
-                </form>
-                <a href="#" data-dismiss="modal" class="dismiss">NO THANKS</a>
-                <p class="small">We Promise don't spam<span class="hidden-xs"> and use your email for weird purpose</span></p>
-                <p class="small">See our policy at <a href="term.html">Terms</a> and <a href="privacy.html">Privacy</a></p>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <div class="to-top">
     <a href="#top"><i class="fa fa-arrow-up"></i></a>
@@ -536,16 +508,15 @@
 <script src="/library/waypoints/lib/jquery.waypoints.min.js"></script>
 
 <script src="/js/script.js"></script>
-<script>
-    $(function(){
-        setTimeout(function(){
-            $('.newsletter').modal('show');
-        }, 3000);
-    });
-</script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
+    if($('.newsletter').length){
+        setTimeout(function(){
+            $('.newsletter').modal('show');
+        }, 3000);
+    }
+
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
         e=o.createElement(i);r=o.getElementsByTagName(i)[0];

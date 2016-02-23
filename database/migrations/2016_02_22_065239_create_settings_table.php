@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVisitorTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateVisitorTable extends Migration
      */
     public function up()
     {
-        Schema::create('visitors', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
-            $table->integer('hit')->default(0);
-            $table->integer('unique')->default(0);
+            $table->string('key', 100)->unique();
+            $table->text('value')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateVisitorTable extends Migration
      */
     public function down()
     {
-        Schema::drop('visitors');
+        Schema::drop('settings');
     }
 }

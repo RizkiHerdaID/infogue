@@ -87,18 +87,23 @@ $factory->define(Infogue\Follower::class, function(){
     ];
 });
 
-$factory->define(Infogue\Message::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Message::class, function(){
+    return [];
+});
+
+$factory->define(Infogue\Conversation::class, function(Faker\Generator $faker){
     return [
-        'from' => rand(1, 100),
-        'to' => rand(1, 100),
+        'message_id' => rand(1, 100),
+        'sender' => rand(1, 100),
+        'receiver' => rand(1, 100),
         'message' => $faker->sentence()
     ];
 });
 
 $factory->define(Infogue\Attachment::class, function(){
     return [
-        'message_id' => rand(1, 200),
-        'file' => 'attachment_'.rand(1, 5)
+        'conversation_id' => rand(1, 300),
+        'file' => 'attachment_'.rand(1, 5).'.zip'
     ];
 });
 

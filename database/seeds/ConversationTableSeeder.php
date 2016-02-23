@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MessagesTableSeeder extends Seeder
+class ConversationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class MessagesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Infogue\Message::class, 100)->create();
+        factory(Infogue\Conversation::class, 300)->create();
     }
 }

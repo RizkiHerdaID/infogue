@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMessageTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,7 @@ class CreateMessageTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('from')->unsigned();
-            $table->integer('to')->unsigned();
-            $table->text('message');
             $table->timestamps();
-
-            $table->foreign('from')->references('id')->on('contributors')->onDelete('cascade');
-            $table->foreign('to')->references('id')->on('contributors')->onDelete('cascade');
         });
     }
 

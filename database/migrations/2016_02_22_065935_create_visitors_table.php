@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttachmentTable extends Migration
+class CreateVisitorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,12 @@ class CreateAttachmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        Schema::create('visitors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('message_id')->unsigned();
-            $table->string('file');
+            $table->date('date');
+            $table->integer('hit')->default(0);
+            $table->integer('unique')->default(0);
             $table->timestamps();
-
-            $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateAttachmentTable extends Migration
      */
     public function down()
     {
-        Schema::drop('attachments');
+        Schema::drop('visitors');
     }
 }

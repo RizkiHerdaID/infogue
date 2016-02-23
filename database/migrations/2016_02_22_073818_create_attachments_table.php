@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRatingTable extends Migration
+class CreateAttachmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class CreateRatingTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id')->unsigned();
-            $table->string('ip', 30);
-            $table->smallInteger('rate')->unsigned()->default(1);
+            $table->integer('conversation_id')->unsigned();
+            $table->string('file');
             $table->timestamps();
 
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('conversation_id')->references('id')->on('conversations')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateRatingTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ratings');
+        Schema::drop('attachments');
     }
 }

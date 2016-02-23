@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingTable extends Migration
+class CreateRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,14 @@ class CreateSettingTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key', 100)->unique();
-            $table->text('value')->nullable();
+            $table->integer('article_id')->unsigned();
+            $table->string('ip', 30);
+            $table->smallInteger('rate')->unsigned()->default(1);
             $table->timestamps();
+
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
         });
     }
 
@@ -27,6 +30,6 @@ class CreateSettingTable extends Migration
      */
     public function down()
     {
-        Schema::drop('settings');
+        Schema::drop('ratings');
     }
 }

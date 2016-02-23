@@ -16,21 +16,36 @@
                 </p>
             </div>
             <div class="content">
-                <form action="contact.html">
+                <form action="{{ route("feedback.store") }}" method="post">
+                    {!! csrf_field() !!}
+
+                        @if(Session::has('status'))
+                            <div class="row">
+                                <div class="col-md-8  col-md-push-2">
+                                    <div class="alert alert-success">
+                                        {!! '<p>'.Session::get('status').'</p>' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    
                     <div class="row">
                         <div class="col-md-4 col-md-push-2 col-sm-6">
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Your Name">
+                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                <input type="name" class="form-control" id="name" name="name" placeholder="Your Name">
+                                {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                         <div class="col-md-4 col-md-push-2 col-sm-6">
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="email" placeholder="Email Address">
+                            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
+                                {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
-                        <div class="col-md-8  col-md-push-2">
-                            <div class="form-group">
-                                <textarea name="message" class="form-control" id="message" rows="7" placeholder="Type Your Message"></textarea>
+                        <div class="col-md-8 col-md-push-2">
+                            <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
+                                <textarea class="form-control" id="message" name="message" rows="7" placeholder="Type Your Message"></textarea>
+                                {!! $errors->first('message', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary center-block pll prl mtm">SEND</button>

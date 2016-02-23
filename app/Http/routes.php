@@ -14,27 +14,6 @@
 Route::get('/', function () {
     return view('pages.index');
 });
-Route::get('/editorial', function () {
-    return view('pages.editorial');
-});
-Route::get('/career', function () {
-    return view('pages.career');
-});
-Route::get('/faq', function () {
-    return view('pages.faq');
-});
-Route::get('/privacy', function () {
-    return view('pages.privacy');
-});
-Route::get('/disclaimer', function () {
-    return view('pages.disclaimer');
-});
-Route::get('/terms', function () {
-    return view('pages.terms');
-});
-Route::get('/contact', function () {
-    return view('pages.contact');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +27,32 @@ Route::get('/contact', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+
+    Route::get('/editorial', function () {
+        return view('pages.editorial');
+    });
+    Route::get('/career', function () {
+        return view('pages.career');
+    });
+    Route::get('/faq', function () {
+        return view('pages.faq');
+    });
+    Route::get('/privacy', function () {
+        return view('pages.privacy');
+    });
+    Route::get('/disclaimer', function () {
+        return view('pages.disclaimer');
+    });
+    Route::get('/terms', function () {
+        return view('pages.terms');
+    });
+    Route::get('/contact', function () {
+        return view('pages.contact');
+    });
+
+    Route::resource('feedback', 'FeedbackController', [
+        'only' => [
+            'store'
+        ]
+    ]);
 });

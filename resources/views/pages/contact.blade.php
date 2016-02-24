@@ -19,16 +19,16 @@
                 <form action="{{ route("feedback.store") }}" method="post">
                     {!! csrf_field() !!}
 
-                        @if(Session::has('status'))
-                            <div class="row">
-                                <div class="col-md-8  col-md-push-2">
-                                    <div class="alert alert-success">
-                                        {!! '<p>'.Session::get('status').'</p>' !!}
-                                    </div>
+                    @if(Session::has('status'))
+                        <div class="row">
+                            <div class="col-md-8  col-md-push-2">
+                                <div class="alert alert-success">
+                                    {!! '<p>'.Session::get('status').'</p>' !!}
                                 </div>
                             </div>
-                        @endif
-                    
+                        </div>
+                    @endif
+
                     <div class="row">
                         <div class="col-md-4 col-md-push-2 col-sm-6">
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">

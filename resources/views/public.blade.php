@@ -4,19 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Info Gue @yield('title')</title>
-    <meta name="description" content="Social news portal gives the most update information">
-    <meta name="keywords" content="article, blog, news, portal, technology, health, science, economic, entertainment">
-    <meta name="author" content="Angga Ari Wijaya">
+    <meta name="description" content="{{ $site_settings['Description'] }}">
+    <meta name="keywords" content="{{ $site_settings['Keywords'] }}">
+    <meta name="author" content="{{ $site_settings['Owner'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Info Gue @yield('title')" />
-    <meta property="og:description" content="Social news portal gives the most update information" />
+    <meta property="og:description" content="{{ $site_settings['Description'] }}" />
     <meta property="og:image" content="/tile.png" />
 
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="{{ $site_settings['Favicon'] }}">
 
     <link rel="stylesheet" href="/library/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/library/font-awesome/css/font-awesome.min.css">
@@ -459,9 +459,9 @@
                     <div class="col-md-12">
                         <h3>CONTACT</h3>
                         <div class="contact">
-                            <p>Avenue Street 34 - East Java, Indonesia</p>
-                            <p><a href="tel:+628565547868">(+62) 8565547868</a></p><br/>
-                            <p><a href="mailto:editorial@infogue.com">editorial@infogue.com</a></p>
+                            <p>{{ $site_settings['Address'] }}</p>
+                            <p><a href="tel:{{ $site_settings['Contact'] }}">{{ $site_settings['Contact'] }}</a></p><br/>
+                            <p><a href="mailto:{{ $site_settings['Email'] }}">{{ $site_settings['Email'] }}</a></p>
                         </div>
                     </div>
                 </div>
@@ -481,9 +481,9 @@
             </div>
             <div class="col-sm-4">
                 <ul class="social hidden-xs">
-                    <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="{{ $site_settings['Facebook'] }}" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ $site_settings['Twitter'] }}" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
                 </ul>
             </div>
         </div>

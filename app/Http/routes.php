@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.index');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -27,6 +23,7 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/', ['as' => 'index', 'uses' => 'PageController@index']);
 
     Route::get('/editorial', function () {
         return view('pages.editorial');

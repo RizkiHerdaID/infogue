@@ -109,7 +109,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/login', ['as' => 'login', 'uses' => 'ContributorController@login']);
         Route::get('/logout', ['as' => 'logout', 'uses' => 'ContributorController@logout']);
         Route::get('/setting', ['as' => 'setting', 'uses' => 'ContributorController@setting']);
-        Route::match(['put', 'patch'], ['as' => 'setting', 'uses' => 'ContributorController@update']);
+        Route::match(['put', 'get'], '/setting', ['as' => 'setting', 'uses' => 'ContributorController@update']);
         Route::post('/follow/{username}', ['as' => 'follow', 'uses' => 'FollowerController@follow']);
         Route::post('/unfollow/{username}', ['as' => 'unfollow', 'uses' => 'FollowerController@unfollow']);
 
@@ -124,7 +124,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['namespace' => 'Admin', 'as' => 'admin.', 'prefix' => 'admin'], function() {
         Route::get('/dashboard', ['as' => 'dashboard', 'uses' => 'AdministratorController@index']);
         Route::get('/setting', ['as' => 'setting', 'uses' => 'AdministratorController@setting']);
-        Route::match(['put', 'patch'], ['as' => 'setting', 'uses' => 'AdministratorController@setting']);
+        Route::match(['put', 'patch'], 'setting', ['as' => 'setting', 'uses' => 'AdministratorController@setting']);
         Route::get('/contributor', ['as' => 'contributor', 'uses' => 'ContributorController@index']);
 
         Route::resource('article', 'ArticleController');
@@ -142,4 +142,5 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/about', ['as' => 'about', 'uses' => 'AdministratorController@about']);
         Route::get('/logout', ['as' => 'about', 'uses' => 'AdministratorController@logout']);
     });
+
 });

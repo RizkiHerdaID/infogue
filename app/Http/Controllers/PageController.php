@@ -2,10 +2,7 @@
 
 namespace Infogue\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use Infogue\Http\Requests;
-use Infogue\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
@@ -16,73 +13,37 @@ class PageController extends Controller
      */
     public function index()
     {
-        //dd(app('site_settings'));
         return view('pages.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the result for articles and contributors.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function search()
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the search result for finding contributors.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function searchPeople()
     {
         //
     }
 
     /**
-     * Display the specified resource.
+     * Show the result for finding articles.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function searchArticle()
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

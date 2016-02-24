@@ -15,12 +15,12 @@
     <meta property="og:description" content="{{ $site_settings['Description'] }}" />
     <meta property="og:image" content="/tile.png" />
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="{{ asset('/apple-touch-icon.png') }}">
     <link rel="icon" href="{{ $site_settings['Favicon'] }}">
 
-    <link rel="stylesheet" href="/library/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/library/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ asset('/library/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/library/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 </head>
 <body id="top">
 
@@ -39,19 +39,23 @@
                 <div class="header-section">
                     <section class="control-wrapper">
                         <ul class="featured-link hidden-xs">
-                            <li><a href="archive.html">HEADLINE</a></li>
-                            <li><a href="archive.html">LATEST</a></li>
-                            <li><a href="archive.html">TRENDING</a></li>
-                            <li><a href="archive.html">RANDOM</a></li>
+                            <li><a href="{{ url('archive') }}">LATEST</a></li>
+                            <li><a href="{{ url('featured/headline') }}">HEADLINE</a></li>
+                            <li><a href="{{ url('featured/trending') }}">TRENDING</a></li>
+                            <li><a href="{{ url('featured/random') }}">RANDOM</a></li>
                         </ul>
                         <div class="user-control">
                             <ul class="hidden-xs">
+                                @if(!Auth::check())
                                 <li><a href="login.html"><span class="hidden-sm">Hello Guest! &nbsp; </span>LOGIN</a></li>
                                 <li><a href="register.html">REGISTER</a></li>
+                                @endif
                             </ul>
 
                             <div class="user-menu">
                                 <a href="#" class="mobile-search"><i class="fa fa-search"></i></a>
+
+                                @if(Auth::check())
                                 <a href="#" class="user-dropdown hidden"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>ANGGA ARI WIJAYA</strong></span></a>
                                 <ul class="list-menu">
                                     <li class="menu-label">ACCOUNT</li>
@@ -64,12 +68,14 @@
                                     <li><a href="contributor_setting.html"><i class="glyphicon glyphicon-cog"></i>Setting</a></li>
                                     <li><a href="login.html"><i class="glyphicon glyphicon-log-out"></i>Logout</a></li>
                                 </ul>
+                                @endif
                             </div>
                         </div>
                     </section>
                     <section class="search-wrapper">
                         <div class="search">
-                            <form action="result.html">
+                            <form action="result.html" method="get">
+                                {!! csrf_field() !!}
                                 <div class="input-search">
                                     <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
                                     <i class="fa fa-search"></i>
@@ -89,9 +95,9 @@
                             </form>
                         </div>
                         <ul class="social hidden-xs">
-                            <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="{{ $site_settings['Facebook'] }}" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{ $site_settings['Twitter'] }}" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </section>
                 </div>
@@ -123,284 +129,64 @@
                     </div>
                 </div>
                 <ul class="sf-menu" id="navigation" role="menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">News</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Main Feature</h2>
-                                <ul>
-                                    <li><a href="category.html">Politic</a></li>
-                                    <li><a href="category.html">World</a></li>
-                                    <li><a href="category.html">Issues</a></li>
-                                    <li><a href="category.html">Opinion</a></li>
-                                    <li><a href="category.html">Hot</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Light News</h2>
-                                <ul>
-                                    <li><a href="category.html">Regional</a></li>
-                                    <li><a href="category.html">Profile</a></li>
-                                    <li><a href="category.html">Debate</a></li>
-                                    <li><a href="category.html">Interview</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Headline</h2>
-                                <ul>
-                                    <li><a href="category.html">Latest</a></li>
-                                    <li><a href="category.html">Trending</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Economy</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Business</h2>
-                                <ul>
-                                    <li><a href="category.html">Finance</a></li>
-                                    <li><a href="category.html">Stock</a></li>
-                                    <li><a href="category.html">Micro Business</a></li>
-                                    <li><a href="category.html">Management</a></li>
-                                    <li><a href="category.html">Strategy</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>National</h2>
-                                <ul>
-                                    <li><a href="category.html">Government</a></li>
-                                    <li><a href="category.html">Market</a></li>
-                                    <li><a href="category.html">Exchange</a></li>
-                                    <li><a href="category.html">Import</a></li>
-                                    <li><a href="category.html">Export</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Academic</h2>
-                                <ul>
-                                    <li><a href="category.html">Accounting</a></li>
-                                    <li><a href="category.html">Policy</a></li>
-                                    <li><a href="category.html">Book</a></li>
-                                    <li><a href="category.html">Startup</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Entertainment</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Extravaganza</h2>
-                                <ul>
-                                    <li><a href="category.html">International</a></li>
-                                    <li><a href="category.html">Celebrities</a></li>
-                                    <li><a href="category.html">Film</a></li>
-                                    <li><a href="category.html">Music</a></li>
-                                    <li><a href="category.html">Game</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Daily</h2>
-                                <ul>
-                                    <li><a href="category.html">Jokes</a></li>
-                                    <li><a href="category.html">Lifestyle</a></li>
-                                    <li><a href="category.html">Vacation</a></li>
-                                    <li><a href="category.html">Festival</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Hobby</h2>
-                                <ul>
-                                    <li><a href="category.html">Anime</a></li>
-                                    <li><a href="category.html">Handicraft</a></li>
-                                    <li><a href="category.html">Outdoor</a></li>
-                                    <li><a href="category.html">Collector</a></li>
-                                    <li><a href="category.html">Arts</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Others</h2>
-                                <ul>
-                                    <li><a href="category.html">K-pop</a></li>
-                                    <li><a href="category.html">J-pop</a></li>
-                                    <li><a href="category.html">Trend</a></li>
-                                    <li><a href="category.html">Party</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Sport</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Popular</h2>
-                                <ul>
-                                    <li><a href="category.html">Soccer</a></li>
-                                    <li><a href="category.html">Tennis</a></li>
-                                    <li><a href="category.html">MotoGP</a></li>
-                                    <li><a href="category.html">Formula 1</a></li>
-                                    <li><a href="category.html">Basket</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Popular</h2>
-                                <ul>
-                                    <li><a href="category.html">Badminton</a></li>
-                                    <li><a href="category.html">Volley</a></li>
-                                    <li><a href="category.html">Athletic</a></li>
-                                    <li><a href="category.html">Rally</a></li>
-                                    <li><a href="category.html">Bicycle</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Popular</h2>
-                                <ul>
-                                    <li><a href="category.html">Extreme Sport</a></li>
-                                    <li><a href="category.html">Freestyle</a></li>
-                                    <li><a href="category.html">Chess</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Event</h2>
-                                <ul>
-                                    <li><a href="category.html">World cup</a></li>
-                                    <li><a href="category.html">Olympic</a></li>
-                                    <li><a href="category.html">Champion</a></li>
-                                    <li><a href="category.html">Schedule</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Health</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Medic</h2>
-                                <ul>
-                                    <li><a href="category.html">Medication</a></li>
-                                    <li><a href="category.html">Disease</a></li>
-                                    <li><a href="category.html">Symptom</a></li>
-                                    <li><a href="category.html">Knowledge</a></li>
-                                    <li><a href="category.html">Drug</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Life</h2>
-                                <ul>
-                                    <li><a href="category.html">Lifestyle</a></li>
-                                    <li><a href="category.html">Exercise</a></li>
-                                    <li><a href="category.html">Food</a></li>
-                                    <li><a href="category.html">Diet</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Doctor</h2>
-                                <ul>
-                                    <li><a href="category.html">Ask Doctor</a></li>
-                                    <li><a href="category.html">Medical Journal</a></li>
-                                    <li><a href="category.html">Hospital</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Science</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Knowledge</h2>
-                                <ul>
-                                    <li><a href="category.html">Discovery</a></li>
-                                    <li><a href="category.html">Research</a></li>
-                                    <li><a href="category.html">Astronomy</a></li>
-                                    <li><a href="category.html">Human</a></li>
-                                    <li><a href="category.html">Earth</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Knowledge</h2>
-                                <ul>
-                                    <li><a href="category.html">Language</a></li>
-                                    <li><a href="category.html">Chemistry</a></li>
-                                    <li><a href="category.html">Biology</a></li>
-                                    <li><a href="category.html">Physic</a></li>
-                                    <li><a href="category.html">History</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Engineering</h2>
-                                <ul>
-                                    <li><a href="category.html">Communication</a></li>
-                                    <li><a href="category.html">Construction</a></li>
-                                    <li><a href="category.html">Electrical</a></li>
-                                    <li><a href="category.html">Otomotive</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Technology</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Computer</h2>
-                                <ul>
-                                    <li><a href="category.html">IT</a></li>
-                                    <li><a href="category.html">Gadget</a></li>
-                                    <li><a href="category.html">Software</a></li>
-                                    <li><a href="category.html">Hardware</a></li>
-                                    <li><a href="category.html">Internet</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Concept</h2>
-                                <ul>
-                                    <li><a href="category.html">Future</a></li>
-                                    <li><a href="category.html">Programming</a></li>
-                                    <li><a href="category.html">Cyber Security</a></li>
-                                    <li><a href="category.html">UI Interaction</a></li>
-                                    <li><a href="category.html">Social Network</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Handheld</h2>
-                                <ul>
-                                    <li><a href="category.html">Blackberry</a></li>
-                                    <li><a href="category.html">Android</a></li>
-                                    <li><a href="category.html">iOS</a></li>
-                                    <li><a href="category.html">Windows Phone</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#">Photo</a></li>
-                    <li><a href="#">Video</a></li>
-                    <li><a href="#">Others</a>
-                        <div class="sf-mega">
-                            <div class="sf-mega-section">
-                                <h2>Life</h2>
-                                <ul>
-                                    <li><a href="category.html">Motivation</a></li>
-                                    <li><a href="category.html">Family</a></li>
-                                    <li><a href="category.html">Career</a></li>
-                                    <li><a href="category.html">Couple</a></li>
-                                    <li><a href="category.html">Relationship</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Miscellaneous</h2>
-                                <ul>
-                                    <li><a href="category.html">Life Hack</a></li>
-                                    <li><a href="category.html">The Lounge</a></li>
-                                    <li><a href="category.html">Opinion</a></li>
-                                    <li><a href="category.html">Society</a></li>
-                                    <li><a href="category.html">Education</a></li>
-                                </ul>
-                            </div>
-                            <div class="sf-mega-section">
-                                <h2>Miscellaneous</h2>
-                                <ul>
-                                    <li><a href="category.html">Idea</a></li>
-                                    <li><a href="category.html">Sharing</a></li>
-                                    <li><a href="category.html">Other</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
+
+                    @foreach($site_menus as $category)
+
+                        <li>
+                            <a href="{{ url('category/'.str_slug($category->category)) }}">{{ $category->category }}</a>
+
+                            @if(!$category->subcategories->isEmpty())
+
+                                <div class="sf-mega">
+
+                                <?php $counter = 1; $section = 0; $last_label = ""; $is_first = true; ?>
+
+                                @foreach($category->subcategories as $subcategory)
+
+                                    @if($last_label != $subcategory->label || $section == 5)
+
+                                        <?php $last_label = $subcategory->label; $section = 0; ?>
+
+                                        @if($is_first)
+                                            <?php $is_first = false; ?>
+                                        @else
+
+                                        {!! "</ul> </div>"  !!}
+
+                                        @endif
+
+                                        <div class="sf-mega-section">
+                                            <h2>{{ $subcategory->label }}</h2>
+                                            <ul>
+
+                                    @endif
+
+                                            <li>
+                                                <a href="{{ url('category/'.str_slug($category->category).'/'.str_slug($subcategory->subcategory)) }}">
+                                                    {{ $subcategory->subcategory }}
+                                                </a>
+                                            </li>
+
+                                    @if($counter == $subcategory->count())
+
+                                            </ul>
+                                        </div>
+
+                                    @endif
+
+                                    <?php $counter++; $section++ ?>
+
+                                @endforeach
+
+                                </div>
+
+                            @endif
+
+                        </li>
+
+                    @endforeach
+
                 </ul>
             </nav>
         </div>
@@ -415,9 +201,9 @@
             <div class="col-md-4 col-sm-6 hidden-sm">
                 <div class="about">
                     <ul class="social pull-right visible-xs">
-                        <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="{{ $site_settings['Facebook'] }}" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="{{ $site_settings['Twitter'] }}" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                     </ul>
                     <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
                     <p class="hidden-xs">The most update web portal news. We always provide latest article and information with high
@@ -426,22 +212,24 @@
             </div>
             <div class="col-md-4 col-sm-6 hidden-xs clearfix">
                 <h3>QUICK LINKS</h3>
-                <ul class="quick-links">
-                    <li><a href="category.html">HEADLINE</a></li>
-                    <li><a href="category.html">TRENDING</a></li>
-                    <li><a href="category.html">POPULAR</a></li>
-                    <li><a href="category.html">RANDOM</a></li>
-                    <li><a href="category.html">COMMENTED</a></li>
-                    <li><a href="category.html">SIGN IN</a></li>
-                </ul>
-                <ul class="quick-links">
-                    <li><a href="category.html">ENTERTAINMENT</a></li>
-                    <li><a href="category.html">TECHNOLOGY</a></li>
-                    <li><a href="category.html">SPORT</a></li>
-                    <li><a href="category.html">NEWS</a></li>
-                    <li><a href="category.html">HEALTH</a></li>
-                    <li><a href="category.html">SCIENCE</a></li>
-                </ul>
+                <?php $counter = 0; $is_first = true; ?>
+                @foreach($site_menus as $category)
+                    @if($counter <= 12)
+                        @if($counter > 0 && $counter % 6 == 0)
+                            {!! "</ul>" !!}
+                        @endif
+                        @if($counter == 0 || $counter % 6 == 0)
+                            {!! '<ul class="quick-links">' !!}
+                        @endif
+                        @if($is_first)
+                            <li><a href="{{ url('featured/headline') }}">HEADLINE</a></li>
+                            <li><a href="{{ url('featured/trending') }}">TRENDING</a></li>
+                            <?php $is_first = false; $counter+=2; ?>
+                        @endif
+                        <li><a href="{{ url('category/'.$category->category) }}">{{ $category->category }}</a></li>
+                    @endif
+                    <?php $counter++ ?>
+                @endforeach
             </div>
             <div class="col-md-4 col-sm-6 hidden-xs">
                 <div class="row">
@@ -470,20 +258,20 @@
         <div class="row bottom">
             <div class="col-sm-8">
                 <ul class="featured-link hidden-xs">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/editorial">Editorial</a></li>
-                    <li><a href="/privacy">Privacy</a></li>
-                    <li><a href="/disclaimer">Disclaimer</a></li>
-                    <li><a href="/faq">FAQ</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="{{ url('editorial') }}">Editorial</a></li>
+                    <li><a href="{{ url('privacy') }}">Privacy</a></li>
+                    <li><a href="{{ url('disclaimer') }}">Disclaimer</a></li>
+                    <li><a href="{{ url('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url('contact') }}">Contact</a></li>
                 </ul>
                 <div class="copyright">&copy; <span class="hidden-xs">Copyright</span> 2016 infogue.com All Rights Reserved.</div>
             </div>
             <div class="col-sm-4">
                 <ul class="social hidden-xs">
-                    <li><a href="{{ $site_settings['Facebook'] }}" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="{{ $site_settings['Twitter'] }}" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="{{ $site_settings['Facebook'] }}" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="{{ $site_settings['Twitter'] }}" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -494,20 +282,20 @@
     <a href="#top"><i class="fa fa-arrow-up"></i></a>
 </div>
 
-<script src="/library/jquery/dist/jquery.min.js"></script>
-<script src="/library/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/library/echojs/dist/echo.min.js"></script>
-<script src="/library/equalize/js/equalize.min.js"></script>
-<script src="/library/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="/library/jquery.cycle2/index.js"></script>
-<script src="/library/jquery.fitvids/jquery.fitvids.js"></script>
-<script src="/library/jquery.nicescroll/dist/jquery.nicescroll.min.js"></script>
-<script src="/library/jquery.stellar/jquery.stellar.min.js"></script>
-<script src="/library/superfish/dist/js/superfish.min.js"></script>
-<script src="/library/superfish/dist/js/hoverIntent.js"></script>
-<script src="/library/waypoints/lib/jquery.waypoints.min.js"></script>
+<script src="{{ asset('/library/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('/library/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/library/echojs/dist/echo.min.js') }}"></script>
+<script src="{{ asset('/library/equalize/js/equalize.min.js') }}"></script>
+<script src="{{ asset('/library/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('/library/jquery.cycle2/index.js') }}"></script>
+<script src="{{ asset('/library/jquery.fitvids/jquery.fitvids.js') }}"></script>
+<script src="{{ asset('/library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
+<script src="{{ asset('/library/jquery.stellar/jquery.stellar.min.js') }}"></script>
+<script src="{{ asset('/library/superfish/dist/js/superfish.min.js') }}"></script>
+<script src="{{ asset('/library/superfish/dist/js/hoverIntent.js') }}"></script>
+<script src="{{ asset('/library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
 
-<script src="/js/script.js"></script>
+<script src="{{ asset('/js/script.js') }}"></script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>

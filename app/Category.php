@@ -12,4 +12,9 @@ class Category extends Model
     {
         return $this->hasManyThrough('Infogue\Article', 'App\Subcategory', 'category_id', 'label');
     }
+
+    public function subcategories()
+    {
+        return $this->hasMany('Infogue\Subcategory');
+    }
 }

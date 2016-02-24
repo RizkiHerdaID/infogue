@@ -27,7 +27,7 @@ class SettingsTableSeeder extends Seeder
             ],
             [
                 'key' => 'Address',
-                'value' => 'Avenue Street 23, Indonesia',
+                'value' => 'Avenue Street 23, West Java - Indonesia',
             ],
             [
                 'key' => 'Contact',

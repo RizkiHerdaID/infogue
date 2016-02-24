@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Infogue\Category;
 use Infogue\Setting;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::share('site_settings', app('site_settings'));
+
+        $this->app->singleton('site_menus', function(){
+            $categories = Category::all();
+            return $categories;
+        });
+
+        View::share('site_menus', app('site_menus'));
 
         Validator::extend('check_password', function($attribute, $value, $parameter){
             return Hash::check($value, Auth::user()->getAuthPassword());

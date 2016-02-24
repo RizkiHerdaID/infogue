@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="article-preview featured-large">
-                        <div class="featured-image" data-featured="/images/featured/image25.jpg">
+                        <div class="featured-image" data-featured="{{ asset('images/featured/image25.jpg') }}">
                             <div class="content">
                                 <h4 class="category slide-category">Health</h4>
                                 <h3><a href="article.html" class="slide-title">Research proves selfie can stimule happiness</a></h3>
@@ -22,7 +22,7 @@
                         <div class="slide">
                             <div class="article-preview featured-mini active">
                                 <div class="featured-image">
-                                    <img src="/images/misc/preloader.gif" alt="Featured 1" data-echo="/images/featured/image25.jpg"/>
+                                    <img src="{{ asset('images/misc/preloader.gif') }}" alt="Featured 1" data-echo="{{ asset('images/featured/image25.jpg') }}"/>
                                     <div class="category-wrapper">
                                         <h4 class="category"><a href="category.html" class="src-category">Health</a></h4>
                                     </div>

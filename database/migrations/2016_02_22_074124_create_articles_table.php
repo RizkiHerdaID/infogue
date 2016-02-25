@@ -25,10 +25,13 @@ class CreateArticlesTable extends Migration
             $table->enum('type', ['standard', 'gallery', 'video'])->default('standard');
             $table->enum('status', ['pending', 'draft', 'published', 'headline', 'trending'])->default('pending');
             $table->integer('view')->unsigned()->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('author')->references('id')->on('contributors')->onDelete('cascade');
             $table->foreign('label')->references('id')->on('subcategories')->onDelete('cascade');
+
+            $table->index(['id', 'slug']);
         });
     }
 

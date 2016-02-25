@@ -37,6 +37,7 @@ class CreateContrbutorsTable extends Migration
             $table->boolean('email_message')->default(true);
             $table->boolean('email_follow')->default(true);
             $table->boolean('email_feed')->default(true);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index(['id', 'name', 'username']);

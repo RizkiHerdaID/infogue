@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers;
 
+use Infogue\Article;
 use Infogue\Http\Requests;
 
 class PageController extends Controller
@@ -13,7 +14,12 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('pages.index');
+        $article = new Article();
+        $featured = $article->headline();
+        $popular = $article->most_popular();
+        $ranked = $article->most_ranked();
+
+        return view('pages.index', compact('featured', 'popular', 'ranked'));
     }
 
     /**

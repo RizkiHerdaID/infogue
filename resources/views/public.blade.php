@@ -34,7 +34,7 @@
             <div class="header-wrapper">
                 <div class="logo">
                     <i class="fa fa-navicon visible-xs toggle-nav"></i>
-                    <h1><a href="index.html">InfoGue</a></h1>
+                    <h1><a href="{{ url('/') }}">InfoGue</a></h1>
                 </div>
                 <div class="header-section">
                     <section class="control-wrapper">

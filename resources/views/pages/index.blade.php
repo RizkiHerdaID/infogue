@@ -8,81 +8,53 @@
         <div class="featured-wrapper">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="article-preview featured-large">
-                        <div class="featured-image" data-featured="{{ asset('images/featured/image25.jpg') }}">
-                            <div class="content">
-                                <h4 class="category slide-category">Health</h4>
-                                <h3><a href="article.html" class="slide-title">Research proves selfie can stimule happiness</a></h3>
-                                <p class="slide-description hidden-xs">Study in University of Cragnain prove photo selfie can reduce stress
-                                    and give positive impact. People who enjoy their photo as habit...</p>
+                    @if($featured->count() > 0)
+
+                        <div class="article-preview featured-large">
+                            <div class="featured-image" data-featured="{{ asset('images/featured/'.$featured->first()->featured) }}">
+                                <div class="content">
+                                    <h4 class="category slide-category">{{ $featured->first()->category }}</h4>
+                                    <h3><a href="{{ route('article.show', [$featured->first()->slug]) }}" class="slide-title">{{ $featured->first()->title }}</a></h3>
+                                    <p class="slide-description hidden-xs">{{ str_limit(strip_tags($featured->first()->content), 160) }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                    @endif
+
                     <div class="featured-list">
-                        <div class="slide">
-                            <div class="article-preview featured-mini active">
-                                <div class="featured-image">
-                                    <img src="{{ asset('images/misc/preloader.gif') }}" alt="Featured 1" data-echo="{{ asset('images/featured/image25.jpg') }}"/>
-                                    <div class="category-wrapper">
-                                        <h4 class="category"><a href="category.html" class="src-category">Health</a></h4>
+                        @forelse($featured as $article)
+
+                            <div class="slide">
+                                <div class="article-preview featured-mini active">
+                                    <div class="featured-image">
+                                        <img src="{{ asset('images/misc/preloader.gif') }}" alt="Featured 1" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                        <div class="category-wrapper">
+                                            <h4 class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}" class="src-category">{{ $article->subcategory->category->category }}</a></h4>
+                                        </div>
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="sub-category">{{ $article->subcategory->subcategory }}</h4>
+                                        <p><a href="{{ route('article.show', [$article->slug]) }}" class="src-title">{{ str_limit($article->title, 40) }}</a></p>
+                                        <p class="hidden src-description">{{ str_limit(strip_tags($article->content), 160) }}</p>
                                     </div>
                                 </div>
-                                <div class="content">
-                                    <h4 class="sub-category">Lifestyle</h4>
-                                    <p><a href="article.html" class="src-title">Research proves selfie can stimule happiness</a></p>
-                                    <p class="hidden src-description">Study in University of Cragnain prove photo selfie can reduce stress
-                                        and give positive impact. People who enjoy their photo as habit...</p>
-                                </div>
                             </div>
-                        </div>
-                        <div class="slide">
-                            <div class="article-preview featured-mini">
-                                <div class="featured-image">
-                                    <img src="/images/misc/preloader.gif" alt="Featured 1" data-echo="/images/featured/image26.jpg"/>
-                                    <div class="category-wrapper">
-                                        <h4 class="category"><a href="category.html" class="src-category">Sport</a></h4>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <h4 class="sub-category">Extreme</h4>
-                                    <p><a href="article.html" class="src-title">Hard journey into ice cave in the north</a></p>
-                                    <p class="hidden src-description">Consectetur adipisicing elit. Accusamus ad
-                                        aperiam assumenda aut adipisicing elit cum distinctio, doloremque ea facilis itaque...</p>
-                                </div>
+
+                        @empty
+                            <div class="slide">
+                                <div class="article-preview featured-mini active">No Featured</div>
                             </div>
-                        </div>
-                        <div class="slide">
-                            <div class="article-preview featured-mini">
-                                <div class="featured-image">
-                                    <img src="/images/misc/preloader.gif" alt="Featured 1" data-echo="/images/featured/image27.jpg"/>
-                                    <div class="category-wrapper">
-                                        <h4 class="category"><a href="category.html" class="src-category">Entertainment</a></h4>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <h4 class="sub-category">Film</h4>
-                                    <p><a href="article.html" class="src-title">Release date prequel of Girl of Darkness</a></p>
-                                    <p class="hidden src-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad
-                                        aperiam assumenda aut consectetur, culpa cum distinctio, doloremque ea facilis itaque...</p>
-                                </div>
+                            <div class="slide">
+                                <div class="article-preview featured-mini active">No Featured</div>
                             </div>
-                        </div>
-                        <div class="slide">
-                            <div class="article-preview featured-mini">
-                                <div class="featured-image">
-                                    <img src="/images/misc/preloader.gif" alt="Featured 1" data-echo="/images/featured/image28.jpg"/>
-                                    <div class="category-wrapper">
-                                        <h4 class="category"><a href="category.html" class="src-category">News</a></h4>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <h4 class="sub-category">Government</h4>
-                                    <p><a href="article.html" class="src-title">Financial crisis again, what we should do?</a></p>
-                                    <p class="hidden src-description">Aperiam assumenda aut consectetur, culpa cum distinctio Lorem ipsum dolor sit amet, Accusamus ad
-                                        doloremque consectetur adipisicing elit...</p>
-                                </div>
+                            <div class="slide">
+                                <div class="article-preview featured-mini active">No Featured</div>
                             </div>
-                        </div>
+                            <div class="slide">
+                                <div class="article-preview featured-mini active">No Featured</div>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -100,91 +72,48 @@
                     <div class="tab-content featured-news">
                         <div role="tabpanel" class="tab-pane active" id="popular">
                             <ol>
-                                <li><a href="article.html">
-                                        <p class="number">01</p>
-                                        <p>Water is founded on mars, NASA confirm newest life pontential.</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">02</p>
-                                        <p>Electric vehicle became future of transportation</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">03</p>
-                                        <p>Edit genome for the first time success on a large surgery</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">04</p>
-                                        <p>Cancer become the most deadly desease past 3 years</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">05</p>
-                                        <p>Team Obelix got the golden ticket in final game face Chronos</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">06</p>
-                                        <p>People join the biggest party in the world, let's join the big crowd</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">07</p>
-                                        <p>Muse release the new album after almost 2 years</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">08</p>
-                                        <p>Finally it goes rain tonight on Jakarta after long summer</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">09</p>
-                                        <p>Momentum of opimpic affect entire world business</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">10</p>
-                                        <p>Man behind the gun, the old aphorism now become popular</p>
-                                    </a></li>
+                                <?php $counter = 1; ?>
+                                @forelse($popular as $article)
+
+                                    <li>
+                                        <a href="{{ route('article.show', [$article->slug]) }}">
+                                            <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
+                                            <p>{{ $article->title }}</p>
+                                        </a>
+                                    </li>
+
+                                    <?php $counter++; ?>
+
+                                @empty
+                                        <li>
+                                            <a href="#">
+                                                <p>No popular article available</p>
+                                            </a>
+                                        </li>
+                                @endforelse
                             </ol>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="commented">
                             <ol>
-                                <li><a href="article.html">
-                                        <p class="number">01</p>
-                                        <p>People join the biggest party in the world, let's join the big crowd</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">02</p>
-                                        <p>Muse release the new album after almost 2 years</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">03</p>
-                                        <p>Electric vehicle became future of transportation</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">04</p>
-                                        <p>Finally it goes rain tonight on Jakarta after long summer</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">05</p>
-                                        <p>Water is founded on mars, NASA confirm newest life pontential.</p>
-                                    </a></li>
+                                <?php $counter = 1; ?>
+                                @forelse($ranked as $article)
 
-                                <li><a href="article.html">
-                                        <p class="number">06</p>
-                                        <p>Edit genome for the first time success on a large surgery</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">07</p>
-                                        <p>Cancer become the most deadly desease past 3 years</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">08</p>
-                                        <p>Team Obelix got the golden ticket in final game face Chronos</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">09</p>
-                                        <p>Man behind the gun, the old aphorism now become popular</p>
-                                    </a></li>
-                                <li><a href="article.html">
-                                        <p class="number">10</p>
-                                        <p>Momentum of opimpic affect entire world business</p>
-                                    </a></li>
+                                    <li>
+                                        <a href="{{ route('article.show', [$article->slug]) }}">
+                                            <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
+                                            <p>{{ $article->title }}</p>
+                                        </a>
+                                    </li>
+
+                                    <?php $counter++; ?>
+
+                                @empty
+                                    <li>
+                                        <a href="#">
+                                            <p>No ranked article available</p>
+                                        </a>
+                                    </li>
+                                @endforelse
                             </ol>
                         </div>
                     </div>

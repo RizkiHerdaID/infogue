@@ -23,7 +23,8 @@ class CreateArticlesTable extends Migration
             $table->text('content_update')->nullable();
             $table->string('excerpt', 300)->nullable();
             $table->enum('type', ['standard', 'gallery', 'video'])->default('standard');
-            $table->enum('status', ['pending', 'draft', 'published', 'headline', 'trending'])->default('pending');
+            $table->enum('status', ['pending', 'draft', 'published', 'reject'])->default('pending');
+            $table->enum('ranking', ['general', 'headline', 'trending'])->default('general');
             $table->integer('view')->unsigned()->default(0);
             $table->softDeletes();
             $table->timestamps();

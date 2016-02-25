@@ -121,7 +121,9 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
 
     $types = ['standard', 'gallery', 'video'];
 
-    $statuses = ['pending', 'draft', 'published', 'headline', 'trending'];
+    $statuses = ['pending', 'draft', 'published', 'reject'];
+
+    $rankings = ['general', 'headline', 'trending'];
 
     return [
         'author' => rand(1, 100),
@@ -134,6 +136,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
         'excerpt' => (rand(0, 1)) ? '' : $faker->paragraph,
         'type' => $types[array_rand($types, 1)],
         'status' => $statuses[array_rand($statuses, 1)],
+        'ranking' => $rankings[array_rand($rankings, 1)],
         'view' => rand(0, 2000)
     ];
 });

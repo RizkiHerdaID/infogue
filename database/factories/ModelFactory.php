@@ -136,7 +136,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
         'excerpt' => (rand(0, 1)) ? '' : $faker->paragraph,
         'type' => $types[array_rand($types, 1)],
         'status' => $statuses[array_rand($statuses, 1)],
-        'ranking' => $rankings[array_rand($rankings, 1)],
+        'state' => $rankings[array_rand($rankings, 1)],
         'view' => rand(0, 2000)
     ];
 });

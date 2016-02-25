@@ -28,7 +28,7 @@
                             <div class="slide">
                                 <div class="article-preview featured-mini active">
                                     <div class="featured-image">
-                                        <img src="{{ asset('images/misc/preloader.gif') }}" alt="Featured 1" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                        <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
                                         <div class="category-wrapper">
                                             <h4 class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}" class="src-category">{{ $article->subcategory->category->category }}</a></h4>
                                         </div>
@@ -123,176 +123,87 @@
 
         <div class="breadcrumb-wrapper mbs mts">
             <ol class="breadcrumb">
-                <li><a href="#">Trending</a></li>
+                <li><a href="{{ route('article.trending') }}">Trending</a></li>
                 <li class="blank"></li>
                 <li class="blank"></li>
             </ol>
             <div class="control">
-                <a class="btn btn-primary control-left" href="#"><i class="fa fa-chevron-left"></i></a>
-                <a class="btn btn-primary control-right" href="#"><i class="fa fa-chevron-right"></i></a>
+                <a class="btn btn-primary control-left" href="{{ route('article.trending') }}"><i class="fa fa-chevron-left"></i></a>
+                <a class="btn btn-primary control-right" href="{{ route('article.trending') }}"><i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 1" data-echo="/images/featured/image1.jpg"/>
+            @forelse($trending as $article)
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="article-preview portrait">
+                        <div class="featured-image">
+                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                        </div>
+                        <div class="title-wrapper">
+                            <p class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}">{{ $article->subcategory->category->category }}</a></p>
+                            <h1 class="title">
+                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                            </h1>
+                            <ul class="timestamp">
+                                <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                <li>@simpledate($article->created_at)</li>
+                                <li>{{ $article->view }} Views</li>
+                            </ul>
+                        </div>
+                        <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
+                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                        <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Entertainment</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Reika make a dark theme on his new video clip</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Angga Ari Wijaya</a></li>
-                            <li>2 May 2016</li>
-                            <li>355 Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        After success with single Don’t Let You Go, Reika the band from america starting create
-                        ivideo clip. Black and white describe about the song that can make feels free...
-                    </article>
-                    <div class="rating-wrapper" data-rating="2"></div>
-                    <p class="sub-category"><a href="category.html">International</a></p>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 2" data-echo="/images/featured/image2.jpg"/>
-                    </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Technology</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Google has release new concept od User Interface design</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Imelda Dwi</a></li>
-                            <li>14 February 2016</li>
-                            <li>234 Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        Google I/O in San Fransisco late 2014 before announch new feature and service, one of them
-                        is Material Design which can implement on web or android...
-                    </article>
-                    <div class="rating-wrapper" data-rating="3"></div>
-                    <p class="sub-category"><a href="category.html">Internet</a></p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 4" data-echo="/images/featured/image3.jpg"/>
-                    </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Science</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Reika make a dark theme on his new video clip</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Winda Aditiya</a></li>
-                            <li>1 January 2016</li>
-                            <li>53K Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        Research proves the earth’s air is more polluted than 10 years ago and this is should
-                        become big concern for society to keep on guard and pay attention...
-                    </article>
-                    <div class="rating-wrapper" data-rating="2"></div>
-                    <p class="sub-category"><a href="category.html">Research</a></p>
-                </div>
-            </div>
+
+            @empty
+                <p class="text-center center-block">No article available</p>
+            @endforelse
+
         </div>
 
         <div class="breadcrumb-wrapper mbs mts">
             <ol class="breadcrumb">
-                <li><a href="#">Latest</a></li>
+                <li><a href="{{ route('article.latest') }}">Latest</a></li>
                 <li class="blank"></li>
                 <li class="blank"></li>
             </ol>
             <div class="control">
-                <a class="btn btn-primary control-left" href="#"><i class="fa fa-chevron-left"></i></a>
-                <a class="btn btn-primary control-right" href="#"><i class="fa fa-chevron-right"></i></a>
+                <a class="btn btn-primary control-left" href="{{ route('article.trending') }}"><i class="fa fa-chevron-left"></i></a>
+                <a class="btn btn-primary control-right" href="{{ route('article.trending') }}"><i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 4" data-echo="/images/featured/image4.jpg"/>
+            @forelse($latest as $article)
+
+                <div class="col-md-4 col-sm-6">
+                    <div class="article-preview portrait">
+                        <div class="featured-image">
+                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                        </div>
+                        <div class="title-wrapper">
+                            <p class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}">{{ $article->subcategory->category->category }}</a></p>
+                            <h1 class="title">
+                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                            </h1>
+                            <ul class="timestamp">
+                                <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                <li>@simpledate($article->created_at)</li>
+                                <li>{{ $article->view }} Views</li>
+                            </ul>
+                        </div>
+                        <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
+                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                        <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Entertainment</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Reika make a dark theme on his new video clip</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Angga Ari Wijaya</a></li>
-                            <li>2 May 2016</li>
-                            <li>355 Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        After success with single Don’t Let You Go, Reika the band from america starting create
-                        ivideo clip. Black and white describe about the song that can make feels free...
-                    </article>
-                    <div class="rating-wrapper" data-rating="2"></div>
-                    <p class="sub-category"><a href="category.html">International</a></p>
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 5" data-echo="/images/featured/image5.jpg"/>
-                    </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Technology</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Google has release new concept od User Interface design</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Imelda Dwi</a></li>
-                            <li>14 February 2016</li>
-                            <li>234 Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        Google I/O in San Fransisco late 2014 before announch new feature and service, one of them
-                        is Material Design which can implement on web or android...
-                    </article>
-                    <div class="rating-wrapper" data-rating="4"></div>
-                    <p class="sub-category"><a href="category.html">Internet</a></p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="article-preview portrait">
-                    <div class="featured-image">
-                        <img src="/images/misc/preloader.gif" alt="Featured 6" data-echo="/images/featured/image6.jpg"/>
-                    </div>
-                    <div class="title-wrapper">
-                        <p class="category"><a href="category.html">Science</a></p>
-                        <h1 class="title">
-                            <a href="article.html">Reika make a dark theme on his new video clip</a>
-                        </h1>
-                        <ul class="timestamp">
-                            <li>By <a href="profile.html">Winda Aditiya</a></li>
-                            <li>1 January 2016</li>
-                            <li>53K Views</li>
-                        </ul>
-                    </div>
-                    <article>
-                        Research proves the earth’s air is more polluted than 10 years ago and this is should
-                        become big concern for society to keep on guard and pay attention...
-                    </article>
-                    <div class="rating-wrapper" data-rating="5"></div>
-                    <p class="sub-category"><a href="category.html">Research</a></p>
-                </div>
-            </div>
+
+            @empty
+                <p class="text-center center-block">No article available</p>
+            @endforelse
         </div>
 
         <div class="row">

@@ -39,16 +39,16 @@
                 <div class="header-section">
                     <section class="control-wrapper">
                         <ul class="featured-link hidden-xs">
-                            <li><a href="{{ url('archive') }}">LATEST</a></li>
-                            <li><a href="{{ url('featured/headline') }}">HEADLINE</a></li>
-                            <li><a href="{{ url('featured/trending') }}">TRENDING</a></li>
-                            <li><a href="{{ url('featured/random') }}">RANDOM</a></li>
+                            <li><a href="{{ route('article.archive') }}">LATEST</a></li>
+                            <li><a href="{{ route('article.headline') }}">HEADLINE</a></li>
+                            <li><a href="{{ route('article.trending') }}">TRENDING</a></li>
+                            <li><a href="{{ route('article.random') }}">RANDOM</a></li>
                         </ul>
                         <div class="user-control">
                             <ul class="hidden-xs">
                                 @if(!Auth::check())
-                                <li><a href="login.html"><span class="hidden-sm">Hello Guest! &nbsp; </span>LOGIN</a></li>
-                                <li><a href="register.html">REGISTER</a></li>
+                                <li><a href="{{ route('login.form') }}"><span class="hidden-sm">Hello Guest! &nbsp; </span>LOGIN</a></li>
+                                <li><a href="{{ route('register.form') }}">REGISTER</a></li>
                                 @endif
                             </ul>
 

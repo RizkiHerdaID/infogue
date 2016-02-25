@@ -18,8 +18,10 @@ class PageController extends Controller
         $featured = $article->headline();
         $popular = $article->most_popular();
         $ranked = $article->most_ranked();
+        $trending = $article->trending();
+        $latest = $article->latest();
 
-        return view('pages.index', compact('featured', 'popular', 'ranked'));
+        return view('pages.index', compact('featured', 'popular', 'ranked', 'trending', 'latest'));
     }
 
     /**

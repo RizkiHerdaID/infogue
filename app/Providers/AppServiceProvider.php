@@ -46,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo with{$expression}->format('d/m/Y H:i'); ?>";
         });
 
+        Blade::directive('simpledate', function($expression) {
+            return "<?php echo with{$expression}->format('d M Y'); ?>";
+        });
+
         Blade::directive('fulldate', function($expression) {
             return "<?php echo with{$expression}->format('d F Y'); ?>";
         });

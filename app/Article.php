@@ -37,11 +37,9 @@ class Article extends Model
 
     public function rating()
     {
-        return $this->hasMany('Infogue\Rating')
+        return $this->hasOne('Infogue\Rating')
             ->selectRaw('ROUND(AVG(ratings.rate)) AS total_rating')
-            ->groupBy('article_id')
-            ->pluck('total_rating')
-            ->first();
+            ->groupBy('article_id');
     }
 
     public function tags()
@@ -108,9 +106,32 @@ class Article extends Model
         return $headline;
     }
 
-    public function latest()
+    public function trending($is_featured = true)
     {
-        $latest = $this->published()->paginate(10);
+        if($is_featured){
+            $trending = $this->published()->where('state', 'trending')->take(3)->get();
+        }
+        else{
+            $trending = $this->published()->where('state', 'trending')->paginate(10);
+        }
+
+        return $trending;
+    }
+
+    public function latest($is_featured = true)
+    {
+        if($is_featured){
+            $trending = $this->select('id')
+                ->published()
+                ->where('state', 'trending')
+                ->take(3)
+                ->pluck('id')->toArray();
+
+            $latest = $this->published()->whereNotIn('id', $trending)->take(3)->get();
+        }
+        else{
+            $latest = $this->published()->paginate(10);
+        }
 
         return $latest;
     }
@@ -133,9 +154,12 @@ class Article extends Model
                 featured,
                 author,
                 label,
-                ROUND(AVG(ratings.rate)) AS total_rating,
+                category,
+                subcategory
                 articles.created_at')
             )
+            ->join('subcategory', 'subcategories.id', '=', 'label')
+            ->join('category', 'categories.id', '=', 'category_id')
             ->where('title', 'like', "%{$query}%")
             ->orWhere('category', 'like', "%{$query}%")
             ->orWhere('subcategory', 'like', "%{$query}%")

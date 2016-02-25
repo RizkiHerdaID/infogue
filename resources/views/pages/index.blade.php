@@ -134,9 +134,10 @@
         </div>
 
         <div class="row">
+            <?php $counter = 1; ?>
             @forelse($trending as $article)
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">
                     <div class="article-preview portrait">
                         <div class="featured-image">
                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
@@ -157,6 +158,8 @@
                         <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
                 </div>
+
+                <?php $counter++; ?>
 
             @empty
                 <p class="text-center center-block">No article available</p>
@@ -171,15 +174,16 @@
                 <li class="blank"></li>
             </ol>
             <div class="control">
-                <a class="btn btn-primary control-left" href="{{ route('article.trending') }}"><i class="fa fa-chevron-left"></i></a>
-                <a class="btn btn-primary control-right" href="{{ route('article.trending') }}"><i class="fa fa-chevron-right"></i></a>
+                <a class="btn btn-primary control-left" href="{{ route('article.latest') }}"><i class="fa fa-chevron-left"></i></a>
+                <a class="btn btn-primary control-right" href="{{ route('article.latest') }}"><i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
 
         <div class="row">
+            <?php $counter = 1; ?>
             @forelse($latest as $article)
 
-                <div class="col-md-4 col-sm-6">
+                <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">
                     <div class="article-preview portrait">
                         <div class="featured-image">
                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
@@ -201,6 +205,8 @@
                     </div>
                 </div>
 
+                <?php $counter++; ?>
+
             @empty
                 <p class="text-center center-block">No article available</p>
             @endforelse
@@ -208,452 +214,276 @@
 
         <div class="row">
             <div class="col-md-8">
-                <div class="tag category">Entertainment</div>
+                @if(isset($summary[0]) && $summary[0]->count() > 0)
+
+                <?php $article = $summary[0][0]; ?>
+                <div class="tag category">{{ $article->subcategory->category->category }}</div>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="article-preview portrait">
                             <div class="featured-image">
-                                <img src="/images/misc/preloader.gif" alt="Featured 7" data-echo="/images/featured/image7.jpg"/>
+                                <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
                             </div>
                             <div class="title-wrapper">
+                                <p class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}">{{ $article->subcategory->category->category }}</a></p>
                                 <h1 class="title">
-                                    <a href="article.html">
-                                        John Burn starting his career from a model and programmer
-                                    </a>
+                                    <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
                                 </h1>
                                 <ul class="timestamp">
-                                    <li>By <a href="profile.html">Winda Aditiya</a></li>
-                                    <li>1 January 2016</li>
-                                    <li>53K Views</li>
+                                    <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                    <li>@fulldate($article->created_at)</li>
+                                    <li>{{ $article->view }} Views</li>
                                 </ul>
                             </div>
-                            <article>
-                                Every people is unique even we through the same way, school in same place, eat
-                                similar breakfast, but we have defferent when pick a decision and emotion...
-                            </article>
-                            <div class="rating-wrapper" data-rating="3"></div>
-                            <p class="sub-category"><a href="category.html">International</a></p>
+                            <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
+                            <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                            <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 8" data-echo="/images/featured/image8.jpg"/>
+                        @if($summary[0]->count() > 1)
+
+                            @for($i = 1; $i < $summary[0]->count(); $i++)
+
+                                <?php $article = $summary[0][$i]; ?>
+
+                                <div class="article-preview landscape mini">
+                                    <div class="row">
+                                        <div class="col-sm-5 col-xs-4">
+                                            <div class="featured-image">
+                                                <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-7 col-xs-8">
+                                            <div class="title-wrapper">
+                                                <h1 class="title">
+                                                    <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                                </h1>
+                                                <ul class="timestamp">
+                                                    <li>@fulldate($article->created_at)</li>
+                                                    <li>{{ $article->view }} Views</li>
+                                                </ul>
+                                            </div>
+                                            <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Bicyclist recommend warming up before exercising
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>24 January 2016</li>
-                                            <li>12 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="2"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 9" data-echo="/images/featured/image9.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">Extreme sport now more popular lately</a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>15 January 2016</li>
-                                            <li>632 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="2"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 10" data-echo="/images/featured/image10.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Sertification become necesarry as Coach
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>12 January 2016</li>
-                                            <li>173 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="2"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 11" data-echo="/images/featured/image11.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Young people in Indonesia introduce importance of exercise
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>18 January 2016</li>
-                                            <li>12 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="2"></div>
-                                </div>
-                            </div>
-                        </div>
+
+                            @endfor
+
+                        @endif
+
                     </div>
                 </div>
 
+                @else
+                    <p class="text-center center-block">No article available</p>
+                @endif
+
+
+
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="tag category">Sport</div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-6 mbm">
-                                <div class="article-preview portrait">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 13" data-echo="/images/featured/image13.jpg"/>
-                                        <div class="category-wrapper">
-                                            <p class="sub-category"><a href="category.html">Soccer</a></p>
-                                            <div class="rating-wrapper" data-rating="3"></div>
+                        @if(isset($summary[1]) && $summary[1]->count() > 0)
+
+                            <?php $article = $summary[1][0]; ?>
+                            <div class="tag category">{{ $article->subcategory->category->category }}</div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6 mbm">
+                                    <div class="article-preview portrait">
+                                        <div class="featured-image">
+                                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                            <div class="category-wrapper">
+                                                <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
+                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="title-wrapper">
+                                            <h1 class="title">
+                                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                            </h1>
+                                            <ul class="timestamp">
+                                                <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                                <li>@simpledate($article->created_at)</li>
+                                                <li>{{ $article->view }} Views</li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Football Supporter are going to watch the biggest game ever
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>By <a href="profile.html">Angga Ari</a></li>
-                                            <li>25 January 2016</li>
-                                            <li>674 Views</li>
-                                        </ul>
-                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-6">
+
+                                    @if($summary[1]->count() > 1)
+
+                                        @for($i = 1; $i < 4; $i++)
+
+                                            <?php $article = $summary[1][$i]; ?>
+
+                                            <div class="article-preview landscape mini">
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-4">
+                                                        <div class="featured-image">
+                                                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-7 col-xs-8">
+                                                        <div class="title-wrapper">
+                                                            <h1 class="title">
+                                                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                                            </h1>
+                                                            <ul class="timestamp">
+                                                                <li>@fulldate($article->created_at)</li>
+                                                                <li>{{ $article->view }} Views</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endfor
+
+                                    @endif
+
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-6">
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 14" data-echo="/images/featured/image14.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Fishing world champion begin
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>15 January 2016</li>
-                                                    <li>212 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 15" data-echo="/images/featured/image15.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Running now the most popular and healthy quick training
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>11 January 2016</li>
-                                                    <li>72 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 16" data-echo="/images/featured/image16.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Home sport is alternative for modern people
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>7 January 2016</li>
-                                                    <li>643 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="4"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @else
+                            <p class="text-center center-block">No article available</p>
+                        @endif
                     </div>
                     <div class="col-md-6">
-                        <div class="tag category">Economic</div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-6 mbm">
-                                <div class="article-preview portrait">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 12" data-echo="/images/featured/image12.jpg"/>
-                                        <div class="category-wrapper">
-                                            <p class="sub-category"><a href="category.html">Finance</a></p>
-                                            <div class="rating-wrapper" data-rating="4"></div>
+                        @if(isset($summary[2]) && $summary[2]->count() > 0)
+
+                            <?php $article = $summary[2][0]; ?>
+                            <div class="tag category">{{ $article->subcategory->category->category }}</div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-6 mbm">
+                                    <div class="article-preview portrait">
+                                        <div class="featured-image">
+                                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                            <div class="category-wrapper">
+                                                <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
+                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                            </div>
+                                        </div>
+                                        <div class="title-wrapper">
+                                            <h1 class="title">
+                                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                            </h1>
+                                            <ul class="timestamp">
+                                                <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                                <li>@simpledate($article->created_at)</li>
+                                                <li>{{ $article->view }} Views</li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Micro business now  collec money from goverment program
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>By <a href="profile.html">Rio Shika</a></li>
-                                            <li>28 January 2016</li>
-                                            <li>732 Views</li>
-                                        </ul>
-                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-6">
+
+                                    @if($summary[2]->count() > 1)
+
+                                        @for($i = 1; $i < 4; $i++)
+
+                                            <?php $article = $summary[2][$i]; ?>
+
+                                            <div class="article-preview landscape mini">
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-xs-4">
+                                                        <div class="featured-image">
+                                                            <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-7 col-xs-8">
+                                                        <div class="title-wrapper">
+                                                            <h1 class="title">
+                                                                <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                                            </h1>
+                                                            <ul class="timestamp">
+                                                                <li>@fulldate($article->created_at)</li>
+                                                                <li>{{ $article->view }} Views</li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endfor
+
+                                    @endif
+
                                 </div>
                             </div>
-                            <div class="col-md-12 col-sm-6">
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 17" data-echo="/images/featured/image17.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Chef Technology Officer from Apple critics competitor
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>13 January 2016</li>
-                                                    <li>73 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 18" data-echo="/images/featured/image18.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Young businessman become popular figure
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>8 January 2016</li>
-                                                    <li>163 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="2"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="article-preview landscape mini">
-                                    <div class="row">
-                                        <div class="col-sm-5 col-xs-4">
-                                            <div class="featured-image">
-                                                <img src="/images/misc/preloader.gif" alt="Featured 20" data-echo="/images/featured/image20.jpg"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7 col-xs-8">
-                                            <div class="title-wrapper">
-                                                <h1 class="title">
-                                                    <a href="article.html">
-                                                        Electronic get expensive everyday
-                                                    </a>
-                                                </h1>
-                                                <ul class="timestamp">
-                                                    <li>2 January 2016</li>
-                                                    <li>53 Views</li>
-                                                </ul>
-                                            </div>
-                                            <div class="rating-wrapper" data-rating="3"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @else
+                            <p class="text-center center-block">No article available</p>
+                        @endif
                     </div>
                 </div>
 
             </div>
             <div class="col-md-4">
-                <div class="tag category">Health</div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-6">
-                        <div class="article-preview portrait">
-                            <div class="featured-image">
-                                <img src="/images/misc/preloader.gif" alt="Featured 24" data-echo="/images/featured/image24.jpg"/>
+                @if(isset($summary[3]) && $summary[3]->count() > 0)
+                    <?php $article = $summary[3][0]; ?>
+                    <div class="tag category">{{ $article->subcategory->category->category }}</div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-6">
+                            <div class="article-preview portrait">
+                                <div class="featured-image">
+                                    <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                </div>
+                                <div class="title-wrapper">
+                                    <p class="category"><a href="{{ route('article.category', [str_slug($article->subcategory->category->category)]) }}">{{ $article->subcategory->category->category }}</a></p>
+                                    <h1 class="title">
+                                        <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                    </h1>
+                                    <ul class="timestamp">
+                                        <li>By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
+                                        <li>@fulldate($article->created_at)</li>
+                                        <li>{{ $article->view }} Views</li>
+                                    </ul>
+                                </div>
+                                <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
+                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                             </div>
-                            <div class="title-wrapper">
-                                <h1 class="title">
-                                    <a href="article.html">
-                                        Blend various healthy vegetable on breakfast
-                                    </a>
-                                </h1>
-                                <ul class="timestamp">
-                                    <li>By <a href="profile.html">Mitha Nita</a></li>
-                                    <li>23 February 2016</li>
-                                    <li>82 Views</li>
-                                </ul>
-                            </div>
-                            <article>
-                                An egg can provide energy for a day, but sometime we doing exercise, stay up until
-                                midnight and so on. We need more extra calories from our food specially...
-                            </article>
-                            <div class="rating-wrapper" data-rating="3"></div>
-                            <p class="sub-category"><a href="category.html">Lifestyle</a></p>
+                        </div>
+                        <div class="col-md-12 col-sm-6">
+                            @if($summary[2]->count() > 1)
+
+                                @for($i = 1; $i < $summary[3]->count(); $i++)
+
+                                    <?php $article = $summary[3][$i]; ?>
+
+                                    <div class="article-preview landscape mini">
+                                        <div class="row">
+                                            <div class="col-sm-5 col-xs-4">
+                                                <div class="featured-image">
+                                                    <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-7 col-xs-8">
+                                                <div class="title-wrapper">
+                                                    <h1 class="title">
+                                                        <a href="{{ route('article.show', [$article->slug]) }}">{{ $article->title }}</a>
+                                                    </h1>
+                                                    <ul class="timestamp">
+                                                        <li>@fulldate($article->created_at)</li>
+                                                        <li>{{ $article->view }} Views</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                @endfor
+
+                            @endif
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-6">
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 19" data-echo="/images/featured/image19.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                People grow old and dying like always
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>22 January 2016</li>
-                                            <li>912 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="3"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 21" data-echo="/images/featured/image21.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Now doctor consultation can be accessed at home
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>18 January 2016</li>
-                                            <li>46 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="4"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 22" data-echo="/images/featured/image22.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Doctor is the one of exellent job can make you rich
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>14 January 2016</li>
-                                            <li>784 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="2"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="article-preview landscape mini">
-                            <div class="row">
-                                <div class="col-sm-5 col-xs-4">
-                                    <div class="featured-image">
-                                        <img src="/images/misc/preloader.gif" alt="Featured 23" data-echo="/images/featured/image23.jpg"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7 col-xs-8">
-                                    <div class="title-wrapper">
-                                        <h1 class="title">
-                                            <a href="article.html">
-                                                Surgery team X desease success healing Vcro Virus
-                                            </a>
-                                        </h1>
-                                        <ul class="timestamp">
-                                            <li>12 January 2016</li>
-                                            <li>623 Views</li>
-                                        </ul>
-                                    </div>
-                                    <div class="rating-wrapper" data-rating="3"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                @else
+                    <p class="text-center center-block">No article available</p>
+                @endif
 
                 <div class="tag category">Advertisement</div>
                 <ul class="list-group">
@@ -680,7 +510,7 @@
         <div class="container">
             <h2>Keep in touch with us</h2>
             <h1>MOBILE EVERYWHERE</h1>
-            <p class="lead">Don’t be nerd and keep up-to date with your handheld</p>
+            <p class="lead">Don't be nerd and keep up-to date with your handheld</p>
             <p class="mbm mtl">Available on Android and iOS, so hurry get it now on:</p>
             <a class="btn btn-outline btn-light btn-mobile" href="http://play.google.com" target="_blank">
                 <i class="fa fa-android"></i>
@@ -692,7 +522,7 @@
                 <h3>APPLE iOS</h3>
                 <p>APP STORE</p>
             </a>
-            <img src="/images/misc/mobile.png" class="hidden-xs" alt="Mobile Application" data-stellar-ratio="1.45"/>
+            <img src="{{ asset('/images/misc/mobile.png') }}" class="hidden-xs" alt="Mobile Application" data-stellar-ratio="1.45"/>
         </div>
     </div>
 
@@ -704,28 +534,28 @@
             </div>
             <ul class="company-list">
                 <li><a href="http://www.google.com?q=mountain" target="_blank">
-                        <img src="/images/misc/mountain.png" alt="Sleeping Mountain"/></a>
+                        <img src="{{ asset('/images/misc/mountain.png') }}" alt="Sleeping Mountain"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=redcode" target="_blank">
-                        <img src="/images/misc/redcode.png" alt="Redcode Deliver"/></a>
+                        <img src="{{ asset('/images/misc/redcode.png') }}" alt="Redcode Deliver"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=vana" target="_blank">
-                        <img src="/images/misc/vana.png" alt="Vana Internet Provider"/></a>
+                        <img src="{{ asset('/images/misc/vana.png') }}" alt="Vana Internet Provider"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=express" target="_blank">
-                        <img src="/images/misc/express.png" alt="Express"/></a>
+                        <img src="{{ asset('/images/misc/express.png') }}" alt="Express"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=magnive" target="_blank">
-                        <img src="/images/misc/magnive.png" alt="Magnive"/></a>
+                        <img src="{{ asset('/images/misc/magnive.png') }}" alt="Magnive"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=frezze" target="_blank">
-                        <img src="/images/misc/frezze.png" alt="Frezzer"/></a>
+                        <img src="{{ asset('/images/misc/frezze.png') }}" alt="Frezzer"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=bluewave" target="_blank">
-                        <img src="/images/misc/bluewave.png" alt="Bluewave"/></a>
+                        <img src="{{ asset('/images/misc/bluewave.png') }}" alt="Bluewave"/></a>
                 </li>
                 <li><a href="http://www.google.com?q=smiles" target="_blank">
-                        <img src="/images/misc/smiles.png" alt="Smiles"/></a>
+                        <img src="{{ asset('/images/misc/smiles.png') }}" alt="Smiles"/></a>
                 </li>
             </ul>
         </div>
@@ -752,7 +582,7 @@
                     </form>
                     <a href="#" data-dismiss="modal" class="dismiss">NO THANKS</a>
                     <p class="small">We Promise don't spam<span class="hidden-xs"> and use your email for weird purpose</span></p>
-                    <p class="small">See our policy at <a href="/term">Terms</a> and <a href="/privacy">Privacy</a></p>
+                    <p class="small">See our policy at <a href="{{ url('term') }}">Terms</a> and <a href="{{ url('privacy') }}">Privacy</a></p>
                 </div>
                 <div class="modal-footer">
                 </div>

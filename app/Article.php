@@ -109,7 +109,7 @@ class Article extends Model
     public function trending($is_featured = true)
     {
         if($is_featured){
-            $trending = $this->published()->where('state', 'trending')->take(3)->get();
+            $trending = $this->published()->where('state', 'trending')->take(4)->get();
         }
         else{
             $trending = $this->published()->where('state', 'trending')->paginate(10);
@@ -127,7 +127,7 @@ class Article extends Model
                 ->take(3)
                 ->pluck('id')->toArray();
 
-            $latest = $this->published()->whereNotIn('id', $trending)->take(3)->get();
+            $latest = $this->published()->whereNotIn('id', $trending)->take(4)->get();
         }
         else{
             $latest = $this->published()->paginate(10);

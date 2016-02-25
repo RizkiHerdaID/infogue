@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers;
 
 use Infogue\Article;
+use Infogue\Category;
 use Infogue\Http\Requests;
 
 class PageController extends Controller
@@ -21,7 +22,10 @@ class PageController extends Controller
         $trending = $article->trending();
         $latest = $article->latest();
 
-        return view('pages.index', compact('featured', 'popular', 'ranked', 'trending', 'latest'));
+        $category = new Category();
+        $summary = $category->featured();
+
+        return view('pages.index', compact('featured', 'popular', 'ranked', 'trending', 'latest', 'summary'));
     }
 
     /**

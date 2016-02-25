@@ -59,14 +59,14 @@
                                 <a href="#" class="user-dropdown hidden"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>ANGGA ARI WIJAYA</strong></span></a>
                                 <ul class="list-menu">
                                     <li class="menu-label">ACCOUNT</li>
-                                    <li><a href="contributor_stream.html"><i class="glyphicon glyphicon-user"></i>Profile</a></li>
-                                    <li><a href="contributor_article.html"><i class="glyphicon glyphicon-file"></i>Article</a></li>
-                                    <li><a href="contributor_message.html"><i class="glyphicon glyphicon-envelope"></i>Message</a></li>
-                                    <li><a href="contributor_followers.html"><i class="glyphicon glyphicon-arrow-right"></i>Followers</a></li>
-                                    <li><a href="contributor_following.html"><i class="glyphicon glyphicon-arrow-left"></i>Following</a></li>
+                                    <li><a href="{{ route('account.stream') }}"><i class="glyphicon glyphicon-user"></i>Profile</a></li>
+                                    <li><a href="{{ route('account.article') }}"><i class="glyphicon glyphicon-file"></i>Article</a></li>
+                                    <li><a href="{{ route('account.message.list') }}"><i class="glyphicon glyphicon-envelope"></i>Message</a></li>
+                                    <li><a href="{{ route('account.follower') }}"><i class="glyphicon glyphicon-arrow-right"></i>Followers</a></li>
+                                    <li><a href="{{ route('account.following') }}"><i class="glyphicon glyphicon-arrow-left"></i>Following</a></li>
                                     <li class="menu-label">CONTROL</li>
-                                    <li><a href="contributor_setting.html"><i class="glyphicon glyphicon-cog"></i>Setting</a></li>
-                                    <li><a href="login.html"><i class="glyphicon glyphicon-log-out"></i>Logout</a></li>
+                                    <li><a href="{{ route('account.setting') }}"><i class="glyphicon glyphicon-cog"></i>Setting</a></li>
+                                    <li><a href="{{ route('login.destroy') }}"><i class="glyphicon glyphicon-log-out"></i>Logout</a></li>
                                 </ul>
                                 @endif
                             </div>
@@ -74,7 +74,7 @@
                     </section>
                     <section class="search-wrapper">
                         <div class="search">
-                            <form action="result.html" method="get">
+                            <form action="{{ route('search') }}" method="get">
                                 {!! csrf_field() !!}
                                 <div class="input-search">
                                     <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="sidebar-profile visible-xs">
                     <a href="contributor_stream.html" class="hidden">
-                        <img src="images/contributors/cici.png"/>
+                        <img src="{{ asset('images/contributors/avatar_1.jpg') }}"/>
                         <div class="info">
                             <p class="name">Angga Ari Wijaya</p>
                             <p class="location">Jakarta, Indonesia</p>

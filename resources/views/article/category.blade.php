@@ -34,8 +34,8 @@
                 @endif
             </ol>
             <div class="control hidden-xs">
-                <a class="btn btn-primary control-left" href="#"><i class="fa fa-chevron-left"></i></a>
-                <a class="btn btn-primary control-right" href="#"><i class="fa fa-chevron-right"></i></a>
+                <a class="btn btn-primary control-left" href="{{ $prev_ref }}"><i class="fa fa-chevron-left"></i></a>
+                <a class="btn btn-primary control-right" href="{{ $next_ref }}"><i class="fa fa-chevron-right"></i></a>
             </div>
         </div>
 

@@ -4,6 +4,7 @@ namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Route;
 use Infogue\Article;
 use Infogue\Http\Requests;
 
@@ -50,11 +51,15 @@ class ArticleController extends Controller
             'Latest' => route('article.latest'),
         ];
 
+        $next_ref = route('article.headline');
+
+        $prev_ref = '#';
+
         if(Input::get('page', false)){
             return $latest;
         }
         else{
-            return view('article.category', compact('breadcrumb'));
+            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 
@@ -72,11 +77,15 @@ class ArticleController extends Controller
             'Headline' => route('article.headline'),
         ];
 
+        $next_ref = route('article.trending');
+
+        $prev_ref = route('article.latest');
+
         if(Input::get('page', false)){
             return $headline;
         }
         else{
-            return view('article.category', compact('breadcrumb'));
+            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 
@@ -94,11 +103,15 @@ class ArticleController extends Controller
             'Trending' => route('article.trending'),
         ];
 
+        $next_ref = route('article.random');
+
+        $prev_ref = route('article.headline');
+
         if(Input::get('page', false)){
             return $trending;
         }
         else{
-            return view('article.category', compact('breadcrumb'));
+            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 

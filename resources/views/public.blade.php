@@ -75,23 +75,24 @@
                     <section class="search-wrapper">
                         <div class="search">
                             <form action="{{ route('search') }}" method="get">
-                                {!! csrf_field() !!}
+                                <input type="hidden" value="all" name="filter">
                                 <div class="input-search">
-                                    <input class="form-control" id="search" type="search" name="search" placeholder="Type a keywords"/>
+                                    <input class="form-control" id="search" type="search" name="query" placeholder="Type a keywords" required/>
                                     <i class="fa fa-search"></i>
                                 </div>
-                                <div class="btn-group filter  hidden-xs">
+                                <div class="btn-group filter dropdown select hidden-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         All Data <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">All Data</a></li>
+                                        <li><a href="#" data-filter="all">All Data</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#">Contributor</a></li>
-                                        <li><a href="#">Article</a></li>
+                                        <li><a href="#" data-filter="contributor">Contributor</a></li>
+                                        <li><a href="#" data-filter="article">Article</a></li>
                                     </ul>
                                 </div>
                                 <button type="submit" class="btn btn-primary">SEARCH</button>
+                                {!! csrf_field() !!}
                             </form>
                         </div>
                         <ul class="social hidden-xs">

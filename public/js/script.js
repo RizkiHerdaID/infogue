@@ -343,8 +343,16 @@ $(function () {
         e.preventDefault();
     });
 
-
-
+    // DROPDOWN
+    $(".dropdown.select a").click(function(){
+        var text = $(this).text()+" <span class='caret'></span>";
+        $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
+    });
+    $(".dropdown.filter a").click(function(){
+        var text = $(this).data('filter');
+        console.log('name '+text);
+        $(".search-wrapper input[name='filter']").val(text);
+    });
 
 });
 

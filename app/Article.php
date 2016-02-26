@@ -100,7 +100,9 @@ class Article extends Model
             $headline = $this->published()->where('state', 'headline')->take(4)->get();
         }
         else{
-            $headline = $this->preArticleQuery()->published()->where('state', 'headline')->paginate(9);
+            $articles = $this->preArticleQuery()->published()->where('state', 'headline')->paginate(9);
+
+            $headline = $this->preArticleModifier($articles);
         }
 
         return $headline;

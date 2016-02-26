@@ -44,6 +44,7 @@ class ArticleController extends Controller
     public function latest()
     {
         $latest = $this->article->latest(false);
+
         $breadcrumb = [
             'Archive' => route('article.archive'),
             'Latest' => route('article.latest'),
@@ -53,7 +54,7 @@ class ArticleController extends Controller
             return $latest;
         }
         else{
-            return view('article.category', compact('latest', 'breadcrumb'));
+            return view('article.category', compact('breadcrumb'));
         }
     }
 
@@ -64,7 +65,19 @@ class ArticleController extends Controller
      */
     public function headline()
     {
-        //
+        $headline = $this->article->headline(false);
+
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            'Headline' => route('article.headline'),
+        ];
+
+        if(Input::get('page', false)){
+            return $headline;
+        }
+        else{
+            return view('article.category', compact('breadcrumb'));
+        }
     }
 
     /**

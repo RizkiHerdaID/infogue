@@ -108,7 +108,7 @@ $factory->define(Infogue\Attachment::class, function(){
 });
 
 $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
-    $title = $faker->sentence();
+    $title = $faker->sentence(8);
 
     $content   = $faker->paragraphs(7);
 
@@ -143,7 +143,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
 
 $factory->define(Infogue\Rating::class, function(Faker\Generator $faker){
     return [
-        'article_id' => rand(1, 100),
+        'article_id' => rand(1, 1000),
         'ip' => $faker->ipv4,
         'rate' => rand(1, 5)
     ];
@@ -157,7 +157,7 @@ $factory->define(Infogue\Tag::class, function(Faker\Generator $faker){
 
 $factory->define(Infogue\ArticleTag::class, function(){
     return [
-        'article_id' => rand(1, 100),
+        'article_id' => rand(1, 1000),
         'tag_id' => rand(1, 20)
     ];
 });

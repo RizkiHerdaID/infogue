@@ -11,6 +11,6 @@ class ArticleTagsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Infogue\ArticleTag::class, 500)->create();
+        factory(Infogue\ArticleTag::class, 5000)->create();
     }
 }

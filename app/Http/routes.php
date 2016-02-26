@@ -35,10 +35,6 @@ Route::get('/terms', function () {
     return view('pages.terms');
 });
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-});
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -94,6 +90,9 @@ Route::group(['middleware' => ['web']], function () {
 
     // Contact / feedback routes...
     Route::resource('feedback', 'FeedbackController', ['only' => ['store']]);
+    Route::get('/contact', function () {
+        return view('pages.contact');
+    });
 
     // Group of article routes...
     Route::group(['as' => 'article.'], function () {

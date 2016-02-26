@@ -114,7 +114,9 @@ class Article extends Model
             $trending = $this->published()->where('state', 'trending')->take(4)->get();
         }
         else{
-            $trending = $this->preArticleQuery()->published()->where('state', 'trending')->paginate(9);
+            $articles = $this->preArticleQuery()->published()->where('state', 'trending')->paginate(9);
+
+            $trending = $this->preArticleModifier($articles);
         }
 
         return $trending;

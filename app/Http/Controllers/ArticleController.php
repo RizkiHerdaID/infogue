@@ -87,7 +87,19 @@ class ArticleController extends Controller
      */
     public function trending()
     {
-        //
+        $trending = $this->article->trending(false);
+
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            'Trending' => route('article.trending'),
+        ];
+
+        if(Input::get('page', false)){
+            return $trending;
+        }
+        else{
+            return view('article.category', compact('breadcrumb'));
+        }
     }
 
     /**

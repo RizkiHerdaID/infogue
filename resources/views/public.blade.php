@@ -297,7 +297,6 @@
 <script src="{{ asset('/library/mustache/mustache.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('/js/script.js') }}"></script>
-<script src="{{ asset('/js/template.js') }}"></script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>

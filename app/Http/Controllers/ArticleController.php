@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Infogue\Article;
 use Infogue\Http\Requests;
 
@@ -42,7 +43,18 @@ class ArticleController extends Controller
      */
     public function latest()
     {
-        //
+        $latest = $this->article->latest(false);
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            'Latest' => route('article.latest'),
+        ];
+
+        if(Input::get('page', false)){
+            return $latest;
+        }
+        else{
+            return view('article.category', compact('latest', 'breadcrumb'));
+        }
     }
 
     /**

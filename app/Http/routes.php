@@ -69,7 +69,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
         Route::resource('category', 'CategoryController', ['except' => ['show', 'create', 'edit']]);
         Route::resource('subcategory', 'SubcategoryController', ['only' => ['store', 'update', 'destroy']]);
-        Route::resource('feedback', 'SubcategoryController', ['only' => ['index', 'destroy']]);
+        Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'destroy']]);
         Route::post('/feedback/reply', ['as' => 'admin.feedback.reply', 'uses' => 'FeedbackController@reply']);
         Route::post('/feedback/important', ['as' => 'admin.feedback.important', 'uses' => 'FeedbackController@important']);
         Route::post('/feedback/archive', ['as' => 'admin.feedback.archive', 'uses' => 'FeedbackController@archive']);
@@ -98,8 +98,8 @@ Route::group(['middleware' => ['web']], function () {
     // Group of article routes...
     Route::group(['as' => 'article.'], function () {
         Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
-        Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@index']);
-        Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'SubcategoryController@index']);
+        Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
+        Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
         Route::get('/featured/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
         Route::get('/featured/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
         Route::get('/featured/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);

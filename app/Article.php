@@ -144,7 +144,7 @@ class Article extends Model
 
     public function random()
     {
-        $articles = $this->preArticleQuery()->orderByRaw("RAND()")->published()->paginate(15);
+        $articles = $this->preArticleQuery()->orderByRaw("RAND()")->published()->paginate(9);
 
         $random = $this->preArticleModifier($articles);
 

@@ -122,7 +122,23 @@ class ArticleController extends Controller
      */
     public function random()
     {
-        //
+        $trending = $this->article->random();
+
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            'Random' => route('article.random'),
+        ];
+
+        $next_ref = '#';
+
+        $prev_ref = route('article.trending');
+
+        if(Input::get('page', false)){
+            return $trending;
+        }
+        else{
+            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
+        }
     }
 
     /**

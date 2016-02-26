@@ -10,7 +10,7 @@ class Subcategory extends Model
 
     public function articles()
     {
-        return $this->hasMany('Infogue\Article', 'label');
+        return $this->hasMany('Infogue\Article');
     }
 
     public function category()

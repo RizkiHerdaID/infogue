@@ -11,7 +11,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->hasManyThrough('Infogue\Article', 'Infogue\Subcategory', 'category_id', 'label');
+        return $this->hasManyThrough('Infogue\Article', 'Infogue\Subcategory', 'category_id', 'subcategory_id');
     }
 
     public function subcategories()
@@ -23,7 +23,7 @@ class Category extends Model
     {
         $top_categories = $this->select(DB::raw('categories.id, SUM(view) AS total_view'))
             ->join('subcategories', 'category_id', '=', 'categories.id')
-            ->join('articles', 'articles.label','=', 'subcategories.id')
+            ->join('articles', 'subcategory_id','=', 'subcategories.id')
             ->where('status', 'published')
             ->groupBy('articles.id')
             ->orderBy('total_view', 'desc')

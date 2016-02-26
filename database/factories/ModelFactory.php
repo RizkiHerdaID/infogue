@@ -126,8 +126,8 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
     $rankings = ['general', 'headline', 'trending'];
 
     return [
-        'author' => rand(1, 100),
-        'label' => rand(1, 100),
+        'contributor_id' => rand(1, 100),
+        'subcategory_id' => rand(1, 100),
         'title' => $title,
         'slug' => str_slug($title),
         'featured' => 'featured_'.rand(1, 28).'.jpg',

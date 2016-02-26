@@ -15,7 +15,7 @@ class Contributor extends Model
 
     public function articles()
     {
-        return $this->hasMany('Infogue\Article', 'author');
+        return $this->hasMany('Infogue\Article');
     }
 
     public function messages()

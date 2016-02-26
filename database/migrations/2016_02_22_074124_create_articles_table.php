@@ -14,8 +14,8 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('author')->unsigned();
-            $table->integer('label')->unsigned();
+            $table->integer('contributor_id')->unsigned();
+            $table->integer('subcategory_id')->unsigned();
             $table->string('title', 70);
             $table->string('slug', 100)->unique();
             $table->string('featured')->default('noimage.jpg');
@@ -29,8 +29,8 @@ class CreateArticlesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('author')->references('id')->on('contributors')->onDelete('cascade');
-            $table->foreign('label')->references('id')->on('subcategories')->onDelete('cascade');
+            $table->foreign('contributor_id')->references('id')->on('contributors')->onDelete('cascade');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
 
             $table->index(['id', 'slug']);
         });

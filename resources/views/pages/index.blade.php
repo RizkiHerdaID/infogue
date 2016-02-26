@@ -154,7 +154,7 @@
                             </ul>
                         </div>
                         <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
-                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                        <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                         <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                             </ul>
                         </div>
                         <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
-                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                        <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                         <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
                                 </ul>
                             </div>
                             <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
-                            <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                            <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                             <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                         </div>
                     </div>
@@ -264,7 +264,7 @@
                                                     <li>{{ $article->view }} Views</li>
                                                 </ul>
                                             </div>
-                                            <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                            <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@
                                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
                                             <div class="category-wrapper">
                                                 <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
-                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                             </div>
                                         </div>
                                         <div class="title-wrapper">
@@ -335,7 +335,7 @@
                                                                 <li>{{ $article->view }} Views</li>
                                                             </ul>
                                                         </div>
-                                                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                        <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -362,7 +362,7 @@
                                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
                                             <div class="category-wrapper">
                                                 <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
-                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                             </div>
                                         </div>
                                         <div class="title-wrapper">
@@ -402,7 +402,7 @@
                                                                 <li>{{ $article->view }} Views</li>
                                                             </ul>
                                                         </div>
-                                                        <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                        <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -442,7 +442,7 @@
                                     </ul>
                                 </div>
                                 <article>{{ str_limit(strip_tags($article->content), 160) }}</article>
-                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                 <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                             </div>
                         </div>
@@ -470,7 +470,7 @@
                                                         <li>{{ $article->view }} Views</li>
                                                     </ul>
                                                 </div>
-                                                <div class="rating-wrapper" data-rating="{{ $article->rating->total_rating }}"></div>
+                                                <div class="rating-wrapper" data-rating="@if($article->rating == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
                                             </div>
                                         </div>
                                     </div>

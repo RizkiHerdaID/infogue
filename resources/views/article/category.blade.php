@@ -60,10 +60,10 @@
                 <div class="title-wrapper">
                     <p class="category"><a href="category.html">@{{ subcategory }}</a></p>
                     <h1 class="title">
-                        <a href="article.html">@{{ title }}</a>
+                        <a href="@{{ article_ref }}">@{{ title }}</a>
                     </h1>
                     <ul class="timestamp">
-                        <li>By <a href="@{{ username }}">@{{ name }}</a></li>
+                        <li>By <a href="@{{ contributor_ref }}">@{{ username }}</a></li>
                         <li>@{{ published_at }}</li>
                         <li>@{{ view }} Views</li>
                     </ul>

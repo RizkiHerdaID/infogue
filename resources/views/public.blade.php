@@ -134,7 +134,7 @@
                     @foreach($site_menus as $category)
 
                         <li>
-                            <a href="{{ url('category/'.str_slug($category->category)) }}">{{ $category->category }}</a>
+                            <a href="{{ route('article.category', [str_slug($category->category)]) }}">{{ $category->category }}</a>
 
                             @if(!$category->subcategories->isEmpty())
 
@@ -163,7 +163,7 @@
                                     @endif
 
                                             <li>
-                                                <a href="{{ url('category/'.str_slug($category->category).'/'.str_slug($subcategory->subcategory)) }}">
+                                                <a href="{{ route('article.subcategory', [str_slug($category->category), str_slug($subcategory->subcategory)]) }}">
                                                     {{ $subcategory->subcategory }}
                                                 </a>
                                             </li>

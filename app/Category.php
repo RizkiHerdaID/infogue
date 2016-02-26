@@ -9,9 +9,24 @@ class Category extends Model
 {
     protected $fillable = ['category', 'description'];
 
+    private $article;
+
+    public function category_article($id)
+    {
+        $this->article = new Article();
+
+        $articles = $this->article->preArticleQuery()
+            ->where('articles.status', 'published')
+            ->where('category_id', $id)
+            ->orderBy('articles.created_at', 'desc')
+            ->paginate(9);
+
+        return $this->article->preArticleModifier($articles);
+    }
+
     public function articles()
     {
-        return $this->hasManyThrough('Infogue\Article', 'Infogue\Subcategory', 'category_id', 'subcategory_id');
+        return $this->hasManyThrough('Infogue\Article', 'Infogue\Subcategory');
     }
 
     public function subcategories()
@@ -25,7 +40,7 @@ class Category extends Model
             ->join('subcategories', 'category_id', '=', 'categories.id')
             ->join('articles', 'subcategory_id','=', 'subcategories.id')
             ->where('status', 'published')
-            ->groupBy('articles.id')
+            ->groupBy('categories.id')
             ->orderBy('total_view', 'desc')
             ->take('6')
             ->get();

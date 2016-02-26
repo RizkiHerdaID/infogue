@@ -39,7 +39,7 @@
                 <div class="header-section">
                     <section class="control-wrapper">
                         <ul class="featured-link hidden-xs">
-                            <li><a href="{{ route('article.archive') }}">LATEST</a></li>
+                            <li><a href="{{ route('article.latest') }}">LATEST</a></li>
                             <li><a href="{{ route('article.headline') }}">HEADLINE</a></li>
                             <li><a href="{{ route('article.trending') }}">TRENDING</a></li>
                             <li><a href="{{ route('article.random') }}">RANDOM</a></li>
@@ -205,7 +205,7 @@
                         <li><a href="{{ $site_settings['Twitter'] }}" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
                         <li><a href="{{ $site_settings['Google Plus'] }}" class="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                     </ul>
-                    <img src="images/misc/logo.png" alt="Logo InfoGue" class="img-responsive logo"/>
+                    <img src="{{ asset('images/misc/logo.png') }}" alt="Logo InfoGue" class="img-responsive logo"/>
                     <p class="hidden-xs">The most update web portal news. We always provide latest article and information with high
                         integrity and truth. Knowledge is beyond among us to share with you.</p>
                 </div>
@@ -294,11 +294,14 @@
 <script src="{{ asset('/library/superfish/dist/js/superfish.min.js') }}"></script>
 <script src="{{ asset('/library/superfish/dist/js/hoverIntent.js') }}"></script>
 <script src="{{ asset('/library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('/library/mustache/mustache.min.js') }}" type="text/javascript"></script>
 
 <script src="{{ asset('/js/script.js') }}"></script>
+<script src="{{ asset('/js/template.js') }}"></script>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
+    /*
     if($('.newsletter').length){
         setTimeout(function(){
             $('.newsletter').modal('show');
@@ -311,6 +314,7 @@
         e.src='https://www.google-analytics.com/analytics.js';
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
     ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+    */
 </script>
 </body>
 </html>

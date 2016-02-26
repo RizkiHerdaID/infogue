@@ -38,7 +38,7 @@ class Article extends Model
     public function rating()
     {
         return $this->hasOne('Infogue\Rating')
-            ->selectRaw('ROUND(AVG(ratings.rate)) AS total_rating')
+            ->selectRaw('IFNULL(ROUND(AVG(ratings.rate)), 0) AS total_rating')
             ->groupBy('article_id');
     }
 
@@ -183,10 +183,11 @@ class Article extends Model
                     contributor_id,
                     name,
                     username,
-                    CAST(ROUND(AVG(ratings.rate)) AS UNSIGNED) AS total_rating,
+                    CAST(IFNULL(ROUND(AVG(ratings.rate)), 0) AS UNSIGNED) AS total_rating,
                     subcategory_id,
-                    category,
                     subcategory,
+                    category_id,
+                    category,
                     articles.created_at'
                 )
             )
@@ -202,10 +203,11 @@ class Article extends Model
         foreach($data as $row):
 
             $row->featured_ref = asset('images/featured/'.$row->featured);
+            $row->article_ref = route('article.show', [$row->slug]);
             $row->contributor_ref = route('contributor.stream', [$row->username]);
             $row->category_ref = route('article.category', [str_slug($row->category)]);
             $row->subcategory_ref = route('article.subcategory', [str_slug($row->category), str_slug($row->username)]);
-            $row->published_at = Carbon::parse($row->created_at)->format('d M Y');
+            $row->published_at = Carbon::parse($row->created_at)->format('d F Y');
             $row->content = str_limit(strip_tags($row->content), 160);
 
         endforeach;

@@ -56,7 +56,7 @@ $factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
         'status' => $statuses[array_rand($statuses, 1)],
         'gender' => $genders[array_rand($genders, 1)],
         'avatar' => 'avatar_'.rand(1, 20).'.jpg',
-        'cover' => 'cover_'.rand(1, 5).'jpg',
+        'cover' => 'cover_'.rand(1, 5).'.jpg',
         'birthday' => $faker->date('Y-m-d', '2000-01-01'),
         'about' => $faker->paragraph(),
         'location' => $faker->city.', '.$faker->country,

@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
 
@@ -18,41 +19,71 @@ class ContributorController extends Controller
     /**
      * Display a listing of the contributor.
      *
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function detail()
+    public function detail($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        return view('profile.detail', compact('contributor'));
     }
 
     /**
      * Display a listing of the contributor.
      *
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function article()
+    public function article($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $articles = $this->contributor->contributor_article($username);
+
+        if (Input::get('page', false)) {
+            return $articles;
+        } else {
+            return view('profile.article', compact('contributor', 'articles'));
+        }
     }
 
     /**
      * Display a listing of the contributor.
      *
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function follower()
+    public function follower($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $followers = $this->contributor->contributor_follower($username);
+
+        if (Input::get('page', false)) {
+            return $followers;
+        } else {
+            return view('profile.follower', compact('contributor', 'followers'));
+        }
     }
 
     /**
      * Display a listing of the contributor.
      *
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function following()
+    public function following($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $following = $this->contributor->contributor_following($username);
+
+        if (Input::get('page', false)) {
+            return $following;
+        } else {
+            return view('profile.following', compact('contributor', 'following'));
+        }
     }
 
     /**
@@ -68,7 +99,7 @@ class ContributorController extends Controller
     /**
      * Store a newly created contributor in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -79,12 +110,20 @@ class ContributorController extends Controller
     /**
      * Display the specified contributor.
      *
-     * @param  int  $id
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $stream = $this->contributor->stream($username);
+
+        if (Input::get('page', false)) {
+            return $stream;
+        } else {
+            return view('profile.stream', compact('contributor', 'stream'));
+        }
     }
 
     /**
@@ -100,8 +139,8 @@ class ContributorController extends Controller
     /**
      * Update the specified contributor in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -112,7 +151,7 @@ class ContributorController extends Controller
     /**
      * Remove the specified contributor from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

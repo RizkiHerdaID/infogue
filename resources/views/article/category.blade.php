@@ -1,6 +1,10 @@
 @extends('public')
 
-@section('title', '- International')
+@if(Request::segment(3) == "")
+    @section('title', '- '.ucfirst(Request::segment(2)))
+@else
+    @section('title', '- '.ucfirst(Request::segment(2).' - '.ucfirst(Request::segment(3))))
+@endif
 
 @section('content')
 
@@ -58,7 +62,7 @@
                     <img src="{{ asset('images/misc/preloader.gif') }}" alt="@{{ featured }}" data-echo="@{{ featured_ref }}"/>
                 </div>
                 <div class="title-wrapper">
-                    <p class="category"><a href="category.html">@{{ subcategory }}</a></p>
+                    <p class="category"><a href="@{{ subcategory_ref }}">@{{ subcategory }}</a></p>
                     <h1 class="title">
                         <a href="@{{ article_ref }}">@{{ title }}</a>
                     </h1>
@@ -73,9 +77,9 @@
                 </article>
                 <div class="rating-wrapper" data-rating="@{{ total_rating }}">@{{ rating }}</div>
                 <ul class="social text-right">
-                    <li><a href="http://www.facebook.com/infogue" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="http://www.twitter.com/infogue" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="http://plus.google.com/+infogue" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="https://www.facebook.com/sharer/sharer.php?u=@{{ article_ref }}" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="https://www.twitter.com/home?status=@{{ article_ref }}" class="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="https://plus.google.com/share?url=@{{ article_ref }}" class="googleplus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
                 </ul>
             </div>
         </div>

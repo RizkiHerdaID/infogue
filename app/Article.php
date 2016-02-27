@@ -11,6 +11,8 @@ class Article extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $hidden = ['deleted_at'];
+
     protected static function boot()
     {
         parent::boot();
@@ -180,6 +182,7 @@ class Article extends Model
                     title,
                     content,
                     featured,
+                    view,
                     contributor_id,
                     name,
                     username,
@@ -198,20 +201,20 @@ class Article extends Model
             ->groupBy('articles.id');
     }
 
-    public function preArticleModifier($data)
+    public function preArticleModifier($articles)
     {
-        foreach($data as $row):
+        foreach($articles as $article):
 
-            $row->featured_ref = asset('images/featured/'.$row->featured);
-            $row->article_ref = route('article.show', [$row->slug]);
-            $row->contributor_ref = route('contributor.stream', [$row->username]);
-            $row->category_ref = route('article.category', [str_slug($row->category)]);
-            $row->subcategory_ref = route('article.subcategory', [str_slug($row->category), str_slug($row->username)]);
-            $row->published_at = Carbon::parse($row->created_at)->format('d F Y');
-            $row->content = str_limit(strip_tags($row->content), 160);
+            $article->featured_ref = asset('images/featured/'.$article->featured);
+            $article->article_ref = route('article.show', [$article->slug]);
+            $article->contributor_ref = route('contributor.stream', [$article->username]);
+            $article->category_ref = route('article.category', [str_slug($article->category)]);
+            $article->subcategory_ref = route('article.subcategory', [str_slug($article->category), str_slug($article->username)]);
+            $article->published_at = Carbon::parse($article->created_at)->format('d F Y');
+            $article->content = str_limit(strip_tags($article->content), 160);
 
         endforeach;
 
-        return $data;
+        return $articles;
     }
 }

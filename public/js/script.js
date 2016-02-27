@@ -858,58 +858,115 @@ $(function () {
     var onLoading = false;
     var isEnded = false;
 
-    if($('.btn-load-more').length && $('#articles').length){
+    if($('.btn-load-more').length){
         $('.loading').show();
         $('.btn-load-more').hide();
 
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onLoading && !isEnded) {
-                loadArticle();
+                loadContent();
             }
         });
 
         $('.btn-load-more').click(function (e) {
             e.preventDefault();
-            loadArticle();
+            loadContent();
         });
 
-        function loadArticle() {
+        function loadContent() {
             onLoading = true;
             $('.loading').show();
             $('.btn-load-more').hide();
-            generateArticle()
+            generateContent()
         }
 
-        function generateArticle(){
+        function generateContent(){
             $.getJSON($("section[data-href]").data('href')+'?page='+page, function (data) {
                 onLoading = false;
                 $('.loading').hide();
                 $('.btn-load-more').show();
 
-                if ($('#article-portrait-template').length && data.data.length > 0) {
-                    var template = $('#article-portrait-template').html();
-                    var html = Mustache.to_html(template, data);
-                    $('#articles').append(html);
-
-                    generateRating();
-
-                    echo.init();
-
-                    $('#articles').equalize({equalize: 'height', children: '.article-preview'});
-
-                    if(page == data.last_page){
-                        $('.btn-load-more').text("END OF PAGE").addClass('disabled');
-                        isEnded = true;
-                    }
-                    else{
-                        page++;
-                    }
+                if($('#articles').length){
+                    loadArticleCategory(data);
                 }
-                else{
+                else if($('#stream').length){
+                    loadStream(data);
+                }
+                else if($('#followers').length){
+                    loadFollower(data);
+                }
+            });
+        }
+
+        function loadArticleCategory(data){
+            if ($('#article-portrait-template').length && data.data.length > 0) {
+                var template = $('#article-portrait-template').html();
+                var html = Mustache.to_html(template, data);
+                $('#articles').append(html);
+
+                generateRating();
+
+                echo.init();
+
+                $('#articles').equalize({equalize: 'height', children: '.article-preview'});
+
+                if(page == data.last_page){
                     $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                     isEnded = true;
                 }
-            });
+                else{
+                    page++;
+                }
+            }
+            else{
+                $('.btn-load-more').text("END OF PAGE").addClass('disabled');
+                isEnded = true;
+            }
+        }
+
+        function loadStream(data){
+            if ($('#article-landscape-template').length && data.data.length > 0) {
+                var template = $('#article-landscape-template').html();
+                var html = Mustache.to_html(template, data);
+                $('#stream').append(html);
+
+                generateRating();
+
+                echo.init();
+
+                if(page == data.last_page){
+                    $('.btn-load-more').text("END OF STREAM").addClass('disabled');
+                    isEnded = true;
+                }
+                else{
+                    page++;
+                }
+            }
+            else{
+                $('.btn-load-more').text("END OF STREAM").addClass('disabled');
+                isEnded = true;
+            }
+        }
+
+        function loadFollower(data){
+            console.log(data);
+            if ($('#follower-row-template').length && data.data.length > 0) {
+                var template = $('#follower-row-template').html();
+                var html = Mustache.to_html(template, data);
+                $('#followers').append(html);
+
+                if(page == data.last_page){
+                    $('.btn-load-more').text("END OF FOLLOWERS").addClass('disabled');
+                    isEnded = true;
+                }
+                else{
+                    page++;
+                }
+            }
+            else{
+                $('.btn-load-more').text("END OF FOLLOWERS").addClass('disabled');
+                isEnded = true;
+            }
         }
 
         function generateRating(){

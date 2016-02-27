@@ -1,6 +1,6 @@
 @extends('public')
 
-@section('title', '- Imelda Agustine\'s Detail')
+@section('title', '- '.$contributor->name.' Detail')
 
 @section('content')
 
@@ -30,7 +30,7 @@
 
                                 <ul class="statistic nav-justified">
                                     <li><a href="{{ route('contributor.following', [$contributor->username]) }}"><strong>{{ $contributor->following()->count() }}</strong>FOLLOWING</a></li>
-                                    <li><a href="{{ route('contributor.article', [$contributor->username]) }}"><strong>{{ $contributor->articles()->count() }}</strong>ARTICLES</a></li>
+                                    <li><a href="{{ route('contributor.article', [$contributor->username]) }}"><strong>{{ $contributor->articles()->where('status', 'published')->count() }}</strong>ARTICLES</a></li>
                                     <li><a href="{{ route('contributor.follower', [$contributor->username]) }}"><strong>{{ $contributor->followers()->count() }}</strong>FOLLOWERS</a></li>
                                 </ul>
 

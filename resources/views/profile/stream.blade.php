@@ -1,6 +1,6 @@
 @extends('public')
 
-@section('title', '- Imelda Agustine')
+@section('title', '- '.$contributor->name)
 
 @section('content')
 

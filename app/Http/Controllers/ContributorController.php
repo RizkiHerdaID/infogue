@@ -39,7 +39,7 @@ class ContributorController extends Controller
     {
         $contributor = $this->contributor->profile($username);
 
-        $articles = $this->contributor->contributor_article($username);
+        $articles = $this->contributor->contributorArticle($username);
 
         if (Input::get('page', false)) {
             return $articles;
@@ -58,7 +58,7 @@ class ContributorController extends Controller
     {
         $contributor = $this->contributor->profile($username);
 
-        $followers = $this->contributor->contributor_follower($username);
+        $followers = $this->contributor->contributorFollower($username);
 
         if (Input::get('page', false)) {
             return $followers;

@@ -851,6 +851,8 @@ $(function(){
         }
     }, 4000);
 
+    $('#search-contributor').equalize({equalize: 'height', children: '.contributor-profile'});
+
 });
 
 $(function () {

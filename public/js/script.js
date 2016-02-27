@@ -857,10 +857,16 @@ $(function () {
     var page = 1;
     var onLoading = false;
     var isEnded = false;
+    var isFirst = true;
 
     if($('.btn-load-more').length){
         $('.loading').show();
         $('.btn-load-more').hide();
+
+        if(isFirst){
+            isFirst = false;
+            loadContent();
+        }
 
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onLoading && !isEnded) {

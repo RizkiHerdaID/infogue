@@ -106,6 +106,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
         Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
         Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
+        Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'ArticleController@tag']);
         Route::post('/rate/{id}', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
         Route::post('/hit/{id}', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
     });

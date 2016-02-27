@@ -82,6 +82,8 @@ Route::group(['middleware' => ['web']], function () {
     // Authentication routes...
     Route::get('auth/login', ['as' => 'login.form', 'uses' => 'Auth\AuthController@showLoginForm']);
     Route::post('auth/login', ['as' => 'login.attempt', 'uses' => 'Auth\AuthController@login']);
+    Route::get('auth/forgot', ['as' => 'login.forgot', 'uses' => 'Auth\AuthController@forgot']);
+    Route::get('auth/reset', ['as' => 'login.reset', 'uses' => 'Auth\AuthController@reset']);
     Route::get('account/logout', ['as' => 'login.destroy', 'uses' => 'Auth\AuthController@logout']);
 
     // Registration routes...
@@ -118,25 +120,25 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // Group of logged in account profile routes...
-    Route::group(['as' => 'account.', 'prefix' => 'account', 'middleware' => ['auth']], function () {
-        Route::get('/', ['as' => 'stream', 'uses' => 'ArticleController@stream']);
+    Route::group(['prefix' => 'account', 'middleware' => ['auth']], function () {
+        Route::get('/', ['as' => 'account.stream', 'uses' => 'ArticleController@stream']);
 
-        Route::group(['as' => 'message.', 'prefix' => 'message'], function () {
+        Route::group(['as' => 'account.message.', 'prefix' => 'message'], function () {
             Route::get('/', ['as' => 'list', 'uses' => 'MessageController@index']);
             Route::post('/{id}', ['as' => 'send', 'uses' => 'MessageController@send']);
             Route::delete('/{id}', ['as' => 'delete', 'uses' => 'MessageController@destroy']);
             Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
         });
 
-        Route::get('/article', ['as' => 'article', 'uses' => 'ArticleController@index']);
-        Route::get('/follower', ['as' => 'follower', 'uses' => 'FollowerController@follower']);
-        Route::get('/following', ['as' => 'following', 'uses' => 'FollowerController@following']);
+        Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
+        Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
+        Route::get('/following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
 
-        Route::post('/follow', ['as' => 'follow', 'uses' => 'FollowerController@follow']);
-        Route::delete('/unfollow/{id}', ['as' => 'unfollow', 'uses' => 'FollowerController@unfollow']);
+        Route::post('/follow', ['as' => 'account.follow', 'uses' => 'FollowerController@follow']);
+        Route::delete('/unfollow/{id}', ['as' => 'account.unfollow', 'uses' => 'FollowerController@unfollow']);
 
-        Route::get('/setting', ['as' => 'setting', 'uses' => 'ContributorController@setting']);
-        Route::match(['put', 'patch'], '/setting', ['as' => 'update', 'uses' => 'ContributorController@update']);
+        Route::get('/setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
+        Route::match(['put', 'patch'], '/setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
     });
 
     // Group of API for external devices...

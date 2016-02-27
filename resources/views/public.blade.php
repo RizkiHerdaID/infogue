@@ -16,7 +16,7 @@
     <meta property="og:image" content="/tile.png" />
 
     <link rel="apple-touch-icon" href="{{ asset('/apple-touch-icon.png') }}">
-    <link rel="icon" href="{{ $site_settings['Favicon'] }}">
+    <link rel="icon" href="{{ asset($site_settings['Favicon']) }}">
 
     <link rel="stylesheet" href="{{ asset('/library/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/library/font-awesome/css/font-awesome.min.css') }}">

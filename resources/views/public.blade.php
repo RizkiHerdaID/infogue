@@ -77,12 +77,16 @@
                             <form action="{{ route('search') }}" method="get">
                                 <input type="hidden" value="all" name="filter">
                                 <div class="input-search">
-                                    <input class="form-control" id="search" type="search" name="query" placeholder="Type a keywords" required/>
+                                    <input class="form-control" id="search" type="search" name="query" value="@if(\Illuminate\Support\Facades\Input::get('query')){{ \Illuminate\Support\Facades\Input::get('query') }}@endif" placeholder="Type a keywords" required/>
                                     <i class="fa fa-search"></i>
                                 </div>
                                 <div class="btn-group filter dropdown select hidden-xs">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        All Data <span class="caret"></span>
+                                        @if(\Illuminate\Support\Facades\Input::has('filter') && \Illuminate\Support\Facades\Input::get('filter') != 'all')
+                                            {{ ucwords(\Illuminate\Support\Facades\Input::get('filter')) }}
+                                        @else
+                                            {{ "All Data" }}
+                                        @endif <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" data-filter="all">All Data</a></li>

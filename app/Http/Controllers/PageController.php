@@ -2,9 +2,12 @@
 
 namespace Infogue\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Infogue\Article;
 use Infogue\Category;
+use Infogue\Contributor;
 use Infogue\Http\Requests;
+use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
@@ -37,7 +40,27 @@ class PageController extends Controller
      */
     public function search()
     {
-        //
+        $article = new Article();
+        $contributor = new Contributor();
+
+        $filter = Input::get('filter');
+
+        if($filter == 'contributor'){
+            $contributor_result = $contributor->search(Input::get('query'), 8);
+            $total_result = $contributor_result->total();
+            return view('pages.search', compact('contributor_result', 'total_result'));
+        }
+        else if($filter == 'article'){
+            $article_result = $article->search(Input::get('query'), 10);
+            $total_result = $article_result->total();
+            return view('pages.search', compact('article_result', 'total_result'));
+        }
+        else{
+            $article_result = $article->search(Input::get('query'), 10);
+            $contributor_result = $contributor->search(Input::get('query'), 4);
+            $total_result = $article_result->total() + $contributor_result->total();
+            return view('pages.search', compact('contributor_result', 'article_result', 'total_result'));
+        }
     }
 
     /**
@@ -47,7 +70,13 @@ class PageController extends Controller
      */
     public function searchPeople()
     {
-        //
+        $contributor = new Contributor();
+
+        $contributor_result = $contributor->search(Input::get('query'), 20);
+
+        $total_result = $contributor_result->total();
+
+        return view('pages.search', compact('contributor_result', 'total_result'));
     }
 
     /**
@@ -57,7 +86,13 @@ class PageController extends Controller
      */
     public function searchArticle()
     {
-        //
+        $article = new Article();
+
+        $article_result = $article->search(Input::get('query'));
+
+        $total_result = $article_result->total();
+
+        return view('pages.search', compact('article_result', 'total_result'));
     }
 
 }

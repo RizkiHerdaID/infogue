@@ -2,6 +2,7 @@
 
 namespace Infogue;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,20 @@ class Contributor extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $hidden = ['password', 'deleted_at'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('latest', function(Builder $builder) {
+            $builder->orderBy('contributors.created_at', 'desc');
+        });
+    }
+
+    public function scopeActivated($query)
+    {
+        return $query->where('contributors.status', 'activated');
+    }
 
     public function activities()
     {
@@ -81,7 +96,7 @@ class Contributor extends Model
 
     public function profile($username)
     {
-        $profile = $this->relatedFollowers()->whereUsername($username)->firstOrFail();
+        $profile = $this->relatedFollowers()->activated()->whereUsername($username)->firstOrFail();
 
         return $this->preContributorModifier([$profile])[0];
     }
@@ -125,5 +140,15 @@ class Contributor extends Model
         endforeach;
 
         return $contributors;
+    }
+
+    public function search($query, $take = 10)
+    {
+        $result = $this->relatedFollowers()->activated()
+            ->where('username', 'like', "%{$query}%")
+            ->orWhere('name', 'like', "%{$query}%")
+            ->paginate($take);
+
+        return $this->preContributorModifier($result);
     }
 }

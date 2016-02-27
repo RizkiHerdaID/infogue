@@ -170,7 +170,7 @@ class Article extends Model
         return $archive;
     }
 
-    public function search($query)
+    public function search($query, $take = 10)
     {
         $result = $this->preArticleQuery()->published()
             ->where('title', 'like', "%{$query}%")
@@ -178,9 +178,9 @@ class Article extends Model
             ->orWhere('subcategory', 'like', "%{$query}%")
             ->orWhere('content', 'like', "%{$query}%")
             ->groupBy('articles.id')
-            ->paginate(9);
+            ->paginate($take);
 
-        return $result;
+        return $this->preArticleModifier($result);
     }
 
     public function preArticleQuery()

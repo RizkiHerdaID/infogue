@@ -27,7 +27,7 @@ class Contributor extends Model
         return $this->hasMany('Infogue\Article');
     }
 
-    public function contributor_article($username)
+    public function contributorArticle($username)
     {
         $contributor = $this->whereUsername($username)->first();
 
@@ -37,6 +37,7 @@ class Contributor extends Model
 
         $articles = $article->preArticleQuery()
             ->whereIn('articles.id', $contributor_article)
+            ->where('articles.status', 'published')
             ->paginate(10);
 
         return $article->preArticleModifier($articles);
@@ -47,13 +48,13 @@ class Contributor extends Model
         return $this->hasMany('Infogue\Follower', 'following');
     }
 
-    public function contributor_follower($username)
+    public function contributorFollower($username)
     {
         $contributor = $this->whereUsername($username)->first();
 
         $follower = $contributor->followers()->pluck('contributor_id')->toArray();
 
-        $contributors = $this->related_followers()
+        $contributors = $this->relatedFollowers()
             ->whereIn('contributors.id', $follower)
             ->paginate(10);
 
@@ -71,7 +72,7 @@ class Contributor extends Model
 
         $following = $contributor->following()->pluck('following')->toArray();
 
-        $contributors = $this->related_followers()
+        $contributors = $this->relatedFollowers()
             ->whereIn('contributors.id', $following)
             ->paginate(10);
 
@@ -80,12 +81,12 @@ class Contributor extends Model
 
     public function profile($username)
     {
-        $profile = $this->related_followers()->whereUsername($username)->firstOrFail();
+        $profile = $this->relatedFollowers()->whereUsername($username)->firstOrFail();
 
         return $this->preContributorModifier([$profile])[0];
     }
 
-    public function related_followers()
+    public function relatedFollowers()
     {
         $id = 0;
 

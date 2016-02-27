@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Route;
 use Infogue\Article;
+use Infogue\Contributor;
 use Infogue\Http\Requests;
 
 class ArticleController extends Controller
@@ -144,6 +145,36 @@ class ArticleController extends Controller
     /**
      * Display a listing of the article.
      *
+     * @param $tag
+     * @return \Illuminate\Http\Response
+     */
+    public function tag($tag)
+    {
+        $article_tag = str_replace('-', ' ', $tag);
+
+        $article = $this->article->tag($article_tag);
+
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            'Tag' => '#',
+            $article_tag => '#'
+        ];
+
+        $next_ref = '#';
+
+        $prev_ref = '#';
+
+        if(Input::get('page', false)){
+            return $article;
+        }
+        else{
+            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
+        }
+    }
+
+    /**
+     * Display a listing of the article.
+     *
      * @return \Illuminate\Http\Response
      */
     public function archive()
@@ -203,7 +234,37 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        //
+        $article = $this->article->whereSlug($slug)->firstOrFail();
+
+        $category = $article->subcategory->category->category;
+
+        $subcategory = $article->subcategory->subcategory;
+
+        $breadcrumb = [
+            'Archive' => route('article.archive'),
+            $category => route('article.category', [str_slug($category)]),
+            $subcategory => route('article.subcategory', [str_slug($category), str_slug($subcategory)]),
+        ];
+
+        $previous_article = $this->article->navigateArticle($article->id, 'prev');
+
+        $next_article = $this->article->navigateArticle($article->id, 'next');
+
+        $prev_ref = ($previous_article->count()) ? route('article.show', [$previous_article->slug]) : '#';
+
+        $next_ref = ($next_article->count()) ? route('article.show', [$next_article->slug]) : '#';
+
+        $tags = $article->tags()->get();
+
+        $related = $this->article->related($article->id);
+
+        $popular = $this->article->most_popular(5);
+
+        $contributor = new Contributor();
+
+        $author = $contributor->profile($article->contributor->username);
+
+        return view('article.article', compact('breadcrumb','prev_ref', 'next_ref', 'article', 'author', 'tags', 'related', 'popular'));
     }
 
     /**

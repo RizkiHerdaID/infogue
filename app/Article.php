@@ -52,34 +52,32 @@ class Article extends Model
     public function related($id)
     {
         $tags = $this->published()
-            ->select(DB::raw("group_concat(tags.id separator ',') as tag_list"))
             ->join('article_tags', 'articles.id', '=', 'article_id')
             ->join('tags', 'tags.id', '=', 'tag_id')
             ->where('articles.id', $id)
-            ->first()['tag_list'];
+            ->pluck('tags.id')->toArray();
 
         $related = $this->published()
-            ->select('articles.id', 'title', 'slug', 'content', 'view', 'articles.created_at')
+            ->select('articles.id', 'title', 'slug', 'content', 'view', 'featured', 'articles.created_at')
             ->join('article_tags', 'articles.id', '=', 'article_id')
             ->join('tags', 'tags.id', '=', 'tag_id')
-            ->whereIn('tags.id', explode(',', $tags))
+            ->whereIn('tags.id', $tags)
             ->where('articles.id', '!=', $id)
-            ->take(10)
+            ->take(5)
             ->get();
 
         return $related;
     }
 
-    public function most_popular()
+    public function most_popular($take = 10)
     {
-        $popular = $this->published()
-            ->select('id', 'slug', 'title', 'view')
-            ->where('created_at', '>', Carbon::now()->addMonth(-3))
+        $popular = $this->preArticleQuery()->published()
+            ->where('articles.created_at', '>', Carbon::now()->addMonth(-3))
             ->orderBy('view', 'desc')
-            ->take(10)
+            ->take($take)
             ->get();
 
-        return $popular;
+        return $this->preArticleModifier($popular);
     }
 
     public function most_ranked()
@@ -153,6 +151,17 @@ class Article extends Model
         return $random;
     }
 
+    public function tag($tag)
+    {
+        $articles = $this->preArticleQuery()->published()
+            ->join('article_tags', 'articles.id', '=', 'article_tags.article_id')
+            ->join('tags', 'tags.id', '=', 'tag_id')
+            ->where('tags.tag', 'like', $tag)
+            ->paginate(9);
+
+        return $this->preArticleModifier($articles);
+    }
+
     public function archive()
     {
         $archive = $this->published()->paginate(15);
@@ -216,5 +225,23 @@ class Article extends Model
         endforeach;
 
         return $articles;
+    }
+
+    public function navigateArticle($id, $direction, $total = 1){
+        if($direction == 'prev'){
+            $article = $this->published()->where('id', '<', $id)->orderBy('id', 'desc')->take($total);
+        }
+        else{
+            $article = $this->published()->where('id', '>', $id)->orderBy('id', 'asc')->take($total);
+        }
+
+        if($total > 1){
+            $article = $article->get();
+        }
+        else{
+            $article = $article->first();
+        }
+
+        return $article;
     }
 }

@@ -53,6 +53,7 @@
                                     <li><img src="{{ asset('images/contributors/'.$article->contributor->avatar) }}" class="avatar img-circle"/> By <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a></li>
                                     <li>@fulldate($article->created_at)</li>
                                     <li>{{ $article->view }} Views</li>
+                                    <li><span class="disqus-comment-count" data-disqus-url="{{ Request::url() }}"> <!-- Count will be inserted here --> </span></li>
                                 </ul>
                                 <ul class="social text-right hidden-xs">
                                     <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ route('article.show', [$article->slug]) }}" class="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
@@ -149,10 +150,27 @@
                             </div>
                         </div>
                         <div class="panel panel-simple">
-                            <div class="panel-heading">Leave A Comment</div>
-                            <div class="panel-body">
+                            <div class="panel-heading">Leave a Comment</div>
+                            <div class="panel-body" id="comment-info" data-link="{{ Request::url() }}" data-identity="{{ 'article_'.$article->id }}">
 
-                                <!-- DISQUSS COMMENT -->
+                                <div id="disqus_thread"></div>
+                                <script>
+                                     var disqus_config = function () {
+                                     this.page.url = document.getElementById('comment-info').getAttribute("data-link"); // Replace PAGE_URL with your page's canonical URL variable
+                                     this.page.identifier = document.getElementById('comment-info').getAttribute("data-identity"); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                     console.log(this.page.identifier);
+                                    };
+
+                                    (function() { // DON'T EDIT BELOW THIS LINE
+                                        var d = document, s = d.createElement('script');
+
+                                        s.src = '//info-gue.disqus.com/embed.js';
+
+                                        s.setAttribute('data-timestamp', +new Date());
+                                        (d.head || d.body).appendChild(s);
+                                    })();
+                                </script>
+                                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
                             </div>
                         </div>
@@ -175,14 +193,14 @@
                                             <div class="col-sm-7 col-xs-8">
                                                 <div class="title-wrapper">
                                                     <h1 class="title">
-                                                        <a href="{{ route('article.show', [$related_article->slug]) }}">{{ $related_article->title }}</a>
+                                                        <a href="{{ route('article.show', [$related_article->slug]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">{{ $related_article->title }}</a>
                                                     </h1>
                                                     <ul class="timestamp">
                                                         <li>@fulldate($related_article->created_at)</li>
                                                         <li>{{ $related_article->view }} Views</li>
                                                     </ul>
                                                 </div>
-                                                <div class="rating-wrapper" data-rating="@if($article->rating()->count() == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
+                                                <div class="rating-wrapper" data-rating="@if($related_article->rating()->count() == null) {{ '0' }} @else {{ $related_article->rating->total_rating }} @endif"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -214,7 +232,7 @@
                                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $popular_article->featured }}" data-echo="{{ asset('images/featured/'.$popular_article->featured) }}"/>
                                         </div>
                                         <div class="title-wrapper">
-                                            <p class="category"><a href="{{ route('article.category', [str_slug($popular_article->category)]) }}">{{ $article->category }}</a></p>
+                                            <p class="category"><a href="{{ route('article.category', [str_slug($popular_article->category)]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">{{ $article->category }}</a></p>
                                             <h1 class="title">
                                                 <a href="{{ route('article.show', [$popular_article->slug]) }}">{{ $popular_article->title }}</a>
                                             </h1>

@@ -76,7 +76,7 @@
                                 @forelse($popular as $article)
 
                                     <li>
-                                        <a href="{{ route('article.show', [$article->slug]) }}">
+                                        <a href="{{ route('article.show', [$article->slug]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">
                                             <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
                                             <p>{{ $article->title }}</p>
                                         </a>
@@ -99,7 +99,7 @@
                                 @forelse($ranked as $article)
 
                                     <li>
-                                        <a href="{{ route('article.show', [$article->slug]) }}">
+                                        <a href="{{ route('article.show', [$article->slug]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">
                                             <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
                                             <p>{{ $article->title }}</p>
                                         </a>

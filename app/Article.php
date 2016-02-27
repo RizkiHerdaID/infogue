@@ -61,6 +61,7 @@ class Article extends Model
             ->select('articles.id', 'title', 'slug', 'content', 'view', 'featured', 'articles.created_at')
             ->join('article_tags', 'articles.id', '=', 'article_id')
             ->join('tags', 'tags.id', '=', 'tag_id')
+            ->groupBy('articles.id')
             ->whereIn('tags.id', $tags)
             ->where('articles.id', '!=', $id)
             ->take(5)

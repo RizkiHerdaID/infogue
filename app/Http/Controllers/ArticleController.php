@@ -250,9 +250,9 @@ class ArticleController extends Controller
 
         $next_article = $this->article->navigateArticle($article->id, 'next');
 
-        $prev_ref = ($previous_article->count()) ? route('article.show', [$previous_article->slug]) : '#';
+        $prev_ref = ($previous_article != null) ? route('article.show', [$previous_article->slug]) : '#';
 
-        $next_ref = ($next_article->count()) ? route('article.show', [$next_article->slug]) : '#';
+        $next_ref = ($next_article != null) ? route('article.show', [$next_article->slug]) : '#';
 
         $tags = $article->tags()->get();
 

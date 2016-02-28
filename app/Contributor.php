@@ -94,9 +94,14 @@ class Contributor extends Model
         return $this->preContributorModifier($contributors);
     }
 
-    public function profile($username)
+    public function profile($username, $activated = false)
     {
-        $profile = $this->relatedFollowers()->activated()->whereUsername($username)->firstOrFail();
+        if($activated){
+            $profile = $this->relatedFollowers()->activated()->whereUsername($username)->firstOrFail();
+        }
+        else{
+            $profile = $this->relatedFollowers()->whereUsername($username)->firstOrFail();
+        }
 
         return $this->preContributorModifier([$profile])[0];
     }

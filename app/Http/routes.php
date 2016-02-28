@@ -98,10 +98,10 @@ Route::group(['middleware' => ['web']], function () {
 
     // Group of article routes...
     Route::group(['as' => 'article.'], function () {
+        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
         Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
         Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
         Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
-        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
         Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
         Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
         Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);

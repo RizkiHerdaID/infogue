@@ -348,11 +348,82 @@ $(function () {
         var text = $(this).text()+" <span class='caret'></span>";
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
+
     $(".dropdown.filter a").click(function(){
         var text = $(this).data('filter');
-        console.log('name '+text);
         $(".search-wrapper input[name='filter']").val(text);
     });
+
+    // ARCHIVE FILTER
+    var archive_base_url = $('section[data-href]').data('href');
+    var archive_filter_url = "";
+
+    var archive_filter = new Array();
+
+    $('.data-filter .data .dropdown a').click(function(){
+        var value = $(this).data('value');
+        insert_query(new Array("data", value));
+    });
+
+    $(".data-filter .view .btn").click(function(){
+        var value = $(this).find('input').val();
+        insert_query(new Array("view", value));
+    });
+
+    $('.data-filter .sort .dropdown.by a').click(function(){
+        var value = $(this).text().toLowerCase();
+        insert_query(new Array("by", value));
+    });
+
+    $('.data-filter .sort .dropdown.method a').click(function(){
+        var value = $(this).data('value');
+        insert_query(new Array("sort", value));
+    });
+
+    function insert_query($query){
+        if(getQueryVariable('data')){
+            archive_filter.push(new Array('data', getQueryVariable('data')));
+        }
+        if(getQueryVariable('view')){
+            archive_filter.push(new Array('view', getQueryVariable('view')));
+        }
+        if(getQueryVariable('by')){
+            archive_filter.push(new Array('by', getQueryVariable('by')));
+        }
+        if(getQueryVariable('sort')){
+            archive_filter.push(new Array('sort', getQueryVariable('sort')));
+        }
+
+        for(var i = 0; i < archive_filter.length; i++){
+            if(archive_filter[i][0] == $query[0]){
+                archive_filter.splice(i, 1);
+            }
+        }
+        archive_filter.push($query);
+
+        filter_archive();
+    }
+
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+    function filter_archive(){
+        archive_filter_url = "?";
+        for(var i = 0; i < archive_filter.length; i++){
+            if(i > 0){ archive_filter_url+='&'; }
+            archive_filter_url+=(archive_filter[i][0]+"="+archive_filter[i][1]);
+        }
+
+        window.location.replace(archive_base_url+archive_filter_url);
+    }
 
 });
 

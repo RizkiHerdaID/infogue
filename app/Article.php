@@ -163,11 +163,43 @@ class Article extends Model
         return $this->preArticleModifier($articles);
     }
 
-    public function archive()
+    public function archive($data, $by, $sort)
     {
-        $archive = $this->published()->paginate(15);
+        $archive = $this->preArticleQuery()->published();
 
-        return $archive;
+        if($data == 'trending'){
+            $archive->where('state', 'trending');
+        }
+        else if($data == 'popular'){
+            $archive->where('articles.created_at', '>', Carbon::now()->addMonth(-3))->orderBy('view', 'desc');
+        }
+        else if($data == 'headline'){
+            $archive->where('state', 'headline');
+        }
+        else if($data != 'all-data'){
+
+            $archive->where('category', 'like', "%{$data}%");
+        }
+
+        if($sort == 'random'){
+            $archive->orderByRaw("RAND()");
+        }
+        else{
+            if($by == 'date'){
+                $archive->orderBy('created_at', $sort);
+            }
+            else if($by == 'title'){
+                $archive->orderBy('title', $sort);
+            }
+            else if($by == 'view'){
+                $archive->orderBy('view', $sort);
+            }
+            else if($by == 'star'){
+                $archive->orderBy('total_rating', $sort);
+            }
+        }
+
+        return $this->preArticleModifier($archive->paginate(12));
     }
 
     public function search($query, $take = 10)

@@ -179,7 +179,13 @@ class ArticleController extends Controller
      */
     public function archive()
     {
-        //
+        $filter_data = Input::has('data') ? Input::get('data') : 'all-data';
+        $filter_by = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+
+        $archive = $this->article->archive($filter_data, $filter_by, $filter_sort);
+
+        return view('article.archive', compact('archive'));
     }
 
     /**
@@ -234,7 +240,7 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $article = $this->article->whereSlug($slug)->firstOrFail();
+        $article = $this->article->published()->whereSlug($slug)->firstOrFail();
 
         $category = $article->subcategory->category->category;
 

@@ -8,7 +8,7 @@
         <div class="error404">
             <h1>Error<strong>404</strong></h1>
             <h2>PAGE NOT FOUND</h2>
-            <p class="lead">The page that you’re looking for is not here</p>
+            <p class="lead">The page that you're looking for is not here</p>
             <p class="text-muted">Try something else, or try to search below</p>
             <section class="search-wrapper">
                 <div class="search">
@@ -30,7 +30,7 @@
                 <li><a href="/faq">FAQ</a></li>
                 <li><a href="/contact">Contact</a></li>
             </ul>
-            <p><i class="fa fa-angle-left mrs"></i>Back to <a href="index.html">Home Page</a> and or <a href="contributor_stream.html">Stream</a></p>
+            <p><i class="fa fa-angle-left mrs"></i>Back to <a href="{{ route('index') }}">Home Page</a> and or <a href="{{ route('account.stream') }}">Stream</a></p>
         </div>
     </section>
 

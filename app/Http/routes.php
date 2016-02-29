@@ -82,9 +82,12 @@ Route::group(['middleware' => ['web']], function () {
     // Authentication routes...
     Route::get('auth/login', ['as' => 'login.form', 'uses' => 'Auth\AuthController@showLoginForm']);
     Route::post('auth/login', ['as' => 'login.attempt', 'uses' => 'Auth\AuthController@login']);
-    Route::get('auth/forgot', ['as' => 'login.forgot', 'uses' => 'Auth\AuthController@forgot']);
-    Route::get('auth/reset', ['as' => 'login.reset', 'uses' => 'Auth\AuthController@reset']);
     Route::get('account/logout', ['as' => 'login.destroy', 'uses' => 'Auth\AuthController@logout']);
+
+    Route::get('password/forgot', ['as' => 'login.forgot', 'uses' => 'Auth\PasswordController@showLinkRequestForm']);
+    Route::post('password/email', ['as' => 'login.reset.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
+    Route::get('password/reset/{token?}', ['as' => 'login.reset.form', 'uses' => 'Auth\PasswordController@showResetForm']);
+    Route::post('password/reset', ['as' => 'login.reset.attempt', 'uses' => 'Auth\PasswordController@reset']);
 
     // Registration routes...
     Route::get('auth/register', ['as' => 'register.form', 'uses' => 'Auth\AuthController@showRegistrationForm']);

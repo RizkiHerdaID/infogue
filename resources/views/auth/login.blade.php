@@ -22,11 +22,15 @@
                                 </a>
                             </div>
                         </div>
+
                         @if(Session::has('status'))
                             <div class="form-group">
-                                <div class="alert alert-danger">{{ Session::get('status') }}</div>
+                                <div class="alert alert-danger">
+                                    {{ Session::get('status') }}
+                                </div>
                             </div>
                         @endif
+
                         <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
                             <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="Email Address or Username">
                             {!! $errors->first('username', '<span class="help-block">:message</span>') !!}

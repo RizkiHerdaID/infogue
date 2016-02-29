@@ -208,9 +208,4 @@ class AuthController extends Controller
             ]);
     }
 
-    public function forgot()
-    {
-        return view('auth.forgot');
-    }
-
 }

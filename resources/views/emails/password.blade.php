@@ -8,9 +8,9 @@
 
 <div>
     Infogue! Password Recovery
-    <h3>Hi, {!! $name !!}</h3>
+    <h3>Hi, {!! $user->username !!}</h3>
     <p>We will help you recover your password by clicking link bellow</p>
-    <p>{!! "<a href='localhost:8000/auth/reset/".$token."'>RESET MY PASSWORD</a>" !!}"</p>
+    <p><a href="http://localhost:8000/password/reset/{{ $token }}">RESET MY PASSWORD</a></p>
 </div>
 
 </body>

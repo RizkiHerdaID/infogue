@@ -15,6 +15,7 @@ class CreateContrbutorsTable extends Migration
         Schema::create('contributors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('token', 50)->unique();
+            $table->rememberToken();
             $table->string('vendor', 50);
             $table->string('name', 50);
             $table->string('username', 20)->unique();

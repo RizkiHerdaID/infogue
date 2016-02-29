@@ -89,26 +89,14 @@ Route::group(['middleware' => ['web']], function () {
     // Registration routes...
     Route::get('auth/register', ['as' => 'register.form', 'uses' => 'Auth\AuthController@showRegistrationForm']);
     Route::post('auth/register', ['as' => 'register.attempt', 'uses' => 'Auth\AuthController@register']);
+    Route::get('auth/confirm/{token}', ['as' => 'register.confirm', 'uses' => 'Auth\AuthController@confirm']);
+    Route::get('auth/resend/{token}', ['as' => 'register.resend', 'uses' => 'Auth\AuthController@resend']);
+    Route::get('auth/activate/{token}', ['as' => 'register.activate', 'uses' => 'Auth\AuthController@activate']);
 
     // Contact / feedback routes...
     Route::resource('feedback', 'FeedbackController', ['only' => ['store']]);
     Route::get('/contact', function () {
         return view('pages.contact');
-    });
-
-    // Group of article routes...
-    Route::group(['as' => 'article.'], function () {
-        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
-        Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
-        Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
-        Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
-        Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
-        Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
-        Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
-        Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
-        Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'ArticleController@tag']);
-        Route::post('/rate/{id}', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
-        Route::post('/hit/{id}', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
     });
 
     // Group of contributor view profile routes...
@@ -131,7 +119,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
         });
 
-        Route::resource('article', 'ArticleController', ['except' => ['index', 'show']]);
+        Route::resource('article', 'ArticleController', ['except' => ['show']]);
         Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
         Route::get('/following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
 
@@ -142,8 +130,23 @@ Route::group(['middleware' => ['web']], function () {
         Route::match(['put', 'patch'], '/setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
     });
 
+    // Group of article routes...
+    Route::group(['as' => 'article.'], function () {
+        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
+        Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
+        Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
+        Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
+        Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
+        Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
+        Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
+        Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
+        Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'ArticleController@tag']);
+        Route::post('/rate/{id}', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
+        Route::post('/hit/{id}', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
+    });
+
     // Group of API for external devices...
-    Route::group(['namespace' => 'Api', 'prefix' => 'api'], function () {
+    Route::group(['namespace' => 'Api', 'prefix' => 'api', 'middleware' => ['auth:api']], function () {
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);

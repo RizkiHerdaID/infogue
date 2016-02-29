@@ -3,11 +3,11 @@
 namespace Infogue;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Contributor extends Model
+class Contributor extends Authenticatable
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 

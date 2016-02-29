@@ -35,7 +35,7 @@ class ArticleController extends Controller
      */
     public function stream()
     {
-        //
+        return view('contributor.stream');
     }
 
     /**

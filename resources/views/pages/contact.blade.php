@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="map" style="background: url('images/misc/map.jpg') no-repeat center / cover"></div>
+    <div class="map" style="background: url('{{ asset('images/misc/map.jpg') }}') no-repeat center / cover"></div>
     <div class="container">
         <div class="section">
             <div class="title">
@@ -32,19 +32,21 @@
                     <div class="row">
                         <div class="col-md-4 col-md-push-2 col-sm-6">
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                                <input type="name" class="form-control" id="name" name="name" placeholder="Your Name">
+                                <input type="name" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Your Name">
                                 {!! $errors->first('name', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                         <div class="col-md-4 col-md-push-2 col-sm-6">
                             <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email Address">
                                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-8 col-md-push-2">
                             <div class="form-group {{ $errors->has('message') ? 'has-error' : '' }}">
-                                <textarea class="form-control" id="message" name="message" rows="7" placeholder="Type Your Message"></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="7" placeholder="Type Your Message">{{ old('message') }}</textarea>
                                 {!! $errors->first('message', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group">

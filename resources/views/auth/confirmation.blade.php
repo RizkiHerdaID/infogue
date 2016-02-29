@@ -9,12 +9,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <i class="fa fa-envelope-o"></i>
-                    <h1 class="mbm text-primary">Registration Complete</h1>
+                    <h1 class="mbm text-primary">{{ Session::get('status') }}</h1>
                     <p class="lead subtitle">Please check your email and click activation link to confirm your account</p>
-                    <p class="text-muted">doesn’t receive the email? Please <a href="confirmation.html">Resend</a> or just <a href="login.html">Sign In</a></p>
+                    <p class="text-muted">doesn't receive the email? Please <a href="{{ route('register.resend', [$token]) }}">Resend</a> or just <a href="{{ route('login.form') }}">Sign In</a></p>
                 </div>
             </div>
         </section>
     </div>
-
+    <?php Session::forget('status') ?>
 @endsection

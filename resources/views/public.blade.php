@@ -56,11 +56,11 @@
                                 <a href="#" class="mobile-search"><i class="fa fa-search"></i></a>
 
                                 @if(Auth::check())
-                                <a href="#" class="user-dropdown hidden"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>ANGGA ARI WIJAYA</strong></span></a>
+                                <a href="#" class="user-dropdown"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>ANGGA ARI WIJAYA</strong></span></a>
                                 <ul class="list-menu">
                                     <li class="menu-label">ACCOUNT</li>
                                     <li><a href="{{ route('account.stream') }}"><i class="glyphicon glyphicon-user"></i>Profile</a></li>
-                                    <li><a href="{{ route('account.article') }}"><i class="glyphicon glyphicon-file"></i>Article</a></li>
+                                    <li><a href="{{ route('account.article.index') }}"><i class="glyphicon glyphicon-file"></i>Article</a></li>
                                     <li><a href="{{ route('account.message.list') }}"><i class="glyphicon glyphicon-envelope"></i>Message</a></li>
                                     <li><a href="{{ route('account.follower') }}"><i class="glyphicon glyphicon-arrow-right"></i>Followers</a></li>
                                     <li><a href="{{ route('account.following') }}"><i class="glyphicon glyphicon-arrow-left"></i>Following</a></li>

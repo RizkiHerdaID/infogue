@@ -9,20 +9,18 @@
 <div style="display: block; padding: 20px">
     <div style="margin-bottom: 30px; text-align: center">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
-        <h2 style="margin-top: 0; color: #4dc4d2">EMERGENCY ACTION</h2>
+        <h2 style="margin-top: 0; color: #4dc4d2">RESET PASSWORD ACTION</h2>
         <hr style="margin-top: 10px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">
     </div>
 
 
     <div style="text-align: center">
-        <p style="font-size: 16px; margin-bottom: 5px">We always concern about your account security, if you don't remember your password, Click button below to reset your password account.</p>
-        <p style="margin-bottom: 10px">
-            <a href="{{ route('login.reset.form', [$token]) }}" style="padding: 10px 15px; font-size: 18px; background: #4dc4d2; text-decoration: none; color: #ffffff; margin: 2px; display: inline-block; vertical-align: middle; font-weight: 600;">RESET MY PASSWORD</a>
-        </p>
+        <p style="margin-bottom: 5px">We recently received a request to change the password,
+            if you don't remember make this request or you think it's a mistake please contact our support to suspend your account temporarily by clicking link below.</p>
+        <a href="{{ url('contact') }}" style="color: #00aced; text-decoration: none; font-size: 16px">PLEASE SUSPEND MY ACCOUNT</a>
 
         <p style="margin-bottom: 50px">
-            If you didn't mean to reset your password, then you can ignore this email, your password will not change.<br>
-            Proceed with careful, in case hacking attempt or suspicious action.
+            You can safely ignore and delete this email if you take this action. Proceed with careful, in case hacking attempt or suspicious action.
         </p>
 
         <div style="text-align: center; font-size: 12px; color: #aaa">

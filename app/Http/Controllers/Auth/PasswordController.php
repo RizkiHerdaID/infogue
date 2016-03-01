@@ -2,7 +2,12 @@
 
 namespace Infogue\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -32,6 +37,33 @@ class PasswordController extends Controller
         $this->middleware('guest');
     }
 
+    /**
+     * Send a reset link to the given user.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sendResetLinkEmail(Request $request)
+    {
+        $this->validate($request, ['email' => 'required|email']);
+
+        $broker = $this->getBroker();
+
+        $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
+            $message->subject($this->getEmailSubject());
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+        });
+
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                return $this->getSendResetLinkEmailSuccessResponse($response);
+
+            case Password::INVALID_USER:
+            default:
+                return $this->getSendResetLinkEmailFailureResponse($response);
+        }
+    }
+
     public function showResetForm($token = null)
     {
         if (is_null($token)) {
@@ -55,5 +87,24 @@ class PasswordController extends Controller
         }
 
         return view('auth.reset')->with(compact('token', 'email'));
+    }
+
+    protected function resetPassword($user, $password)
+    {
+        $user->password = bcrypt($password);
+
+        $user->save();
+
+        Mail::send('emails.reset', [], function ($message) use ($user) {
+
+            $message->from('no-reply@infogue.id', 'Infogue.id');
+
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+
+            $message->to($user->email)->subject('Password has been reset');
+
+        });
+
+        Auth::guard($this->getGuard())->login($user);
     }
 }

@@ -126,13 +126,15 @@ class AuthController extends Controller
         $contributor = Contributor::whereToken($token)->firstOrFail();
 
         $data = array(
-            'name' => "Angga",
+            'name' => $contributor->username,
             'token' => $contributor->token
         );
 
         Mail::send('emails.welcome', $data, function ($message) use ($contributor) {
 
             $message->from('no-reply@infogue.id', 'Infogue.id');
+
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
 
             $message->to($contributor->email)->subject('Welcome to Infogue.id');
 
@@ -228,9 +230,34 @@ class AuthController extends Controller
      */
     public function handleFacebookProviderCallback()
     {
-        $user = Socialite::with('facebook')->user();
+        $user = Socialite::driver('facebook')->user();
 
         dd($user);
+
+        $contributor = Contributor::whereVendor('facebook')->whereToken($user->id);
+
+        if($contributor->count() == 0) {
+            $contributor = new Contributor();
+
+            $file = file_get_contents("https://graph.facebook.com/{$user->id}/picture?type=large");
+            file_put_contents('images/contributors/facebook-'.$user->id.'.jpg', $file);
+
+            $contributor->token = $user->id;
+            $contributor->name = $user->name;
+            $contributor->username = $user->username.'.fb';
+            $contributor->password = Hash::make(uniqid());
+            $contributor->email = $user->email;
+            $contributor->vendor = 'facebook';
+            $contributor->status = 'activated';
+            $contributor->about = $user->bio;
+            $contributor->facebook = 'https://facebook.com/'.$user->username;
+
+            $contributor->save();
+        }
+
+        Auth::login($contributor->first());
+
+        return redirect()->route('account.stream');
     }
 
     /**

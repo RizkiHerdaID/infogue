@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html class="no-js" lang="id">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -56,7 +56,7 @@
                                 <a href="#" class="mobile-search"><i class="fa fa-search"></i></a>
 
                                 @if(Auth::check())
-                                <a href="#" class="user-dropdown"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>ANGGA ARI WIJAYA</strong></span></a>
+                                <a href="#" class="user-dropdown"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>{{ Auth::user()->name }}</strong></span></a>
                                 <ul class="list-menu">
                                     <li class="menu-label">ACCOUNT</li>
                                     <li><a href="{{ route('account.stream') }}"><i class="glyphicon glyphicon-user"></i>Profile</a></li>
@@ -304,7 +304,6 @@
 
 <script src="{{ asset('/js/script.js') }}"></script>
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 <script>
     /*
     if($('.newsletter').length){
@@ -312,14 +311,31 @@
             $('.newsletter').modal('show');
         }, 3000);
     }
+     */
 
     (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
         e=o.createElement(i);r=o.getElementsByTagName(i)[0];
         e.src='https://www.google-analytics.com/analytics.js';
         r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
-    */
+    ga('create','UA-74498739-1','auto');ga('send','pageview');
+
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '577855965712128',
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 </script>
 </body>
 </html>

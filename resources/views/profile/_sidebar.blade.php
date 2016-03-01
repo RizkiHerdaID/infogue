@@ -1,7 +1,7 @@
 @if(Auth::check())
     <div class="col-md-4 hidden-sm hidden-xs">
         <div class="contributor-menu compact">
-            <div class="featured" style="background: url('{{ asset('images/covers/cover_1.jpg') }}') no-repeat center center / cover">
+            <div class="featured" style="background: url('{{ asset('images/covers/'.Auth::user()->cover) }}') no-repeat center center / cover">
                 <div class="contributor-profile mini">
                     <img src="{{ asset('images/contributors/'.Auth::user()->avatar) }}" class="avatar img-circle img-responsive" width="80"/>
                     <div class="info">
@@ -38,21 +38,23 @@
             <div class="login-form">
                 <h2 class="form-title">Sign In</h2>
                 <p class="form-subtitle">Login into Contributor profile</p>
-                <form action="{{ route('login.attempt') }}">
+                <form action="{{ route('login.attempt') }}" method="post">
+                    {!! csrf_field() !!}
                     <div class="mbm">
                         <div class="btn-group btn-group-justified" role="group">
-                            <a class="btn btn-facebook" href="http://www.facebook.com">
+                            <a class="btn btn-facebook" href="{{ url('auth/facebook') }}">
                                 <i class="fa fa-facebook"></i> FACEBOOK
                             </a>
-                            <a class="btn btn-twitter" href="http://www.twitter.com">
+                            <a class="btn btn-twitter" href="{{ url('auth/twitter') }}">
                                 <i class="fa fa-twitter"></i> TWITTER
                             </a>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address or Username">
+                    <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Email Address or Username">
+                        {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
                     </div>
-                    <div class="form-group">
+                    <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
                     <div class="form-group clearfix">

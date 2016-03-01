@@ -96,6 +96,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('auth/resend/{token}', ['as' => 'register.resend', 'uses' => 'Auth\AuthController@resend']);
     Route::get('auth/activate/{token}', ['as' => 'register.activate', 'uses' => 'Auth\AuthController@activate']);
 
+    // OAuth routes...
+    Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebookProvider');
+    Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookProviderCallback');
+    Route::get('auth/twitter', 'Auth\AuthController@redirectToTwitterProvider');
+    Route::get('auth/twitter/callback', 'Auth\AuthController@handleTwitterProviderCallback');
+
     // Contact / feedback routes...
     Route::resource('feedback', 'FeedbackController', ['only' => ['store']]);
     Route::get('/contact', function () {

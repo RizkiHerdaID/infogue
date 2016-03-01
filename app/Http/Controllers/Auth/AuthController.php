@@ -6,11 +6,13 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\User;
+use Laravel\Socialite\Facades\Socialite;
 use Validator;
 
 class AuthController extends Controller
@@ -77,7 +79,8 @@ class AuthController extends Controller
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'token' => $token
+            'token' => $token,
+            'vendor' => 'web',
         ]);
     }
 
@@ -208,4 +211,76 @@ class AuthController extends Controller
             ]);
     }
 
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToFacebookProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function handleFacebookProviderCallback()
+    {
+        $user = Socialite::with('facebook')->user();
+
+        dd($user);
+    }
+
+    /**
+     * Redirect the user to the Twitter authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToTwitterProvider()
+    {
+        return Socialite::driver('twitter')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Twitter.
+     *
+     * @return Response
+     */
+    public function handleTwitterProviderCallback()
+    {
+        $user = Socialite::driver('twitter')->user();
+
+        $contributor = Contributor::whereVendor('twitter')->whereToken($user->id);
+
+        if($contributor->count() == 0){
+            $contributor = new Contributor();
+
+            $file = file_get_contents($user->avatar_original);
+            file_put_contents('images/contributors/twitter-'.$user->id.'.jpg', $file);
+
+            $file = file_get_contents($user->user['profile_banner_url']);
+            file_put_contents('images/covers/twitter-'.$user->id.'.jpg', $file);
+
+            $contributor->token = $user->id;
+            $contributor->name = $user->name;
+            $contributor->username = $user->nickname.'.twitter';
+            $contributor->password = Hash::make(uniqid());
+            $contributor->email = $user->nickname.'@domain.com';
+            $contributor->vendor = 'twitter';
+            $contributor->status = 'activated';
+            $contributor->location = $user->user['location'];
+            $contributor->about = $user->user['description'];
+            $contributor->twitter = 'https://twitter.com/'.$user->nickname;
+            $contributor->avatar = 'twitter-'.$user->id.'.jpg';
+            $contributor->cover = 'twitter-'.$user->id.'.jpg';
+
+            $contributor->save();
+        }
+
+        Auth::login($contributor->first());
+
+        return redirect()->route('account.stream');
+    }
 }

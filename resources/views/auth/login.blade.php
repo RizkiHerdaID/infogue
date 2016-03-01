@@ -14,10 +14,10 @@
                         {!! csrf_field() !!}
                         <div class="mbm">
                             <div class="btn-group btn-group-justified" role="group">
-                                <a class="btn btn-facebook" href="http://www.facebook.com">
+                                <a class="btn btn-facebook" href="{{ url('auth/facebook') }}">
                                     <i class="fa fa-facebook"></i> FACEBOOK
                                 </a>
-                                <a class="btn btn-twitter" href="http://www.twitter.com">
+                                <a class="btn btn-twitter" href="{{ url('auth/twitter') }}">
                                     <i class="fa fa-twitter"></i> TWITTER
                                 </a>
                             </div>

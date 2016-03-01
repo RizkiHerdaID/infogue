@@ -13,10 +13,10 @@
                     <p>Be a InfoGue Contributor, <a href="{{ url('faq') }}">Learn More</a></p>
                     <p class="mbm mtl">Have an account?, <a href="{{ route('login.form') }}">Sign In here!</a> or connect with</p>
                     <div>
-                        <a class="btn btn-facebook mrs" href="http://www.facebook.com">
+                        <a class="btn btn-facebook mrs" href="{{ url('auth/facebook') }}">
                             <i class="fa fa-facebook"></i> FACEBOOK
                         </a>
-                        <a class="btn btn-twitter" href="http://www.twitter.com">
+                        <a class="btn btn-twitter" href="{{ url('auth/twitter') }}">
                             <i class="fa fa-twitter"></i> TWITTER
                         </a>
                     </div>
@@ -26,10 +26,10 @@
                     <p class="form-subtitle">Registering yourself as Contributor</p>
 
                     <div class="mbm visible-xs">
-                        <a class="btn btn-facebook mrs" href="http://www.facebook.com">
+                        <a class="btn btn-facebook mrs" href="{{ url('auth/facebook') }}">
                             <i class="fa fa-facebook"></i> FACEBOOK
                         </a>
-                        <a class="btn btn-twitter" href="http://www.twitter.com">
+                        <a class="btn btn-twitter" href="{{ url('auth/twitter') }}">
                             <i class="fa fa-twitter"></i> TWITTER
                         </a>
                     </div>

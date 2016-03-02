@@ -25,7 +25,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('contributor.article');
+        $filter_data = Input::has('data') ? Input::get('data') : 'all-data';
+        $filter_by = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+
+        $articles = $this->article->archive($filter_data, $filter_by, $filter_sort, Auth::user()->id);
+
+        return view('contributor.article', compact('articles'));
     }
 
     /**
@@ -272,7 +278,7 @@ class ArticleController extends Controller
 
         $related = $this->article->related($article->id);
 
-        $popular = $this->article->most_popular(5);
+        $popular = $this->article->mostPopular(5);
 
         $contributor = new Contributor();
 
@@ -302,6 +308,25 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    /**
+     * Update the specified article in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function draft(Request $request, $slug)
+    {
+        $article = Article::whereSlug($slug)->whereContributorId(Auth::user()->id)->firstOrFail();
+        $article->status = 'draft';
+        $article->save();
+
+        return redirect()
+            ->route('account.article.index')
+            ->with('status', 'success')
+            ->with('message', 'Article set to draft successfully');
     }
 
     /**

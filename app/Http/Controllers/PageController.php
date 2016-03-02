@@ -20,8 +20,8 @@ class PageController extends Controller
     {
         $article = new Article();
         $featured = $article->headline();
-        $popular = $article->most_popular();
-        $ranked = $article->most_ranked();
+        $popular = $article->mostPopular();
+        $ranked = $article->mostRanked();
         $trending = $article->trending();
         $latest = $article->latest();
 

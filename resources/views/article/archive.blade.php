@@ -10,7 +10,7 @@
                 <p class="hidden-xs">Data Filter</p>
                 <div class="dropdown select">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-data" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        @if(\Illuminate\Support\Facades\Input::has('data')) {{ str_replace('-', ' ', ucwords(\Illuminate\Support\Facades\Input::get('data'))) }} @else All Data @endif
+                        @if(Input::has('data')) {{ str_replace('-', ' ', ucwords(Input::get('data'))) }} @else All Data @endif
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdown-data">
@@ -33,8 +33,8 @@
                 <p>View As</p>
                 <div class="btn-group" data-toggle="buttons">
                     <?php $list = 'checked'; $grid = '' ?>
-                    @if(\Illuminate\Support\Facades\Input::has('view'))
-                        @if(\Illuminate\Support\Facades\Input::get('view') == 'grid')
+                    @if(Input::has('view'))
+                        @if(Input::get('view') == 'grid')
                             <?php $grid = 'checked'; $list = '' ?>
                         @else
                             <?php $list = 'checked'; $grid = '' ?>
@@ -54,7 +54,7 @@
                 <p class="hidden-xs">Sort By</p>
                 <div class="dropdown select by">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-sort-type" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        @if(\Illuminate\Support\Facades\Input::has('by')) {{ ucwords(\Illuminate\Support\Facades\Input::get('by')) }} @else Date @endif
+                        @if(Input::has('by')) {{ ucwords(Input::get('by')) }} @else Date @endif
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="dropdown select method">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdown-sort-method" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        @if(\Illuminate\Support\Facades\Input::has('sort')) {{ ucwords(\Illuminate\Support\Facades\Input::get('sort')) }} @else Descending @endif
+                        @if(Input::has('sort')) {{ ucwords(Input::get('sort')) }} @else Descending @endif
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort">
@@ -81,7 +81,7 @@
         <div class="article-wrapper">
             <div id="articles">
                 @forelse($archive as $article)
-                    @if(\Illuminate\Support\Facades\Input::get('view', 'list') == 'list')
+                    @if(Input::get('view', 'list') == 'list')
 
                         <div class="article-preview landscape">
                             <div class="row">
@@ -156,7 +156,7 @@
 
             </div>
             <div class="text-center">
-                {!! $archive->appends(\Illuminate\Support\Facades\Input::all())->links() !!}
+                {!! $archive->appends(Input::all())->links() !!}
             </div>
         </div>
     </section>

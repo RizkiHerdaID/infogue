@@ -1182,4 +1182,17 @@ $(function () {
         $("#modal-info").modal("show");
     }
 
+    $('.btn-delete').click(function(){
+        var id = $(this).closest('*[data-id]').data('id');
+        $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
+    });
+
+    $('.btn-share').click(function(){
+        var url = $(this).closest('*[data-id]').data('url');
+        $('#modal-share .copy-url').val(url);
+        $('#modal-share .facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u='+url);
+        $('#modal-share .twitter').attr('href', 'https://www.twitter.com/home?status='+url);
+        $('#modal-share .googleplus').attr('href', 'https://plus.google.com/share?url='+url);
+    });
+
 });

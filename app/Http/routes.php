@@ -129,6 +129,7 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
+        Route::get('/article/draft/{article}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
         Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
         Route::get('/following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
 

@@ -70,7 +70,7 @@ class Article extends Model
         return $related;
     }
 
-    public function most_popular($take = 10)
+    public function mostPopular($take = 10)
     {
         $popular = $this->preArticleQuery()->published()
             ->where('articles.created_at', '>', Carbon::now()->addMonth(-3))
@@ -81,7 +81,7 @@ class Article extends Model
         return $this->preArticleModifier($popular);
     }
 
-    public function most_ranked()
+    public function mostRanked()
     {
         $ranking = $this->published()
             ->select(DB::raw('articles.id, slug, title, CAST(SUM(ratings.rate) AS UNSIGNED) AS total_rating'))
@@ -163,9 +163,16 @@ class Article extends Model
         return $this->preArticleModifier($articles);
     }
 
-    public function archive($data, $by, $sort)
+    public function archive($data, $by, $sort, $contributor = null)
     {
-        $archive = $this->preArticleQuery()->published();
+        $archive = $this->preArticleQuery();
+
+        if($contributor == null){
+            $archive->published();
+        }
+        else{
+            $archive->where('contributor_id', $contributor);
+        }
 
         if($data == 'trending'){
             $archive->where('state', 'trending');
@@ -225,6 +232,7 @@ class Article extends Model
                     content,
                     featured,
                     view,
+                    articles.status AS status,
                     contributor_id,
                     name,
                     username,

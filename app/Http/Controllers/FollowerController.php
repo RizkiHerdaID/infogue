@@ -5,6 +5,7 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Infogue\Contributor;
 use Infogue\Follower;
 use Infogue\Http\Requests;
@@ -69,6 +70,12 @@ class FollowerController extends Controller
             $follower->following = $request->input('id');
 
             if($follower->save()){
+                $contributor = Contributor::findOrFail($request->input('id'));
+
+                if($contributor->email_follow){
+                    $this->sendEmailNotification(Auth::user()->id, $request->input('id'));
+                }
+
                 return 'success';
             }
 
@@ -99,5 +106,35 @@ class FollowerController extends Controller
         else{
             return 'restrict';
         }
+    }
+
+    public function sendEmailNotification($contributor_id, $follow_id)
+    {
+        $contributor = Contributor::findOrFail($contributor_id);
+        $follow = Contributor::findOrFail($follow_id);
+
+        $data = [
+            'followerName' => $contributor->name,
+            'followerLocation' => $contributor->location,
+            'followerAbout' => $contributor->about,
+            'followerUsername' => $contributor->username,
+            'followerAbout' => $contributor->about,
+            'followerAvatar' => $contributor->avatar,
+            'followerArticle' => $contributor->articles()->count(),
+            'followerFollower' => $contributor->followers()->count(),
+            'followerFollowing' => $contributor->following()->count(),
+            'contributorName' => $follow->name,
+            'contributorUsername' => $follow->username
+        ];
+
+        Mail::send('emails.follower', $data, function ($message) use ($follow, $contributor) {
+
+            $message->from('no-reply@infogue.id', 'Infogue.id');
+
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+
+            $message->to($follow->email)->subject($contributor->name.' now is following you');
+
+        });
     }
 }

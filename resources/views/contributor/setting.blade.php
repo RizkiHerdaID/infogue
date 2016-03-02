@@ -261,7 +261,7 @@
                                             <div class="form-group">
                                                 <div class="col-sm-offset-3 col-sm-9 pts pbm">
                                                     <button class="btn btn-primary">SAVE CHANGES</button>
-                                                    <a href="contributor_stream.html" class="btn btn-danger">DISCARD</a>
+                                                    <a href="#" data-toggle="modal" data-target="#discard" class="btn btn-danger">DISCARD</a>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -273,5 +273,27 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <div class="modal fade no-line" id="discard" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-save"></i> DISCARD SETTING</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="mbn">Are you sure want to discard the setting?</label>
+                        <p class="mbn"><small class="text-muted">All filled content will be lost.</small></p>
+                        <input type="hidden" class="form-control" value="0"/>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">NO</a>
+                        <a href="{{ route('account.setting') }}" class="btn btn-danger">YES</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection

@@ -9,7 +9,7 @@
             <div class="breadcrumb-wrapper hidden-xs">
                 <ol class="breadcrumb mtn">
                     <li><a href="{{ route('article.archive') }}">Archive</a></li>
-                    <li><a href="contributor.html">Contributor</a></li>
+                    <li class="active">Contributor</li>
                     <li class="active">{{ $contributor->name }}</li>
                 </ol>
             </div>
@@ -52,7 +52,7 @@
                 <a href="@{{ contributor_ref }}" class="name">@{{ name }}</a>
                 <p class="location">@{{ location }}</p>
             </div>
-            <button class="btn btn-primary btn-outline @{{ following_status }}" data-toggle="button">
+            <button class="btn btn-primary btn-outline @{{ following_status }}" data-id="@{{ id }}" data-toggle="button">
                 <i class="fa fa-user-plus visible-xs"></i><span class="hidden-xs">@{{ following_text }}</span>
             </button>
         </div>

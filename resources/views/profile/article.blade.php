@@ -9,7 +9,7 @@
             <div class="breadcrumb-wrapper hidden-xs">
                 <ol class="breadcrumb mtn">
                     <li><a href="{{ route('article.archive') }}">Archive</a></li>
-                    <li><a href="contributor.html">Contributor</a></li>
+                    <li class="active">Contributor</li>
                     <li class="active">{{ $contributor->name }}</li>
                 </ol>
             </div>

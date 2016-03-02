@@ -13,8 +13,10 @@
                 </div>
                 <div class="col-md-5">
                     <a class="btn btn-primary btn-outline more-info" href="{{ route('contributor.detail', [$contributor->username]) }}">MORE INFO</a>
+                    @if(Auth::check() && Auth::user()->id != $contributor->id)
                     <a class="btn btn-primary btn-outline {{ $contributor->following_status }}" href="#" data-toggle="button">{{ $contributor->following_text }}</a>
                     <a class="btn btn-primary btn-outline" href="#" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope-o"></i></a>
+                    @endif
                 </div>
             </div>
             <div class="row">

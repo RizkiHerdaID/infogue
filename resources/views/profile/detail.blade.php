@@ -9,7 +9,7 @@
             <div class="breadcrumb-wrapper hidden-xs">
                 <ol class="breadcrumb mtn">
                     <li><a href="{{ route('article.archive') }}">Archive</a></li>
-                    <li><a href="contributor.html">Contributor</a></li>
+                    <li class="active">Contributor</li>
                     <li class="active">{{ $contributor->name }}</li>
                 </ol>
             </div>
@@ -56,11 +56,11 @@
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-phone"></i>Contact</strong>
-                                            <span class="value">{{ $contributor->contact }}</span>
+                                            <span class="value">@if($contributor->contact != null){{ $contributor->contact }}@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-birthday-cake"></i>Birthday</strong>
-                                            <span class="value">@fulldate(\Carbon\Carbon::parse($contributor->birthday))</span>
+                                            <span class="value">@if($contributor->birthday != null)@fulldate(\Carbon\Carbon::parse($contributor->birthday))@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-female"></i>Gender</strong>
@@ -102,19 +102,19 @@
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-twitter"></i>Twitter</strong>
-                                            <span class="value"><a href="{{ $contributor->twitter }}" target="_blank">{{ $contributor->twitter }}</a></span>
+                                            <span class="value">@if($contributor->twitter != null)<a href="{{ $contributor->twitter }}" target="_blank">{{ $contributor->twitter }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-facebook"></i>Facebook</strong>
-                                            <span class="value"><a href="{{ $contributor->facebook }}" target="_blank">{{ $contributor->facebook }}</a></span>
+                                            <span class="value">@if($contributor->facebook != null)><a href="{{ $contributor->facebook }}" target="_blank">{{ $contributor->facebook }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-google-plus"></i>Google+</strong>
-                                            <span class="value"><a href="{{ $contributor->googleplus }}" target="_blank">{{ $contributor->googleplus }}</a></span>
+                                            <span class="value">@if($contributor->googleplus != null)<a href="{{ $contributor->googleplus }}" target="_blank">{{ $contributor->googleplus }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-instagram"></i>Instagram</strong>
-                                            <span class="value"><a href="{{ $contributor->instagram }}" target="_blank">{{ $contributor->instagram }}</a></span>
+                                            <span class="value">@if($contributor->instagram != null)><a href="{{ $contributor->instagram }}" target="_blank">{{ $contributor->instagram }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                     </ul>
                                 </div>

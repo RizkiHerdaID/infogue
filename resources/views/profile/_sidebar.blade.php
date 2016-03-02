@@ -6,7 +6,7 @@
                     <img src="{{ asset('images/contributors/'.Auth::user()->avatar) }}" class="avatar img-circle img-responsive" width="80"/>
                     <div class="info">
                         <p class="name">{{ Auth::user()->name }}</p>
-                        <p class="location">{{ Auth::user()->location }}</p>
+                        <p class="location">@if(empty(Auth::user()->location)){{ 'No Location' }}@else{{ Auth::user()->location }}@endif</p>
                     </div>
                 </div>
                 <a href="{{ route('account.article.create') }}" class="btn btn-primary btn-outline btn-block">CREATE ARTICLE</a>
@@ -14,7 +14,7 @@
             <nav>
                 <ul>
                     <li><a href="{{ route('account.stream') }}"><i class="fa fa-desktop"></i>Stream</a></li>
-                    <li><a href="{{ route('account.article') }}"><i class="fa fa-file-text"></i>Article</a></li>
+                    <li><a href="{{ route('account.article.index') }}"><i class="fa fa-file-text"></i>Article</a></li>
                     <li><a href="{{ route('account.message.list') }}"><i class="fa fa-envelope"></i>Message</a></li>
                     <li><a href="{{ route('account.follower') }}"><i class="fa fa-chevron-left"></i>Follower</a></li>
                     <li><a href="{{ route('account.following') }}"><i class="fa fa-chevron-right"></i>Following</a></li>
@@ -50,8 +50,17 @@
                             </a>
                         </div>
                     </div>
+
+                    @if(Session::has('status'))
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                {{ Session::get('status') }}
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Email Address or Username">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="Email Address or Username">
                         {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">

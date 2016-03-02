@@ -3,8 +3,8 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Route;
 use Infogue\Article;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
@@ -25,7 +25,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        return view('contributor.article');
     }
 
     /**
@@ -35,7 +35,15 @@ class ArticleController extends Controller
      */
     public function stream()
     {
-        return view('contributor.stream');
+        $contributor = new Contributor();
+
+        $stream = $contributor->stream(Auth::user()->username);
+
+        if (Input::get('page', false)) {
+            return $stream;
+        } else {
+            return view('contributor.stream', compact('stream'));
+        }
     }
 
     /**

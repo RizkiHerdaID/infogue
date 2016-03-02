@@ -22,7 +22,7 @@ class FollowerController extends Controller
      */
     public function follower()
     {
-        //
+        return view('contributor.follower');
     }
 
     /**
@@ -32,7 +32,7 @@ class FollowerController extends Controller
      */
     public function following()
     {
-        //
+        return view('contributor.following');
     }
 
     /**

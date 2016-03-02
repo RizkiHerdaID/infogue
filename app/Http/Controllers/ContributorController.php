@@ -133,7 +133,7 @@ class ContributorController extends Controller
      */
     public function setting()
     {
-        //
+        return view('contributor.setting');
     }
 
     /**

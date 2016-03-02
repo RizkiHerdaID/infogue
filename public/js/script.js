@@ -1022,6 +1022,10 @@ $(function () {
                 }
             }
             else{
+                if(data.total == 0){
+                    $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor to feed the stream</p>");
+                }
+
                 $('.btn-load-more').text("END OF STREAM").addClass('disabled');
                 isEnded = true;
             }

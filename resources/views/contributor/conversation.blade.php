@@ -8,7 +8,7 @@
         <section class="container content-wrapper">
             <div class="row">
 
-                @include('contributor.sidebar')
+                @include('contributor._sidebar')
 
                 <div class="col-md-8 no-padding-mobile">
                     <div class="account-profile">

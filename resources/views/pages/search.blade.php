@@ -33,7 +33,7 @@
                                 <img src="{{ asset('images/contributors/'.$contributor->avatar) }}" class="avatar img-circle img-responsive" width="80"/>
                                 <div class="info">
                                     <button class="btn btn-primary btn-outline pull-right visible-xs visible-sm {{ $contributor->following_status }}" data-toggle="button">{{ $contributor->following_text }}</button>
-                                    <a href="profile.html" class="name">{{ $contributor->name }}</a>
+                                    <a href="{{ route('contributor.stream', [$contributor->username]) }}" class="name">{{ $contributor->name }}</a>
                                     <p class="location">{{ $contributor->location }}</p>
                                 </div>
                             </div>

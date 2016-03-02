@@ -3,6 +3,9 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Infogue\Contributor;
 use Infogue\Follower;
 use Infogue\Http\Requests;
 
@@ -22,7 +25,15 @@ class FollowerController extends Controller
      */
     public function follower()
     {
-        return view('contributor.follower');
+        $contributor = new Contributor();
+
+        $followers = $contributor->contributorFollower(Auth::user()->username);
+
+        if (Input::get('page', false)) {
+            return $followers;
+        } else {
+            return view('contributor.follower', compact('followers'));
+        }
     }
 
     /**
@@ -32,7 +43,15 @@ class FollowerController extends Controller
      */
     public function following()
     {
-        return view('contributor.following');
+        $contributor = new Contributor();
+
+        $following = $contributor->contributorFollowing(Auth::user()->username);
+
+        if (Input::get('page', false)) {
+            return $following;
+        } else {
+            return view('contributor.following', compact('contributor', 'following'));
+        }
     }
 
     /**

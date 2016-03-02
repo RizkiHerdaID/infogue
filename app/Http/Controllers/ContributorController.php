@@ -77,7 +77,7 @@ class ContributorController extends Controller
     {
         $contributor = $this->contributor->profile($username);
 
-        $following = $this->contributor->contributor_following($username);
+        $following = $this->contributor->contributorFollowing($username);
 
         if (Input::get('page', false)) {
             return $following;

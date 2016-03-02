@@ -1039,7 +1039,7 @@ $(function () {
                 $('#followers').append(html);
 
                 if(page == data.last_page){
-                    $('.btn-load-more').text("END OF FOLLOWERS").addClass('disabled');
+                    $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                     isEnded = true;
                 }
                 else{
@@ -1047,7 +1047,11 @@ $(function () {
                 }
             }
             else{
-                $('.btn-load-more').text("END OF FOLLOWERS").addClass('disabled');
+                if(data.total == 0){
+                    $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
+                }
+
+                $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                 isEnded = true;
             }
         }

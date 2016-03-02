@@ -81,7 +81,7 @@ class Contributor extends Authenticatable
         return $this->hasMany('Infogue\Follower');
     }
 
-    public function contributor_following($username)
+    public function contributorFollowing($username)
     {
         $contributor = $this->whereUsername($username)->first();
 

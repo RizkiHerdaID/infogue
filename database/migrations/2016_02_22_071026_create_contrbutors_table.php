@@ -22,7 +22,7 @@ class CreateContrbutorsTable extends Migration
             $table->string('email', 50)->unique();
             $table->string('password', 60);
             $table->enum('status', ['pending', 'activated', 'suspended'])->default('pending');
-            $table->enum('gender', ['male, female', 'other'])->default('other');
+            $table->enum('gender', ['male', 'female', 'other'])->default('other');
             $table->string('avatar')->default('noavatar.jpg');
             $table->string('cover')->default('nocover.jpg');
             $table->date('birthday')->nullable();

@@ -4,7 +4,7 @@
         <div class="contributor-profile mini">
             <img src="{{ asset('images/contributors/'.Auth::user()->avatar) }}" class="avatar img-circle img-responsive"/>
             <div class="info">
-                <p class="name">{{ Auth::user()->name }}</p>
+                <p class="name"><a href="{{ route('contributor.stream', [Auth::user()->username]) }}">{{ Auth::user()->name }}</a></p>
                 <ul class="list-separated small mts text-muted">
                     <li>{{ Auth::user()->followers()->count() }} FOLLOWERS</li>
                     <li>{{ Auth::user()->following()->count() }} FOLLOWING</li>

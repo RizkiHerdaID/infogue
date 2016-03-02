@@ -8,6 +8,7 @@
     <meta name="keywords" content="{{ $site_settings['Keywords'] }}">
     <meta name="author" content="{{ $site_settings['Owner'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="website" />
@@ -56,7 +57,7 @@
                                 <a href="#" class="mobile-search"><i class="fa fa-search"></i></a>
 
                                 @if(Auth::check())
-                                <a href="#" class="user-dropdown"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>{{ Auth::user()->name }}</strong></span></a>
+                                <a href="#" class="user-dropdown" data-contributor-id="{{ Auth::user()->id }}"><i class="glyphicon glyphicon-user"></i><span class="hidden-xs">HI, <strong>{{ Auth::user()->name }}</strong></span></a>
                                 <ul class="list-menu">
                                     <li class="menu-label">ACCOUNT</li>
                                     <li><a href="{{ route('account.stream') }}"><i class="glyphicon glyphicon-user"></i>Profile</a></li>
@@ -282,6 +283,24 @@
         </div>
     </div>
 </footer>
+
+<div class="modal fade no-line" id="modal-info" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">TITLE</h4>
+            </div>
+            <div class="modal-body">
+                <label class="mbn modal-message">MESSAGE</label>
+                <p class="mbn"><small class="text-muted modal-submessage">SUB MESSAGE</small></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-primary">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="to-top">
     <a href="#top"><i class="fa fa-arrow-up"></i></a>

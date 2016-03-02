@@ -17,14 +17,4 @@ class Follower extends Model
     {
         $this->belongsTo('Infogue\Contributor', 'following');
     }
-
-    public function follow($id)
-    {
-
-    }
-
-    public function unfollow($id)
-    {
-
-    }
 }

@@ -62,7 +62,21 @@ class FollowerController extends Controller
      */
     public function follow(Request $request)
     {
-        //
+        if(Auth::check()){
+            $follower = new Follower();
+
+            $follower->contributor_id = Auth::user()->id;
+            $follower->following = $request->input('id');
+
+            if($follower->save()){
+                return 'success';
+            }
+
+            return 'failed';
+        }
+        else{
+            return 'restrict';
+        }
     }
 
     /**
@@ -73,6 +87,17 @@ class FollowerController extends Controller
      */
     public function unfollow($id)
     {
-        //
+        if(Auth::check()){
+            $follower = Follower::where('contributor_id', Auth::user()->id)->where('following', $id)->first();
+
+            if(count($follower) > 0 && $follower->delete()){
+                return 'success';
+            }
+
+            return 'failed';
+        }
+        else{
+            return 'restrict';
+        }
     }
 }

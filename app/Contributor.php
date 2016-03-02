@@ -137,6 +137,8 @@ class Contributor extends Authenticatable
     {
         foreach ($contributors as $contributor):
 
+            $contributor->location = (empty($contributor->location)) ? 'No Location' : $contributor->location;
+            $contributor->about = (empty($contributor->about)) ? 'No Description' : $contributor->about;
             $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
             $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
             $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';

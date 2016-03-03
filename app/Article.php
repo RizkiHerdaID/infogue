@@ -44,6 +44,11 @@ class Article extends Model
             ->groupBy('article_id');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany('Infogue\Rating');
+    }
+
     public function tags()
     {
         return $this->belongsToMany('Infogue\Tag', 'article_tags')->withTimestamps();

@@ -1,19 +1,17 @@
 $(function () {
 
     // SMOOTH SCROLL---------------------------------------------------------------
-    $(function () {
-        $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function () {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html, body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
+    $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function () {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+                return false;
             }
-        });
+        }
     });
 
 
@@ -36,8 +34,6 @@ $(function () {
                     $(this).append("<i class='fa fa-circle unrated'></i>")
                 }
             }
-
-            $(".rating > .rate-message").text(rateMessage[rating - 1]);
         });
     }
 
@@ -63,6 +59,9 @@ $(function () {
             }
         }
         lastMessage = rateMessage[rate];
+
+        var article_id = $('.single-view[data-id]').data('id');
+        sendRate(article_id, rate+1);
     });
 
     $(".rating-wrapper.control i").hover(function () {
@@ -422,12 +421,7 @@ $(function () {
         window.location.replace(archive_base_url+archive_filter_url);
     }
 
-});
 
-/**
- * Created by Workstation on 2/14/2016.
- */
-$(function(){
     var isLarge = false;
     var isMedium = false;
     var isSmall = false;
@@ -921,9 +915,6 @@ $(function(){
 
     $('#search-contributor').equalize({equalize: 'height', children: '.contributor-profile'});
 
-});
-
-$(function () {
     var page = 1;
     var onLoading = false;
     var isEnded = false;
@@ -1287,5 +1278,20 @@ $(function () {
                 }
             });
         }, 15000);
+    }
+
+    // send rating
+    function sendRate(article_id, rate){
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8000/article/rate",
+            data:{ article_id: article_id, rate: rate },
+            success:function(data){
+                console.log('Article rate avg is '+data);
+            },
+            error:function(e){
+                console.log(e.toString());
+            }
+        });
     }
 });

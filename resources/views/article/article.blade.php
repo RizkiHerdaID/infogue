@@ -76,9 +76,10 @@
                             <div class="panel-heading">Like This Article?</div>
                             <div class="panel-body">
                                 <div class="rating">
+                                    <?php $ratingMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT']; $ratingTotal = ($article->rating()->count() == null) ? 0 : $article->rating->total_rating; ?>
                                     <p class="pull-left pts pbs mrm"><strong>GIVE A RATING</strong></p>
-                                    <div class="rating-wrapper control" data-rating="@if($article->rating()->count() == null) {{ '0' }} @else {{ $article->rating->total_rating }} @endif"></div>
-                                    <span class="rate-message"></span>
+                                    <div class="rating-wrapper control" data-rating="{{ $ratingTotal }}"></div>
+                                    <span class="rate-message">@if($ratingTotal > 0){{ $ratingMessage[$ratingTotal-1] }}@endif</span>
                                 </div>
                                 <ul class="social text-right">
                                     <li><strong class="mrs">SHARE ON</strong></li>
@@ -193,7 +194,7 @@
                                             <div class="col-sm-7 col-xs-8">
                                                 <div class="title-wrapper">
                                                     <h1 class="title">
-                                                        <a href="{{ route('article.show', [$related_article->slug]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">{{ $related_article->title }}</a>
+                                                        <a href="{{ route('article.show', [$related_article->slug]) }}">{{ $related_article->title }}</a>
                                                     </h1>
                                                     <ul class="timestamp">
                                                         <li>@fulldate($related_article->created_at)</li>
@@ -232,7 +233,7 @@
                                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $popular_article->featured }}" data-echo="{{ asset('images/featured/'.$popular_article->featured) }}"/>
                                         </div>
                                         <div class="title-wrapper">
-                                            <p class="category"><a href="{{ route('article.category', [str_slug($popular_article->category)]) }}" data-disqus-identifier="{{ 'article_'.$article->id }}">{{ $article->category }}</a></p>
+                                            <p class="category"><a href="{{ route('article.category', [str_slug($popular_article->category)]) }}">{{ $article->category }}</a></p>
                                             <h1 class="title">
                                                 <a href="{{ route('article.show', [$popular_article->slug]) }}">{{ $popular_article->title }}</a>
                                             </h1>

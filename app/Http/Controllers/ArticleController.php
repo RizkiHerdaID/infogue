@@ -12,6 +12,7 @@ use Infogue\Contributor;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\ArticleRequest;
 use Infogue\Image;
+use Infogue\Rating;
 use Infogue\Tag;
 
 class ArticleController extends Controller
@@ -297,12 +298,30 @@ class ArticleController extends Controller
      * Store user rating for the article.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function rate(Request $request, $id)
+    public function rate(Request $request)
     {
-        //
+        $article = Article::findOrFail($request->input('article_id'));
+
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        $is_rated = $article->ratings()->whereIp($ip)->count();
+
+        if($is_rated){
+            $rating = Rating::whereArticleId($request->input('article_id'))->whereIp($ip)->firstOrFail();
+            $rating->rate = $request->input('rate');
+            $rating->save();
+        }
+        else{
+            $rating = new Rating();
+            $rating->article_id = $request->input('article_id');
+            $rating->ip = $ip;
+            $rating->rate = $request->input('rate');
+            $rating->save();
+        }
+
+        return ($article->rating()->count() == null) ? 0 : $article->rating->total_rating;
     }
 
     /**

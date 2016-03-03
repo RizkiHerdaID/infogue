@@ -123,7 +123,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::group(['as' => 'account.message.', 'prefix' => 'message'], function () {
             Route::get('/', ['as' => 'list', 'uses' => 'MessageController@index']);
-            Route::post('/{id}', ['as' => 'send', 'uses' => 'MessageController@send']);
+            Route::post('/', ['as' => 'send', 'uses' => 'MessageController@send']);
             Route::delete('/{id}', ['as' => 'delete', 'uses' => 'MessageController@destroy']);
             Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
         });

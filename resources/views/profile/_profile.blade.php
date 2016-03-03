@@ -15,7 +15,7 @@
                     <a class="btn btn-primary btn-outline more-info" href="{{ route('contributor.detail', [$contributor->username]) }}">MORE INFO</a>
                     @if(!(Auth::check() && Auth::user()->id == $contributor->id))
                         <a class="btn btn-primary btn-outline @if(Auth::check()){{ $contributor->following_status }}@endif" href="@if(Auth::check()){{ '#' }}@else{{ route('login.form') }}@endif" @if(Auth::check()) data-id="{{ $contributor->id }}" data-toggle="button" @endif>{{ $contributor->following_text }}</a>
-                        <a class="btn btn-primary btn-outline" href="@if(Auth::check()){{ '#' }}@else{{ route('login.form') }}@endif" @if(Auth::check()) data-target="#send-message" data-toggle="modal" @endif><i class="fa fa-envelope-o"></i></a>
+                        <a class="btn btn-primary btn-outline btn-message" href="@if(Auth::check()){{ '#' }}@else{{ route('login.form') }}@endif" @if(Auth::check()) data-target="#send-message" data-toggle="modal" @endif><i class="fa fa-envelope-o"></i></a>
                     @endif
                 </div>
             </div>
@@ -34,20 +34,29 @@
             </div>
         </div>
     </div>
+    @if(Session::has('status'))
+        <div class="alert alert-{{ Session::get('status') }}" style="border-radius: 0">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {!! Session::get('message') !!}
+        </div>
+    @endif
 </section>
 
 <div class="modal fade color" id="send-message" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="#" class="form-strip form-horizontal">
-                <input type="hidden" class="form-control" value="0"/>
+            <form action="{{ route('account.message.send') }}" class="form-strip form-horizontal" method="post">
+                {!! csrf_field() !!}
+                <input type="hidden" id="contributor_id" name="contributor_id" value="{{ $contributor->id }}">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><i class="fa fa-envelope-o"></i> SEND MESSAGE</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>SEND TO : </label> DIAH AYU PERMATA
+                        <label>SEND TO : </label> <span class="message-to"></span>
                     </div>
                     <div class="form-group">
                         <label for="message" class="mbs">MESSAGE : </label>

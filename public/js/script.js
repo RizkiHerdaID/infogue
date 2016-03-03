@@ -1294,4 +1294,9 @@ $(function () {
             }
         });
     }
+
+    $('.btn-message').click(function(){
+        var name = $(this).closest('.profile').find('h2.name').text();
+        $('#send-message').find('.message-to').text(name);
+    });
 });

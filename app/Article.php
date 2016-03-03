@@ -6,9 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $hidden = ['deleted_at'];
@@ -235,6 +240,7 @@ class Article extends Model
                     slug,
                     title,
                     content,
+                    content_update,
                     featured,
                     view,
                     articles.status AS status,

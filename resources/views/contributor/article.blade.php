@@ -122,7 +122,7 @@
                                                             @if($article->status == 'published')
                                                                 <span class="label label-success" style="font-size: 11px">PUBLISHED</span>
                                                             @elseif($article->status == 'pending')
-                                                                <span class="label label-warning" style="font-size: 11px">PENDING</span>
+                                                                <span class="label label-warning" style="font-size: 11px">PENDING @if($article->content_update != '') {{ 'UPDATE' }}@endif</span>
                                                             @elseif($article->status == 'reject')
                                                                 <span class="label label-danger" style="font-size: 11px">REJECT</span>
                                                             @elseif($article->status == 'draft')

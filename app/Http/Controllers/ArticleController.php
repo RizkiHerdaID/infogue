@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Infogue\Article;
 use Infogue\Category;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
-use Infogue\Http\Requests\ArticleRequest;
+use Infogue\Http\Requests\CreateArticleRequest;
 use Infogue\Image;
 use Infogue\Rating;
+use Infogue\Subcategory;
 use Infogue\Tag;
 
 class ArticleController extends Controller
@@ -215,7 +217,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        $categories = Category::lists('category', 'id');
+        $categories = Category::pluck('category', 'id');
 
         $subcategories = null;
 
@@ -235,7 +237,7 @@ class ArticleController extends Controller
 
     public function tags()
     {
-        $tags = DB::table('tags')->lists('tag');
+        $tags = Tag::pluck('tag');
 
         return $tags;
     }
@@ -243,10 +245,10 @@ class ArticleController extends Controller
     /**
      * Store a newly created article in storage.
      *
-     * @param ArticleRequest $request
+     * @param CreateArticleRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleRequest $request)
+    public function store(CreateArticleRequest $request)
     {
         $tags_id = [];
 
@@ -254,10 +256,10 @@ class ArticleController extends Controller
         $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
         // merge tags which exist into tags_id
-        $tags_id = array_merge($tags_id, $tag->lists('id')->toArray());
+        $tags_id = array_merge($tags_id, $tag->pluck('id')->toArray());
 
         // retrieve tags label which already exist to compare with given array
-        $available_tags = $tag->lists('tag')->toArray();
+        $available_tags = $tag->pluck('tag')->toArray();
 
         // new tags need to insert into tags table
         $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
@@ -386,24 +388,111 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified article.
      *
-     * @param  int $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        $article = Article::whereSlug($slug)->firstOrFail();
+
+        $categories = Category::pluck('category', 'id');
+
+        $subcategories = null;
+
+        if(Input::old('category', '') != ''){
+            $subcategories = Category::findOrFail(Input::old('category'))->subcategories;
+        }
+        else{
+            $subcategories = Subcategory::whereCategoryId($article->subcategory->category->id)->get();
+        }
+
+        return view('contributor.article_edit', compact('article', 'categories', 'subcategories'));
     }
 
     /**
      * Update the specified article in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param $slug
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Foundation\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $article = Article::whereSlug($slug)->firstOrFail();
+
+        $rules = [
+            'title' => 'required|max:70',
+            'slug' => 'required|alpha_dash|max:100|unique:articles,slug,'.$article->id,
+            'type' => 'required|in:standard,gallery,video',
+            'category' => 'required',
+            'subcategory' => 'required',
+            'featured' => 'mimes:jpg,jpeg,gif,png',
+            'tags' => 'required',
+            'content' => 'required',
+            'excerpt' => 'max:300',
+            'status' => 'required|in:pending,draft,published,reject',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            $request->session()->flash('status', 'danger');
+            $request->session()->flash('message', 'Your inputs data are invalid, please check again');
+
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $tags_id = [];
+
+        // get all tags which already exist with tags are given
+        $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
+
+        // merge tags which exist into tags_id
+        $tags_id = array_merge($tags_id, $tag->pluck('id')->toArray());
+
+        // retrieve tags label which already exist to compare with given array
+        $available_tags = $tag->pluck('tag')->toArray();
+
+        // new tags need to insert into tags table
+        $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
+
+        //$tags_id_new = [];
+
+        $article->tags()->sync($tag->pluck('id')->toArray());
+
+        foreach ($new_tags as $tag_label):
+            $newTag = new Tag();
+            $newTag->tag = $tag_label;
+            $newTag->save();
+            //array_push($tags_id_new, $newTag->id);
+            if (!$article->tags->contains($newTag->id)) {
+                $article->tags()->save($newTag);
+            }
+        endforeach;
+
+        //$article->tags()->attach($tags_id_new);
+
+        $article->subcategory_id = $request->input('subcategory');
+        $article->title = $request->input('title');
+        $article->slug = $request->input('slug');
+        $article->type = $request->input('type');
+        $article->content_update = $request->input('content');
+        $article->excerpt = $request->input('excerpt');
+        $article->status = $request->input('status');
+
+        $image = new Image();
+        if ($image->uploadImage($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+            $article->featured = $request->input('featured');
+        }
+
+        $article->save();
+
+        return redirect()
+            ->route('account.article.index')
+            ->with('status', 'success')
+            ->with('message', 'The <strong>' . $article->title . '</strong> was updated');
     }
 
     /**

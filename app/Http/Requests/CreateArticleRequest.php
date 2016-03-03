@@ -5,7 +5,7 @@ namespace Infogue\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Infogue\Http\Requests\Request;
 
-class ArticleRequest extends Request
+class CreateArticleRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

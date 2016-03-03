@@ -72,12 +72,12 @@
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            {{ Session::get('message') }}
+                                            {!! Session::get('message') !!}
                                         </div>
                                     @endif
                                     <div>
                                         @forelse($articles as $article)
-                                            <div class="article-preview landscape mini" style="height: 180px">
+                                            <div class="article-preview landscape mini record" style="height: 180px">
                                                 <div class="row">
                                                     <div class="col-sm-4 col-xs-5">
                                                         <div class="featured-image">
@@ -112,7 +112,7 @@
                                                                     <li><a href="{{ route('account.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
                                                                     <li><a href="#" data-toggle="modal" data-target="#modal-delete" class="btn-delete"><i class="fa fa-trash"></i> Delete</a></li>
                                                                     <li class="dropdown-header">QUICK ACTION</li>
-                                                                    <li><a href="{{ route('account.article.draft', [$article->slug]) }}"><i class="fa fa-edit"></i> Set as Draft</a></li>
+                                                                    <li><a href="#" class="btn-draft"><i class="fa fa-edit"></i> Set as Draft</a></li>
                                                                     <li><a href="#" data-toggle="modal" data-target="#modal-share" class="btn-share"><i class="fa fa-share-alt"></i> Share</a></li>
                                                                 </ul>
                                                             </div>
@@ -151,7 +151,7 @@
     <div class="modal fade no-line" id="modal-delete" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#" data-url="{{ url('article/delete/') }}" method="post">
+                <form action="#" data-url="{{ url('account/article/') }}" method="post">
                     {!! csrf_field() !!}
                     <input type="hidden" name="_method" value="DELETE">
                     <div class="modal-header">
@@ -159,9 +159,8 @@
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE ARTICLE</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbn">Are you sure delete this article?</label>
+                        <label class="mbn">Are you sure delete the <span class="delete-title text-danger"></span>?</label>
                         <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
-                        <input type="hidden" class="form-control" value="0"/>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
@@ -198,5 +197,10 @@
             </div>
         </div>
     </div>
+
+    <form action="#" method="post" data-url="{{ url('account/article/draft') }}" id="form-draft">
+        {!! csrf_field() !!}
+        <input type="hidden" name="_method" value="PATCH">
+    </form>
 
 @endsection

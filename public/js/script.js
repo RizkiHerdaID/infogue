@@ -1184,7 +1184,9 @@ $(function () {
 
     $('.btn-delete').click(function(){
         var id = $(this).closest('*[data-id]').data('id');
+        var title = $(this).closest('.record').find('h1.title a').text();
         $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
+        $('#modal-delete form .delete-title').text(title);
     });
 
     $('.btn-share').click(function(){
@@ -1193,6 +1195,12 @@ $(function () {
         $('#modal-share .facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u='+url);
         $('#modal-share .twitter').attr('href', 'https://www.twitter.com/home?status='+url);
         $('#modal-share .googleplus').attr('href', 'https://plus.google.com/share?url='+url);
+    });
+
+    $('.btn-draft').click(function(){
+        var id = $(this).closest('*[data-id]').data('id');
+        $('#form-draft').attr('action', $('#form-draft').data('url')+'/'+id);
+        $('#form-draft').submit();
     });
 
 });

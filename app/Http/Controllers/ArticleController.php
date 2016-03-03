@@ -313,20 +313,20 @@ class ArticleController extends Controller
     /**
      * Update the specified article in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param $slug
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function draft(Request $request, $slug)
+    public function draft($id)
     {
-        $article = Article::whereSlug($slug)->whereContributorId(Auth::user()->id)->firstOrFail();
+        $article = Article::whereId($id)->whereContributorId(Auth::user()->id)->firstOrFail();
+
         $article->status = 'draft';
+
         $article->save();
 
-        return redirect()
-            ->route('account.article.index')
-            ->with('status', 'success')
-            ->with('message', 'Article set to draft successfully');
+        return redirect()->route('account.article.index')
+            ->with('status', 'warning')
+            ->with('message', 'The <strong>'.$article->title.'</strong> set to draft');
     }
 
     /**
@@ -337,6 +337,12 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        $article->delete();
+
+        return redirect()->route('account.article.index')
+            ->with('status', 'danger')
+            ->with('message', 'The <strong>'.$article->title.'</strong> was deleted');;
     }
 }

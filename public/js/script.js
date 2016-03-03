@@ -1203,4 +1203,71 @@ $(function () {
         $('#form-draft').submit();
     });
 
+
+    $('select[name="category"]').change(function(){
+        loadingSelect($('select[name="subcategory"]'));
+        $.getJSON("http://localhost:8000/account/article/subcategory/"+$(this).val(), function (data) {
+            var output = '<option value="">'+$('select[name="category"] option:selected').text()+' Subcategory</option>';
+            var label = '';
+            var isFirst = true;
+            $.each(data, function(i,row){
+                if(row.label != label){
+                    if(!isFirst){
+                        output += '</optgroup>';
+                    }
+                    isFirst = false;
+                    label = row.label;
+                    output += '<optgroup label="'+row.label+'">';
+                }
+                output += "<option value='"+row.id+"'>"+row.subcategory+"</option>";
+                if(data == data.length - 1){
+                    output += '</optgroup>';
+                }
+            });
+            completeSelect($('select[name="subcategory"]'));
+            $('select[name="subcategory"]').html(output);
+        });
+    });
+
+    function loadingSelect($tag){
+        $tag.attr('disabled', '');
+        $tag.html('<option value="loading">Please Wait...</option>');
+    }
+
+    function completeSelect($tag){
+        $tag.removeAttr('disabled');
+        $tag.find('option[value="loading"]').remove();
+    }
+
+    function createSlug(str) {
+        var $slug;
+        var trimmed = $.trim(str);
+        $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+            replace(/-+/g, '-').
+            replace(/^-|-$/g, '');
+        return $slug.toLowerCase();
+    }
+
+    $("#title").keyup(function(){
+        if(!$("#slug").hasClass('changed')){
+            $("#slug").val(createSlug($(this).val()));
+        }
+    });
+
+    $("#slug").keyup(function(){
+        if($("#title").val() != ''){
+            $(this).addClass('changed');
+        }
+    });
+
+    var countries = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        prefetch: 'http://localhost:8000/account/article/tags'
+    });
+
+    $('.bootstrap-tagsinput input').typeahead(null, {
+        name: 'slug',
+        source: countries
+    });
 });

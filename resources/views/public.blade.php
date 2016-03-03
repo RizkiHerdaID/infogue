@@ -21,6 +21,9 @@
 
     <link rel="stylesheet" href="{{ asset('/library/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/library/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/library/summernote/dist/summernote.css') }}">
+    <link rel="stylesheet" href="{{ asset('/library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
+    <link rel="stylesheet" href="{{ asset('/library/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
 </head>
 <body id="top">
@@ -308,10 +311,11 @@
 
 <script src="{{ asset('/library/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('/library/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/library/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
+<script src="{{ asset('/library/bootstrap-typeahead/typeahead.bundle.js') }}"></script>
 <script src="{{ asset('/library/echojs/dist/echo.min.js') }}"></script>
 <script src="{{ asset('/library/equalize/js/equalize.min.js') }}"></script>
 <script src="{{ asset('/library/jquery-validation/dist/jquery.validate.min.js') }}"></script>
-<script src="{{ asset('/library/jquery.cycle2/index.js') }}"></script>
 <script src="{{ asset('/library/jquery.fitvids/jquery.fitvids.js') }}"></script>
 <script src="{{ asset('/library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('/library/jquery.stellar/jquery.stellar.min.js') }}"></script>
@@ -319,6 +323,7 @@
 <script src="{{ asset('/library/superfish/dist/js/hoverIntent.js') }}"></script>
 <script src="{{ asset('/library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
 <script src="{{ asset('/library/mustache/mustache.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/library/summernote/dist/summernote.min.js') }}" type="text/javascript"></script>
 <script id="dsq-count-scr" src="//info-gue.disqus.com/count.js" async></script>
 
 <script src="{{ asset('/js/script.js') }}"></script>

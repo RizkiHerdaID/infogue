@@ -67,7 +67,7 @@
                         <a href="@{{ article_ref }}">@{{ title }}</a>
                     </h1>
                     <ul class="timestamp">
-                        <li>By <a href="@{{ contributor_ref }}">@{{ username }}</a></li>
+                        <li>By <a href="@{{ contributor_ref }}">@{{ name }}</a></li>
                         <li>@{{ published_at }}</li>
                         <li>@{{ view }} Views</li>
                     </ul>

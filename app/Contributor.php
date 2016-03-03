@@ -127,7 +127,7 @@ class Contributor extends Authenticatable
         $article = new Article();
 
         $articles = $article->preArticleQuery()->published()
-            ->whereIn('articles.id', $follow)
+            ->whereIn('contributor_id', $follow)
             ->paginate(10);
 
         return $article->preArticleModifier($articles);

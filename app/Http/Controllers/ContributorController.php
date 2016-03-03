@@ -2,7 +2,6 @@
 
 namespace Infogue\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -88,27 +87,6 @@ class ContributorController extends Controller
         } else {
             return view('profile.following', compact('contributor', 'following'));
         }
-    }
-
-    /**
-     * Show the form for creating a new contributor.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created contributor in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -275,14 +253,4 @@ class ContributorController extends Controller
         return ['status' => false, 'filename' => ''];
     }
 
-    /**
-     * Remove the specified contributor from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

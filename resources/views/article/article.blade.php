@@ -39,7 +39,7 @@
         <div class="article-wrapper">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="article-preview single-view">
+                    <div class="article-preview single-view" data-id="{{ $article->id }}">
                         <div class="featured-image">
                             <img src="{{ asset('images/misc/preloader.gif') }}" alt="{{ $article->featured }}" data-echo="{{ asset('images/featured/'.$article->featured) }}"/>
                         </div>
@@ -158,7 +158,7 @@
                                      var disqus_config = function () {
                                      this.page.url = document.getElementById('comment-info').getAttribute("data-link"); // Replace PAGE_URL with your page's canonical URL variable
                                      this.page.identifier = document.getElementById('comment-info').getAttribute("data-identity"); // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-                                     console.log(this.page.identifier);
+                                     //console.log(this.page.identifier);
                                     };
 
                                     (function() { // DON'T EDIT BELOW THIS LINE

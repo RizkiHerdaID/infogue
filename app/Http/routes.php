@@ -145,7 +145,6 @@ Route::group(['middleware' => ['web']], function () {
     // Group of article routes...
     Route::group(['as' => 'article.'], function () {
         Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
-        Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
         Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
         Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
         Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
@@ -153,8 +152,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
         Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
         Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'ArticleController@tag']);
-        Route::post('/rate/{id}', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
-        Route::post('/hit/{id}', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
+        Route::post('/article/rate', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
+        Route::post('/article/hit', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
+        Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
     });
 
     // Group of API for external devices...

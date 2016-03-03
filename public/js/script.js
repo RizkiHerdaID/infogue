@@ -1270,4 +1270,22 @@ $(function () {
         name: 'slug',
         source: countries
     });
+
+    // count view
+    if($('.single-view[data-id]').length){
+        var article_id = $('.single-view[data-id]').data('id');
+        setTimeout(function(){
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8000/article/hit",
+                data:{ id: article_id },
+                success:function(data){
+                    console.log('This article hit at '+data);
+                },
+                error:function(e){
+                    console.log(e.toString());
+                }
+            });
+        }, 15000);
+    }
 });

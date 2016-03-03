@@ -313,7 +313,14 @@ class ArticleController extends Controller
      */
     public function hit(Request $request)
     {
-        //
+        $article = Article::findOrFail($request->id);
+
+        $article->view = $article->view + 1;
+
+        $article->save();
+
+        return $article->view;
+
     }
 
     /**

@@ -935,6 +935,12 @@ $(function () {
 
     $('#search-contributor').equalize({equalize: 'height', children: '.contributor-profile'});
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     var page = 1;
     var onLoading = false;
     var isEnded = false;
@@ -1108,6 +1114,8 @@ $(function () {
 
         var firstScroll = true;
         var previousScrollHeightMinusTop = 0;
+        var lastConversationId = '';
+        var isCheckingNewConversation = false;
         function loadConversation(data){
             if ($('#conversation-row-template').length && data.data.length > 0) {
                 var template = $('#conversation-row-template').html();
@@ -1115,6 +1123,7 @@ $(function () {
                 var html = Mustache.to_html(template, data);
                 $('#conversations').prepend(html);
                 $("time.timeago").timeago();
+                lastConversationId = $('.conversation:last-child').data('id');
 
                 if(firstScroll){
                     $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
@@ -1153,6 +1162,67 @@ $(function () {
                     loadContent();
                 }
             });
+
+            setInterval(function(){
+                if(!isCheckingNewConversation){
+                    checkConversation();
+                }
+            }, 5000);
+        }
+
+        $('.btn-message').click(function(){
+            var name = $(this).closest('.profile').find('h2.name').text();
+            $('#send-message').find('.message-to').text(name);
+        });
+
+        // AJAX SEND MESSAGE
+        $('#form-message').on('submit',(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+
+            $("#message").attr('readonly','');
+            $("#attachment").attr('disabled','true');
+            $(".btn-send").attr('disabled','true');
+
+            $.ajax({
+                type:'POST',
+                url: $(this).attr('action'),
+                data:formData,
+                cache:false,
+                contentType: false,
+                processData: false,
+                success:function(){
+                    console.log("message sent");
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").removeAttr('disabled');
+                    if(!isCheckingNewConversation){
+                        checkConversation();
+                    }
+                },
+                error: function(){
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").removeAttr('disabled');
+                    console.log("send message is failed");
+                }
+            });
+        }));
+
+        function checkConversation(){
+            isCheckingNewConversation = true;
+            $.getJSON($("section[data-href]").data('href')+'?last='+lastConversationId, function (data) {
+                if ($('#conversation-row-template').length && data.data.length > 0) {
+                    var template = $('#conversation-row-template').html();
+                    data.data.reverse();
+                    var html = Mustache.to_html(template, data);
+                    $('#conversations').append(html);
+                    $("time.timeago").timeago();
+                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                    lastConversationId = $('.conversation:last-child').data('id');
+                }
+                isCheckingNewConversation = false;
+            });
         }
 
         function generateRating(){
@@ -1172,12 +1242,6 @@ $(function () {
             });
         }
     }
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     $(document).on("click", ".btn-follow", function(e){
         e.preventDefault();
@@ -1400,8 +1464,4 @@ $(function () {
         });
     }
 
-    $('.btn-message').click(function(){
-        var name = $(this).closest('.profile').find('h2.name').text();
-        $('#send-message').find('.message-to').text(name);
-    });
 });

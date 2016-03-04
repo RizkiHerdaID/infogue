@@ -25,7 +25,7 @@ class Conversation extends Model
         $this->hasOne('Infogue\Attachment');
     }
 
-    public function retrieveConversation($id){
+    public function retrieveConversation($id, $last = null){
         $contributor_id = $id;
         $user_id = Auth::user()->id;
 
@@ -37,16 +37,19 @@ class Conversation extends Model
             ->join('contributors', 'contributors.id', '=', 'sender')
             ->whereMessageId($message->message_id)
             ->orderBy('created_at', 'desc')
-            ->orderBy('id', 'desc')
-            ->paginate(7);
+            ->orderBy('id', 'desc');
 
+        if($last != null || $last != 0){
+            $conversations = $conversations->where('conversations.id', '>', $last)->get();
+            return ["data"=>$this->preConversationModifier($conversations)];
+        }
         /*
         $reverse = $this->select(DB::raw('conversations.*'))
             ->from(DB::raw("({$conversations->toSql()}) as conversations"))
             ->orderBy('id', 'asc')
             ->setBindings([$message->message_id]);
 */
-        return $this->preConversationModifier($conversations);
+        return $this->preConversationModifier($conversations->paginate(7));
     }
 
     public function preConversationModifier($conversations)

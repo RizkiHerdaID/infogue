@@ -23,15 +23,18 @@
                                         </div>
                                     </div>
                                     <div class="chat-box">
-                                        <form action="#">
+                                        <form action="{{ route('account.message.send') }}" id="form-message" method="post" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <input type="hidden" name="async" value="true">
+                                            <input type="hidden" name="contributor_id" value="{{ $contributor->id }}">
                                             <textarea name="message" id="message" cols="30" rows="3" placeholder="Type a message here" class="form-control"></textarea>
                                             <div class="control">
                                                 <div class="css-file attachment">
                                                     <a class="open-attachment"><i class="fa fa-file mrs"></i>ATTACHMENT</a>
                                                     <span class="file-info"></span>
-                                                    <input type="file" class="file-input" id="attachment" />
+                                                    <input type="file" class="file-input" id="attachment" name="attachment" />
                                                 </div>
-                                                <button type="submit" class="btn btn-primary plm prm">SEND</button>
+                                                <button type="submit" class="btn btn-primary btn-send plm prm">SEND</button>
                                             </div>
                                         </form>
                                     </div>
@@ -46,7 +49,7 @@
 
     <script id="conversation-row-template" type="text/template">
         @{{#data}}
-        <div class="@{{ owner }}">
+        <div class="conversation @{{ owner }}" data-id="@{{ id }}">
             <div class="contributor-profile mini message-list @{{ owner }}">
                 <img src="@{{ avatar_ref }}" class="avatar img-circle"/>
                 <div class="info">

@@ -5,9 +5,11 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
 use Infogue\Http\Requests;
+use Infogue\Image;
 use Infogue\Message;
 
 class MessageController extends Controller
@@ -50,9 +52,9 @@ class MessageController extends Controller
         $contributor = Contributor::whereUsername($username)->firstOrFail();
 
         $conversation = new Conversation();
-        $conversations = $conversation->retrieveConversation($contributor->id);
+        $conversations = $conversation->retrieveConversation($contributor->id, Input::get('last', null));
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) || Input::has('last')) {
             return $conversations;
         } else {
             return view('contributor.conversation', compact('contributor', 'conversations'));
@@ -88,9 +90,20 @@ class MessageController extends Controller
         $conversation->message = $request->input('message');
         $conversation->save();
 
-        return redirect()->back()
-            ->with('status', 'success')
-            ->with('message', 'The message was sent');
+        if($request->has('async')){
+            $image = new Image();
+            if ($image->uploadImage($request, 'attachment', base_path('public/file/'), rand(0, 1000) . uniqid())) {
+                $attachment = new Attachment();
+                $attachment->conversation_id = $conversation->id;
+                $attachment->file = $request->input('attachment');
+                $attachment->save();
+            }
+        }
+        else{
+            return redirect()->back()
+                ->with('status', 'success')
+                ->with('message', 'The message was sent');
+        }
     }
 
     /**

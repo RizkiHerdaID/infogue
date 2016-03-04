@@ -48,6 +48,7 @@ class Message extends Model
             $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
             $contributor->conversation_ref = route('account.message.conversation', [$contributor->username]);
             $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
+            $contributor->message = substr($contributor->message, 30);
             $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
             $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
 

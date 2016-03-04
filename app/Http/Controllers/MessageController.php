@@ -5,6 +5,7 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
@@ -90,6 +91,11 @@ class MessageController extends Controller
         $conversation->message = $request->input('message');
         $conversation->save();
 
+        $contributor = Contributor::findOrFail($receiver);
+        if($contributor->email_message){
+            $this->sendEmailNotification($sender, $receiver, $request->input('message'));
+        }
+
         if($request->has('async')){
             $image = new Image();
             if ($image->uploadImage($request, 'attachment', base_path('public/file/'), rand(0, 1000) . uniqid())) {
@@ -104,6 +110,35 @@ class MessageController extends Controller
                 ->with('status', 'success')
                 ->with('message', 'The message was sent');
         }
+    }
+
+    public function sendEmailNotification($sender, $receiver, $message)
+    {
+        $contributorSender = Contributor::findOrFail($sender);
+        $contributorReceiver = Contributor::findOrFail($receiver);
+
+        $data = [
+            'receiverName' => $contributorReceiver->name,
+            'receiverUsername' => $contributorReceiver->username,
+            'receiverMessage' => $message,
+            'senderName' => $contributorSender->name,
+            'senderLocation' => $contributorSender->location,
+            'senderUsername' => $contributorSender->username,
+            'senderAvatar' => $contributorSender->avatar,
+            'senderArticle' => $contributorSender->articles()->count(),
+            'senderFollower' => $contributorSender->followers()->count(),
+            'senderFollowing' => $contributorSender->following()->count(),
+        ];
+
+        Mail::send('emails.message', $data, function ($message) use ($contributorReceiver, $contributorSender) {
+
+            $message->from('no-reply@infogue.id', 'Infogue.id');
+
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+
+            $message->to($contributorReceiver->email)->subject($contributorSender->name.' sent you a message');
+
+        });
     }
 
     /**

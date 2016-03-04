@@ -118,7 +118,6 @@ class FollowerController extends Controller
             'followerLocation' => $contributor->location,
             'followerAbout' => $contributor->about,
             'followerUsername' => $contributor->username,
-            'followerAbout' => $contributor->about,
             'followerAvatar' => $contributor->avatar,
             'followerArticle' => $contributor->articles()->count(),
             'followerFollower' => $contributor->followers()->count(),

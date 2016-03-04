@@ -133,7 +133,7 @@
                                                 </div>
                                             </div>
                                         @empty
-                                            <p class="text-center center-block">No articles available, <a href="{{ route('account.article.create') }}">create</a> now?</p>
+                                            <p class="text-center center-block pm">No articles available, <a href="{{ route('account.article.create') }}">create</a> now?</p>
                                         @endforelse
                                     </div>
                                 </div>

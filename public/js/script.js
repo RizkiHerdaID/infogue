@@ -1046,7 +1046,7 @@ $(function () {
             }
             else{
                 if(data.total == 0){
-                    $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
+                    $('#followers').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
                 }
 
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');

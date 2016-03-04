@@ -17,7 +17,7 @@
     <div style="display: block">
         <h2>Hi, {!! $receiverName !!}</h2>
         <p style="font-size: 16px; margin-bottom: 0">You have new message on Infogue</p>
-        <p style="margin-top: 0; margin-bottom: 30px">a little information about your new follower</p>
+        <p style="margin-top: 0; margin-bottom: 30px">a little information about your new conversation</p>
         <div style="display: block; margin-bottom: 50px">
             <img src="{{ asset('images/contributors/'.$senderAvatar) }}" class="avatar" width="100" style="float: left">
             <div class="info" style="padding-left: 125px">

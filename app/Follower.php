@@ -10,11 +10,11 @@ class Follower extends Model
 
     public function contributor()
     {
-        $this->belongsTo('Infogue\Contributor');
+        return $this->belongsTo('Infogue\Contributor');
     }
 
     public function following()
     {
-        $this->belongsTo('Infogue\Contributor', 'following');
+        return $this->belongsTo('Infogue\Contributor', 'following');
     }
 }

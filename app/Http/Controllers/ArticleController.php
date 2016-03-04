@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Article;
 use Infogue\Category;
@@ -290,10 +291,47 @@ class ArticleController extends Controller
 
         Article::find($article->id)->tags()->attach($tags_id);
 
+        $this->sendEmailNotification(Auth::user()->id, $article);
+
         return redirect()
             ->route('account.article.index')
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was created');
+    }
+
+    public function sendEmailNotification($contributor_id, $article)
+    {
+        $contributor = Contributor::findOrFail($contributor_id);
+
+        $followers = $contributor->followers;
+
+        foreach($followers as $follower):
+            $follower = $follower->contributor;
+            if($follower->email_feed){
+                $data = [
+                    'receiverName' => $follower->name,
+                    'receiverUsername' => $follower->username,
+                    'contributorName' => $contributor->name,
+                    'contributorLocation' => $contributor->location,
+                    'contributorUsername' => $contributor->username,
+                    'contributorAvatar' => $contributor->avatar,
+                    'contributorArticle' => $contributor->articles()->count(),
+                    'contributorFollower' => $contributor->followers()->count(),
+                    'contributorFollowing' => $contributor->following()->count(),
+                    'article' => $article,
+                ];
+
+                Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
+
+                    $message->from('no-reply@infogue.id', 'Infogue.id');
+
+                    $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+
+                    $message->to($follower->email)->subject($contributor->name.' create new article');
+
+                });
+            }
+        endforeach;
     }
 
     /**

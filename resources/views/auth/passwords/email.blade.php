@@ -14,7 +14,7 @@
                     @if(Session::has('status'))
                         <div class="form-group">
                             <div class="alert alert-warning">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="margin-top: 0; font-size: 16px;">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                                 {{ Session::get('status') }}
@@ -37,10 +37,10 @@
                     <p class="hidden-xs">Still doesn't know about InfoGue feature, <a href="{{ url('faq') }}">Learn More</a></p>
                     <p class="mbm mtl">Remember your credential? <a href="{{ route('login.form') }}">Sign here!</a> or connect with</p>
                     <div class="mbm">
-                        <a class="btn btn-facebook mrs" href="http://www.facebook.com">
+                        <a class="btn btn-facebook mrs" href="{{ url('auth/facebook') }}">
                             <i class="fa fa-facebook"></i> FACEBOOK
                         </a>
-                        <a class="btn btn-twitter" href="http://www.twitter.com">
+                        <a class="btn btn-twitter" href="{{ url('auth/twitter') }}">
                             <i class="fa fa-twitter"></i> TWITTER
                         </a>
                     </div>

@@ -10,7 +10,6 @@
     <div style="margin-bottom: 30px; text-align: center">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
         <h2 style="margin-top: 0; color: #4dc4d2">RESET PASSWORD ACTION</h2>
-        <hr style="margin-top: 10px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">
     </div>
 
 
@@ -57,9 +56,11 @@
                 Infogue Publisher in Java, Indonesia. You are receiving Endorsements emails.
                 You receive this email because you intended for reset your password. <a href="{{ url('faq') }}" style="color: #4dc4d2;">Learn why we included this</a>.</p>
 
-            <p>Infogue is a registered business name of Infogue Public Portal.</p>
-            <p style="margin: 0">Registered in Indonesia as a private limited company.</p>
-            <p style="margin: 0">{{ $site_settings['Address'] }}</p>
+            <p style="margin: 0;">{{ $site_settings['Address'] }}
+                contact: <a href="tel:{{ $site_settings['Contact'] }}" style="color: #4dc4d2;">{{ $site_settings['Contact'] }}</a>
+                email: <a href="tel:{{ $site_settings['Email'] }}" style="color: #4dc4d2;">{{ $site_settings['Email'] }}</a>
+                Infogue is a registered business name of Infogue Public Portal. Registered in Indonesia as a private limited company.
+            </p>
         </div>
 
     </div>

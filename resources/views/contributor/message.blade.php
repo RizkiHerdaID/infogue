@@ -13,120 +13,19 @@
                 <div class="col-md-8 no-padding-mobile">
                     <div class="account-profile">
                         <div class="profile-wrapper">
-                            <section class="list-data">
+                            <section class="list-data" data-href="{{ Request::url() }}">
                                 <h3 class="title">MESSAGES</h3>
                                 <div class="content">
-                                    <div role="list">
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/team04.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Wendi Aditya Wijaya</p>
-                                                    <p class="message">Hei what’s up, it’s long time never see you again since</p>
-                                                    <p class="timestamp">15 Conversation | 40 minutes ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
+                                    @if(Session::has('status'))
+                                        <div class="alert alert-{{ Session::get('status') }}" style="border-radius: 0">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            {!! Session::get('message') !!}
                                         </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/profile.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Brian Vhirdrict</p>
-                                                    <p class="message">We need to complete last code about path finder</p>
-                                                    <p class="timestamp">67 Conversation | 4 hours ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/cici.png" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Imelda Agustine</p>
-                                                    <p class="message">Bro, come at my home saturday night</p>
-                                                    <p class="timestamp">12 Conversation | 2 hours ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/angga.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Angga Ari Wijaya</p>
-                                                    <p class="message">We promise to solve their cases, now I’m working on it</p>
-                                                    <p class="timestamp">8 Conversation | a minute ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/team02.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Rendi Beat</p>
-                                                    <p class="message">Confirm soon alright?</p>
-                                                    <p class="timestamp">15 Conversation | 8 hours ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/iyan.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Iyan Budiman</p>
-                                                    <p class="message">I was sent you email, have you read it?</p>
-                                                    <p class="timestamp">45 Conversation | 1 days ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/lukman.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Lukman Hidayatullah</p>
-                                                    <p class="message">Meet me at 9:00 AM at starbuck, don’t be late</p>
-                                                    <p class="timestamp">8 Conversation | a minute ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/team01.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Shanon Rean</p>
-                                                    <p class="message">Hei what’s up, it’s long time never see you again since</p>
-                                                    <p class="timestamp">8 Conversation | a minute ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/desi.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Desi Wulandari</p>
-                                                    <p class="message">Hei hei... just say hi, how are you?...</p>
-                                                    <p class="timestamp">51 Conversation | 4 days ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
-                                        <div class="contributor-profile mini message-list">
-                                            <img src="images/contributors/vivi.jpg" class="avatar img-circle img-responsive"/>
-                                            <div class="info">
-                                                <a href="contributor_conversation.html">
-                                                    <p class="name">Vivi Rachkmawati</p>
-                                                    <p class="message">I hope we keep friend and bounding til end of my life</p>
-                                                    <p class="timestamp">85 Conversation | 3 days ago</p>
-                                                </a>
-                                            </div>
-                                            <button class="btn btn-primary btn-outline btn-delete" data-toggle="modal" data-target="#delete"><i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span></button>
-                                        </div>
+                                    @endif
+                                    <div role="list" id="messages">
+
                                     </div>
                                 </div>
                                 <div class="text-center pm">
@@ -139,6 +38,51 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <script id="message-row-template" type="text/template">
+        @{{#data}}
+        <div class="contributor-profile mini message-list" data-id="@{{ message_id }}" data-sender="@{{ message_sender }}">
+            <img src="@{{ avatar_ref }}" class="avatar img-circle img-responsive"/>
+            <div class="info">
+                <a href="@{{ conversation_ref }}">
+                    <p class="name">@{{ name }}</p>
+                    <p class="message">@{{ message }}</p>
+                    <p class="timestamp">@{{ conversation_total }} Conversation |
+                        <time class="timeago" datetime="@{{ created_at }}">@{{ created_at }}</time>
+                    </p>
+                </a>
+            </div>
+            <button class="btn btn-primary btn-outline btn-delete delete-message" data-toggle="modal" data-label="@{{ name }}" data-target="#modal-delete">
+                <i class="fa fa-trash visible-xs"></i><span class="hidden-xs">DELETE</span>
+            </button>
+        </div>
+        @{{/data}}
+    </script>
+
+    <div class="modal fade no-line" id="modal-delete" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" data-url="{{ url('account/message/') }}" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="sender" value="">
+                    <input type="hidden" name="contributor" value="">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE CONVERSATION</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="mbn">Are you sure delete conversation with <span class="delete-title text-danger"></span>?</label>
+                        <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
+                        <button type="submit" class="btn btn-danger">DELETE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 @endsection

@@ -4,6 +4,7 @@ namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Infogue\Conversation;
 use Infogue\Http\Requests;
 use Infogue\Message;
@@ -26,7 +27,15 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return view('contributor.message');
+        $message = new Message();
+
+        $messages = $message->retrieveMessages(Auth::user()->id);
+
+        if (Input::get('page', false)) {
+            return $messages;
+        } else {
+            return view('contributor.message', compact('messages'));
+        }
     }
 
     /**
@@ -77,11 +86,28 @@ class MessageController extends Controller
     /**
      * Remove the specified message from database.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $message = Conversation::whereMessageId($id);
+
+        if(count($message->get()) == 0){
+            abort(404);
+        }
+        else{
+            if($request->input('sender') == Auth::user()->id){
+                $message->update(['is_available_sender' => 0]);
+            }
+            else{
+                $message->update(['is_available_receiver' => 0]);
+            }
+        }
+
+        return redirect()->route('account.message.list')
+            ->with('status', 'danger')
+            ->with('message', 'Conversation with <strong>' . $request->input('contributor') . '</strong> was deleted');
     }
 }

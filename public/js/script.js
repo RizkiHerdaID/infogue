@@ -224,11 +224,30 @@ $(function () {
 
 
     // TO TOP ---------------------------------------------------------------------
-    $('footer').waypoint(function () {
-        if ($(document).height() > 1500) {
-            $('.to-top').toggleClass('visible');
-        }
-    }, {offset: '140%'});
+    function onElementHeightChange(elm, callback){
+        var lastHeight = elm.clientHeight, newHeight;
+        (function run(){
+            newHeight = elm.clientHeight;
+            if( lastHeight != newHeight )
+                callback();
+            lastHeight = newHeight;
+
+            if( elm.onElementHeightChangeTimer )
+                clearTimeout(elm.onElementHeightChangeTimer);
+
+            elm.onElementHeightChangeTimer = setTimeout(run, 200);
+        })();
+    }
+
+    onElementHeightChange(document.body, function(){
+        console.log('aa');
+        $('footer').waypoint(function () {
+            if ($(document).height() > 2000) {
+                $('.to-top').toggleClass('visible');
+            }
+        }, {offset: '140%'});
+    });
+
 
 
     // BROWSER UPGRADE ------------------------------------------------------------
@@ -913,6 +932,8 @@ $(function () {
         }
     }, 4000);
 
+    $("time.timeago").timeago();
+
     $('#search-contributor').equalize({equalize: 'height', children: '.contributor-profile'});
 
     var page = 1;
@@ -961,6 +982,9 @@ $(function () {
                 }
                 else if($('#followers').length){
                     loadFollower(data);
+                }
+                else if($('#messages').length){
+                    loadMessage(data);
                 }
             }).fail(function( jqxhr, textStatus, error ) {
                 if(jqxhr.status == 401){
@@ -1050,6 +1074,31 @@ $(function () {
                 }
 
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');
+                isEnded = true;
+            }
+        }
+
+        function loadMessage(data){
+            if ($('#message-row-template').length && data.data.length > 0) {
+                var template = $('#message-row-template').html();
+                var html = Mustache.to_html(template, data);
+                $('#messages').append(html);
+                $("time.timeago").timeago();
+
+                if(page == data.last_page){
+                    $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
+                    isEnded = true;
+                }
+                else{
+                    page++;
+                }
+            }
+            else{
+                if(data.total == 0){
+                    $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+                }
+
+                $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
                 isEnded = true;
             }
         }
@@ -1173,9 +1222,13 @@ $(function () {
         $("#modal-info").modal("show");
     }
 
-    $('.btn-delete').click(function(){
+    $(document).on("click", ".btn-delete", function(){
         var id = $(this).closest('*[data-id]').data('id');
-        var title = $(this).closest('.record').find('h1.title a').text();
+        var title = $(this).data('label');
+        if($(this).hasClass('delete-message')){
+            $('#modal-delete input[name="sender"]').val($(this).closest('*[data-id]').data('sender'));
+            $('#modal-delete input[name="contributor"]').val(title);
+        }
         $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
         $('#modal-delete form .delete-title').text(title);
     });

@@ -77,7 +77,7 @@
                                     @endif
                                     <div>
                                         @forelse($articles as $article)
-                                            <div class="article-preview landscape mini record" style="height: 180px">
+                                            <div class="article-preview landscape mini" style="height: 180px">
                                                 <div class="row">
                                                     <div class="col-sm-4 col-xs-5">
                                                         <div class="featured-image">
@@ -110,7 +110,7 @@
                                                                     <li class="dropdown-header">CONTROL</li>
                                                                     <li><a href="{{ route('article.show', [$article->slug]) }}"><i class="fa fa-eye"></i> View</a></li>
                                                                     <li><a href="{{ route('account.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                                    <li><a href="#" data-toggle="modal" data-target="#modal-delete" class="btn-delete"><i class="fa fa-trash"></i> Delete</a></li>
+                                                                    <li><a href="#" data-toggle="modal" data-target="#modal-delete" data-label="{{ $article->title }}" class="btn-delete"><i class="fa fa-trash"></i> Delete</a></li>
                                                                     <li class="dropdown-header">QUICK ACTION</li>
                                                                     <li><a href="#" class="btn-draft"><i class="fa fa-edit"></i> Set as Draft</a></li>
                                                                     <li><a href="#" data-toggle="modal" data-target="#modal-share" class="btn-share"><i class="fa fa-share-alt"></i> Share</a></li>

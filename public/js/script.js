@@ -240,7 +240,6 @@ $(function () {
     }
 
     onElementHeightChange(document.body, function(){
-        console.log('aa');
         $('footer').waypoint(function () {
             if ($(document).height() > 2000) {
                 $('.to-top').toggleClass('visible');
@@ -941,18 +940,19 @@ $(function () {
     var isEnded = false;
     var isFirst = true;
 
-    if($('.btn-load-more').length){
+    if($('.loading').length){
         $('.loading').show();
         $('.btn-load-more').hide();
 
         if(isFirst){
-            isFirst = false;
             loadContent();
         }
 
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onLoading && !isEnded) {
-                loadContent();
+                if(!$('#conversations').length){
+                    loadContent();
+                }
             }
         });
 
@@ -985,6 +985,9 @@ $(function () {
                 }
                 else if($('#messages').length){
                     loadMessage(data);
+                }
+                else if($('#conversations').length){
+                    loadConversation(data);
                 }
             }).fail(function( jqxhr, textStatus, error ) {
                 if(jqxhr.status == 401){
@@ -1101,6 +1104,55 @@ $(function () {
                 $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
                 isEnded = true;
             }
+        }
+
+        var firstScroll = true;
+        var previousScrollHeightMinusTop = 0;
+        function loadConversation(data){
+            if ($('#conversation-row-template').length && data.data.length > 0) {
+                var template = $('#conversation-row-template').html();
+                data.data.reverse();
+                var html = Mustache.to_html(template, data);
+                $('#conversations').prepend(html);
+                $("time.timeago").timeago();
+
+                if(firstScroll){
+                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                    firstScroll = false;
+                }
+                else{
+                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight - previousScrollHeightMinusTop);
+                }
+
+                if(page == data.last_page){
+                    $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+                    isEnded = true;
+                }
+                else{
+                    page++;
+                }
+            }
+            else{
+                if(data.total == 0){
+                    $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+                }
+
+                $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+                isEnded = true;
+            }
+        }
+
+        if($('#conversations').length){
+            if(isExtraSmall){
+                $('footer').hide();
+            }
+            $(".message-box").scroll(function () {
+                previousScrollHeightMinusTop = $(".message-box")[0].scrollHeight - $(".message-box").scrollTop();
+
+                if($(".message-box").scrollTop() < 50  && !onLoading && !isEnded){
+                    loadContent();
+                }
+            });
         }
 
         function generateRating(){

@@ -5,6 +5,7 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Infogue\Contributor;
 use Infogue\Conversation;
 use Infogue\Http\Requests;
 use Infogue\Message;
@@ -46,7 +47,16 @@ class MessageController extends Controller
      */
     public function conversation($username)
     {
-        //
+        $contributor = Contributor::whereUsername($username)->firstOrFail();
+
+        $conversation = new Conversation();
+        $conversations = $conversation->retrieveConversation($contributor->id);
+
+        if (Input::get('page', false)) {
+            return $conversations;
+        } else {
+            return view('contributor.conversation', compact('contributor', 'conversations'));
+        }
     }
 
     /**

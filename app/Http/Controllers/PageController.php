@@ -28,8 +28,6 @@ class PageController extends Controller
         $category = new Category();
         $summary = $category->featured();
 
-        //dd($summary[0][1]->rating);
-
         return view('pages.index', compact('featured', 'popular', 'ranked', 'trending', 'latest', 'summary'));
     }
 

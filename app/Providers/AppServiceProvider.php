@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Infogue\Category;
 use Infogue\Setting;
+use Infogue\Visitor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $visitor = new Visitor();
+        $visitor->checkVisitor();
+
         $this->app->singleton('site_settings', function(){
             $settings = Setting::all();
             $keys = array();

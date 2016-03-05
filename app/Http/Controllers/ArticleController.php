@@ -345,7 +345,7 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($request->input('article_id'));
 
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $request->ip();
 
         $is_rated = $article->ratings()->whereIp($ip)->count();
 

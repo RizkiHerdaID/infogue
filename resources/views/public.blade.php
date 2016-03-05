@@ -9,7 +9,7 @@
     <meta name="author" content="{{ $site_settings['Owner'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="url" content="{{ Request::url() }}" />
+    <meta name="url" content="{{ route('index') }}" />
 
     <meta property="og:url" content="{{ Request::url() }}" />
     <meta property="og:type" content="website" />

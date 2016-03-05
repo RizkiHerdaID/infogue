@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Infogue\Activity;
 use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
@@ -116,6 +117,11 @@ class MessageController extends Controller
     {
         $contributorSender = Contributor::findOrFail($sender);
         $contributorReceiver = Contributor::findOrFail($receiver);
+
+        $activity = new Activity();
+        $activity->contributor_id = Auth::user()->id;
+        $activity->activity = $activity->sendingMessageActivity($contributorSender->username, $contributorReceiver->username);
+        $activity->save();
 
         $data = [
             'receiverName' => $contributorReceiver->name,

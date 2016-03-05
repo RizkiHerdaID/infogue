@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\User;
@@ -155,6 +156,11 @@ class AuthController extends Controller
 
         $contributor->save();
 
+        $activity = new Activity();
+        $activity->contributor_id = $contributor->id;
+        $activity->activity = $activity->registerActivity($contributor->username, 'web');
+        $activity->save();
+
         return view('auth.activation', compact('contributor'));
     }
 
@@ -253,6 +259,11 @@ class AuthController extends Controller
             $contributor->facebook = 'https://facebook.com/'.$user->username;
 
             $contributor->save();
+
+            $activity = new Activity();
+            $activity->contributor_id = $contributor->id;
+            $activity->activity = $activity->registerActivity($contributor->username, 'facebook');
+            $activity->save();
         }
 
         Auth::login($contributor->first());
@@ -304,6 +315,11 @@ class AuthController extends Controller
             $contributor->cover = 'twitter-'.$user->id.'.jpg';
 
             $contributor->save();
+
+            $activity = new Activity();
+            $activity->contributor_id = $contributor->id;
+            $activity->activity = $activity->registerActivity($contributor->username, 'twitter');
+            $activity->save();
         }
 
         Auth::login($contributor->first());

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -94,6 +95,11 @@ class PasswordController extends Controller
         $user->password = bcrypt($password);
 
         $user->save();
+
+        $activity = new Activity();
+        $activity->contributor_id = $user->id;
+        $activity->activity = $activity->resetPasswordActivity($user->username);
+        $activity->save();
 
         Mail::send('emails.reset', [], function ($message) use ($user) {
 

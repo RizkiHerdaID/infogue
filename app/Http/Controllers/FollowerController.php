@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
+use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Follower;
 use Infogue\Http\Requests;
@@ -71,6 +72,11 @@ class FollowerController extends Controller
 
             if($follower->save()){
                 $contributor = Contributor::findOrFail($request->input('id'));
+
+                $activity = new Activity();
+                $activity->contributor_id = Auth::user()->id;
+                $activity->activity = $activity->followActivity(Auth::user()->username, $contributor->username);
+                $activity->save();
 
                 if($contributor->email_follow){
                     $this->sendEmailNotification(Auth::user()->id, $request->input('id'));

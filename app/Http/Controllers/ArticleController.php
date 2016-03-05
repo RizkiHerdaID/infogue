@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Infogue\Activity;
 use Infogue\Article;
 use Infogue\Category;
 use Infogue\Contributor;
@@ -361,6 +362,11 @@ class ArticleController extends Controller
             $rating->save();
         }
 
+        $activity = new Activity();
+        $activity->contributor_id = $article->contributor_id;
+        $activity->activity = $activity->giveRatingActivity($article->title, $article->slug, $request->input('rate'));
+        $activity->save();
+
         return ($article->rating()->count() == null) ? 0 : $article->rating->total_rating;
     }
 
@@ -563,6 +569,11 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
 
         $article->delete();
+
+        $activity = new Activity();
+        $activity->contributor_id = Auth::user()->id;
+        $activity->activity = $activity->deleteArticleActivity(Auth::user()->username, $article->title, $article->slug);
+        $activity->save();
 
         return redirect()->route('account.article.index')
             ->with('status', 'danger')

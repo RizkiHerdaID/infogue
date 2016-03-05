@@ -72,7 +72,7 @@
                 Infogue Publisher. <a href="{{ route('account.setting') }}" style="color: #4dc4d2;">Unsubscribe</a>
                 This email was intended for {{ $receiverName }}. <a href="{{ url('faq') }}" style="color: #4dc4d2;">Learn why we included this</a>.</p>
 
-            <p style="margin: 0;">{{ $site_settings['Address'] }}
+            <p style="margin: 0;">{{ $site_settings['Address'] }},
                 contact: <a href="tel:{{ $site_settings['Contact'] }}" style="color: #4dc4d2;">{{ $site_settings['Contact'] }}</a>
                 email: <a href="tel:{{ $site_settings['Email'] }}" style="color: #4dc4d2;">{{ $site_settings['Email'] }}</a>
                 Infogue is a registered business name of Infogue Public Portal.

@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700">
 </head>
-<body style="font-family: 'Open Sans', sans-serif; color: #555; margin: 0; padding: 0;">
+<body style="font-family: 'Open Sans', sans-serif; color: #555; margin: 0; padding: 20px; background: #f5f5f5;">
 
-<div style="display: block; padding: 20px">
+<div style="display: block; max-width: 550px; padding: 25px; background: #ffffff; margin: auto;">
     <div style="margin-bottom: 30px; display: block">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
-        <hr style="margin-top: 10px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">
     </div>
 
 
@@ -76,9 +75,12 @@
                 Infogue Publisher in Java, Indonesia. You are receiving Endorsements emails. <a href="{{ route('account.setting') }}" style="color: #4dc4d2;">Unsubscribe</a>
                 This email was intended for {{ $contributorName }}. <a href="{{ url('faq') }}" style="color: #4dc4d2;">Learn why we included this</a>.</p>
 
-            <p>Infogue is a registered business name of Infogue Public Portal.</p>
+            <p style="margin: 0;">{{ $site_settings['Address'] }},
+                contact: <a href="tel:{{ $site_settings['Contact'] }}" style="color: #4dc4d2;">{{ $site_settings['Contact'] }}</a>
+                email: <a href="tel:{{ $site_settings['Email'] }}" style="color: #4dc4d2;">{{ $site_settings['Email'] }}</a>
+                Infogue is a registered business name of Infogue Public Portal.
+            </p>
             <p style="margin: 0">Registered in Indonesia as a private limited company.</p>
-            <p style="margin: 0">{{ $site_settings['Address'] }}</p>
         </div>
 
     </div>

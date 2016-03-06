@@ -129,7 +129,7 @@ Route::group(['middleware' => ['web']], function () {
         });
 
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
-        Route::patch('/article/draft/{id}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
+        Route::match(['put', 'patch'], '/article/draft/{id}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
         Route::get('/article/subcategory/{id}', ['as' => 'account.article.subcategory', 'uses' => 'ArticleController@subcategory']);
         Route::get('/article/tags', ['as' => 'account.article.tags', 'uses' => 'ArticleController@tags']);
         Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);

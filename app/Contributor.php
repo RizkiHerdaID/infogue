@@ -11,7 +11,7 @@ class Contributor extends Authenticatable
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $hidden = ['password', 'deleted_at'];
+    protected $hidden = ['password', 'deleted_at', 'remember_token'];
 
     protected static function boot()
     {

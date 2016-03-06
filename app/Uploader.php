@@ -5,13 +5,13 @@ namespace Infogue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Image
+class Uploader
 {
     public function __construct(){
 
     }
 
-    public function uploadImage(Request $request, $input, $path, $name)
+    public function upload(Request $request, $input, $path, $name)
     {
         // modified uploaded filename by id because user id always unique
         $fileName = $input.'_'.$name;

@@ -9,9 +9,11 @@ class Category extends Model
 {
     protected $fillable = ['category', 'description'];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     private $article;
 
-    public function category_article($id)
+    public function categoryArticle($id)
     {
         $this->article = new Article();
 

@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
         $category = $this->category->where('category', 'like', $category_name)->firstOrFail();
 
-        $articles = $this->category->category_article($category->id);
+        $articles = $this->category->categoryArticle($category->id);
 
         $breadcrumb = [
             'Archive' => route('article.archive'),
@@ -68,7 +68,7 @@ class CategoryController extends Controller
 
         $subcategory = $category->subcategories()->where('subcategory', 'like', $subcategory_name)->firstOrFail();
 
-        $articles = $this->subcategory->subcategory_article($subcategory->id);
+        $articles = $this->subcategory->subcategoryArticle($subcategory->id);
 
         $breadcrumb = [
             'Archive' => route('article.archive'),

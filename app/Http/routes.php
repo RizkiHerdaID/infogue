@@ -158,7 +158,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // Group of API for external devices...
-    Route::group(['namespace' => 'Api', 'prefix' => 'api', 'middleware' => ['auth:api']], function () {
+    Route::group(['namespace' => 'Api', 'prefix' => 'api'], function () {
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);

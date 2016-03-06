@@ -1420,16 +1420,18 @@ $(function () {
         }
     });
 
-    var countries = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        prefetch: 'http://localhost:8000/account/article/tags'
-    });
+    if($('.bootstrap-tagsinput input').length){
+        var tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: 'http://localhost:8000/account/article/tags'
+        });
 
-    $('.bootstrap-tagsinput input').typeahead(null, {
-        name: 'slug',
-        source: countries
-    });
+        $('.bootstrap-tagsinput input').typeahead(null, {
+            name: 'slug',
+            source: tags
+        });
+    }
 
     // count view
     if($('.single-view[data-id]').length){

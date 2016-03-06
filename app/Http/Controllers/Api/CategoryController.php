@@ -39,7 +39,7 @@ class CategoryController extends Controller
      */
     public function category($slug)
     {
-        $category_name = str_replace('-',' ', $slug);
+        $category_name = str_replace('-', ' ', $slug);
 
         $category = $this->category->where('category', 'like', $category_name)->firstOrFail();
 
@@ -57,9 +57,9 @@ class CategoryController extends Controller
      */
     public function subcategory($category_slug, $subcategory_slug)
     {
-        $category_name = str_replace('-',' ', $category_slug);
+        $category_name = str_replace('-', ' ', $category_slug);
 
-        $subcategory_name = str_replace('-',' ', $subcategory_slug);
+        $subcategory_name = str_replace('-', ' ', $subcategory_slug);
 
         $category = $this->category->where('category', 'like', $category_name)->firstOrFail();
 

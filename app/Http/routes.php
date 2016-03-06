@@ -170,6 +170,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('/register', ['as' => 'api.register', 'uses' => 'ContributorController@register']);
         Route::post('/login', ['as' => 'api.login', 'uses' => 'ContributorController@login']);
+        Route::match(['put', 'patch'], '/', ['as' => 'api.account.update', 'uses' => 'ContributorController@update']);
 
         Route::post('/follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
         Route::delete('/unfollow/{$id}', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
@@ -180,8 +181,6 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
             Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);
         });
-
-        //Route::match(['put', 'patch'], '/', ['as' => 'update', 'uses' => 'ContributorController@update']);
     });
 
 });

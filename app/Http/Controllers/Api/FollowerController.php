@@ -30,7 +30,7 @@ class FollowerController extends Controller
         $follower->contributor_id = $request->input('contributor_id');
         $follower->following = $request->input('following_id');
 
-        if($follower->save()){
+        if ($follower->save()) {
             $contributor = Contributor::findOrFail($request->input('following_id'));
 
             $activity = new Activity();
@@ -38,7 +38,7 @@ class FollowerController extends Controller
             $activity->activity = $activity->followActivity($request->input('contributor_username'), $contributor->username);
             $activity->save();
 
-            if($contributor->email_follow){
+            if ($contributor->email_follow) {
                 $this->sendEmailNotification($request->input('contributor_id'), $request->input('following_id'));
             }
 
@@ -59,7 +59,7 @@ class FollowerController extends Controller
     {
         $follower = Follower::where('contributor_id', $request->input('contributor_id'))->where('following', $id)->first();
 
-        if(count($follower) > 0 && $follower->delete()){
+        if (count($follower) > 0 && $follower->delete()) {
             return 'success';
         }
 
@@ -90,7 +90,7 @@ class FollowerController extends Controller
 
             $message->replyTo('no-reply@infogue.id', 'Infogue.id');
 
-            $message->to($follow->email)->subject($contributor->name.' now is following you');
+            $message->to($follow->email)->subject($contributor->name . ' now is following you');
 
         });
     }

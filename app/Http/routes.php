@@ -164,8 +164,9 @@ Route::group(['middleware' => ['web']], function () {
         ]]);
         Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
 
-        Route::get('/category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@index']);
-        Route::get('/category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'SubcategoryController@index']);
+        Route::get('/category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
+        Route::get('/category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
+        Route::get('/category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
 
         Route::post('/register', ['as' => 'api.register', 'uses' => 'ContributorController@register']);
         Route::post('/login', ['as' => 'api.login', 'uses' => 'ContributorController@login']);

@@ -8,9 +8,11 @@ class Subcategory extends Model
 {
     protected $fillable = ['subcategory', 'description'];
 
+    protected $hidden = ['created_at', 'updated_at'];
+
     private $article;
 
-    public function subcategory_article($id)
+    public function subcategoryArticle($id)
     {
         $this->article = new Article();
 

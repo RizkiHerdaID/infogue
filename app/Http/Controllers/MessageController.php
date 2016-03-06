@@ -11,7 +11,7 @@ use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
 use Infogue\Http\Requests;
-use Infogue\Image;
+use Infogue\Uploader;
 use Infogue\Message;
 
 class MessageController extends Controller
@@ -98,8 +98,8 @@ class MessageController extends Controller
         }
 
         if($request->has('async')){
-            $image = new Image();
-            if ($image->uploadImage($request, 'attachment', base_path('public/file/'), rand(0, 1000) . uniqid())) {
+            $image = new Uploader();
+            if ($image->upload($request, 'attachment', base_path('public/file/'), rand(0, 1000) . uniqid())) {
                 $attachment = new Attachment();
                 $attachment->conversation_id = $conversation->id;
                 $attachment->file = $request->input('attachment');

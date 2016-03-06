@@ -14,7 +14,7 @@ use Infogue\Category;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CreateArticleRequest;
-use Infogue\Image;
+use Infogue\Uploader;
 use Infogue\Rating;
 use Infogue\Subcategory;
 use Infogue\Tag;
@@ -283,8 +283,8 @@ class ArticleController extends Controller
         $article->excerpt = $request->input('excerpt');
         $article->status = $request->input('status');
 
-        $image = new Image();
-        if ($image->uploadImage($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        $image = new Uploader();
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
             $article->featured = $request->input('featured');
         }
 
@@ -378,7 +378,7 @@ class ArticleController extends Controller
      */
     public function hit(Request $request)
     {
-        $article = Article::findOrFail($request->id);
+        $article = Article::findOrFail($request->input('id'));
 
         $article->view = $article->view + 1;
 
@@ -526,8 +526,8 @@ class ArticleController extends Controller
         $article->excerpt = $request->input('excerpt');
         $article->status = $request->input('status');
 
-        $image = new Image();
-        if ($image->uploadImage($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        $image = new Uploader();
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
             $article->featured = $request->input('featured');
         }
 

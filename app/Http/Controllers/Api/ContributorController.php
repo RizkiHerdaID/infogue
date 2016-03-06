@@ -2,7 +2,6 @@
 
 namespace Infogue\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -17,79 +16,62 @@ class ContributorController extends Controller
     }
 
     /**
-     * Display the specified contributor.
+     * Display the specified contributor stream.
      *
-     * @param  int $id
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $contributor->stream = $this->contributor->stream($username);
+
+        return $contributor;
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor article.
      *
-     * @param $id
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function article($id)
+    public function article($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $contributor->articles = $this->contributor->contributorArticle($username);
+
+        return $contributor;
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor follower.
      *
-     * @param $id
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function follower($id)
+    public function follower($username)
     {
-        //
+        $contributor = $this->contributor->profile($username);
+
+        $contributor->followers = $this->contributor->contributorFollower($username);
+
+        return $contributor;
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor following.
      *
-     * @param $id
+     * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function following($id)
+    public function following($username)
     {
-        //
-    }
+        $contributor = $this->contributor->profile($username);
 
-    /**
-     * Show the form for editing the specified contributor.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function setting()
-    {
-        //
-    }
+        $contributor->following = $this->contributor->contributorFollower($username);
 
-    /**
-     * Update the specified contributor in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified contributor from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $contributor;
     }
 }

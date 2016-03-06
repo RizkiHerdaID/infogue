@@ -174,13 +174,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('/follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
         Route::delete('/unfollow/{$id}', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
 
-        Route::group(['as' => 'api.contributor.', 'prefix' => 'contributor/{id}'], function () {
+        Route::group(['as' => 'api.contributor.', 'prefix' => 'contributor/{username}'], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'ContributorController@show']);
             Route::get('/article', ['as' => 'article', 'uses' => 'ContributorController@article']);
             Route::get('/follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
             Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);
-            Route::match(['put', 'patch'], '/', ['as' => 'update', 'uses' => 'ContributorController@update']);
         });
+
+        //Route::match(['put', 'patch'], '/', ['as' => 'update', 'uses' => 'ContributorController@update']);
     });
 
 });

@@ -146,17 +146,12 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $article = $this->article->published()->whereSlug($slug)->firstOrFail();
+        $article = $this->article->published()
+            ->whereSlug($slug)
+            ->with('subcategory', 'subcategory.category', 'tags', 'contributor')
+            ->firstOrFail();
 
-        $article->subcategory->category->category;
-
-        $article->subcategory->subcategory;
-
-        $article->tags;
-
-        $article->contributor;
-
-        return compact('article');
+        return $article;
     }
 
     /**

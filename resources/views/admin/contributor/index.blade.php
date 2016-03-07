@@ -107,7 +107,7 @@
                             <?php
                                 $follower_total = $contributor->followers->count();
                                 $following_total = $contributor->following->count();
-                                
+
                                 $popularity = 0;
                                 if($follower_total == null || $follower_total >= 0){
                                     $popularity = 1;
@@ -150,7 +150,7 @@
                 </table>
                 <div class="table-footer">
                     <div class="status">
-                        <p class="text-muted">{{ $contributors->currentPage() }}/{{ $contributors->lastPage() }} Rows selected</p>
+                        <p class="text-muted">{{ $contributors->currentPage() }}/{{ $contributors->lastPage() }} list of page</p>
                         <p>Showing {{ $contributors->perPage() * $contributors->currentPage() - 9 }} to {{ $contributors->perPage() * $contributors->currentPage() }} of {{ $contributors->total() }} entries</p>
                     </div>
                     <div class="pagination-wrapper">

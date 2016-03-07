@@ -76,8 +76,8 @@ return [
         ],
 
         'admins' => [
-             'driver' => 'database',
-             'table' => 'users',
+             'driver' => 'eloquent',
+             'model' => Infogue\User::class,
         ],
     ],
 
@@ -109,7 +109,7 @@ return [
         ],
         'admins' => [
             'provider' => 'admins',
-            'email' => 'admin.emails.password',
+            'email' => 'emails.admin.password',
             'table' => 'password_resets',
             'expire' => 60,
         ],

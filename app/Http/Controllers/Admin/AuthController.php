@@ -4,6 +4,8 @@ namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Validator;
@@ -28,13 +30,54 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin/dashboard';
+
+    protected $redirectAfterLogout = '/';
+
+    protected $username = 'username';
+
+    protected $guard = 'admin';
 
     /**
      * Create a new authentication controller instance.
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest:admin', ['except' => 'logout']);
     }
+
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+
+        if ($throttles && $lockedOut = $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $request->merge([$field => $request->input('username')]);
+
+        $credentials = $request->only($field, 'password');
+
+        if (Auth::guard('admin')->attempt($credentials, $request->has('remember'))) {
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+
+        if ($throttles && ! $lockedOut) {
+            $this->incrementLoginAttempts($request);
+        }
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
 }

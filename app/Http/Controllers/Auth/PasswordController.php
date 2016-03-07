@@ -30,12 +30,14 @@ class PasswordController extends Controller
 
     protected $redirectTo = '/account';
 
+    protected $guard = 'web';
+
     /**
      * Create a new password controller instance.
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:web');
     }
 
     /**
@@ -101,7 +103,7 @@ class PasswordController extends Controller
         $activity->activity = $activity->resetPasswordActivity($user->username);
         $activity->save();
 
-        Mail::send('emails.reset', [], function ($message) use ($user) {
+        Mail::send('emails.reset', ['name' => $user->name], function ($message) use ($user) {
 
             $message->from('no-reply@infogue.id', 'Infogue.id');
 

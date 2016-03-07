@@ -14,6 +14,7 @@
 
 
     <div style="text-align: center">
+        <h2>Hi, {{ $name }}</h2>
         <p style="margin-bottom: 5px">We recently received a request to change the password,
             if you don't remember make this request or you think it's a mistake please contact our support to suspend your account temporarily by clicking link below.</p>
         <a href="{{ url('contact') }}" style="color: #00aced; text-decoration: none; font-size: 16px">PLEASE SUSPEND MY ACCOUNT</a>

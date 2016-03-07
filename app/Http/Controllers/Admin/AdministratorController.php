@@ -3,10 +3,17 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Infogue\Activity;
+use Infogue\Article;
+use Infogue\Contributor;
+use Infogue\Feedback;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
+use Infogue\Message;
 use Infogue\Setting;
+use Infogue\Subcategory;
 use Infogue\User;
+use Infogue\Visitor;
 
 class AdministratorController extends Controller
 {
@@ -26,7 +33,20 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        $activities = Activity::with('contributor')->paginate(8);
+
+        $statistics = [
+            'ARTICLES' => Article::count(),
+            'MEMBERS' => Contributor::count(),
+            'CATEGORIES' => Subcategory::count(),
+            'MESSAGES' => Message::count(),
+            'FEEDBACK' => Feedback::count(),
+            'VISITORS' => (int) Visitor::sum('unique')
+        ];
+
+        $visitors = Visitor::take(10)->get();
+
+        return view('admin.dashboard.index', compact('activities', 'statistics', 'visitors'));
     }
 
     /**

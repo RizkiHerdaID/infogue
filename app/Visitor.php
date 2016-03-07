@@ -2,13 +2,22 @@
 
 namespace Infogue;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Route;
 
 class Visitor extends Model
 {
     protected $fillable = ['date', 'hit', 'unique'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('latest', function(Builder $builder) {
+            $builder->orderBy('visitors.created_at', 'desc');
+        });
+    }
 
     public function checkVisitor()
     {

@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Infogue\Article;
 use Infogue\Category;
+use Infogue\Contributor;
 use Infogue\Setting;
 use Infogue\Visitor;
 
@@ -41,6 +43,14 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::share('site_menus', app('site_menus'));
+
+        $this->app->singleton('site_statistic', function(){
+            $article = Article::whereStatus('published')->count();
+            $member = Contributor::whereStatus('activated')->count();
+            return ['article' => $article, 'member' => $member];
+        });
+
+        View::share('site_statistic', app('site_statistic'));
 
         Validator::extend('check_password', function($attribute, $value, $parameter){
             return Hash::check($value, Auth::user()->getAuthPassword());

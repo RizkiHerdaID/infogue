@@ -2,11 +2,21 @@
 
 namespace Infogue;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
     protected $fillable = ['contributor_id', 'activity'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('latest', function(Builder $builder) {
+            $builder->orderBy('activities.created_at', 'desc');
+        });
+    }
 
     public function contributor()
     {

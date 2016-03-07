@@ -507,17 +507,13 @@ $(function () {
         }
     });
 
-    $.validator.addMethod("checkKeywords", function (value) {
-        return ($("#keywords").find(".tag").length > 0);
-    });
-
     $.validator.addMethod("checkTags", function (value) {
-        return ($("#tags").find(".tag").length > 0);
+        return ($(".bootstrap-tagsinput").find(".tag").length > 0);
     });
 
     $("#form-setting").validate({
         rules: {
-            "keywords-dummy": "checkKeywords",
+            "keywords-dummy": "checkTags",
             "new-password": {
                 minlength: 8,
                 maxlength: 20

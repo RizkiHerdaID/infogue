@@ -56,7 +56,7 @@ class AdministratorController extends Controller
      */
     public function setting()
     {
-        //
+        return view('admin.setting.index');
     }
 
     /**

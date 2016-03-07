@@ -13,18 +13,18 @@
             <div class="control hidden-xs">
                 <div class="account clearfix">
                     <div class="avatar-wrapper">
-                        <img src="/images/contributors/cici.png" class="img-circle img-rounded">
+                        <img src="{{ asset('images/contributors/'.Auth::guard('admin')->user()->avatar) }}" class="img-circle img-rounded">
                         <div class="notify"></div>
                     </div>
-                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>Imelda Agustine</strong></p>
+                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>{{ Auth::guard('admin')->user()->name }}</strong></p>
                 </div>
-                <a href="admin_login.html" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
+                <a href="{{ route('admin.login.destroy') }}" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
             </div>
         </header>
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
-                <li><a href="index.html">INFOGUE.ID</a></li>
-                <li class="hidden-sm hidden-xs"><a href="admin_dashboard.html">Dashboard</a></li>
+                <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
+                <li class="hidden-xs"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 <li class="active">About</li>
             </ol>
         </div>

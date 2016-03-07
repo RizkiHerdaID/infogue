@@ -78,7 +78,7 @@ class AdministratorController extends Controller
      */
     public function about()
     {
-        //
+        return view('admin.about.index');
     }
 
 }

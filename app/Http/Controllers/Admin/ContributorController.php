@@ -4,6 +4,7 @@ namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 
+use Infogue\Contributor;
 use Infogue\Http\Requests;
 use Infogue\Http\Controllers\Controller;
 
@@ -16,7 +17,10 @@ class ContributorController extends Controller
      */
     public function index()
     {
-        //
+        $contributor = new Contributor();
+        $contributors = $contributor->paginate(10);
+
+        return view('admin.contributor.index', compact('contributors'));
     }
 
     /**

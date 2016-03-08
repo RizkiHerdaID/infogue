@@ -34,7 +34,7 @@ class AuthController extends Controller
 
     protected $redirectAfterLogout = '/';
 
-    protected $username = 'username';
+    protected $username = 'email';
 
     protected $guard = 'admin';
 
@@ -63,11 +63,7 @@ class AuthController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        $request->merge([$field => $request->input('username')]);
-
-        $credentials = $request->only($field, 'password');
+        $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);

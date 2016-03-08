@@ -34,8 +34,8 @@
 
         <form action="{{ route('admin.login.attempt') }}" method="post">
             {!! csrf_field() !!}
-            <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-                <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="Username or Email"/>
+            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+                <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email address"/>
             </div>
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password"/>

@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     <div class="group-control">
-                        <a href="#delete" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-delete all btn-sm"><i class="fa fa-trash"></i> DELETE</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <tr data-id="{{ $contributor->id }}">
                             <td width="40">
                                 <div class="checkbox">
-                                    <input type="checkbox" name="row[]" value="{{ $contributor->id }}" id="check-{{ $contributor->id }}" class="css-checkbox">
+                                    <input type="checkbox" name="row[]" value="{{ $contributor->id }}" id="check-{{ $contributor->id }}" class="css-checkbox checkbox-row">
                                     <label for="check-{{ $contributor->id }}" class="css-label"></label>
                                 </div>
                             </td>
@@ -187,6 +187,7 @@
                 <form action="#" data-url="{{ url('admin/contributor/') }}" method="post">
                     {!! csrf_field() !!}
                     {!! method_field('delete') !!}
+                    <input type="hidden" name="selected" value="">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE CONTRIBUTOR</h4>

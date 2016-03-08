@@ -54,17 +54,32 @@ class ContributorController extends Controller
     /**
      * Remove the specified contributor from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id = null)
     {
-        $contributor = Contributor::findOrFail($id);
+        if(!empty(trim($request->input('selected')))){
+            $contributor_ids = explode(',', $request->input('selected'));
+            $delete = Contributor::whereIn('id', $contributor_ids)->delete();
 
-        $contributor->delete();
+            $name = count($contributor_ids).' Contributors';
+        }
+        else{
+            $contributor = Contributor::findOrFail($id);
+
+            $name = $contributor->name;
+
+            $delete = $contributor->delete();
+        }
+
+        $status = $delete ? 'warning' : 'danger';
+
+        $message = $delete ? 'The <strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
 
         return redirect()->route('admin.contributor.index')
-            ->with('status', 'danger')
-            ->with('message', 'The <strong>'.$contributor->name.'</strong> was deleted');
+            ->with('status', $status)
+            ->with('message', $message);
     }
 }

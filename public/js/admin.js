@@ -645,8 +645,18 @@ $(function () {
     });
 
     $(document).on("click", ".btn-delete", function(){
+        var selectedRows = new Array();
+        $('input[name="selected"]').val('');
+        if($(this).hasClass('all')){
+            $('.checkbox-row').each(function(){
+                if($(this).is(':checked')){
+                    selectedRows.push($(this).val());
+                }
+            });
+            $('input[name="selected"]').val(selectedRows);
+        }
         var id = $(this).closest('*[data-id]').data('id');
-        var title = $(this).data('label');
+        var title = $(this).hasClass('all') ? selectedRows.length+' selected data' : $(this).data('label');
         $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
         $('#modal-delete form .delete-title').text(title);
     });

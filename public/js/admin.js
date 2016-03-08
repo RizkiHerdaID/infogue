@@ -99,6 +99,56 @@ $(function () {
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
 
+    $('.filter .dropdown.by a').click(function(){
+        var value = $(this).text().toLowerCase();
+        filterData('by', value);
+    });
+
+    $('.filter .dropdown.method a').click(function(){
+        var value = $(this).text().toLowerCase();
+        filterData('sort', (value=='ascending') ? 'asc' : 'desc');
+    });
+
+    function filterData(key, value){
+        var url = window.location.origin + window.location.pathname;
+        var query = window.location.search.substring(1);
+        var newQuery = '?';
+        var vars = query.split("&").clean('');
+        var isNewQuery = true;
+        for (var i=0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == key){
+                vars[i] = key+"="+value;
+                isNewQuery = false;
+            }
+            if(pair[0] == 'page'){
+                vars.splice(i, 1);
+            }
+        }
+
+        if(isNewQuery){
+            vars.push(key+"="+value);
+        }
+
+        for (var i=0; i < vars.length; i++) {
+            if(i > 0){ newQuery+='&'; }
+            newQuery += vars[i];
+        }
+
+        window.location.replace(url+newQuery);
+    }
+
+    Array.prototype.clean = function(deleteValue) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == deleteValue) {
+                this.splice(i, 1);
+                i--;
+            }
+        }
+        return this;
+    };
+
+    
     // RATING ------------------------------------------------------------------------
     renderRate();
     function renderRate() {

@@ -40,28 +40,40 @@
                 </div>
                 <div class="control">
                     <div class="filter">
-                        <div class="dropdown select">
+                        <div class="dropdown select by">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                TIMESTAMP
+                                @if(Input::has('by'))
+                                    {{ strtoupper(Input::get('by')) }}
+                                @else
+                                    TIMESTAMP
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">SORT BY</li>
-                                <li><a href="#"><i class="fa fa-clock-o"></i> Timestamp</a></li>
-                                <li><a href="#"><i class="fa fa-font"></i> Name</a></li>
-                                <li><a href="#"><i class="fa fa-trophy"></i> Popularity</a></li>
-                                <li><a href="#"><i class="fa fa-file-text"></i> Article</a></li>
+                                <li><a href="#"><i class="fa fa-clock-o"></i>Date</a></li>
+                                <li><a href="#"><i class="fa fa-font"></i>Name</a></li>
+                                <li><a href="#"><i class="fa fa-trophy"></i>Popularity</a></li>
+                                <li><a href="#"><i class="fa fa-file-text"></i>Article</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown select">
+                        <div class="dropdown select method">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                DESCENDING
+                                @if(Input::has('sort'))
+                                    @if(Input::get('sort') == 'asc')
+                                        ASCENDING
+                                    @else
+                                        DESCENDING
+                                    @endif
+                                @else
+                                    DESCENDING
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">METHOD</li>
-                                <li><a href="#"><i class="fa fa-arrow-up"></i> Ascending</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-down"></i> Descending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-up"></i>Ascending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-down"></i>Descending</a></li>
                             </ul>
                         </div>
                     </div>
@@ -92,8 +104,8 @@
                         <tr>
                             <td width="40">
                                 <div class="checkbox">
-                                    <input type="checkbox" name="check-all" id="check-1" class="css-checkbox">
-                                    <label for="check-1" class="css-label"></label>
+                                    <input type="checkbox" name="row[]" value="{{ $contributor->id }}" id="check-{{ $contributor->id }}" class="css-checkbox">
+                                    <label for="check-{{ $contributor->id }}" class="css-label"></label>
                                 </div>
                             </td>
                             <td>
@@ -154,7 +166,7 @@
                         <p>Showing {{ $contributors->perPage() * $contributors->currentPage() - 9 }} to {{ $contributors->perPage() * $contributors->currentPage() }} of {{ $contributors->total() }} entries</p>
                     </div>
                     <div class="pagination-wrapper">
-                        {!! $contributors->links() !!}
+                        {!! $contributors->appends(Input::all())->links() !!}
                     </div>
                 </div>
             </div>

@@ -42,6 +42,28 @@ class Contributor extends Authenticatable
         return $this->hasMany('Infogue\Article');
     }
 
+    public function retrieveContributor($by, $sort){
+        $contributor = $this->select(DB::raw('contributors.*, IFNULL(follower_total, 0) AS follower_total, IFNULL(article_total, 0) AS article_total'))
+            ->leftJoin(DB::raw("(SELECT followers.id, following, COUNT(*) AS follower_total FROM followers GROUP BY following) followers"), 'contributors.id', '=', 'followers.following')
+            ->leftJoin(DB::raw("(SELECT articles.id, contributor_id, COUNT(*) AS article_total FROM articles GROUP BY contributor_id) articles"), 'contributors.id', '=', 'articles.contributor_id')
+            ->groupBy('contributors.id');
+
+        if($by == 'date'){
+            $contributor->orderBy('created_at', $sort);
+        }
+        else if($by == 'name'){
+            $contributor->orderBy('name', $sort);
+        }
+        else if($by == 'popularity'){
+            $contributor->orderBy('follower_total', $sort);
+        }
+        else if($by == 'article'){
+            $contributor->orderBy('article_total', $sort);
+        }
+
+        return $contributor->paginate(10);
+    }
+
     public function contributorArticle($username)
     {
         $contributor = $this->whereUsername($username)->first();

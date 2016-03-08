@@ -66,7 +66,7 @@ Route::group(['middleware' => ['web']], function () {
         // Basic admin routes...
         Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdministratorController@index']);
         Route::get('/setting', ['as' => 'admin.setting', 'uses' => 'AdministratorController@setting']);
-        Route::match(['put', 'patch'], '/setting', ['as' => 'admin.setting', 'uses' => 'AdministratorController@update']);
+        Route::match(['put', 'patch'], '/setting', ['as' => 'admin.setting.update', 'uses' => 'AdministratorController@update']);
         Route::get('/about', ['as' => 'admin.about', 'uses' => 'AdministratorController@about']);
 
         // Admin module routes...

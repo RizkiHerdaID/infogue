@@ -514,24 +514,20 @@ $(function () {
     $("#form-setting").validate({
         rules: {
             "keywords-dummy": "checkTags",
-            "new-password": {
-                minlength: 8,
+            new_password: {
+                minlength: 6,
                 maxlength: 20
             },
-            "confirm-password": {
-                minlength: 8,
+            new_password_confirmation: {
+                minlength: 6,
                 maxlength: 20,
-                equalTo: "#new-password"
+                equalTo: "#new_password"
             }
         },
         messages: {
             "keywords-dummy": "Keywords are required",
             password: "Password is required to save",
-            address: "Address is required",
-            email: "Email address is required",
             contact: "Contact or Fax is required",
-            description: "Description is required",
-            website: "Website name is required"
         }
     });
 

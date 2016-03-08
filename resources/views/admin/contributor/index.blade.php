@@ -119,7 +119,7 @@
                             <td>
                                 <div class="people">
                                     <img src="{{ asset('images/contributors/'.$contributor->avatar) }}"/>
-                                    <a href="profile.html" target="_blank">{{ $contributor->name }}</a>
+                                    <a href="{{ route('contributor.stream', [$contributor->username]) }}" target="_blank">{{ $contributor->name }}</a>
                                 </div>
                             </td>
                             <td><a href="mailto:{{ $contributor->email }}">{{ $contributor->email }}</a></td>

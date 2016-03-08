@@ -966,281 +966,281 @@ $(function () {
             e.preventDefault();
             loadContent();
         });
+    }
 
-        function loadContent() {
-            onLoading = true;
-            $('.loading').show();
-            $('.btn-load-more').hide();
-            generateContent()
-        }
+    function loadContent() {
+        onLoading = true;
+        $('.loading').show();
+        $('.btn-load-more').hide();
+        generateContent()
+    }
 
-        function generateContent(){
-            $.getJSON($("section[data-href]").data('href')+'?page='+page, function (data) {
-                onLoading = false;
-                $('.loading').hide();
-                $('.btn-load-more').show();
+    function generateContent(){
+        $.getJSON($("section[data-href]").data('href')+'?page='+page, function (data) {
+            onLoading = false;
+            $('.loading').hide();
+            $('.btn-load-more').show();
 
-                if($('#articles').length){
-                    loadArticleCategory(data);
-                }
-                else if($('#stream').length){
-                    loadStream(data);
-                }
-                else if($('#followers').length){
-                    loadFollower(data);
-                }
-                else if($('#messages').length){
-                    loadMessage(data);
-                }
-                else if($('#conversations').length){
-                    loadConversation(data);
-                }
-            }).fail(function( jqxhr, textStatus, error ) {
-                if(jqxhr.status == 401){
-                    showInfoUnauthorized(jqxhr.status);
-                }
-                else if(jqxhr.status == 401){
-                    showInfoNotFound(jqxhr.status);
-                }
-            });
-        }
-
-        function loadArticleCategory(data){
-            if ($('#article-portrait-template').length && data.data.length > 0) {
-                var template = $('#article-portrait-template').html();
-                var html = Mustache.to_html(template, data);
-                $('#articles').append(html);
-
-                generateRating();
-
-                echo.init();
-
-                $('#articles').equalize({equalize: 'height', children: '.article-preview'});
-
-                if(page == data.last_page){
-                    $('.btn-load-more').text("END OF PAGE").addClass('disabled');
-                    isEnded = true;
-                }
-                else{
-                    page++;
-                }
+            if($('#articles').length){
+                loadArticleCategory(data);
             }
-            else{
+            else if($('#stream').length){
+                loadStream(data);
+            }
+            else if($('#followers').length){
+                loadFollower(data);
+            }
+            else if($('#messages').length){
+                loadMessage(data);
+            }
+            else if($('#conversations').length){
+                loadConversation(data);
+            }
+        }).fail(function( jqxhr, textStatus, error ) {
+            if(jqxhr.status == 401){
+                showInfoUnauthorized(jqxhr.status);
+            }
+            else if(jqxhr.status == 401){
+                showInfoNotFound(jqxhr.status);
+            }
+        });
+    }
+
+    function loadArticleCategory(data){
+        if ($('#article-portrait-template').length && data.data.length > 0) {
+            var template = $('#article-portrait-template').html();
+            var html = Mustache.to_html(template, data);
+            $('#articles').append(html);
+
+            generateRating();
+
+            echo.init();
+
+            $('#articles').equalize({equalize: 'height', children: '.article-preview'});
+
+            if(page == data.last_page){
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                 isEnded = true;
             }
-        }
-
-        function loadStream(data){
-            if ($('#article-landscape-template').length && data.data.length > 0) {
-                var template = $('#article-landscape-template').html();
-                var html = Mustache.to_html(template, data);
-                $('#stream').append(html);
-
-                generateRating();
-
-                echo.init();
-
-                if(page == data.last_page){
-                    $('.btn-load-more').text("END OF STREAM").addClass('disabled');
-                    isEnded = true;
-                }
-                else{
-                    page++;
-                }
-            }
             else{
-                if(data.total == 0){
-                    $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor to feed the stream</p>");
-                }
+                page++;
+            }
+        }
+        else{
+            $('.btn-load-more').text("END OF PAGE").addClass('disabled');
+            isEnded = true;
+        }
+    }
 
+    function loadStream(data){
+        if ($('#article-landscape-template').length && data.data.length > 0) {
+            var template = $('#article-landscape-template').html();
+            var html = Mustache.to_html(template, data);
+            $('#stream').append(html);
+
+            generateRating();
+
+            echo.init();
+
+            if(page == data.last_page){
                 $('.btn-load-more').text("END OF STREAM").addClass('disabled');
                 isEnded = true;
             }
-        }
-
-        function loadFollower(data){
-            if ($('#follower-row-template').length && data.data.length > 0) {
-                var template = $('#follower-row-template').html();
-                var html = Mustache.to_html(template, data);
-                $('#followers').append(html);
-
-                if($('a[data-contributor-id]').length){
-                    $('#followers').find('button[data-id="'+$('a[data-contributor-id]').data('contributor-id')+'"]').hide();
-                }
-
-                if(page == data.last_page){
-                    $('.btn-load-more').text("END OF PAGE").addClass('disabled');
-                    isEnded = true;
-                }
-                else{
-                    page++;
-                }
-            }
             else{
-                if(data.total == 0){
-                    $('#followers').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
-                }
+                page++;
+            }
+        }
+        else{
+            if(data.total == 0){
+                $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor to feed the stream</p>");
+            }
 
+            $('.btn-load-more').text("END OF STREAM").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    function loadFollower(data){
+        if ($('#follower-row-template').length && data.data.length > 0) {
+            var template = $('#follower-row-template').html();
+            var html = Mustache.to_html(template, data);
+            $('#followers').append(html);
+
+            if($('a[data-contributor-id]').length){
+                $('#followers').find('button[data-id="'+$('a[data-contributor-id]').data('contributor-id')+'"]').hide();
+            }
+
+            if(page == data.last_page){
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                 isEnded = true;
             }
-        }
-
-        function loadMessage(data){
-            if ($('#message-row-template').length && data.data.length > 0) {
-                var template = $('#message-row-template').html();
-                var html = Mustache.to_html(template, data);
-                $('#messages').append(html);
-                $("time.timeago").timeago();
-
-                if(page == data.last_page){
-                    $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
-                    isEnded = true;
-                }
-                else{
-                    page++;
-                }
-            }
             else{
-                if(data.total == 0){
-                    $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
-                }
+                page++;
+            }
+        }
+        else{
+            if(data.total == 0){
+                $('#followers').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
+            }
 
+            $('.btn-load-more').text("END OF PAGE").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    function loadMessage(data){
+        if ($('#message-row-template').length && data.data.length > 0) {
+            var template = $('#message-row-template').html();
+            var html = Mustache.to_html(template, data);
+            $('#messages').append(html);
+            $("time.timeago").timeago();
+
+            if(page == data.last_page){
                 $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
                 isEnded = true;
             }
+            else{
+                page++;
+            }
         }
+        else{
+            if(data.total == 0){
+                $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+            }
 
-        var firstScroll = true;
-        var previousScrollHeightMinusTop = 0;
-        var lastConversationId = '';
-        var isCheckingNewConversation = false;
-        function loadConversation(data){
+            $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    var firstScroll = true;
+    var previousScrollHeightMinusTop = 0;
+    var lastConversationId = '';
+    var isCheckingNewConversation = false;
+    function loadConversation(data){
+        if ($('#conversation-row-template').length && data.data.length > 0) {
+            var template = $('#conversation-row-template').html();
+            data.data.reverse();
+            var html = Mustache.to_html(template, data);
+            $('#conversations').prepend(html);
+            $("time.timeago").timeago();
+            lastConversationId = $('.conversation:last-child').data('id');
+
+            if(firstScroll){
+                $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                firstScroll = false;
+            }
+            else{
+                $(".message-box").scrollTop($(".message-box")[0].scrollHeight - previousScrollHeightMinusTop);
+            }
+
+            if(page == data.last_page){
+                $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+                isEnded = true;
+            }
+            else{
+                page++;
+            }
+        }
+        else{
+            if(data.total == 0){
+                $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+            }
+
+            $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    if($('#conversations').length){
+        if(isExtraSmall){
+            $('footer').hide();
+        }
+        $(".message-box").scroll(function () {
+            previousScrollHeightMinusTop = $(".message-box")[0].scrollHeight - $(".message-box").scrollTop();
+
+            if($(".message-box").scrollTop() < 50  && !onLoading && !isEnded){
+                loadContent();
+            }
+        });
+
+        setInterval(function(){
+            if(!isCheckingNewConversation){
+                checkConversation();
+            }
+        }, 5000);
+    }
+
+    $('.btn-message').click(function(){
+        var name = $(this).closest('.profile').find('h2.name').text();
+        $('#send-message').find('.message-to').text(name);
+    });
+
+    // AJAX SEND MESSAGE
+    $('#form-message').on('submit',(function(e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        $("#message").attr('readonly','');
+        $("#attachment").attr('disabled','true');
+        $(".btn-send").attr('disabled','true');
+
+        $.ajax({
+            type:'POST',
+            url: $(this).attr('action'),
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            success:function(){
+                console.log("message sent");
+                $("#message").removeAttr('readonly').val('');
+                $("#attachment").removeAttr('disabled').val('');
+                $(".btn-send").removeAttr('disabled');
+                if(!isCheckingNewConversation){
+                    checkConversation();
+                }
+            },
+            error: function(){
+                $("#message").removeAttr('readonly').val('');
+                $("#attachment").removeAttr('disabled').val('');
+                $(".btn-send").removeAttr('disabled');
+                console.log("send message is failed");
+            }
+        });
+    }));
+
+    function checkConversation(){
+        isCheckingNewConversation = true;
+        $.getJSON($("section[data-href]").data('href')+'?last='+lastConversationId, function (data) {
             if ($('#conversation-row-template').length && data.data.length > 0) {
                 var template = $('#conversation-row-template').html();
                 data.data.reverse();
                 var html = Mustache.to_html(template, data);
-                $('#conversations').prepend(html);
+                $('#conversations').append(html);
                 $("time.timeago").timeago();
+                $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
                 lastConversationId = $('.conversation:last-child').data('id');
-
-                if(firstScroll){
-                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
-                    firstScroll = false;
-                }
-                else{
-                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight - previousScrollHeightMinusTop);
-                }
-
-                if(page == data.last_page){
-                    $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
-                    isEnded = true;
-                }
-                else{
-                    page++;
-                }
             }
-            else{
-                if(data.total == 0){
-                    $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
-                }
-
-                $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
-                isEnded = true;
-            }
-        }
-
-        if($('#conversations').length){
-            if(isExtraSmall){
-                $('footer').hide();
-            }
-            $(".message-box").scroll(function () {
-                previousScrollHeightMinusTop = $(".message-box")[0].scrollHeight - $(".message-box").scrollTop();
-
-                if($(".message-box").scrollTop() < 50  && !onLoading && !isEnded){
-                    loadContent();
-                }
-            });
-
-            setInterval(function(){
-                if(!isCheckingNewConversation){
-                    checkConversation();
-                }
-            }, 5000);
-        }
-
-        $('.btn-message').click(function(){
-            var name = $(this).closest('.profile').find('h2.name').text();
-            $('#send-message').find('.message-to').text(name);
+            isCheckingNewConversation = false;
         });
+    }
 
-        // AJAX SEND MESSAGE
-        $('#form-message').on('submit',(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
+    function generateRating(){
+        $('.rating-wrapper').each(function () {
+            var rating = $(this).data('rating');
 
-            $("#message").attr('readonly','');
-            $("#attachment").attr('disabled','true');
-            $(".btn-send").attr('disabled','true');
+            $(this).html("");
 
-            $.ajax({
-                type:'POST',
-                url: $(this).attr('action'),
-                data:formData,
-                cache:false,
-                contentType: false,
-                processData: false,
-                success:function(){
-                    console.log("message sent");
-                    $("#message").removeAttr('readonly').val('');
-                    $("#attachment").removeAttr('disabled').val('');
-                    $(".btn-send").removeAttr('disabled');
-                    if(!isCheckingNewConversation){
-                        checkConversation();
-                    }
-                },
-                error: function(){
-                    $("#message").removeAttr('readonly').val('');
-                    $("#attachment").removeAttr('disabled').val('');
-                    $(".btn-send").removeAttr('disabled');
-                    console.log("send message is failed");
+            for (var index = 0; index < 5; index++) {
+                if (index < rating) {
+                    $(this).append("<i class='fa fa-circle rated'></i>")
                 }
-            });
-        }));
-
-        function checkConversation(){
-            isCheckingNewConversation = true;
-            $.getJSON($("section[data-href]").data('href')+'?last='+lastConversationId, function (data) {
-                if ($('#conversation-row-template').length && data.data.length > 0) {
-                    var template = $('#conversation-row-template').html();
-                    data.data.reverse();
-                    var html = Mustache.to_html(template, data);
-                    $('#conversations').append(html);
-                    $("time.timeago").timeago();
-                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
-                    lastConversationId = $('.conversation:last-child').data('id');
+                else {
+                    $(this).append("<i class='fa fa-circle'></i>")
                 }
-                isCheckingNewConversation = false;
-            });
-        }
-
-        function generateRating(){
-            $('.rating-wrapper').each(function () {
-                var rating = $(this).data('rating');
-
-                $(this).html("");
-
-                for (var index = 0; index < 5; index++) {
-                    if (index < rating) {
-                        $(this).append("<i class='fa fa-circle rated'></i>")
-                    }
-                    else {
-                        $(this).append("<i class='fa fa-circle'></i>")
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 
     $(document).on("click", ".btn-follow", function(e){

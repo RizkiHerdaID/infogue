@@ -53,6 +53,9 @@ class AppServiceProvider extends ServiceProvider
         View::share('site_statistic', app('site_statistic'));
 
         Validator::extend('check_password', function($attribute, $value, $parameter){
+            if($parameter[0] == 'admin'){
+                return Hash::check($value, Auth::guard('admin')->user()->getAuthPassword());
+            }
             return Hash::check($value, Auth::user()->getAuthPassword());
         });
 

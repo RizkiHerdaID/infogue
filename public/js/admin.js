@@ -622,14 +622,14 @@ $(function () {
             }
         },
         rules: {
-            "new-password": {
-                minlength: 8,
+            "new_password": {
+                minlength: 6,
                 maxlength: 20
             },
-            "confirm-password": {
-                minlength: 8,
+            "new_password_confirmation": {
+                minlength: 6,
                 maxlength: 20,
-                equalTo: "#new-password"
+                equalTo: "#new_password"
             }
         },
         messages: {

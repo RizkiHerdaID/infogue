@@ -13,11 +13,8 @@ class Uploader
 
     public function upload(Request $request, $input, $path, $name)
     {
-        // modified uploaded filename by id because user id always unique
-        $fileName = $input.'_'.$name;
-
         // passing all attributed to upload helper
-        $upload = $this->uploadFile($request, $input, $path, $fileName);
+        $upload = $this->uploadFile($request, $input, $path, $name);
 
         if ($upload['status']) {
             $request->merge([$input => $upload['filename']]);
@@ -29,6 +26,7 @@ class Uploader
     private function uploadFile($request, $source, $target, $filename = null)
     {
         if ($request->hasFile($source)) {
+
             $upload = $request->file($source);
             if ($upload->isValid())
             {

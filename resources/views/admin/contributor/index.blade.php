@@ -82,6 +82,14 @@
                     </div>
                 </div>
             </div>
+            @if(Session::has('status'))
+                <div class="alert alert-{{ Session::get('status') }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {!! Session::get('message') !!}
+                </div>
+            @endif
             <div class="content-section">
                 <table class="table table-striped table-hover table-condensed mbs">
                     <thead>
@@ -101,7 +109,7 @@
                     </thead>
                     <tbody>
                     @forelse($contributors as $contributor)
-                        <tr>
+                        <tr data-id="{{ $contributor->id }}">
                             <td width="40">
                                 <div class="checkbox">
                                     <input type="checkbox" name="row[]" value="{{ $contributor->id }}" id="check-{{ $contributor->id }}" class="css-checkbox">
@@ -148,7 +156,7 @@
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="{{ route('contributor.stream', [$contributor->username]) }}" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                         <li><a href="{{ route('admin.contributor.edit', [$contributor->username]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-                                        <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                        <li><a href="#" data-label="{{ $contributor->name }}" class="btn-delete" data-target="#modal-delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -173,18 +181,19 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="delete" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-delete" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#">
+                <form action="#" data-url="{{ url('admin/contributor/') }}" method="post">
+                    {!! csrf_field() !!}
+                    {!! method_field('delete') !!}
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE CONTRIBUTOR</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbn">Are you sure delete this contributor?</label>
+                        <label class="mbn">Are you sure delete the <span class="delete-title text-danger"></span>?</label>
                         <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
-                        <input type="hidden" class="form-control" value="0"/>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>

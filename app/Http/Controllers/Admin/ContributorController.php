@@ -59,6 +59,12 @@ class ContributorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contributor = Contributor::findOrFail($id);
+
+        $contributor->delete();
+
+        return redirect()->route('admin.contributor.index')
+            ->with('status', 'danger')
+            ->with('message', 'The <strong>'.$contributor->name.'</strong> was deleted');
     }
 }

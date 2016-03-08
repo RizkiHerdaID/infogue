@@ -148,7 +148,7 @@ $(function () {
         return this;
     };
 
-    
+
     // RATING ------------------------------------------------------------------------
     renderRate();
     function renderRate() {
@@ -642,5 +642,12 @@ $(function () {
             year: "Please complete the birthday",
             password: "Password is required to update"
         }
+    });
+
+    $(document).on("click", ".btn-delete", function(){
+        var id = $(this).closest('*[data-id]').data('id');
+        var title = $(this).data('label');
+        $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
+        $('#modal-delete form .delete-title').text(title);
     });
 })

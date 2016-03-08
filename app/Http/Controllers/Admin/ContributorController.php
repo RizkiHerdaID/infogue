@@ -4,13 +4,12 @@ namespace Infogue\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Contributor;
-use Infogue\Http\Requests;
 use Infogue\Http\Controllers\Controller;
+use Infogue\Http\Requests;
 use Infogue\Uploader;
 
 class ContributorController extends Controller
@@ -26,8 +25,9 @@ class ContributorController extends Controller
 
         $filter_by = Input::has('by') ? Input::get('by') : 'date';
         $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+        $query = Input::has('query') ? Input::get('query') : null;
 
-        $contributors = $contributor->retrieveContributor($filter_by, $filter_sort);
+        $contributors = $contributor->retrieveContributor($filter_by, $filter_sort, $query);
 
         return view('admin.contributor.index', compact('contributors'));
     }

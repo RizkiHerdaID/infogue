@@ -42,11 +42,18 @@ class Contributor extends Authenticatable
         return $this->hasMany('Infogue\Article');
     }
 
-    public function retrieveContributor($by, $sort){
+    public function retrieveContributor($by, $sort, $query = null){
         $contributor = $this->select(DB::raw('contributors.*, IFNULL(follower_total, 0) AS follower_total, IFNULL(article_total, 0) AS article_total'))
             ->leftJoin(DB::raw("(SELECT followers.id, following, COUNT(*) AS follower_total FROM followers GROUP BY following) followers"), 'contributors.id', '=', 'followers.following')
             ->leftJoin(DB::raw("(SELECT articles.id, contributor_id, COUNT(*) AS article_total FROM articles GROUP BY contributor_id) articles"), 'contributors.id', '=', 'articles.contributor_id')
             ->groupBy('contributors.id');
+
+        if($query != null && $query != ''){
+            $contributor->where('username', 'like', "%{$query}%")
+                ->orWhere('name', 'like', "%{$query}%")
+                ->orWhere('email', 'like', "%{$query}%")
+                ->orWhere('location', 'like', "%{$query}%");
+        }
 
         if($by == 'date'){
             $contributor->orderBy('created_at', $sort);
@@ -176,6 +183,8 @@ class Contributor extends Authenticatable
         $result = $this->relatedFollowers()->activated()
             ->where('username', 'like', "%{$query}%")
             ->orWhere('name', 'like', "%{$query}%")
+            ->orWhere('email', 'like', "%{$query}%")
+            ->orWhere('location', 'like', "%{$query}%")
             ->paginate($take);
 
         return $this->preContributorModifier($result);

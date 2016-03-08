@@ -208,7 +208,7 @@
     <div class="modal fade no-line" id="search" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#">
+                <form action="{{ route('admin.contributor.index') }}" method="get">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-search"></i> SEARCH QUERY</h4>
@@ -216,7 +216,7 @@
                     <div class="modal-body">
                         <label class="mbs">Search in Contributor Data</label>
                         <div class="search">
-                            <input type="search" class="form-control pull-left" placeholder="Type keywords here"/>
+                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here" autofocus/>
                             <button type="submit" class="btn btn-primary pull-right">SEARCH</button>
                         </div>
                     </div>

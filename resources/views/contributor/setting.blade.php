@@ -211,7 +211,7 @@
                                                         <label for="email_subscription" class="css-label">Subscribe new articles</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input type="checkbox" name="email_message" value="1" id="email_message" class="css-checkbox" @if(old('email_message', Auth::user()->email_subscription)){{ 'checked' }}@endif>
+                                                        <input type="checkbox" name="email_message" value="1" id="email_message" class="css-checkbox" @if(old('email_message', Auth::user()->email_message)){{ 'checked' }}@endif>
                                                         <label for="email_message" class="css-label">Email me when I got a message</label>
                                                     </div>
                                                     <div class="checkbox">

@@ -169,7 +169,7 @@ class ContributorController extends Controller
             $request->session()->flash('status', 'danger');
             $request->session()->flash('message', 'Your inputs data are invalid, please check again');
 
-            if(empty($request->input('date')) || empty($request->input('date')) || empty($request->input('date'))) {
+            if(empty($request->input('date')) || empty($request->input('month')) || empty($request->input('month'))) {
                 $validator->errors()->add('birthday', 'Birthday is required');
             }
 

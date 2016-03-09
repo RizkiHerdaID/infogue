@@ -14,11 +14,11 @@
                     <div class="account-profile">
                         <div class="profile-wrapper">
                             <section class="list-data">
-                                <h3 class="title">CREATE ARTICLE</h3>
+                                <h3 class="title">EDIT ARTICLE</h3>
                                 <div class="content">
                                     <form action="{{ route('account.article.update', [$article->slug]) }}" class="form-horizontal form-strip" method="post" enctype="multipart/form-data">
                                         {!! csrf_field() !!}
-                                        <input type="hidden" name="_method" value="PUT">
+                                        {!! method_field('put') !!}
                                         <fieldset>
                                             <legend>INFORMATION</legend>
                                             @if(Session::has('status'))
@@ -195,5 +195,25 @@
         </section>
     </div>
 
-
+    <div class="modal fade no-line" id="discard" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-save"></i> DISCARD ARTICLE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="mbn">Are you sure want to discard the article?</label>
+                        <p class="mbn"><small class="text-muted">All filled content will be lost.</small></p>
+                        <input type="hidden" class="form-control" value="0"/>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">NO</a>
+                        <a href="{{ route('admin.article.index') }}" class="btn btn-danger">YES</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

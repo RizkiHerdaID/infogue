@@ -84,11 +84,32 @@ class ArticleController extends Controller
     /**
      * Remove the specified article from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if(!empty(trim($request->input('selected')))){
+            $article_ids = explode(',', $request->input('selected'));
+            $delete = Article::whereIn('id', $article_ids)->delete();
+
+            $title = count($article_ids).' Articles';
+        }
+        else{
+            $article = Article::findOrFail($id);
+
+            $title = $article->title;
+
+            $delete = $article->delete();
+        }
+
+        $status = $delete ? 'warning' : 'danger';
+
+        $message = $delete ? 'The <strong>'.$title.'</strong> was deleted' : 'Something is getting wrong';
+
+        return redirect()->route('admin.article.index')
+            ->with('status', $status)
+            ->with('message', $message);
     }
 }

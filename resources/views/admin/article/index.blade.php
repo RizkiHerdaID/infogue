@@ -121,11 +121,20 @@
                         </div>
                     </div>
                     <div class="group-control">
-                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm btn-delete all"><i class="fa fa-trash"></i> DELETE</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> APPROVE</a>
                     </div>
                 </div>
             </div>
+            @include('errors.common')
+            @if(Session::has('status'))
+                <div class="alert alert-{{ Session::get('status') }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {!! Session::get('message') !!}
+                </div>
+            @endif
             <div class="content-section">
                 <table class="table table-responsive table-striped table-hover table-condensed mbs">
                     <thead>
@@ -147,10 +156,10 @@
                     </thead>
                     <tbody>
                     @forelse($articles as $article)
-                        <tr>
+                        <tr data-id="{{ $article->id }}" data-title="{{ $article->title }}" data-category="{{ $article->category }}" data-rating="{{ $article->total_rating }}">
                             <td width="40">
                                 <div class="checkbox">
-                                    <input type="checkbox" name="check-{{ $article->id }}" value="{{ $article->id }}" id="check-{{ $article->id }}" class="css-checkbox">
+                                    <input type="checkbox" name="check-{{ $article->id }}" value="{{ $article->id }}" id="check-{{ $article->id }}" class="css-checkbox checkbox-row">
                                     <label for="check-{{ $article->id }}" class="css-label"></label>
                                 </div>
                             </td>
@@ -189,13 +198,13 @@
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">QUICK ACTION</li>
                                         <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
-                                        <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Suspend</a></li>
+                                        <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Reject</a></li>
                                         <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
                                         <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
                                         <li><a href="{{ route('admin.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
-                                        <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#modal-delete" class="btn-delete" data-label="{{ $article->title }}"><i class="fa fa-trash"></i> Delete</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -320,18 +329,20 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="delete" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-delete" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#">
+                <form action="#" data-url="{{ url('admin/article/') }}" method="post">
+                    {!! csrf_field() !!}
+                    {!! method_field('delete') !!}
+                    <input type="hidden" name="selected" value="">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE ARTICLE</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbn">Are you sure delete this article?</label>
+                        <label class="mbn">Are you sure delete the <span class="delete-title text-danger"></span>?</label>
                         <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
-                        <input type="hidden" class="form-control" value="0"/>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>

@@ -37,7 +37,25 @@ class FeedbackController extends Controller
      */
     public function reply(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $message = $request->input('message');
+        $reply = $request->input('reply');
+
+        $feedback = new Feedback();
+
+        $result = $feedback->reply($id, $name, $email, $message, $reply);
+
+        if($result){
+            return redirect()
+                ->route('admin.feedback.index')
+                ->with('status', 'success')
+                ->with('message', 'Reply of feedback <strong>#'.$id.'</strong> has been sent to <strong>'.$email.'</strong>');
+        }
+        else {
+            return redirect()->back()->withErrors();
+        }
     }
 
     /**

@@ -686,5 +686,24 @@ $(function () {
         $('#modal-detail .timestamp').text(timestamp);
         $('#modal-detail .message').html(message);
         $('#modal-detail .btn-mark').data('id', id);
+        $('#modal-detail .btn-feedback-reply').data('id', id);
+    });
+
+    $('.btn-feedback-reply').click(function(){
+        var feedback = $('tr[data-id="'+$(this).data('id')+'"]').closest('*[data-id]');
+        var id = feedback.data('id');
+        var name = feedback.data('name');
+        var email = feedback.data('email');
+        var message = feedback.data('message');
+
+        $('#modal-reply .name').text(name);
+        $('#modal-reply .email').text(email);
+        $('#modal-reply .email-link').attr('href', 'mailto:'+email);
+
+        $('#modal-reply input[name="id"]').val(id);
+        $('#modal-reply input[name="name"]').val(name);
+        $('#modal-reply input[name="email"]').val(email);
+        $('#modal-reply input[name="message"]').val(message);
+        $('#modal-reply textarea[name="reply"]').html('Hi '+name+',\n\r--reply here\n\rRegard,\nInfogue Support');
     });
 })

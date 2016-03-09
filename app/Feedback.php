@@ -4,6 +4,7 @@ namespace Infogue;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 
 class Feedback extends Model
 {
@@ -43,8 +44,20 @@ class Feedback extends Model
         return $feedback->paginate(10);
     }
 
-    public function reply($to, $subject)
+    public function reply($id, $name, $email, $message, $reply)
     {
+        $data = ['name' => $name, 'feedback' => $message, 'reply' => $reply];
 
+        Mail::send('emails.admin.feedback', $data, function ($message) use ($id, $name, $email) {
+
+            $message->from('no-reply@infogue.id', 'Infogue.id');
+
+            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+
+            $message->to($email)->subject('Reply feedback ticket #'.$id);
+
+        });
+
+        return count(Mail::failures() == 0) ? true : false;
     }
 }

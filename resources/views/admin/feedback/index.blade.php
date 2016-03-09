@@ -156,7 +156,7 @@
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-feedback-detail"><i class="fa fa-eye"></i>View</a></li>
-                                        <li><a href="#" data-toggle="modal" data-target="#modal-reply" class="btn-feedback-reply"><i class="fa fa-pencil"></i>Reply</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#modal-reply" class="btn-feedback-reply" data-id="{{ $feedback->id }}"><i class="fa fa-pencil"></i>Reply</a></li>
                                         <li><a href="#" class="btn-delete" data-toggle="modal" data-target="#modal-delete" data-label="{{ $feedback->name }}"><i class="fa fa-trash"></i>Delete</a></li>
                                         <li class="dropdown-header">QUICK ACTION</li>
                                         <li><a href="#" class="btn-mark"><i class="fa fa-bookmark"></i>Important</a></li>
@@ -195,24 +195,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mbn">
-                            <label>SENDER : </label> <span class="name">Angga Ari Wijaya</span> &lt;<span class="email">anggadarkprince@gmail.com</span>&gt;
+                            <label>SENDER : </label> <span class="name">Name</span> &lt;<span class="email">Email</span>&gt;
                         </div>
                         <div class="form-group mbn">
-                            <label>TIMESTAMP : </label> <span class="timestamp">26 January 2016 At 08:30 AM</span>
+                            <label>TIMESTAMP : </label> <span class="timestamp">Timestamp</span>
                         </div>
                         <div class="form-group mbn">
                             <label>MESSAGE : </label>
-                            <p class="message">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur blanditiis
-                                doloribus esse iste quasi quisquam veniam vitae? A animi eum temporibus? Eaque est eum expedita
-                                repudiandae, sed sunt vitae!
-                            </p>
+                            <p class="message">Message</p>
                         </div>
                         <input type="hidden" class="form-control" value="0"/>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-primary">CLOSE</a>
-                        <a href="#" data-toggle="modal" data-target="#modal-reply" data-dismiss="modal" class="btn btn-primary">REPLY</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-reply" data-dismiss="modal" class="btn btn-primary btn-feedback-reply">REPLY</a>
                         <a href="#" data-dismiss="modal" class="btn btn-danger btn-mark" data-id="">IMPORTANT</a>
                     </div>
                 </form>
@@ -223,22 +219,26 @@
     <div class="modal fade color" id="modal-reply" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#" class="form-strip form-horizontal">
-                    <input type="hidden" class="form-control" value="0"/>
+                <form action="{{ route('admin.feedback.reply') }}" class="form-strip form-horizontal" method="post">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="name" value="">
+                    <input type="hidden" name="email" value="">
+                    <input type="hidden" name="message" value="">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-comments-o"></i> FEEDBACK REPLY</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>REPLY TO : </label> Angga Ari Wijaya
+                            <label>REPLY TO : </label> <span class="name">Name</span>
                         </div>
                         <div class="form-group">
-                            <label>EMAIL : </label> <a href="mailto:anggadarkprince@gmail.com">anggadarkprince@gmail.com</a>
+                            <label>EMAIL : </label> <a href="#" class="email-link"><span class="email">Email</span></a>
                         </div>
                         <div class="form-group">
-                            <label for="reply-message">MESSAGE : </label>
-                            <textarea name="message" class="form-control" id="reply-message" cols="30" rows="5" placeholder="Type message here"></textarea>
+                            <label for="reply-message" class="mbs">MESSAGE : </label>
+                            <textarea name="reply" class="form-control message" id="reply-message" cols="30" rows="5" placeholder="Type message here" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

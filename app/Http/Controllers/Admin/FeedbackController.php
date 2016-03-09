@@ -3,6 +3,8 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Infogue\Feedback;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 
@@ -15,9 +17,16 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $feedback = $this->feedback->paginate(10);
+        $filter_data = Input::has('data') ? Input::get('data') : 'all';
+        $filter_by = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+        $query = Input::has('query') ? Input::get('query') : null;
 
-        return view('admin.feedback.data', compact('feedback'));
+        $feedback = new Feedback();
+
+        $feedbacks = $feedback->retrieveFeedback($filter_data, $filter_by, $filter_sort, $query);
+
+        return view('admin.feedback.index', compact('feedbacks'));
     }
 
     /**

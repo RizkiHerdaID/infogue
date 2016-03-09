@@ -157,7 +157,7 @@
                     </thead>
                     <tbody>
                     @forelse($articles as $article)
-                        <tr data-id="{{ $article->id }}" data-title="{{ $article->title }}" data-category="{{ $article->category }}" data-rating="{{ $article->total_rating }}">
+                        <tr data-id="{{ $article->id }}" data-article-ref="{{ $article->article_ref }}" data-title="{{ $article->title }}" data-category="{{ $article->category }}" data-subcategory="{{ $article->subcategory }}" data-category-ref="{{ $article->category_ref }}" data-subcategory-ref="{{ $article->subcategory_ref }}" data-timestamp="@datetime($article->created_at)" data-avatar="{{ $article->avatar_ref }}" data-author-ref="{{ $article->contributor_ref }}" data-author="{{ $article->name }}" data-rating="{{ $article->total_rating }}" data-tags="{{ implode(',', $article->tags()->pluck('tag')->toArray()) }}" data-view="{{ $article->view }}">
                             <td width="40">
                                 <div class="checkbox">
                                     <input type="checkbox" name="check-{{ $article->id }}" value="{{ $article->id }}" id="check-{{ $article->id }}" class="css-checkbox checkbox-row">
@@ -214,7 +214,7 @@
                                         <li @if($article->state == 'headline'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="headline" data-type="state"><i class="fa fa-star"></i> @if($article->state != 'headline'){!! 'Set' !!}@endif Headline</a></li>
                                         <li><a href="#" class="btn-mark" data-value="general" data-type="state"><i class="fa fa-file-text"></i> Set General</a></li>
                                         <li class="dropdown-header">CONTROL</li>
-                                        <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-article-detail"><i class="fa fa-info-circle"></i> Detail</a></li>
                                         <li><a href="{{ route('admin.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-delete" class="btn-delete" data-label="{{ $article->title }}"><i class="fa fa-trash"></i> Delete</a></li>
                                     </ul>
@@ -241,7 +241,7 @@
         </div>
     </div>
 
-    <div class="modal fade color" id="detail" tabindex="-1" role="dialog">
+    <div class="modal fade color" id="modal-detail" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="#" class="form-strip form-horizontal">
@@ -257,7 +257,7 @@
                                     <label>TITLE</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p><a href="article.html" target="_blank">Reika make a dark theme on his new video clip</a></p>
+                                    <p><a href="#" target="_blank" class="title">Title</a></p>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +267,7 @@
                                     <label>TIMESTAMP</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p>25 January at 08:30 AM</p>
+                                    <p class="timestamp">Timestamp</p>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +277,7 @@
                                     <label>CATEGORY</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p><a href="category.html">Entertainment</a> | <a href="category.html">Music</a></p>
+                                    <p><a href="#" class="category">Category</a> | <a href="#" class="subcategory">Subcategory</a></p>
                                 </div>
                             </div>
                         </div>
@@ -287,7 +287,7 @@
                                     <label>KEYWORDS</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <ul class="list-inline">
+                                    <ul class="list-inline tags">
                                         <li><a class="tag" href="article.html" target="_blank">international</a></li>
                                         <li><a class="tag" href="article.html" target="_blank">usa</a></li>
                                         <li><a class="tag" href="article.html" target="_blank">video</a></li>
@@ -306,8 +306,8 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="people">
-                                        <img src="images/contributors/iyan.jpg"/>
-                                        <a href="profile.html">Bima Shakti</a>
+                                        <img src="" class="author-avatar"/>
+                                        <a href="#" class="author">Author</a>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +318,7 @@
                                     <label>RATING</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <div class="rating-wrapper pn" data-rating="3"></div>
+                                    <div class="rating-wrapper pn"></div>
                                 </div>
                             </div>
                         </div>
@@ -328,7 +328,7 @@
                                     <label>VIEWS</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p>3543 X</p>
+                                    <p class="view">0 X</p>
                                 </div>
                             </div>
                         </div>

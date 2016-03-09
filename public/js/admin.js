@@ -1,4 +1,5 @@
 $(function () {
+    var websiteUrl = $('meta[name="url"]').attr('content');
     var wrapper = $("#wrapper");
 
     $(window).resize(function () {
@@ -394,12 +395,7 @@ $(function () {
         document.body.innerHTML = originalContents;
         location.reload();
     }
-});
-/**
- * Created by Workstation on 2/14/2016.
- */
 
-$(function () {
     var isLarge = false;
     var isMedium = false;
     var isSmall = false;
@@ -545,13 +541,7 @@ $(function () {
             $(".filter ul.dropdown-menu").removeClass("dropdown-menu-left").addClass("dropdown-menu-right");
         }
     }
-});
 
-
-/**
- * Created by Workstation on 2/14/2016.
- */
-$(function () {
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -688,9 +678,7 @@ $(function () {
         }
 
         $('#form-mark').attr('action', link);
-        setTimeout(function(){
-            $('#form-mark').submit();
-        }, 100);
+        $('#form-mark').submit();
     });
 
     $('.btn-feedback-detail').click(function(){
@@ -726,4 +714,23 @@ $(function () {
         $('#modal-reply input[name="message"]').val(message);
         $('#modal-reply textarea[name="reply"]').html('Hi '+name+',\n\r--reply here\n\rRegard,\nInfogue Support');
     });
-})
+
+    $('.btn-article-detail').click(function(){
+        var article = $(this).closest('*[data-id]');
+        $('#modal-detail .title').text(article.data('title')).attr('href', article.data('article-ref')).unbind('click');
+        $('#modal-detail .timestamp').text(article.data('timestamp'));
+        $('#modal-detail .category').text(article.data('category')).attr('href', article.data('category-ref')).unbind('click');
+        $('#modal-detail .subcategory').text(article.data('subcategory')).attr('href', article.data('subcategory-ref')).unbind('click');
+        $('#modal-detail .author').text(article.data('author')).attr('href', article.data('author-ref')).unbind('click');
+        $('#modal-detail .author-avatar').attr('src', article.data('avatar'));
+        $('#modal-detail .rating-wrapper').data('rating', article.data('rating'));
+        renderRate();
+        $('#modal-detail .view').text(article.data('view')+' X');
+        var tags = article.data('tags').toString().split(',');
+        $('#modal-detail .tags').html('');
+        for(var i = 0; i < tags.length; i++){
+            var slug = tags[i].toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+            $('#modal-detail .tags').append('<li><a class="tag" href="'+websiteUrl+'/tag/'+slug+'" target="_blank">'+tags[i].toString().toUpperCase()+'</a></li>');
+        }
+    });
+});

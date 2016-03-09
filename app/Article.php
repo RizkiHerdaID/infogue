@@ -296,6 +296,7 @@ class Article extends Model
                     contributor_id,
                     name,
                     username,
+                    avatar,
                     CAST(IFNULL(ROUND(AVG(ratings.rate)), 0) AS UNSIGNED) AS total_rating,
                     subcategory_id,
                     subcategory,
@@ -318,6 +319,7 @@ class Article extends Model
             $article->featured_ref = asset('images/featured/'.$article->featured);
             $article->article_ref = route('article.show', [$article->slug]);
             $article->contributor_ref = route('contributor.stream', [$article->username]);
+            $article->avatar_ref = asset('images/contributors/'.$article->avatar);
             $article->category_ref = route('article.category', [str_slug($article->category)]);
             $article->subcategory_ref = route('article.subcategory', [str_slug($article->category), str_slug($article->username)]);
             $article->published_at = Carbon::parse($article->created_at)->format('d F Y');

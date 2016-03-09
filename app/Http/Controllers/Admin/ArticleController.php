@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Infogue\Article;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -23,7 +24,15 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(10);
+        $filter_data = Input::has('data') ? Input::get('data') : 'all';
+        $filter_status = Input::has('status') ? Input::get('status') : 'all';
+        $filter_by = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+        $query = Input::has('query') ? Input::get('query') : null;
+
+        $article = new Article();
+
+        $articles = $article->retrieveArticle($filter_data, $filter_status, $filter_by, $filter_sort, $query);
 
         return view('admin.article.index', compact('articles'));
     }

@@ -24,11 +24,11 @@
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
-                <li class="hidden-xs"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                <li class="hidden-xs hidden-sm"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                 <li class="active">Article</li>
             </ol>
             <div class="control">
-                <a href="#search" data-toggle="modal" class="link"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="#" data-toggle="modal" data-target="#modal-search" class="link"><i class="fa fa-search"></i> SEARCH</a>
                 <a href="{{ route('admin.article.create') }}" class="link visible-xs"><i class="fa fa-plus"></i> CREATE ARTICLE</a>
                 <a href="#" class="link print"><i class="fa fa-print"></i> PRINT</a>
             </div>
@@ -41,33 +41,87 @@
                 </div>
                 <div class="control">
                     <div class="filter">
-                        <div class="dropdown select">
+                        <div class="dropdown select data">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                TIMESTAMP
+                                @if(Input::has('data') && Input::get('data') != 'all')
+                                    {{ str_replace('-', ' ', strtoupper(Input::get('data'))) }}
+                                @else
+                                    ALL DATA
+                                @endif
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdown-data">
+                                <li><a href="#"><i class="fa fa-navicon"></i>All Data</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">CATEGORY</li>
+                                @foreach($site_menus as $category)
+                                    <li><a href="#" data-value="{{ str_slug($category->category) }}">{{ $category->category }}</a></li>
+                                @endforeach
+                                <li role="separator" class="divider"></li>
+                                <li class="dropdown-header">HEADLINE</li>
+                                <li><a href="#" data-value="trending">Trending</a></li>
+                                <li><a href="#" data-value="headline">Headline</a></li>
+                                <li><a href="#" data-value="popular">Popular</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown select status">
+                            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                @if(Input::has('status') && Input::get('status') != 'all')
+                                    {{ strtoupper(Input::get('status')) }}
+                                @else
+                                    ALL STATUS
+                                @endif
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                <li class="dropdown-header">ARTICLE STATUS</li>
+                                <li><a href="#"><i class="fa fa-signal"></i>All Status</a></li>
+                                <li><a href="#"><i class="fa fa-info-circle"></i>Pending</a></li>
+                                <li><a href="#"><i class="fa fa-file-text-o"></i>Published</a></li>
+                                <li><a href="#"><i class="fa fa-file-o"></i>Draft</a></li>
+                                <li><a href="#"><i class="fa fa-remove"></i>Reject</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown select by">
+                            <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                @if(Input::has('by'))
+                                    {{ strtoupper(Input::get('by')) }}
+                                @else
+                                    TIMESTAMP
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">SORT BY</li>
-                                <li><a href="#"><i class="fa fa-clock-o"></i> Timestamp</a></li>
-                                <li><a href="#"><i class="fa fa-font"></i> Name</a></li>
-                                <li><a href="#"><i class="fa fa-trophy"></i> Popularity</a></li>
-                                <li><a href="#"><i class="fa fa-file-text"></i> Article</a></li>
+                                <li><a href="#"><i class="fa fa-calendar"></i>Date</a></li>
+                                <li><a href="#"><i class="fa fa-font"></i>Title</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>Author</a></li>
+                                <li><a href="#"><i class="fa fa-eye"></i>View</a></li>
+                                <li><a href="#"><i class="fa fa-trophy"></i>Popularity</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown select">
+                        <div class="dropdown select method">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                DESCENDING
+                                @if(Input::has('sort'))
+                                    @if(Input::get('sort') == 'asc')
+                                        ASCENDING
+                                    @else
+                                        DESCENDING
+                                    @endif
+                                @else
+                                    DESCENDING
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">METHOD</li>
-                                <li><a href="#"><i class="fa fa-arrow-up"></i> Ascending</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-down"></i> Descending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-up"></i>Ascending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-down"></i>Descending</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="group-control">
-                        <a href="#delete" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
                         <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> APPROVE</a>
                     </div>
                 </div>
@@ -83,8 +137,11 @@
                             </div>
                         </th>
                         <th>Title</th>
+                        <th>Category</th>
+                        <th>View</th>
+                        <th>Rating</th>
                         <th>Author</th>
-                        <th class="text-center">Status</th>
+                        <th>Status</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -98,6 +155,9 @@
                                 </div>
                             </td>
                             <td><a href="{{ route('article.show', [$article->slug]) }}" target="_blank">{{ $article->title }}</a></td>
+                            <td><a href="{{ route('article.category', [$article->category]) }}" target="_blank">{{ $article->category }}</a></td>
+                            <td>{{ $article->view }}X</td>
+                            <td><div class="rating-wrapper pn" data-rating="{{ $article->total_rating }}"></div></td>
                             <td>
                                 <div class="people">
                                     <img src="{{ asset('images/contributors/'.$article->contributor->avatar) }}"/>
@@ -119,7 +179,7 @@
                                 $label = 'danger';
                             }
                             ?>
-                            <td class="text-center"><span class="label label-{{ $label }}">{{ strtoupper($article->status) }}</span></td>
+                            <td><span class="label label-{{ $label }}">{{ strtoupper($article->status) }}</span></td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -142,7 +202,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center">No article available</td>
+                            <td colspan="8" class="text-center">No article available</td>
                         </tr>
                     @endforelse
                     </tbody>
@@ -153,7 +213,7 @@
                         <p>Showing {{ $articles->perPage() * $articles->currentPage() - 9 }} to {{ $articles->perPage() * $articles->currentPage() }} of {{ $articles->total() }} entries</p>
                     </div>
                     <div class="pagination-wrapper">
-                        {!! $articles->links() !!}
+                        {!! $articles->appends(Input::all())->links() !!}
                     </div>
                 </div>
             </div>
@@ -282,18 +342,18 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="search" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-search" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#">
+                <form action="{{ route('admin.article.index') }}" method="get">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-search"></i> SEARCH QUERY</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbs">Search in Contributor Data</label>
+                        <label class="mbs">Search in Article Data</label>
                         <div class="search">
-                            <input type="search" class="form-control pull-left" placeholder="Type keywords here"/>
+                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here"/>
                             <button type="submit" class="btn btn-primary pull-right">SEARCH</button>
                         </div>
                     </div>
@@ -302,5 +362,10 @@
             </div>
         </div>
     </div>
+
+    <form action="#" method="post" data-url="{{ url('admin/feedback/mark') }}" id="form-mark">
+        {!! csrf_field() !!}
+        {!! method_field('put') !!}
+    </form>
 
 @endsection

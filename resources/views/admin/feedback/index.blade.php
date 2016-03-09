@@ -283,7 +283,7 @@
                         <h4 class="modal-title"><i class="fa fa-search"></i> SEARCH QUERY</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbs">Search in Contributor Data</label>
+                        <label class="mbs">Search in Feedback Data</label>
                         <div class="search">
                             <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here"/>
                             <button type="submit" class="btn btn-primary pull-right">SEARCH</button>

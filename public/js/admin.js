@@ -101,7 +101,15 @@ $(function () {
 
     $('.filter .dropdown.data a').click(function(){
         var value = $(this).text().toLowerCase();
+        if($(this).data('value') != null){
+            var value = $(this).data('value');
+        }
         filterData('data', (value == 'all data') ? 'all' : value);
+    });
+
+    $('.filter .dropdown.status a').click(function(){
+        var value = $(this).text().toLowerCase();
+        filterData('status', (value == 'all status') ? 'all' : value);
     });
 
     $('.filter .dropdown.by a').click(function(){

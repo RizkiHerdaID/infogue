@@ -194,7 +194,6 @@ class Article extends Model
             $archive->where('state', 'headline');
         }
         else if($data != 'all-data'){
-
             $archive->where('category', 'like', "%{$data}%");
         }
 
@@ -217,6 +216,55 @@ class Article extends Model
         }
 
         return $this->preArticleModifier($archive->paginate(12));
+    }
+
+    public function retrieveArticle($data, $status, $by, $sort, $query = null)
+    {
+        $articles = $this->preArticleQuery();
+
+        if($query != null && $query != ''){
+            $articles
+                ->where('title', 'like', "%{$query}%")
+                ->orWhere('name', 'like', "%{$query}%")
+                ->orWhere('category', 'like', "%{$query}%")
+                ->orWhere('subcategory', 'like', "%{$query}%")
+                ->orWhere('content', 'like', "%{$query}%");
+        }
+
+        if($status != 'all'){
+            $articles->where('articles.status', $status);
+        }
+
+        if($data == 'trending'){
+            $articles->where('state', 'trending');
+        }
+        else if($data == 'popular'){
+            $articles->where('articles.created_at', '>', Carbon::now()->addMonth(-3))->orderBy('view', 'desc');
+        }
+        else if($data == 'headline'){
+            $articles->where('state', 'headline');
+        }
+        else if($data != 'all'){
+            $articles->where('category', 'like', "%{$data}%");
+        }
+
+        if($by == 'date'){
+            $articles->orderBy('created_at', $sort);
+        }
+        else if($by == 'title'){
+            $articles->orderBy('title', $sort);
+        }
+        else if($by == 'view'){
+            $articles->orderBy('view', $sort);
+        }
+        else if($by == 'author'){
+            $articles->orderBy('name', $sort);
+        }
+        else if($by == 'popularity'){
+            $articles->orderBy('total_rating', $sort);
+        }
+
+        return $this->preArticleModifier($articles->paginate(10));
     }
 
     public function search($query, $take = 10)

@@ -723,9 +723,11 @@ $(function () {
         $('#modal-detail .subcategory').text(article.data('subcategory')).attr('href', article.data('subcategory-ref')).unbind('click');
         $('#modal-detail .author').text(article.data('author')).attr('href', article.data('author-ref')).unbind('click');
         $('#modal-detail .author-avatar').attr('src', article.data('avatar'));
+        $('#modal-detail .view').text(article.data('view')+' X');
+
         $('#modal-detail .rating-wrapper').data('rating', article.data('rating'));
         renderRate();
-        $('#modal-detail .view').text(article.data('view')+' X');
+
         var tags = article.data('tags').toString().split(',');
         $('#modal-detail .tags').html('');
         for(var i = 0; i < tags.length; i++){

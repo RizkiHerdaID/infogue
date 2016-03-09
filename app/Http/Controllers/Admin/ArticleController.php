@@ -59,6 +59,21 @@ class ArticleController extends Controller
     }
 
     /**
+     * Display the specified article.
+     *
+     * @param  int $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function show($slug)
+    {
+        $article = $this->article->whereSlug($slug)->firstOrFail();
+
+        $tags = $article->tags()->get();
+
+        return view('admin.article.article', compact('article', 'author', 'tags'));
+    }
+
+    /**
      * Show the form for editing the article.
      *
      * @param  int $id

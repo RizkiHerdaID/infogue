@@ -66,7 +66,7 @@
                             {!! $article->content !!}
                         </article>
 
-                        @if(trim($article->exceprt) != "")
+                        @if(trim($article->excerpt) != "")
                         <div class="excerpt">
                             {{ $article->excerpt }}
                         </div>

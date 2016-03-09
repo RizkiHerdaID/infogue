@@ -214,6 +214,7 @@
                                         <li @if($article->state == 'headline'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="headline" data-type="state"><i class="fa fa-star"></i> @if($article->state != 'headline'){!! 'Set' !!}@endif Headline</a></li>
                                         <li><a href="#" class="btn-mark" data-value="general" data-type="state"><i class="fa fa-file-text"></i> Set General</a></li>
                                         <li class="dropdown-header">CONTROL</li>
+                                        <li><a href="{{ route('admin.article.show', [$article->slug]) }}"><i class="fa fa-eye"></i> View</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-article-detail"><i class="fa fa-info-circle"></i> Detail</a></li>
                                         <li><a href="{{ route('admin.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-delete" class="btn-delete" data-label="{{ $article->title }}"><i class="fa fa-trash"></i> Delete</a></li>
@@ -287,15 +288,7 @@
                                     <label>KEYWORDS</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <ul class="list-inline tags">
-                                        <li><a class="tag" href="article.html" target="_blank">international</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">usa</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">video</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">music</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">clip</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">release</a></li>
-                                        <li><a class="tag" href="article.html" target="_blank">singer</a></li>
-                                    </ul>
+                                    <ul class="list-inline tags"></ul>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +300,7 @@
                                 <div class="col-sm-9">
                                     <div class="people">
                                         <img src="" class="author-avatar"/>
-                                        <a href="#" class="author">Author</a>
+                                        <a href="#" class="author" target="_blank">Author</a>
                                     </div>
                                 </div>
                             </div>

@@ -157,7 +157,7 @@
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="#detail" data-toggle="modal"><i class="fa fa-eye"></i>View</a></li>
                                         <li><a href="#reply" data-toggle="modal"><i class="fa fa-pencil"></i>Reply</a></li>
-                                        <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i>Delete</a></li>
+                                        <li><a href="#" class="btn-delete" data-toggle="modal" data-target="#modal-delete" data-label="{{ $feedback->name }}"><i class="fa fa-trash"></i>Delete</a></li>
                                         <li class="dropdown-header">QUICK ACTION</li>
                                         <li><a href="#" class="btn-mark"><i class="fa fa-bookmark"></i>Important</a></li>
                                         <li><a href="#" class="btn-mark"><i class="fa fa-archive"></i>Archived</a></li>

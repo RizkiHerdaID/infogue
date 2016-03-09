@@ -72,16 +72,32 @@ class FeedbackController extends Controller
     /**
      * Remove the specified feedback from storage.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $feedback = $this->feedback->find($id);
+        if(!empty(trim($request->input('selected')))){
+            $feedback_ids = explode(',', $request->input('selected'));
+            $delete = Feedback::whereIn('id', $feedback_ids)->delete();
 
-        $feedback->delete();
+            $name = count($feedback_ids).' Feedbacks';
+        }
+        else{
+            $feedback = Feedback::findOrFail($id);
+
+            $name = $feedback->name;
+
+            $delete = $feedback->delete();
+        }
+
+        $status = $delete ? 'warning' : 'danger';
+
+        $message = $delete ? '<strong>'.$name.'\'s</strong> feedback was deleted' : 'Something is getting wrong';
 
         return redirect()->route('admin.feedback.index')
-            ->with('status', Lang::get('alert.feedback_deleted'));
+            ->with('status', $status)
+            ->with('message', $message);
     }
 }

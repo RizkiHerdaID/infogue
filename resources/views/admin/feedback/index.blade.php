@@ -135,7 +135,7 @@
                             $label = 'success';
                         }
                         ?>
-                        <tr class="@if($label == 'danger'){{ $label }}@endif" data-id="{{ $feedback->id }}" data-name="{{ $feedback->name }}" data-email="{{ $feedback->email }}" data-message="{{ $feedback->message }}">
+                        <tr class="@if($label == 'danger'){{ $label }}@endif" data-id="{{ $feedback->id }}" data-name="{{ $feedback->name }}" data-email="{{ $feedback->email }}" data-message="{{ nl2br($feedback->message) }}" data-timestamp="@datetime($feedback->created_at)">
                             <td>
                                 <div class="checkbox">
                                     <input type="checkbox" name="row[]" value="{{ $feedback->id }}" id="check-{{ $feedback->id }}" class="css-checkbox checkbox-row">
@@ -144,7 +144,7 @@
                             </td>
                             <td>{{ $feedback->name }}</td>
                             <td><a href="mailto:{{ $feedback->email }}">{{ $feedback->email }}</a></td>
-                            <td><a href="#detail" data-toggle="modal">DETAIL</a></td>
+                            <td><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-feedback-detail">DETAIL</a></td>
                             <td>@fulldate($feedback->created_at)</td>
                             <td><span class="label label-{{ $label }}">{{ strtoupper($feedback->label) }}</span></td>
                             <td class="text-center">
@@ -155,8 +155,8 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">CONTROL</li>
-                                        <li><a href="#detail" data-toggle="modal"><i class="fa fa-eye"></i>View</a></li>
-                                        <li><a href="#reply" data-toggle="modal"><i class="fa fa-pencil"></i>Reply</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-feedback-detail"><i class="fa fa-eye"></i>View</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#modal-reply" class="btn-feedback-reply"><i class="fa fa-pencil"></i>Reply</a></li>
                                         <li><a href="#" class="btn-delete" data-toggle="modal" data-target="#modal-delete" data-label="{{ $feedback->name }}"><i class="fa fa-trash"></i>Delete</a></li>
                                         <li class="dropdown-header">QUICK ACTION</li>
                                         <li><a href="#" class="btn-mark"><i class="fa fa-bookmark"></i>Important</a></li>
@@ -185,7 +185,7 @@
         </div>
     </div>
 
-    <div class="modal fade color" id="detail" tabindex="-1" role="dialog">
+    <div class="modal fade color" id="modal-detail" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="#">
@@ -195,14 +195,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mbn">
-                            <label>SENDER : </label> Angga Ari Wijaya &lt;anggadarkprince@gmail.com&gt;
+                            <label>SENDER : </label> <span class="name">Angga Ari Wijaya</span> &lt;<span class="email">anggadarkprince@gmail.com</span>&gt;
                         </div>
                         <div class="form-group mbn">
-                            <label>TIMESTAMP : </label> 26 January 2016 At 08:30 AM
+                            <label>TIMESTAMP : </label> <span class="timestamp">26 January 2016 At 08:30 AM</span>
                         </div>
                         <div class="form-group mbn">
                             <label>MESSAGE : </label>
-                            <p>
+                            <p class="message">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur blanditiis
                                 doloribus esse iste quasi quisquam veniam vitae? A animi eum temporibus? Eaque est eum expedita
                                 repudiandae, sed sunt vitae!
@@ -212,15 +212,15 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-primary">CLOSE</a>
-                        <a href="#reply" data-toggle="modal" data-dismiss="modal" class="btn btn-primary">REPLY</a>
-                        <a href="#" data-dismiss="modal" class="btn btn-danger">MARK AS IMPORTANT</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-reply" data-dismiss="modal" class="btn btn-primary">REPLY</a>
+                        <a href="#" data-dismiss="modal" class="btn btn-danger btn-mark" data-id="">IMPORTANT</a>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="modal fade color" id="reply" tabindex="-1" role="dialog">
+    <div class="modal fade color" id="modal-reply" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="#" class="form-strip form-horizontal">

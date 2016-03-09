@@ -672,4 +672,19 @@ $(function () {
         $('#form-mark').attr('action', $('#form-mark').data('url')+'/'+type+'/'+id);
         $('#form-mark').submit();
     });
+
+    $('.btn-feedback-detail').click(function(){
+        var feedback = $(this).closest('*[data-id]');
+        var id = feedback.data('id');
+        var name = feedback.data('name');
+        var email = feedback.data('email');
+        var timestamp = feedback.data('timestamp');
+        var message = feedback.data('message');
+
+        $('#modal-detail .name').text(name);
+        $('#modal-detail .email').text(email);
+        $('#modal-detail .timestamp').text(timestamp);
+        $('#modal-detail .message').html(message);
+        $('#modal-detail .btn-mark').data('id', id);
+    });
 })

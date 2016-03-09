@@ -147,10 +147,11 @@
                         </th>
                         <th>Title</th>
                         <th>Category</th>
+                        <th>Author</th>
                         <th>View</th>
                         <th>Rating</th>
-                        <th>Author</th>
                         <th>Status</th>
+                        <th>State</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -163,32 +164,42 @@
                                     <label for="check-{{ $article->id }}" class="css-label"></label>
                                 </div>
                             </td>
-                            <td><a href="{{ route('article.show', [$article->slug]) }}" target="_blank">{{ $article->title }}</a></td>
-                            <td><a href="{{ route('article.category', [$article->category]) }}" target="_blank">{{ $article->category }}</a></td>
-                            <td>{{ $article->view }}X</td>
-                            <td><div class="rating-wrapper pn" data-rating="{{ $article->total_rating }}"></div></td>
+                            <td><a href="{{ route('admin.article.show', [$article->slug]) }}">{{ $article->title }}</a></td>
+                            <td>{{ $article->category }}</td>
                             <td>
                                 <div class="people">
                                     <img src="{{ asset('images/contributors/'.$article->contributor->avatar) }}"/>
                                     <a href="{{ route('contributor.stream', [$article->contributor->username]) }}">{{ $article->contributor->name }}</a>
                                 </div>
                             </td>
+                            <td>{{ $article->view }}X</td>
+                            <td><div class="rating-wrapper pn" data-rating="{{ $article->total_rating }}"></div></td>
                             <?php
-                            $label = 'default';
-                            if($article->status == 'published'){
-                                $label = 'success';
-                            }
-                            if($article->status == 'pending'){
-                                $label = 'warning';
-                            }
-                            if($article->status == 'draft'){
-                                $label = 'info';
-                            }
-                            if($article->status == 'reject'){
-                                $label = 'danger';
-                            }
+                                $label = 'default';
+                                $status = 'default';
+
+                                if($article->status == 'published'){
+                                    $label = 'success';
+                                }
+                                if($article->status == 'pending'){
+                                    $label = 'warning';
+                                }
+                                if($article->status == 'draft'){
+                                    $label = 'info';
+                                }
+                                if($article->status == 'reject'){
+                                    $label = 'danger';
+                                }
+
+                                if($article->state == 'trending'){
+                                    $status = 'success';
+                                }
+                                else if($article->state == 'headline'){
+                                    $status = 'warning';
+                                }
                             ?>
                             <td><span class="label label-{{ $label }}">{{ strtoupper($article->status) }}</span></td>
+                            <td><span class="label label-{{ $status }}">{{ strtoupper($article->state) }}</span></td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -197,10 +208,11 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">QUICK ACTION</li>
-                                        <li><a href="#" class="approve"><i class="fa fa-check"></i> Approve</a></li>
-                                        <li><a href="#" class="suspend"><i class="fa fa-remove"></i> Reject</a></li>
-                                        <li><a href="#" class="trending"><i class="fa fa-trophy"></i> Set Trending</a></li>
-                                        <li><a href="#" class="headline"><i class="fa fa-star"></i> Set Headline</a></li>
+                                        <li @if($article->status == 'published'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="published" data-type="status"><i class="fa fa-check"></i> @if($article->status == 'published'){{ 'Approved' }}@else{{ 'Approve' }}@endif</a></li>
+                                        <li @if($article->status == 'reject'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="reject" data-type="status"><i class="fa fa-remove"></i> @if($article->status == 'reject'){{ 'Rejected' }}@else{{ 'Reject' }}@endif</a></li>
+                                        <li @if($article->state == 'trending'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="trending" data-type="state"><i class="fa fa-trophy"></i> @if($article->state != 'trending'){!! 'Set' !!}@endif Trending</a></li>
+                                        <li @if($article->state == 'headline'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="headline" data-type="state"><i class="fa fa-star"></i> @if($article->state != 'headline'){!! 'Set' !!}@endif Headline</a></li>
+                                        <li><a href="#" class="btn-mark" data-value="general" data-type="state"><i class="fa fa-file-text"></i> Set General</a></li>
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="#detail" data-toggle="modal"><i class="fa fa-info-circle"></i> Detail</a></li>
                                         <li><a href="{{ route('admin.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
@@ -211,7 +223,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center">No article available</td>
+                            <td colspan="9" class="text-center">No article available</td>
                         </tr>
                     @endforelse
                     </tbody>
@@ -374,7 +386,7 @@
         </div>
     </div>
 
-    <form action="#" method="post" data-url="{{ url('admin/feedback/mark') }}" id="form-mark">
+    <form action="#" method="post" data-url="{{ url('admin/article/mark') }}" id="form-mark">
         {!! csrf_field() !!}
         {!! method_field('put') !!}
     </form>

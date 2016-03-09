@@ -676,9 +676,21 @@ $(function () {
 
     $('.btn-mark').click(function(){
         var id = $(this).closest('*[data-id]').data('id');
-        var type = $(this).text().toString().toLowerCase();
-        $('#form-mark').attr('action', $('#form-mark').data('url')+'/'+type+'/'+id);
-        $('#form-mark').submit();
+        var label = $(this).text().toString().toLowerCase();
+        var type = '';
+
+        var link = $('#form-mark').data('url')+'/'+label+'/'+id;
+
+        if($(this).data('value') != null && $(this).data('type') != null){
+            label = $(this).data('value');
+            type = $(this).data('type');
+            link = $('#form-mark').data('url')+'/'+type+'/'+label+'/'+id;
+        }
+
+        $('#form-mark').attr('action', link);
+        setTimeout(function(){
+            $('#form-mark').submit();
+        }, 100);
     });
 
     $('.btn-feedback-detail').click(function(){

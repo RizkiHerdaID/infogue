@@ -292,6 +292,7 @@ class Article extends Model
                     featured,
                     view,
                     articles.status AS status,
+                    state,
                     contributor_id,
                     name,
                     username,

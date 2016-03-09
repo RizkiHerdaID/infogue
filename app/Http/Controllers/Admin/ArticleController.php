@@ -82,6 +82,44 @@ class ArticleController extends Controller
     }
 
     /**
+     * Update the specified article status and state in storage.
+     *
+     * @param $type
+     * @param $label
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function mark($type, $label, $id)
+    {
+        $article = Article::findOrFail($id);
+
+        if($type == 'status'){
+            $article->status = $label;
+        }
+        else if($type == 'state'){
+            $article->state = $label;
+        }
+        else{
+            abort(404);
+        }
+
+        $result = $article->save();
+
+        if($result){
+            return redirect()
+                ->route('admin.article.index')
+                ->with('status', ($label=='reject' || $label=='general') ? 'warning' : 'success')
+                ->with('message', 'The <strong>'.$article->title.'</strong> set '.$type.' as <strong>'.$label.'</strong>');
+        }
+        else {
+            return redirect()
+                ->back()->withErrors()
+                ->with('status', 'danger')
+                ->with('message', 'The <strong>'.$article->title.'</strong> fail mark '.$type.' as <strong>'.$label.'</strong>');
+        }
+    }
+
+    /**
      * Remove the specified article from storage.
      *
      * @param Request $request

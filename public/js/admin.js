@@ -665,4 +665,11 @@ $(function () {
         $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
         $('#modal-delete form .delete-title').text(title);
     });
+
+    $('.btn-mark').click(function(){
+        var id = $(this).closest('*[data-id]').data('id');
+        var type = $(this).text().toString().toLowerCase();
+        $('#form-mark').attr('action', $('#form-mark').data('url')+'/'+type+'/'+id);
+        $('#form-mark').submit();
+    });
 })

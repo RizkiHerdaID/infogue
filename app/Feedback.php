@@ -47,9 +47,4 @@ class Feedback extends Model
     {
 
     }
-
-    public function mark($label, $id)
-    {
-
-    }
 }

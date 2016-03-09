@@ -76,7 +76,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('subcategory', 'SubcategoryController', ['only' => ['store', 'update', 'destroy']]);
         Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'destroy']]);
         Route::post('/feedback/reply', ['as' => 'admin.feedback.reply', 'uses' => 'FeedbackController@reply']);
-        Route::match(['put', 'patch'], '/feedback/mark/{type}/{id}', ['as' => 'admin.feedback.mark', 'uses' => 'FeedbackController@mark']);
+        Route::match(['put', 'patch'], '/feedback/mark/{label}/{id}', ['as' => 'admin.feedback.mark', 'uses' => 'FeedbackController@mark']);
     });
 
     // Index routes...

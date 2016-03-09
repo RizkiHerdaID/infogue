@@ -43,23 +43,30 @@ class FeedbackController extends Controller
     /**
      * Store a newly created feedback in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param $label
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function important(Request $request)
+    public function mark($label, $id)
     {
-        //
-    }
+        $feedback = Feedback::findOrFail($id);
 
-    /**
-     * Store a newly created feedback in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function archive(Request $request)
-    {
-        //
+        $feedback->label = $label;
+
+        $result = $feedback->save();
+
+        if($result){
+            return redirect()
+                ->route('admin.feedback.index')
+                ->with('status', $label=='important'? 'warning' : 'success')
+                ->with('message', 'Feedback from <strong>'.$feedback->name.'</strong> marked as <strong>'.$label.'</strong>');
+        }
+        else {
+            return redirect()
+                ->back()->withErrors()
+                ->with('status', 'danger')
+                ->with('message', 'Feedback from <strong>'.$feedback->name.'</strong> fail mark as <strong>'.$label.'</strong>');
+        }
     }
 
     /**

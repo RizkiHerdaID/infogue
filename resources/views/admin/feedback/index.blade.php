@@ -97,6 +97,15 @@
                     </div>
                 </div>
             </div>
+            @include('errors.common')
+            @if(Session::has('status'))
+                <div class="alert alert-{{ Session::get('status') }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {!! Session::get('message') !!}
+                </div>
+            @endif
             <div class="content-section">
                 <table class="table table-responsive table-striped table-hover table-condensed mbs">
                     <thead>
@@ -126,7 +135,7 @@
                             $label = 'success';
                         }
                         ?>
-                        <tr class="@if($label == 'danger'){{ $label }}@endif">
+                        <tr class="@if($label == 'danger'){{ $label }}@endif" data-id="{{ $feedback->id }}" data-name="{{ $feedback->name }}" data-email="{{ $feedback->email }}" data-message="{{ $feedback->message }}">
                             <td>
                                 <div class="checkbox">
                                     <input type="checkbox" name="row[]" value="{{ $feedback->id }}" id="check-{{ $feedback->id }}" class="css-checkbox checkbox-row">
@@ -135,7 +144,7 @@
                             </td>
                             <td>{{ $feedback->name }}</td>
                             <td><a href="mailto:{{ $feedback->email }}">{{ $feedback->email }}</a></td>
-                            <td><a href="#detail" data-toggle="modal" data-name="{{ $feedback->name }}" data-email="{{ $feedback->email }}" data-message="{{ $feedback->message }}">DETAIL</a></td>
+                            <td><a href="#detail" data-toggle="modal">DETAIL</a></td>
                             <td>@fulldate($feedback->created_at)</td>
                             <td><span class="label label-{{ $label }}">{{ strtoupper($feedback->label) }}</span></td>
                             <td class="text-center">
@@ -146,12 +155,12 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">CONTROL</li>
-                                        <li><a href="#detail" data-toggle="modal"><i class="fa fa-eye"></i> View</a></li>
-                                        <li><a href="#reply" data-toggle="modal"><i class="fa fa-pencil"></i> Reply</a></li>
-                                        <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                        <li><a href="#detail" data-toggle="modal"><i class="fa fa-eye"></i>View</a></li>
+                                        <li><a href="#reply" data-toggle="modal"><i class="fa fa-pencil"></i>Reply</a></li>
+                                        <li><a href="#delete" data-toggle="modal"><i class="fa fa-trash"></i>Delete</a></li>
                                         <li class="dropdown-header">QUICK ACTION</li>
-                                        <li><a href="#"><i class="fa fa-bookmark"></i> Important</a></li>
-                                        <li><a href="#"><i class="fa fa-archive"></i> Archive</a></li>
+                                        <li><a href="#" class="btn-mark"><i class="fa fa-bookmark"></i>Important</a></li>
+                                        <li><a href="#" class="btn-mark"><i class="fa fa-archive"></i>Archived</a></li>
                                     </ul>
                                 </div>
                             </td>

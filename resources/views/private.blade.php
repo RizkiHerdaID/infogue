@@ -78,6 +78,7 @@
 <script src="{{ asset('/library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
 <script src="{{ asset('/library/jquery.timeago/jquery.timeago.js') }}"></script>
 <script src="{{ asset('/library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('/library/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('/js/admin.js') }}"></script>
 
 </body>

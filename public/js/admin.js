@@ -329,7 +329,7 @@ $(function () {
             $("#slug").val("");
             $('#tags').tagsinput('removeAll');
             $('#category').val("");
-            $('#subcategory').val("");
+            $('#subcategory').html("<option value=''>Select Subcategory</option>");
             $(".note-editable").text("");
             $("#excerpt").val("");
             $("#standard").prop("checked", true);
@@ -606,10 +606,6 @@ $(function () {
                 required: "Slug is required",
                 maxlength: "Slug max length is {0} characters"
             },
-            category: "Category is required",
-            subcategory: "Sub Category is required",
-            featured: "Featured is required",
-            content: "Post content name is required"
         }
     });
 
@@ -646,6 +642,41 @@ $(function () {
             password: "Password is required to update"
         }
     });
+
+    $('select[name="category"]').change(function(){
+        loadingSelect($('select[name="subcategory"]'));
+        $.getJSON(websiteUrl+"/admin/article/subcategory/"+$(this).val(), function (data) {
+            var output = '<option value="">'+$('select[name="category"] option:selected').text()+' Subcategory</option>';
+            var label = '';
+            var isFirst = true;
+            $.each(data, function(i,row){
+                if(row.label != label){
+                    if(!isFirst){
+                        output += '</optgroup>';
+                    }
+                    isFirst = false;
+                    label = row.label;
+                    output += '<optgroup label="'+row.label+'">';
+                }
+                output += "<option value='"+row.id+"'>"+row.subcategory+"</option>";
+                if(data == data.length - 1){
+                    output += '</optgroup>';
+                }
+            });
+            completeSelect($('select[name="subcategory"]'));
+            $('select[name="subcategory"]').html(output);
+        });
+    });
+
+    function loadingSelect($tag){
+        $tag.attr('disabled', '');
+        $tag.html('<option value="loading">Please Wait...</option>');
+    }
+
+    function completeSelect($tag){
+        $tag.removeAttr('disabled');
+        $tag.find('option[value="loading"]').remove();
+    }
 
     $(document).on("click", ".btn-delete", function(){
         var selectedRows = new Array();
@@ -735,4 +766,17 @@ $(function () {
             $('#modal-detail .tags').append('<li><a class="tag" href="'+websiteUrl+'/tag/'+slug+'" target="_blank">'+tags[i].toString().toUpperCase()+'</a></li>');
         }
     });
+
+    if($('.bootstrap-tagsinput input').length){
+        var tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: websiteUrl+'/admin/article/tags'
+        });
+
+        $('.bootstrap-tagsinput input').typeahead(null, {
+            name: 'slug',
+            source: tags
+        });
+    }
 });

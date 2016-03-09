@@ -14,7 +14,7 @@ class CreateArticleRequest extends Request
      */
     public function authorize()
     {
-        return Auth::check();
+        return Auth::check() || Auth::guard('admin')->check();
     }
 
     /**
@@ -30,8 +30,8 @@ class CreateArticleRequest extends Request
             'type' => 'required|in:standard,gallery,video',
             'category' => 'required',
             'subcategory' => 'required',
-            'tags' => 'required',
-            'featured' => 'required',
+            'tags' => 'required|max:200',
+            'featured' => 'required|mimes:jpg,jpeg,gif,png|max:1000',
             'content' => 'required',
             'excerpt' => 'max:300',
             'status' => 'required|in:pending,draft,published,reject',

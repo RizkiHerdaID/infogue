@@ -324,8 +324,8 @@
 <script src="{{ asset('/library/superfish/dist/js/superfish.min.js') }}"></script>
 <script src="{{ asset('/library/superfish/dist/js/hoverIntent.js') }}"></script>
 <script src="{{ asset('/library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('/library/mustache/mustache.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('/library/summernote/dist/summernote.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/library/mustache/mustache.min.js') }}"></script>
+<script src="{{ asset('/library/summernote/dist/summernote.min.js') }}"></script>
 <script id="dsq-count-scr" src="//info-gue.disqus.com/count.js" async></script>
 
 <script src="{{ asset('/js/script.js') }}"></script>

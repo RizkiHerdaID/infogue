@@ -71,8 +71,10 @@ Route::group(['middleware' => ['web']], function () {
 
         // Admin module routes...
         Route::resource('contributor', 'ContributorController', ['except' => ['show', 'create', 'store']]);
-        Route::resource('article', 'ArticleController');
+        Route::get('/article/tags', ['as' => 'admin.article.tags', 'uses' => 'ArticleController@tags']);
+        Route::get('/article/subcategory/{id}', ['as' => 'admin.article.subcategory', 'uses' => 'ArticleController@subcategory']);
         Route::match(['put', 'patch'], '/article/mark/{type}/{label}/{id}', ['as' => 'admin.article.mark', 'uses' => 'ArticleController@mark']);
+        Route::resource('article', 'ArticleController');
         Route::resource('category', 'CategoryController', ['except' => ['show', 'create', 'edit']]);
         Route::resource('subcategory', 'SubcategoryController', ['only' => ['store', 'update', 'destroy']]);
         Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'destroy']]);

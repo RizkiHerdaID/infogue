@@ -21,7 +21,7 @@ class Feedback extends Model
     }
 
     public function retrieveFeedback($data, $by, $sort, $query = null){
-        $feedback = $this;
+        $feedback = $this->select('*');
 
         if($query != null && $query != ''){
             $feedback->where('name', 'like', "%{$query}%")

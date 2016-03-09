@@ -28,7 +28,7 @@
                 <li class="active">Contributor</li>
             </ol>
             <div class="control">
-                <a href="#search" class="link" data-toggle="modal"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="#" class="link" data-toggle="modal" data-target="#modal-search"><i class="fa fa-search"></i> SEARCH</a>
                 <a href="#" class="link print"><i class="fa fa-print"></i> PRINT</a>
             </div>
         </div>
@@ -205,7 +205,7 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="search" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-search" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('admin.contributor.index') }}" method="get">
@@ -216,7 +216,7 @@
                     <div class="modal-body">
                         <label class="mbs">Search in Contributor Data</label>
                         <div class="search">
-                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here" autofocus/>
+                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here"/>
                             <button type="submit" class="btn btn-primary pull-right">SEARCH</button>
                         </div>
                     </div>

@@ -99,6 +99,11 @@ $(function () {
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
 
+    $('.filter .dropdown.data a').click(function(){
+        var value = $(this).text().toLowerCase();
+        filterData('data', (value == 'all data') ? 'all' : value);
+    });
+
     $('.filter .dropdown.by a').click(function(){
         var value = $(this).text().toLowerCase();
         filterData('by', value);

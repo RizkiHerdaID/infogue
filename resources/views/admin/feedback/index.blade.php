@@ -8,7 +8,7 @@
         <header>
             <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
             <div class="title">
-                <h1>Contributor</h1>
+                <h1>Feedback</h1>
             </div>
             <div class="control hidden-xs">
                 <div class="account clearfix">
@@ -28,7 +28,7 @@
                 <li class="active">Feedback</li>
             </ol>
             <div class="control">
-                <a href="#search" data-toggle="modal" class="link"><i class="fa fa-search"></i> SEARCH</a>
+                <a href="#" data-toggle="modal" data-target="#modal-search" class="link"><i class="fa fa-search"></i> SEARCH</a>
                 <a href="#" class="link print"><i class="fa fa-print"></i> PRINT</a>
             </div>
         </div>
@@ -40,43 +40,60 @@
                 </div>
                 <div class="control">
                     <div class="filter">
-                        <div class="dropdown select">
+                        <div class="dropdown select data">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                ALL DATA
+                                @if(Input::has('data') && Input::get('data') != 'all')
+                                    {{ strtoupper(Input::get('data')) }}
+                                @else
+                                    ALL DATA
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">FEEDBACK TYPE</li>
-                                <li><a href="#"><i class="fa fa-navicon"></i> All Data</a></li>
-                                <li><a href="#"><i class="fa fa-bookmark"></i> Important</a></li>
-                                <li><a href="#"><i class="fa fa-archive"></i> Archive</a></li>
+                                <li><a href="#"><i class="fa fa-navicon"></i>All Data</a></li>
+                                <li><a href="#"><i class="fa fa-bookmark"></i>Important</a></li>
+                                <li><a href="#"><i class="fa fa-archive"></i>Archived</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown select">
+                        <div class="dropdown select by">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                TIMESTAMP
+                                @if(Input::has('by'))
+                                    {{ strtoupper(Input::get('by')) }}
+                                @else
+                                    TIMESTAMP
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">SORT BY</li>
-                                <li><a href="#"><i class="fa fa-clock-o"></i> Timestamp</a></li>
-                                <li><a href="#"><i class="fa fa-font"></i> Name</a></li>
+                                <li><a href="#"><i class="fa fa-clock-o"></i>Date</a></li>
+                                <li><a href="#"><i class="fa fa-font"></i>Name</a></li>
+                                <li><a href="#"><i class="fa fa-envelope"></i>Email</a></li>
                             </ul>
                         </div>
-                        <div class="dropdown select">
+                        <div class="dropdown select method">
                             <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                DESCENDING
+                                @if(Input::has('sort'))
+                                    @if(Input::get('sort') == 'asc')
+                                        ASCENDING
+                                    @else
+                                        DESCENDING
+                                    @endif
+                                @else
+                                    DESCENDING
+                                @endif
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                 <li class="dropdown-header">METHOD</li>
-                                <li><a href="#"><i class="fa fa-arrow-up"></i> Ascending</a></li>
-                                <li><a href="#"><i class="fa fa-arrow-down"></i> Descending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-up"></i>Ascending</a></li>
+                                <li><a href="#"><i class="fa fa-arrow-down"></i>Descending</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="group-control">
-                        <a href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm btn-delete all"><i class="fa fa-trash"></i> DELETE</a>
                     </div>
                 </div>
             </div>
@@ -94,12 +111,22 @@
                         <th>Email</th>
                         <th>Message</th>
                         <th>Timestamp</th>
+                        <th>Label</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     @forelse($feedbacks as $feedback)
-                        <tr>
+                        <?php
+                        $label = 'default';
+                        if($feedback->label == 'important'){
+                            $label = 'danger';
+                        }
+                        else if($feedback->label == 'archived'){
+                            $label = 'success';
+                        }
+                        ?>
+                        <tr class="@if($label == 'danger'){{ $label }}@endif">
                             <td>
                                 <div class="checkbox">
                                     <input type="checkbox" name="row[]" value="{{ $feedback->id }}" id="check-{{ $feedback->id }}" class="css-checkbox checkbox-row">
@@ -110,6 +137,7 @@
                             <td><a href="mailto:{{ $feedback->email }}">{{ $feedback->email }}</a></td>
                             <td><a href="#detail" data-toggle="modal" data-name="{{ $feedback->name }}" data-email="{{ $feedback->email }}" data-message="{{ $feedback->message }}">DETAIL</a></td>
                             <td>@fulldate($feedback->created_at)</td>
+                            <td><span class="label label-{{ $label }}">{{ strtoupper($feedback->label) }}</span></td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -130,7 +158,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">No feedback available</td>
+                            <td colspan="7" class="text-center">No feedback available</td>
                         </tr>
                     @endforelse
                     </tbody>
@@ -237,7 +265,7 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="search" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-search" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('admin.feedback.index') }}" method="get">
@@ -248,7 +276,7 @@
                     <div class="modal-body">
                         <label class="mbs">Search in Contributor Data</label>
                         <div class="search">
-                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here" autofocus/>
+                            <input type="search" name="query" id="query" class="form-control pull-left" placeholder="Type keywords here"/>
                             <button type="submit" class="btn btn-primary pull-right">SEARCH</button>
                         </div>
                     </div>
@@ -257,5 +285,10 @@
             </div>
         </div>
     </div>
+
+    <form action="#" method="post" data-url="{{ url('admin/feedback/mark') }}" id="form-mark">
+        {!! csrf_field() !!}
+        {!! method_field('put') !!}
+    </form>
 
 @endsection

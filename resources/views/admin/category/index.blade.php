@@ -171,9 +171,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                                     <li class="dropdown-header">CONTROL</li>
-                                                    <li><a href="category.html" target="_blank"><i class="fa fa-eye"></i> View</a></li>
-                                                    <li><a href="#edit-sub" data-toggle="modal"><i class="fa fa-pencil"></i> Edit</a></li>
-                                                    <li><a href="#delete-sub" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
+                                                    <li><a href="{{ route('article.subcategory', [str_slug($category->category), str_slug($subcategory->subcategory)]) }}" target="_blank"><i class="fa fa-eye"></i> View</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal-subcategory" class="btn-subcategory-edit"><i class="fa fa-pencil"></i> Edit</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal-delete" data-label="{{ $subcategory->subcategory }}" class="btn-delete btn-delete-subcategory"><i class="fa fa-trash"></i> Delete</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -243,35 +243,31 @@
         </div>
     </div>
 
-    <div class="modal fade color" id="modal-subcategory" tabindex="-1" role="dialog">
+    <div class="modal fade color" data-url="{{ route('admin.subcategory.store') }}" id="modal-subcategory" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#" class="form-strip form-horizontal">
-                    <input type="hidden" class="form-control" value="0"/>
+                <form action="#" data-url="{{ route('admin.subcategory.store') }}" method="post" class="form-strip form-horizontal" id="form-subcategory">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" class="method" value=""/>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"><i class="fa fa-navicon"></i> CREATE SUB CATEGORY</h4>
+                        <h4 class="modal-title"><i class="fa fa-navicon"></i> <span class="title">CREATE</span> SUB CATEGORY</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <label for="category-list-edit">CATEGORY</label>
+                                    <label for="category_id">CATEGORY</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <label for="category-list" class="css-select">
-                                        <select name="category-list" id="category-list" class="form-control" required>
+                                    <label for="category" class="css-select">
+                                        <select name="category_id" id="category_id" class="form-control" required>
                                             <option value="">Select Category</option>
-                                            <option value="1">News</option>
-                                            <option value="2">Economic</option>
-                                            <option value="5">Entertainment</option>
-                                            <option value="4">Sport</option>
-                                            <option value="4">Health</option>
-                                            <option value="4">Science</option>
-                                            <option value="4">Technology</option>
-                                            <option value="4">Photo</option>
-                                            <option value="4">Video</option>
-                                            <option value="4">Others</option>
+                                            @foreach($site_menus as $category)
+
+                                                <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>{{ $category->category }}</option>
+
+                                            @endforeach
                                         </select>
                                     </label>
                                 </div>
@@ -280,38 +276,37 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <label for="sub-category">SUB CATEGORY</label>
+                                    <label for="subcategory">SUB CATEGORY</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" id="sub-category" class="form-control" placeholder="Sub category name"/>
+                                    <input type="text" id="subcategory" name="subcategory" class="form-control" value="{{ old('subcategory') }}" placeholder="Sub category name"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <label for="label-edit">GROUP LABEL</label>
+                                    <label for="label">GROUP LABEL</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" id="label-edit" class="form-control" placeholder="Label group in menu"/>
+                                    <input type="text" id="label" name="label" class="form-control" value="{{ old('label') }}" placeholder="Label group in menu"/>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <label for="description-sub">DESCRIPTION</label>
+                                    <label for="description">DESCRIPTION</label>
                                 </div>
                                 <div class="col-sm-9">
-                                <textarea name="description" class="form-control" id="description-sub" cols="30" rows="5" placeholder="Short sub category description">
-                                </textarea>
+                                <textarea class="form-control" id="description" name="description" cols="30" rows="3" placeholder="Short sub category description">{{ old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
-                        <button type="submit" class="btn btn-primary">CREATE SUB</button>
+                        <button type="submit" class="btn btn-primary"><span class="title-button">CREATE</span> SUB CATEGORY</button>
                     </div>
                 </form>
             </div>

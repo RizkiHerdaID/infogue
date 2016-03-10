@@ -837,4 +837,57 @@ $(function () {
     $('.btn-delete-category').click(function(){
         $('#modal-delete form .title').text(' CATEGORY');
     });
+
+    $('.btn-subcategory-create').click(function(){
+        var subcategoryModal = $('#modal-subcategory');
+
+        subcategoryModal.find('form').attr('action', $('#modal-subcategory form').data('url'));
+        subcategoryModal.find('form input[name="_method"]').val('post');
+
+        subcategoryModal.find('.title').text('CREATE');
+        subcategoryModal.find('.title-button').text('CREATE');
+
+        if(firstCategoryRequest && (subcategoryModal.find('input[name="subcategory"]').val() != '' || subcategoryModal.find('input[name="label"]').val() != '' || subcategoryModal.find('textarea[name="description"]').val() != '')){
+            firstCategoryRequest = false;
+            return;
+        }
+        firstCategoryRequest = false;
+
+        subcategoryModal.find('select[name="category_id"]').val('');
+        subcategoryModal.find('input[name="subcategory"]').val('');
+        subcategoryModal.find('input[name="label"]').val('');
+        subcategoryModal.find('textarea[name="description"]').val('');
+    });
+
+    $('.btn-subcategory-edit').click(function(){
+        var subcategoryModal = $('#modal-subcategory');
+        var subcategoryData = $(this).closest('*[data-id]');
+
+        var id = subcategoryData.data('id');
+        var category = subcategoryData.data('category');
+        var subcategory = subcategoryData.data('subcategory');
+        var label = subcategoryData.data('label');
+        var description = subcategoryData.data('description');
+
+        subcategoryModal.find('form').attr('action', $('#modal-subcategory form').data('url')+'/'+id);
+        subcategoryModal.find('form input[name="_method"]').val('put');
+
+        subcategoryModal.find('.title').text('EDIT');
+        subcategoryModal.find('.title-button').text('UPDATE');
+
+        if(firstCategoryRequest && (subcategoryModal.find('input[name="subcategory"]').val() != '' || subcategoryModal.find('input[name="label"]').val() != '' || subcategoryModal.find('textarea[name="description"]').val() != '')){
+            firstCategoryRequest = false;
+            return;
+        }
+        firstCategoryRequest = false;
+
+        subcategoryModal.find('select[name="category_id"]').val(category);
+        subcategoryModal.find('input[name="subcategory"]').val(subcategory);
+        subcategoryModal.find('input[name="label"]').val(label);
+        subcategoryModal.find('textarea[name="description"]').val(description);
+    });
+
+    $('.btn-delete-subcategory').click(function(){
+        $('#modal-delete form .title').text(' SUBCATEGORY');
+    });
 });

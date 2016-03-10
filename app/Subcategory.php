@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subcategory extends Model
 {
-    protected $fillable = ['subcategory', 'description'];
+    protected $fillable = ['category_id', 'subcategory', 'label', 'description'];
 
     protected $hidden = ['created_at', 'updated_at'];
 

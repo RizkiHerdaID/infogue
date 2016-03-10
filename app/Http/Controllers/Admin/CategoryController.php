@@ -85,14 +85,14 @@ class CategoryController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         if(!empty(trim($request->input('selected')))){
             $category_ids = explode(',', $request->input('selected'));
 
             $delete = Category::whereIn('id', $category_ids)->delete();
 
-            $name = count($category_ids).' Feedbacks';
+            $name = count($category_ids).' Categories';
         }
         else{
             $category = Category::findOrFail($id);

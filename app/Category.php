@@ -66,10 +66,10 @@ class Category extends Model
 
     public function retrieveCategory($by, $sort)
     {
-        $categories = $this->select(DB::raw('categories.*, subcategories.subcategory, IFNULL(SUM(article_total), 0) AS article_total, IFNULL(SUM(view_total), 0) AS view_total, IFNULL(SUM(rating_total), 0) AS rating_total, IFNULL(COUNT(subcategories.id), 0) AS subcategory_total'))
+        $categories = $this->select(DB::raw('categories.*, subcategories.subcategory, IFNULL(SUM(article_total), 0) AS article_total, IFNULL(SUM(view_total), 0) AS view_total, IFNULL(CEIL(AVG(rating_total)), 0) AS rating_total, IFNULL(COUNT(subcategories.id), 0) AS subcategory_total'))
             ->leftJoin('subcategories', 'categories.id', '=', 'subcategories.category_id')
             ->leftJoin(DB::raw("(SELECT subcategory_id, COUNT(*) AS article_total, SUM(view) AS view_total FROM articles GROUP BY subcategory_id) articles"), 'articles.subcategory_id', '=', 'subcategories.id')
-            ->leftJoin(DB::raw("(SELECT subcategory_id, SUM(rate) AS rating_total FROM articles INNER JOIN ratings ON articles.id = ratings.article_id GROUP BY subcategory_id) ratings"), 'ratings.subcategory_id', '=', 'subcategories.id')
+            ->leftJoin(DB::raw("(SELECT subcategory_id, AVG(rate) AS rating_total FROM articles INNER JOIN ratings ON articles.id = ratings.article_id GROUP BY subcategory_id) ratings"), 'ratings.subcategory_id', '=', 'subcategories.id')
             ->groupBy('categories.id');
 
         if($by == 'timestamp'){

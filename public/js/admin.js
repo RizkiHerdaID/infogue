@@ -691,7 +691,17 @@ $(function () {
         }
         var id = $(this).closest('*[data-id]').data('id');
         var title = $(this).hasClass('all') ? selectedRows.length+' selected data' : $(this).data('label');
-        $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
+
+        if($(this).hasClass('btn-delete-category')){
+            $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/category/'+id);
+        }
+        else if($(this).hasClass('btn-delete-subcategory')){
+            $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/subcategory/'+id);
+        }
+        else{
+            $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
+        }
+
         $('#modal-delete form .delete-title').text(title);
     });
 
@@ -779,4 +789,52 @@ $(function () {
             source: tags
         });
     }
+
+    var firstCategoryRequest = true;
+    $('.btn-category-create').click(function(){
+        var categoryModal = $('#modal-category');
+
+        categoryModal.find('form').attr('action', $('#modal-category form').data('url'));
+        categoryModal.find('form input[name="_method"]').val('post');
+
+        categoryModal.find('.title').text('CREATE');
+        categoryModal.find('.title-button').text('CREATE');
+
+        if(firstCategoryRequest && (categoryModal.find('input[name="category"]').val() != '' || categoryModal.find('textarea[name="description"]').val() != '')){
+            firstCategoryRequest = false;
+            return;
+        }
+        firstCategoryRequest = false;
+
+        categoryModal.find('input[name="category"]').val('');
+        categoryModal.find('textarea[name="description"]').val('');
+    });
+
+    $('.btn-category-edit').click(function(){
+        var categoryModal = $('#modal-category');
+        var categoryData = $(this).closest('*[data-id]');
+
+        var id = categoryData.data('id');
+        var category = categoryData.data('category');
+        var description = categoryData.data('description');
+
+        categoryModal.find('form').attr('action', $('#modal-category form').data('url')+'/'+id);
+        categoryModal.find('form input[name="_method"]').val('put');
+
+        categoryModal.find('.title').text('EDIT');
+        categoryModal.find('.title-button').text('UPDATE');
+
+        if(firstCategoryRequest && (categoryModal.find('input[name="category"]').val() != '' || categoryModal.find('textarea[name="description"]').val() != '')){
+            firstCategoryRequest = false;
+            return;
+        }
+        firstCategoryRequest = false;
+
+        categoryModal.find('input[name="category"]').val(category);
+        categoryModal.find('textarea[name="description"]').val(description);
+    });
+
+    $('.btn-delete-category').click(function(){
+        $('#modal-delete form .title').text(' CATEGORY');
+    });
 });

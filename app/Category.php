@@ -63,4 +63,37 @@ class Category extends Model
 
         return $featured_categories;
     }
+
+    public function retrieveCategory($by, $sort)
+    {
+        $categories = $this->select(DB::raw('categories.*, subcategories.subcategory, IFNULL(SUM(article_total), 0) AS article_total, IFNULL(SUM(view_total), 0) AS view_total, IFNULL(SUM(rating_total), 0) AS rating_total, IFNULL(COUNT(subcategories.id), 0) AS subcategory_total'))
+            ->leftJoin('subcategories', 'categories.id', '=', 'subcategories.category_id')
+            ->leftJoin(DB::raw("(SELECT subcategory_id, COUNT(*) AS article_total, SUM(view) AS view_total FROM articles GROUP BY subcategory_id) articles"), 'articles.subcategory_id', '=', 'subcategories.id')
+            ->leftJoin(DB::raw("(SELECT subcategory_id, SUM(rate) AS rating_total FROM articles INNER JOIN ratings ON articles.id = ratings.article_id GROUP BY subcategory_id) ratings"), 'ratings.subcategory_id', '=', 'subcategories.id')
+            ->groupBy('categories.id');
+
+        if($by == 'timestamp'){
+            $categories->orderBy('created_at', $sort);
+        }
+        else if($by == 'title'){
+            $categories->orderBy('category', $sort);
+            return $categories->with(['subcategories' => function($query) use($sort){
+                $query->orderBy('subcategory', $sort);
+            }])->paginate(10);
+        }
+        else if($by == 'sub'){
+            $categories->orderBy('subcategory_total', $sort);
+        }
+        else if($by == 'article'){
+            $categories->orderBy('article_total', $sort);
+        }
+        else if($by == 'view'){
+            $categories->orderBy('view_total', $sort);
+        }
+        else if($by == 'popularity'){
+            $categories->orderBy('rating_total', $sort);
+        }
+
+        return $categories->with('subcategories')->paginate(10);
+    }
 }

@@ -36,7 +36,7 @@
             <div class="title-section">
                 <div class="title-wrapper">
                     <h1 class="title">Category</h1>
-                    <p class="subtitle">List of article category</p>
+                    <p class="subtitle">Click list of category to reveal subs</p>
                 </div>
                 <div class="control">
                     <div class="filter">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="group-control">
-                        <a href="#delete" data-toggle="modal" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> DELETE</a>
+                        <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm btn-delete all"><i class="fa fa-trash"></i> DELETE</a>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($categories as $category)
+                    @forelse($categories as $category)
                         <tr data-target="#sub{{ $category->id }}" data-id="{{ $category->id }}" data-category="{{ $category->category }}" data-description="{{ $category->description }}">
                             <td>
                                 <div class="checkbox">
@@ -155,7 +155,7 @@
                                         <td></td>
                                         <td>
                                             <div class="checkbox checkbox-inline">
-                                                <input type="checkbox" name="rowsub[]" id="subcheck-{{ $category->id.$subcategory->id }}" class="css-checkbox checkbox-row-sub">
+                                                <input type="checkbox" name="rowsub[]" value="{{ $subcategory->id }}" id="subcheck-{{ $category->id.$subcategory->id }}" class="css-checkbox checkbox-row-sub">
                                                 <label for="subcheck-{{ $category->id.$subcategory->id }}" class="css-label"></label>
                                             </div>
                                             <a href="{{ route('article.subcategory', [str_slug($category->category), str_slug($subcategory->subcategory)]) }}"></a>{{ strtoupper($subcategory->subcategory) }}
@@ -180,13 +180,22 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">NO SUB CATEGORY AVAILABLE</td>
+                                        <td colspan="7" class="text-center">NO SUB CATEGORY AVAILABLE, <a href="#" data-toggle="modal" data-target="#modal-subcategory" class="btn-subcategory-create">CREATE ONE</a></td>
                                     </tr>
                                 @endforelse
+                                @if(count($subcategories) > 0)
+                                <tr>
+                                    <td colspan="7" class="text-center"><a href="#" data-toggle="modal" data-target="#modal-subcategory" class="btn-subcategory-create" style="border-top: 2px solid; display: block">CREATE NEW SUB {{ strtoupper($category->category) }}</a></td>
+                                </tr>
+                                @endif
                                 </tbody>
                             </div>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">NO CATEGORY AVAILABLE, <a href="#" data-toggle="modal" data-target="#modal-category" class="btn-category-create">CREATE ONE</a></td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
                 <div class="table-footer">
@@ -320,6 +329,7 @@
                     {!! csrf_field() !!}
                     {!! method_field('delete') !!}
                     <input type="hidden" name="selected" value="">
+                    <input type="hidden" name="selected_sub" value="">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE<span class="title">CATEGORY</span></h4>

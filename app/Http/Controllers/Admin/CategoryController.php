@@ -8,6 +8,7 @@ use Infogue\Category;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CategoryRequest;
+use Infogue\Subcategory;
 
 class CategoryController extends Controller
 {
@@ -85,14 +86,21 @@ class CategoryController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id = null)
     {
         if(!empty(trim($request->input('selected')))){
             $category_ids = explode(',', $request->input('selected'));
+            $subcategory_ids = [];
+
+            if($request->input('selected_sub') != ''){
+                $subcategory_ids = explode(',', $request->input('selected_sub'));
+
+                Subcategory::whereIn('id', $subcategory_ids)->delete();
+            }
 
             $delete = Category::whereIn('id', $category_ids)->delete();
 
-            $name = count($category_ids).' Categories';
+            $name = (count($category_ids) + count($subcategory_ids)).' Categories';
         }
         else{
             $category = Category::findOrFail($id);
@@ -104,7 +112,7 @@ class CategoryController extends Controller
 
         $status = $delete ? 'warning' : 'danger';
 
-        $message = $delete ? 'Category <strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
+        $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
 
         return redirect()->route('admin.category.index')
             ->with('status', $status)

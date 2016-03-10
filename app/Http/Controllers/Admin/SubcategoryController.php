@@ -68,10 +68,10 @@ class SubcategoryController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $id = null)
     {
-        if(!empty(trim($request->input('selected')))){
-            $subcategory_ids = explode(',', $request->input('selected'));
+        if(!empty(trim($request->input('selected_sub')))){
+            $subcategory_ids = explode(',', $request->input('selected_sub'));
 
             $delete = Subcategory::whereIn('id', $subcategory_ids)->delete();
 
@@ -87,7 +87,7 @@ class SubcategoryController extends Controller
 
         $status = $delete ? 'warning' : 'danger';
 
-        $message = $delete ? 'Category <strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
+        $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
 
         return redirect()->route('admin.category.index')
             ->with('status', $status)

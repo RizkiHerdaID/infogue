@@ -161,3 +161,9 @@ $factory->define(Infogue\ArticleTag::class, function(){
         'tag_id' => rand(1, 20)
     ];
 });
+
+$factory->define(Infogue\Subscriber::class, function(Faker\Generator $faker){
+    return [
+        'email' => $faker->email
+    ];
+});

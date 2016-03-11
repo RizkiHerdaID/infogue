@@ -1,5 +1,11 @@
 $(function () {
 
+    if ($('.newsletter').length) {
+        setTimeout(function () {
+            $('.newsletter').modal('show');
+        }, 3000);
+    }
+
     // SMOOTH SCROLL---------------------------------------------------------------
     $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -1466,4 +1472,28 @@ $(function () {
         });
     }
 
+    // FORM VALIDATION
+    $.validator.setDefaults({
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+    $.validator.addMethod("checkTags", function (value) {
+        return ($(".bootstrap-tagsinput").find(".tag").length > 0);
+    });
+
+    $("#form-contact").validate();
 });

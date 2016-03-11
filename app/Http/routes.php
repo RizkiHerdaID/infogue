@@ -11,29 +11,29 @@
 |
 */
 
-Route::get('/editorial', function () {
+Route::get('editorial', ['as' => 'page.editorial', 'uses' => function () {
     return view('pages.editorial');
-});
+}]);
 
-Route::get('/career', function () {
+Route::get('career', ['as' => 'page.career', 'uses' => function () {
     return view('pages.career');
-});
+}]);
 
-Route::get('/faq', function () {
+Route::get('faq', ['as' => 'page.faq', 'uses' => function () {
     return view('pages.faq');
-});
+}]);
 
-Route::get('/privacy', function () {
+Route::get('privacy', ['as' => 'page.privacy', 'uses' => function () {
     return view('pages.privacy');
-});
+}]);
 
-Route::get('/disclaimer', function () {
+Route::get('disclaimer', ['as' => 'page.disclaimer', 'uses' => function () {
     return view('pages.disclaimer');
-});
+}]);
 
-Route::get('/terms', function () {
+Route::get('terms', ['as' => 'page.terms', 'uses' => function () {
     return view('pages.terms');
-});
+}]);
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ Route::get('/terms', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::group(['namespace' => 'Admin'], function(){
+    Route::group(['namespace' => 'Admin'], function () {
         // Authentication routes...
         Route::get('admin', ['as' => 'admin.login.form', 'uses' => 'AuthController@showLoginForm']);
         Route::post('admin/login', ['as' => 'admin.login.attempt', 'uses' => 'AuthController@login']);
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['web']], function () {
     });
 
     // Group of administrator feature...
-    Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth:admin']], function() {
+    Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
 
         // Basic admin routes...
         Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdministratorController@index']);
@@ -116,9 +116,9 @@ Route::group(['middleware' => ['web']], function () {
 
     // Contact / feedback routes...
     Route::resource('feedback', 'FeedbackController', ['only' => ['store']]);
-    Route::get('/contact', function () {
+    Route::get('contact', ['as' => 'page.contact', 'uses' => function () {
         return view('pages.contact');
-    });
+    }]);
 
     // Group of contributor view profile routes...
     Route::group(['as' => 'contributor.', 'prefix' => 'contributor/{username}'], function () {

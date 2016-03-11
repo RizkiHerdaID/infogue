@@ -26,7 +26,7 @@ class CreateFeedbackRequest extends Request
         return [
             'name' => 'required|max:50',
             'email' => 'required|email|max:50',
-            'message' => 'required'
+            'message' => 'required|max:5000'
         ];
     }
 }

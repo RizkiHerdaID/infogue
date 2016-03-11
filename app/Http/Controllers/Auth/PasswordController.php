@@ -28,8 +28,18 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    /**
+     * Where to redirect users after reset.
+     *
+     * @var string
+     */
     protected $redirectTo = '/account';
 
+    /**
+     * Default authentication guard.
+     *
+     * @var string
+     */
     protected $guard = 'web';
 
     /**
@@ -54,60 +64,94 @@ class PasswordController extends Controller
 
         $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
             $message->subject($this->getEmailSubject());
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
         });
 
         switch ($response) {
             case Password::RESET_LINK_SENT:
                 return $this->getSendResetLinkEmailSuccessResponse($response);
-
             case Password::INVALID_USER:
             default:
                 return $this->getSendResetLinkEmailFailureResponse($response);
         }
     }
 
+    /**
+     * Show reset password view.
+     *
+     * @param null $token
+     * @return $this|\Illuminate\Http\Response
+     */
     public function showResetForm($token = null)
     {
         if (is_null($token)) {
             return $this->getEmail();
         }
 
+        /*
+         * --------------------------------------------------------------------------
+         * Checking password reset request token
+         * --------------------------------------------------------------------------
+         * Check if user has been creating request for changing their password
+         * otherwise throw it 404 error page, then retrieve their profile to make
+         * sure they are going to update the correct account.
+         */
+
         $reset = DB::table('password_resets')->whereToken($token)->first();
 
-        if($reset == null){
+        if ($reset == null) {
             abort(404);
         }
 
         $contributor = Contributor::whereEmail($reset->email)->firstOrFail();
 
-        if (property_exists($this, 'resetView')) {
-            return view($this->resetView)->with(compact('token', 'contributor'));
-        }
-
-        if (view()->exists('auth.passwords.reset')) {
-            return view('auth.passwords.reset')->with(compact('token', 'contributor'));
-        }
-
-        return view('auth.reset')->with(compact('token', 'email'));
+        return view('auth.passwords.reset')->with(compact('token', 'contributor'));
     }
 
+    /**
+     * Update the old password and authenticate.
+     *
+     * @param $user
+     * @param $password
+     */
     protected function resetPassword($user, $password)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Update password
+         * --------------------------------------------------------------------------
+         * Hash new password and update database related the user.
+         */
+
         $user->password = bcrypt($password);
 
         $user->save();
 
-        $activity = new Activity();
-        $activity->contributor_id = $user->id;
-        $activity->activity = $activity->resetPasswordActivity($user->username);
-        $activity->save();
+        /*
+         * --------------------------------------------------------------------------
+         * Create register activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert reset password activity.
+         */
+
+        Activity::create([
+            'contributor_id' => $user->id,
+            'activity' => Activity::resetPasswordActivity($user->username)
+        ]);
+
+        /*
+         * --------------------------------------------------------------------------
+         * Send email notification
+         * --------------------------------------------------------------------------
+         * Make sure user is noticed by email information that they recently change
+         * their password.
+         */
 
         Mail::send('emails.reset', ['name' => $user->name], function ($message) use ($user) {
 
-            $message->from('no-reply@infogue.id', 'Infogue.id');
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
             $message->to($user->email)->subject('Password has been reset');
 

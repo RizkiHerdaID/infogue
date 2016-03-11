@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers\Auth;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
@@ -38,14 +39,29 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/account';
 
+    /**
+     * Where to redirect users after logout.
+     *
+     * @var string
+     */
     protected $redirectAfterLogout = '/';
 
+    /**
+     * Default username field for login (maybe email or pin).
+     *
+     * @var string
+     */
     protected $username = 'username';
 
+    /**
+     * Default authentication guard.
+     *
+     * @var string
+     */
     protected $guard = 'web';
 
     /**
-     * Create a new authentication controller instance.
+     * Create a new auth controller instance.
      */
     public function __construct()
     {
@@ -53,9 +69,43 @@ class AuthController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        /*
+         * --------------------------------------------------------------------------
+         * Registering user
+         * --------------------------------------------------------------------------
+         * Generate token, must be unique (additional random number to gain
+         * the uniqueness) then sending email activation and gives information
+         * feedback to user.
+         */
+
+        $token = rand(0, 1000) . uniqid();
+
+        $this->create($request->all(), $token);
+
+        $this->sendingActivationEmail($token);
+
+        return redirect(route('register.confirm', [$token]));
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -87,34 +137,57 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    /**
+     * Send registered user with email activation.
+     *
+     * @param $token
+     * @return Collection
+     */
+    public function sendingActivationEmail($token)
     {
-        $validator = $this->validator($request->all());
+        $contributor = Contributor::whereToken($token)->firstOrFail();
 
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
+        $data = [
+            'name' => $contributor->username,
+            'token' => $contributor->token
+        ];
 
-        $token = rand(0, 1000).uniqid();
+        Mail::send('emails.welcome', $data, function ($message) use ($contributor) {
 
-        $this->create($request->all(), $token);
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-        $this->sendingActivationEmail($token);
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-        return redirect(route('register.confirm', [$token]));
+            $message->to($contributor->email)->subject('Welcome to Infogue.id');
+
+        });
+
+        return $contributor;
     }
 
+    /**
+     * Show confirm request page after register.
+     *
+     * @param Request $request
+     * @param $token
+     * @return \Illuminate\Http\Response
+     */
     public function confirm(Request $request, $token)
     {
-        if(!Session::has('status')){
+        if (!Session::has('status')) {
             $request->session()->flash('status', 'Registration Complete');;
         }
 
-        return view('auth.confirmation', compact('title', 'token'));
+        return view('auth.confirmation', compact('token'));
     }
 
+    /**
+     * Resending activation email by request.
+     *
+     * @param Request $request
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function resend(Request $request, $token)
     {
         $this->sendingActivationEmail($token);
@@ -124,67 +197,90 @@ class AuthController extends Controller
         return redirect(route('register.confirm', [$token]));
     }
 
-    public function sendingActivationEmail($token)
-    {
-        $contributor = Contributor::whereToken($token)->firstOrFail();
-
-        $data = array(
-            'name' => $contributor->username,
-            'token' => $contributor->token
-        );
-
-        Mail::send('emails.welcome', $data, function ($message) use ($contributor) {
-
-            $message->from('no-reply@infogue.id', 'Infogue.id');
-
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
-
-            $message->to($contributor->email)->subject('Welcome to Infogue.id');
-
-        });
-
-        return $contributor;
-    }
-
+    /**
+     * Handle activating user account.
+     *
+     * @param $token
+     * @return \Illuminate\Http\Response
+     */
     public function activate($token)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Activating user
+         * --------------------------------------------------------------------------
+         * Find user by token or throw into 404 page
+         * activate user only with pending status, otherwise throws into login page
+         * and return the status, it could be 'activated' or 'suspended'.
+         */
+
         $contributor = Contributor::whereToken($token)->firstOrFail();
 
-        if($contributor->status != 'pending'){
-            return redirect(route('login.form'))->with('status', 'Your account has been '.$contributor->status);
+        if ($contributor->status != 'pending') {
+            return redirect(route('login.form'))
+                ->with('status', 'Your account has been ' . $contributor->status);
         }
 
         $contributor->status = 'activated';
 
         $contributor->save();
 
-        $activity = new Activity();
-        $activity->contributor_id = $contributor->id;
-        $activity->activity = $activity->registerActivity($contributor->username, 'web');
-        $activity->save();
+        /*
+         * --------------------------------------------------------------------------
+         * Create register activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert register activity.
+         */
+        Activity::create([
+            'contributor_id' => $contributor->id,
+            'activity' => Activity::registerActivity($contributor->username, 'web')
+        ]);
 
         return view('auth.activation', compact('contributor'));
     }
 
+    /**
+     * Handle a login request to the application.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         $this->validateLogin($request);
 
-        $user = Contributor::where('email', $request->input('username'))
-            ->orWhere('username', $request->input('username'))->first();
+        /*
+         * --------------------------------------------------------------------------
+         * Attempting to authenticate user
+         * --------------------------------------------------------------------------
+         * Check user availability by username or email, if user is exist make sure
+         * the  status is activated unless throwing back on confirm page if 'pending'
+         * or back on login page with if 'suspended' follow the information within.
+         */
 
-        if($user->count()){
-            if($user->status == 'pending'){
+        $username = $request->input('username');
+
+        $user = Contributor::where('email', $username)->orWhere('username', $username)->first();
+
+        if ($user->count()) {
+            if ($user->status == 'pending') {
                 $request->session()->flash('status', 'Please Activate Your Account');
 
                 return redirect(route('register.confirm', [$user->token]));
-            }
-            else if($user->status == 'suspended'){
+            } else if ($user->status == 'suspended') {
                 $request->session()->flash('status', 'Your account has been suspended');
 
                 return redirect(route('login.form'));
             }
         }
+
+        /*
+         * --------------------------------------------------------------------------
+         * Protect login functionality just in case brute force attempting
+         * --------------------------------------------------------------------------
+         * Count user login attempting and lockout the login response if user
+         * fail to login 7 times just in case hacking or bot effort.
+         */
 
         $throttles = $this->isUsingThrottlesLoginsTrait();
 
@@ -193,6 +289,15 @@ class AuthController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
+
+        /*
+         * --------------------------------------------------------------------------
+         * Authenticate the user
+         * --------------------------------------------------------------------------
+         * Check if user put email or just username by filtering them and choose
+         * what type of checking method to test the credential. Take the default
+         * guard (web) if credential is valid and redirect to intended page.
+         */
 
         $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -204,13 +309,28 @@ class AuthController extends Controller
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
 
-        if ($throttles && ! $lockedOut) {
+        /*
+         * --------------------------------------------------------------------------
+         * Counting login attempt
+         * --------------------------------------------------------------------------
+         * Check if user now throttling by attempting login in row and not locked
+         * out yet and then throw back on login page because credential is invalid
+         * or maybe user never been exist on storage before.
+         */
+
+        if ($throttles && !$lockedOut) {
             $this->incrementLoginAttempts($request);
         }
 
         return $this->sendFailedLoginResponse($request);
     }
 
+    /**
+     * Redirect back if user fail to logged in
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     protected function sendFailedLoginResponse(Request $request)
     {
         return redirect()->back()
@@ -238,34 +358,59 @@ class AuthController extends Controller
      */
     public function handleFacebookProviderCallback()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Login with facebook
+         * --------------------------------------------------------------------------
+         * Initiating facebook driver and retrieve authenticate facebook login,
+         * check if the user has been registered before, if they doesn't exist
+         * create the new one then authenticating them and redirect.
+         */
+
         $user = Socialite::driver('facebook')->user();
 
         dd($user);
 
         $contributor = Contributor::whereVendor('facebook')->whereToken($user->id);
 
-        if($contributor->count() == 0) {
+        if ($contributor->count() == 0) {
+
+            /*
+             * --------------------------------------------------------------------------
+             * Populate facebook data
+             * --------------------------------------------------------------------------
+             * Collect the facebook basic data and create new contributor,
+             * the data including avatar, cover and facebook profile information.
+             */
+
             $contributor = new Contributor();
 
-            $file = file_get_contents("https://graph.facebook.com/{$user->id}/picture?type=large");
-            file_put_contents('images/contributors/facebook-'.$user->id.'.jpg', $file);
+            $avatar = file_get_contents("https://graph.facebook.com/{$user->id}/picture?type=large");
+            file_put_contents('images/contributors/facebook-' . $user->id . '.jpg', $avatar);
 
             $contributor->token = $user->id;
             $contributor->name = $user->name;
-            $contributor->username = $user->username.'.fb';
+            $contributor->username = $user->username . '.fb';
             $contributor->password = Hash::make(uniqid());
             $contributor->email = $user->email;
             $contributor->vendor = 'facebook';
             $contributor->status = 'activated';
             $contributor->about = $user->bio;
-            $contributor->facebook = 'https://facebook.com/'.$user->username;
+            $contributor->facebook = 'https://facebook.com/' . $user->username;
 
             $contributor->save();
 
-            $activity = new Activity();
-            $activity->contributor_id = $contributor->id;
-            $activity->activity = $activity->registerActivity($contributor->username, 'facebook');
-            $activity->save();
+            /*
+             * --------------------------------------------------------------------------
+             * Create register activity
+             * --------------------------------------------------------------------------
+             * Create new instance of Activity and insert register activity.
+             */
+
+            Activity::create([
+                'contributor_id' => $contributor->id,
+                'activity' => Activity::registerActivity($contributor->username, 'facebook')
+            ]);
         }
 
         Auth::login($contributor->first());
@@ -290,38 +435,64 @@ class AuthController extends Controller
      */
     public function handleTwitterProviderCallback()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Login with twitter
+         * --------------------------------------------------------------------------
+         * Initiating twitter driver and retrieve authenticate twitter login,
+         * check if the user has been registered before, if they doesn't exist
+         * create the new one then authenticating them and redirect.
+         */
+
         $user = Socialite::driver('twitter')->user();
 
         $contributor = Contributor::whereVendor('twitter')->whereToken($user->id);
 
-        if($contributor->count() == 0){
+        if ($contributor->count() == 0) {
+
+            /*
+             * --------------------------------------------------------------------------
+             * Populate twitter data
+             * --------------------------------------------------------------------------
+             * Collect the twitter basic data and create new contributor,
+             * the data including banner as contributor cover, twitter avatar
+             * as contributor avatar and twitter profile.
+             */
+
             $contributor = new Contributor();
 
-            $file = file_get_contents($user->avatar_original);
-            file_put_contents('images/contributors/twitter-'.$user->id.'.jpg', $file);
+            $avatar = file_get_contents($user->avatar_original);
+            file_put_contents('images/contributors/twitter-' . $user->id . '.jpg', $avatar);
 
-            $file = file_get_contents($user->user['profile_banner_url']);
-            file_put_contents('images/covers/twitter-'.$user->id.'.jpg', $file);
+            $cover = file_get_contents($user->user['profile_banner_url']);
+            file_put_contents('images/covers/twitter-' . $user->id . '.jpg', $cover);
 
             $contributor->token = $user->id;
             $contributor->name = $user->name;
-            $contributor->username = $user->nickname.'.twitter';
+            $contributor->username = $user->nickname . '.twitter';
             $contributor->password = Hash::make(uniqid());
-            $contributor->email = $user->nickname.'@domain.com';
+            $contributor->email = $user->nickname . '@domain.com';
             $contributor->vendor = 'twitter';
             $contributor->status = 'activated';
             $contributor->location = $user->user['location'];
             $contributor->about = $user->user['description'];
-            $contributor->twitter = 'https://twitter.com/'.$user->nickname;
-            $contributor->avatar = 'twitter-'.$user->id.'.jpg';
-            $contributor->cover = 'twitter-'.$user->id.'.jpg';
+            $contributor->twitter = 'https://twitter.com/' . $user->nickname;
+            $contributor->avatar = 'twitter-' . $user->id . '.jpg';
+            $contributor->cover = 'twitter-' . $user->id . '.jpg';
 
             $contributor->save();
 
-            $activity = new Activity();
-            $activity->contributor_id = $contributor->id;
-            $activity->activity = $activity->registerActivity($contributor->username, 'twitter');
-            $activity->save();
+            /*
+             * --------------------------------------------------------------------------
+             * Create register activity
+             * --------------------------------------------------------------------------
+             * Create new instance of Activity and insert register activity.
+             */
+
+            Activity::create([
+                'contributor_id' => $contributor->id,
+                'activity' => Activity::registerActivity($contributor->username, 'twitter')
+            ]);
         }
 
         Auth::login($contributor->first());

@@ -13,7 +13,7 @@ class Activity extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('latest', function(Builder $builder) {
+        static::addGlobalScope('latest', function (Builder $builder) {
             $builder->orderBy('activities.created_at', 'desc');
         });
     }
@@ -23,43 +23,51 @@ class Activity extends Model
         return $this->belongsTo('Infogue\Contributor');
     }
 
-    public function registerActivity($username, $provider){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> is joining Infogue via ".$provider;
+    public static function registerActivity($username, $provider)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> is joining Infogue via " . $provider;
         return $template;
     }
 
-    public function resetPasswordActivity($username){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> recently resetting the password";
+    public static function resetPasswordActivity($username)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> recently resetting the password";
         return $template;
     }
 
-    public function createArticleActivity($username, $title, $slug){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> published new article <a href='".route('article.show', $slug)."'>".$title."</a>";
+    public static function createArticleActivity($username, $title, $slug)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> published new article <a href='" . route('article.show', $slug) . "'>" . $title . "</a>";
         return $template;
     }
 
-    public function updateArticleActivity($username, $title, $slug){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> updated the article <a href='".route('article.show', $slug)."'>".$title."</a>";
+    public static function updateArticleActivity($username, $title, $slug)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> updated the article <a href='" . route('article.show', $slug) . "'>" . $title . "</a>";
         return $template;
     }
 
-    public function deleteArticleActivity($username, $title, $slug){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> updated the article <a href='".route('article.show', $slug)."'>".$title."</a>";
+    public static function deleteArticleActivity($username, $title, $slug)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> updated the article <a href='" . route('article.show', $slug) . "'>" . $title . "</a>";
         return $template;
     }
 
-    public function followActivity($username, $follow){
-        $template = "<a href='".route('contributor.stream', $username)."'>".$username."</a> now is following <a href='".route('contributor.stream', $follow)."'>".$follow."</a>";
+    public static function followActivity($username, $follow)
+    {
+        $template = "<a href='" . route('contributor.stream', $username) . "'>" . $username . "</a> now is following <a href='" . route('contributor.stream', $follow) . "'>" . $follow . "</a>";
         return $template;
     }
 
-    public function sendingMessageActivity($sender, $receiver){
-        $template = "<a href='".route('contributor.stream', $sender)."'>".$sender."</a> sending a message to <a href='".route('contributor.stream', $receiver)."'>".$receiver."</a>";
+    public static function sendingMessageActivity($sender, $receiver)
+    {
+        $template = "<a href='" . route('contributor.stream', $sender) . "'>" . $sender . "</a> sending a message to <a href='" . route('contributor.stream', $receiver) . "'>" . $receiver . "</a>";
         return $template;
     }
 
-    public function giveRatingActivity($title, $slug, $rating){
-        $template = "Someone give ".$rating." star for <a href='".route('article.show', $slug)."'>".$title."</a>";
+    public static function giveRatingActivity($title, $slug, $rating)
+    {
+        $template = "Someone give " . $rating . " star for <a href='" . route('article.show', $slug) . "'>" . $title . "</a>";
         return $template;
     }
 }

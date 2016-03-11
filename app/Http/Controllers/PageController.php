@@ -7,7 +7,6 @@ use Infogue\Article;
 use Infogue\Category;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
-use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends Controller
 {
@@ -22,11 +21,11 @@ class PageController extends Controller
          * --------------------------------------------------------------------------
          * Retrieve featured posts from Article model
          * --------------------------------------------------------------------------
-         * headline: indicate article with headline state
-         * trending: indicate article with trending state
-         * popular: the top of post sort by most viewed on last 3 months
-         * ranked: the top of post sort by most stared
-         * latest: last published article
+         * Headline : indicate article with headline state
+         * Trending : indicate article with trending state
+         * Popular  : the top of post sort by most viewed on last 3 months
+         * Ranked   : the top of post sort by most stared
+         * Latest   : last published article
          */
         $article = new Article();
 
@@ -44,7 +43,7 @@ class PageController extends Controller
          * --------------------------------------------------------------------------
          * Retrieve featured category
          * --------------------------------------------------------------------------
-         * selected by most viewed on top 4 categories
+         * Selecting the most viewed articles on top 4 categories
          */
         $category = new Category();
 
@@ -65,20 +64,36 @@ class PageController extends Controller
 
         $filter = Input::get('filter');
 
+        /*
+         * --------------------------------------------------------------------------
+         * Querying result set
+         * --------------------------------------------------------------------------
+         * Select data by filter option, by default result search will return people
+         * and article, contributor filter will select data each 8 rows, article
+         * filter select data each 10 rows
+         */
+
         if($filter == 'contributor'){
             $contributor_result = $contributor->search(Input::get('query'), 8);
+
             $total_result = $contributor_result->total();
+
             return view('pages.search', compact('contributor_result', 'total_result'));
         }
         else if($filter == 'article'){
             $article_result = $article->search(Input::get('query'), 10);
+
             $total_result = $article_result->total();
+
             return view('pages.search', compact('article_result', 'total_result'));
         }
         else{
             $article_result = $article->search(Input::get('query'), 10);
+
             $contributor_result = $contributor->search(Input::get('query'), 4);
+
             $total_result = $article_result->total() + $contributor_result->total();
+
             return view('pages.search', compact('contributor_result', 'article_result', 'total_result'));
         }
     }
@@ -114,5 +129,4 @@ class PageController extends Controller
 
         return view('pages.search', compact('article_result', 'total_result'));
     }
-
 }

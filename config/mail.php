@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'anggadarkprince@gmail.com', 'name' => 'Angga Ari Wijaya'],
+    'from' => ['address' => env('MAIL_ADDRESS', 'support@infogue.id'), 'name' => env('MAIL_NAME', 'Infogue.id')],
 
     /*
     |--------------------------------------------------------------------------

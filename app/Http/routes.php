@@ -119,6 +119,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('contact', ['as' => 'page.contact', 'uses' => function () {
         return view('pages.contact');
     }]);
+    Route::resource('subscribe', 'SubscriberController', ['only' => ['store']]);
 
     // Group of contributor view profile routes...
     Route::group(['as' => 'contributor.', 'prefix' => 'contributor/{username}'], function () {

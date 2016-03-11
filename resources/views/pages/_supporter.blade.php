@@ -1,4 +1,4 @@
-<!-- begin of support team -->
+<!-- support team -->
 <div class="section">
     <div class="title">
         <h1>SUPPORTED BY</h1>

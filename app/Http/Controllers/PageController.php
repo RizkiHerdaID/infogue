@@ -12,20 +12,42 @@ use Symfony\Component\HttpFoundation\Request;
 class PageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the index resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Retrieve featured posts from Article model
+         * --------------------------------------------------------------------------
+         * headline: indicate article with headline state
+         * trending: indicate article with trending state
+         * popular: the top of post sort by most viewed on last 3 months
+         * ranked: the top of post sort by most stared
+         * latest: last published article
+         */
         $article = new Article();
+
         $featured = $article->headline();
-        $popular = $article->mostPopular();
-        $ranked = $article->mostRanked();
+
         $trending = $article->trending();
+
+        $popular = $article->mostPopular();
+
+        $ranked = $article->mostRanked();
+
         $latest = $article->latest();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Retrieve featured category
+         * --------------------------------------------------------------------------
+         * selected by most viewed on top 4 categories
+         */
         $category = new Category();
+
         $summary = $category->featured();
 
         return view('pages.index', compact('featured', 'popular', 'ranked', 'trending', 'latest', 'summary'));

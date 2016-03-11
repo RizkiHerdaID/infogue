@@ -3,28 +3,33 @@
 @section('title', '- Home Page')
 
 @section('content')
-
+    <!-- main content -->
     <div class="container content-wrapper">
+        <!-- begin of featured -->
         <div class="featured-wrapper">
             <div class="row">
                 <div class="col-md-8">
                     @if($featured->count() > 0)
-
+                        <!-- begin of big featured -->
                         <div class="article-preview featured-large">
                             <div class="featured-image" data-featured="{{ asset('images/featured/'.$featured->first()->featured) }}">
                                 <div class="content">
                                     <h4 class="category slide-category">{{ $featured->first()->category }}</h4>
-                                    <h3><a href="{{ route('article.show', [$featured->first()->slug]) }}" class="slide-title">{{ $featured->first()->title }}</a></h3>
+                                    <h3>
+                                        <a href="{{ route('article.show', [$featured->first()->slug]) }}" class="slide-title">
+                                            {{ $featured->first()->title }}
+                                        </a>
+                                    </h3>
                                     <p class="slide-description hidden-xs">{{ str_limit(strip_tags($featured->first()->content), 160) }}</p>
                                 </div>
                             </div>
                         </div>
-
+                        <!-- end of big featured -->
                     @endif
 
                     <div class="featured-list">
                         @forelse($featured as $article)
-
+                            <!-- begin of small featured -->
                             <div class="slide">
                                 <div class="article-preview featured-mini active">
                                     <div class="featured-image">
@@ -40,8 +45,9 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- end of small featured -->
                         @empty
+                            <!-- begin of small featured -->
                             <div class="slide">
                                 <div class="article-preview featured-mini active">No Featured</div>
                             </div>
@@ -54,73 +60,77 @@
                             <div class="slide">
                                 <div class="article-preview featured-mini active">No Featured</div>
                             </div>
+                            <!-- end of small featured -->
                         @endforelse
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <!-- Nav tabs -->
+                    <!-- featured tabs -->
                     <ul class="nav nav-tabs nav-justified" role="tablist">
                         <li role="presentation" class="active">
-                            <a href="#popular" aria-controls="home" role="tab" data-toggle="tab">Most Popular</a>
+                            <a href="#popular" aria-controls="popular" role="tab" data-toggle="tab">Most Popular</a>
                         </li>
                         <li role="presentation">
-                            <a href="#commented" aria-controls="profile" role="tab" data-toggle="tab">Most Commented</a>
+                            <a href="#stared" aria-controls="stared" role="tab" data-toggle="tab">Most Stared</a>
                         </li>
                     </ul>
+                    <!-- end of featured tabs -->
 
-                    <!-- Tab panes -->
+                    <!-- featured panes -->
                     <div class="tab-content featured-news">
+                        <!-- popular list -->
                         <div role="tabpanel" class="tab-pane active" id="popular">
                             <ol>
                                 <?php $counter = 1; ?>
                                 @forelse($popular as $article)
-
                                     <li>
                                         <a href="{{ route('article.show', [$article->slug]) }}">
                                             <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
                                             <p>{{ $article->title }}</p>
                                         </a>
                                     </li>
-
                                     <?php $counter++; ?>
-
-                                @empty
-                                        <li>
-                                            <a href="#">
-                                                <p>No popular article available</p>
-                                            </a>
-                                        </li>
-                                @endforelse
-                            </ol>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="commented">
-                            <ol>
-                                <?php $counter = 1; ?>
-                                @forelse($ranked as $article)
-
-                                    <li>
-                                        <a href="{{ route('article.show', [$article->slug]) }}">
-                                            <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
-                                            <p>{{ $article->title }}</p>
-                                        </a>
-                                    </li>
-
-                                    <?php $counter++; ?>
-
                                 @empty
                                     <li>
                                         <a href="#">
-                                            <p>No ranked article available</p>
+                                            <p>No popular article available</p>
                                         </a>
                                     </li>
                                 @endforelse
                             </ol>
                         </div>
+                        <!-- end of popular list -->
+
+                        <!-- stared list -->
+                        <div role="tabpanel" class="tab-pane" id="stared">
+                            <ol>
+                                <?php $counter = 1; ?>
+                                @forelse($ranked as $article)
+                                    <li>
+                                        <a href="{{ route('article.show', [$article->slug]) }}">
+                                            <p class="number">@if($counter < 10) {{ '0'.$counter  }} @else {{ $counter }} @endif</p>
+                                            <p>{{ $article->title }}</p>
+                                        </a>
+                                    </li>
+                                    <?php $counter++; ?>
+                                @empty
+                                    <li>
+                                        <a href="#">
+                                            <p>No stared article available</p>
+                                        </a>
+                                    </li>
+                                @endforelse
+                            </ol>
+                        </div>
+                        <!-- end of stared list -->
                     </div>
+                    <!-- end of featured panes -->
                 </div>
             </div>
         </div>
+        <!-- end of featured -->
 
+        <!-- trending section -->
         <div class="breadcrumb-wrapper mbs mts">
             <ol class="breadcrumb">
                 <li><a href="{{ route('article.trending') }}">Trending</a></li>
@@ -136,7 +146,6 @@
         <div class="row">
             <?php $counter = 1; ?>
             @forelse($trending as $article)
-
                 <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">
                     <div class="article-preview portrait">
                         <div class="featured-image">
@@ -158,15 +167,14 @@
                         <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
                 </div>
-
                 <?php $counter++; ?>
-
             @empty
-                <p class="text-center center-block">No article available</p>
+                <p class="text-center center-block">No trending article available</p>
             @endforelse
-
         </div>
+        <!-- end of trending section -->
 
+        <!-- latest section -->
         <div class="breadcrumb-wrapper mbs mts">
             <ol class="breadcrumb">
                 <li><a href="{{ route('article.latest') }}">Latest</a></li>
@@ -182,7 +190,6 @@
         <div class="row">
             <?php $counter = 1; ?>
             @forelse($latest as $article)
-
                 <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">
                     <div class="article-preview portrait">
                         <div class="featured-image">
@@ -204,18 +211,17 @@
                         <p class="sub-category"><a href="{{ route('article.subcategory', [str_slug($article->subcategory->category->category), str_slug($article->subcategory->subcategory)]) }}">{{ $article->subcategory->subcategory }}</a></p>
                     </div>
                 </div>
-
                 <?php $counter++; ?>
-
             @empty
-                <p class="text-center center-block">No article available</p>
+                <p class="text-center center-block">No latest article available</p>
             @endforelse
         </div>
+        <!-- end of latest section -->
 
         <div class="row">
             <div class="col-md-8">
+                <!-- featured category 1 -->
                 @if(isset($summary[0]) && $summary[0]->count() > 0)
-
                 <?php $article = $summary[0][0]; ?>
                 <div class="tag category">{{ $article->subcategory->category->category }}</div>
                 <div class="row">
@@ -275,17 +281,15 @@
 
                     </div>
                 </div>
-
                 @else
                     <p class="text-center center-block">No article available</p>
                 @endif
-
-
+                <!-- end of featured category 1 -->
 
                 <div class="row">
+                    <!-- featured category 2 -->
                     <div class="col-md-6">
                         @if(isset($summary[1]) && $summary[1]->count() > 0)
-
                             <?php $article = $summary[1][0]; ?>
                             <div class="tag category">{{ $article->subcategory->category->category }}</div>
                             <div class="row">
@@ -350,6 +354,9 @@
                             <p class="text-center center-block">No article available</p>
                         @endif
                     </div>
+                    <!-- end featured category 2 -->
+
+                    <!-- featured category 3 -->
                     <div class="col-md-6">
                         @if(isset($summary[2]) && $summary[2]->count() > 0)
 
@@ -417,10 +424,12 @@
                             <p class="text-center center-block">No article available</p>
                         @endif
                     </div>
+                    <!-- end of featured category 3 -->
                 </div>
-
             </div>
+
             <div class="col-md-4">
+                <!-- featured category 4 -->
                 @if(isset($summary[3]) && $summary[3]->count() > 0)
                     <?php $article = $summary[3][0]; ?>
                     <div class="tag category">{{ $article->subcategory->category->category }}</div>
@@ -480,11 +489,12 @@
                             @endif
                         </div>
                     </div>
-
                 @else
                     <p class="text-center center-block">No article available</p>
                 @endif
+                <!-- end of featured category 4 -->
 
+                <!-- advertisement -->
                 <div class="tag category">Advertisement</div>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -502,10 +512,13 @@
                         </a>
                     </li>
                 </ul>
+                <!-- end of advertisement -->
             </div>
         </div>
     </div>
+    <!-- end of main content -->
 
+    <!-- mobile promotion -->
     <div class="mobile mtl" data-stellar-background-ratio="0.3">
         <div class="container">
             <h2>Keep in touch with us</h2>
@@ -525,43 +538,13 @@
             <img src="{{ asset('/images/misc/mobile.png') }}" class="hidden-xs" alt="Mobile Application" data-stellar-ratio="1.45"/>
         </div>
     </div>
+    <!-- end of mobile promotion -->
 
     <div class="container">
-        <div class="section">
-            <div class="title">
-                <h1>SUPPORTED BY</h1>
-                <p class="lead">InfoGue.id was supported by awesome startup and company</p>
-            </div>
-            <ul class="company-list">
-                <li><a href="http://www.google.com?q=mountain" target="_blank">
-                        <img src="{{ asset('/images/misc/mountain.png') }}" alt="Sleeping Mountain"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=redcode" target="_blank">
-                        <img src="{{ asset('/images/misc/redcode.png') }}" alt="Redcode Deliver"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=vana" target="_blank">
-                        <img src="{{ asset('/images/misc/vana.png') }}" alt="Vana Internet Provider"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=express" target="_blank">
-                        <img src="{{ asset('/images/misc/express.png') }}" alt="Express"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=magnive" target="_blank">
-                        <img src="{{ asset('/images/misc/magnive.png') }}" alt="Magnive"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=frezze" target="_blank">
-                        <img src="{{ asset('/images/misc/frezze.png') }}" alt="Frezzer"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=bluewave" target="_blank">
-                        <img src="{{ asset('/images/misc/bluewave.png') }}" alt="Bluewave"/></a>
-                </li>
-                <li><a href="http://www.google.com?q=smiles" target="_blank">
-                        <img src="{{ asset('/images/misc/smiles.png') }}" alt="Smiles"/></a>
-                </li>
-            </ul>
-        </div>
+        @include('pages._supporter')
     </div>
 
-
+    <!-- newsletter dialog -->
     <div class="modal fade newsletter no-line" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -574,20 +557,22 @@
                     <h3>ENTER YOUR EMAIL AND GET</h3>
                     <h1>NEWSLETTER</h1>
                     <P>Subscribe to our Newsletter and receive knowledge everyday</P>
-                    <form action="#">
+                    <form action="{{ route('subscribe.store') }}" method="post">
+                        {!! csrf_field() !!}
                         <div class="form-group">
-                            <button type="button" class="btn btn-primary subscribe"><i class="fa fa-envelope-o visible-xs"></i><span class="hidden-xs">SUBSCRIBE</span></button>
-                            <input type="email" class="form-control" placeholder="EMAIL ADDRESS"/>
+                            <button type="submit" class="btn btn-primary subscribe"><i class="fa fa-envelope-o visible-xs"></i><span class="hidden-xs">SUBSCRIBE</span></button>
+                            <input type="email" name="email" class="form-control" placeholder="EMAIL ADDRESS" required/>
                         </div>
                     </form>
                     <a href="#" data-dismiss="modal" class="dismiss">NO THANKS</a>
                     <p class="small">We Promise don't spam<span class="hidden-xs"> and use your email for weird purpose</span></p>
-                    <p class="small">See our policy at <a href="{{ url('term') }}">Terms</a> and <a href="{{ url('privacy') }}">Privacy</a></p>
+                    <p class="small">See our policy at <a href="{{ route('page.terms') }}">Terms</a> and <a href="{{ route('page.privacy') }}">Privacy</a></p>
                 </div>
                 <div class="modal-footer">
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
+    <!-- end of newsletter dialog -->
 
 @endsection

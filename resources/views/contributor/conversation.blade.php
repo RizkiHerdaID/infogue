@@ -27,7 +27,7 @@
                                             {!! csrf_field() !!}
                                             <input type="hidden" name="async" value="true">
                                             <input type="hidden" name="contributor_id" value="{{ $contributor->id }}">
-                                            <textarea name="message" id="message" cols="30" rows="3" placeholder="Type a message here" class="form-control"></textarea>
+                                            <textarea name="message" id="message" cols="30" rows="3" placeholder="Type a message here" class="form-control" required></textarea>
                                             <div class="control">
                                                 <div class="css-file attachment">
                                                     <a class="open-attachment"><i class="fa fa-file mrs"></i>ATTACHMENT</a>
@@ -54,7 +54,7 @@
                 <img src="@{{ avatar_ref }}" class="avatar img-circle"/>
                 <div class="info">
                     <a href="@{{ contributor_ref }}" class="name">@{{ name }}</a>
-                    <p class="message">@{{ message }}</p>
+                    <p class="message">@{{{ message }}}</p>
                     <div class="attachment @{{ has_attachment }}">
                         <p>Attachment</p>
                         <a href="@{{ attachment_ref }}" target="_blank">@{{ attachment }}</a>

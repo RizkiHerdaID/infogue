@@ -43,13 +43,8 @@ class Conversation extends Model
             $conversations = $conversations->where('conversations.id', '>', $last)->get();
             return ["data"=>$this->preConversationModifier($conversations)];
         }
-        /*
-        $reverse = $this->select(DB::raw('conversations.*'))
-            ->from(DB::raw("({$conversations->toSql()}) as conversations"))
-            ->orderBy('id', 'asc')
-            ->setBindings([$message->message_id]);
-*/
-        return $this->preConversationModifier($conversations->paginate(7));
+
+        return $this->preConversationModifier($conversations->paginate(15));
     }
 
     public function preConversationModifier($conversations)
@@ -61,7 +56,7 @@ class Conversation extends Model
             $conversation->attachment_ref = asset("file/{$conversation->attachment}");
             $conversation->owner = ($conversation->sender == Auth::user()->id) ? 'me' : 'they';
             $conversation->has_attachment = ($conversation->attachment == null) ? 'hidden' : '';
-
+            $conversation->message = nl2br($conversation->message);
         endforeach;
 
         return $conversations;

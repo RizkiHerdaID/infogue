@@ -41,19 +41,19 @@ class Message extends Model
         return $this->preMessageModifier($messages);
     }
 
-    public function preMessageModifier($contributors)
+    public function preMessageModifier($messages)
     {
-        foreach ($contributors as $contributor):
+        foreach ($messages as $message):
 
-            $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
-            $contributor->conversation_ref = route('account.message.conversation', [$contributor->username]);
-            $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
-            $contributor->message = substr($contributor->message, 30);
-            $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
-            $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
+            $message->contributor_ref = route('contributor.stream', [$message->username]);
+            $message->conversation_ref = route('account.message.conversation', [$message->username]);
+            $message->avatar_ref = asset("images/contributors/{$message->avatar}");
+            $message->message = str_limit($message->message, 30);
+            $message->following_status = ($message->is_following) ? 'btn-unfollow active' : 'btn-follow';
+            $message->following_text = ($message->is_following) ? 'UNFOLLOW' : 'FOLLOW';
 
         endforeach;
 
-        return $contributors;
+        return $messages;
     }
 }

@@ -22,8 +22,6 @@ $(function () {
     });
 
 
-
-
     // PARALLAX EFFECT ------------------------------------------------------------
     $(window).stellar({responsive: true, horizontalScrolling: false});
 
@@ -1028,6 +1026,20 @@ $(function () {
         }
     }
 
+
+    /*
+     * --------------------------------------------------------------------------
+     * Message Function
+     * --------------------------------------------------------------------------
+     * Setup message dialog, put receiver name and load message list data on
+     * account message page retrieve each 10 data.
+     */
+
+    $('.btn-message').click(function () {
+        var name = $(this).closest('.profile').find('h2.name').text();
+        $('#send-message').find('.message-to').text(name);
+    });
+
     function loadMessage(data) {
         if ($('#message-row-template').length && data.data.length > 0) {
             var template = $('#message-row-template').html();
@@ -1052,6 +1064,15 @@ $(function () {
             isEnded = true;
         }
     }
+
+    /*
+     * --------------------------------------------------------------------------
+     * Conversation Function
+     * --------------------------------------------------------------------------
+     * Setup initial form, button state, check if message box is not empty,
+     * then send message via ajax. Checking the new message from another user
+     * each 5 seconds.
+     */
 
     var firstScroll = true;
     var previousScrollHeightMinusTop = 0;
@@ -1110,62 +1131,75 @@ $(function () {
                 checkConversation();
             }
         }, 5000);
-    }
 
-    $('.btn-message').click(function () {
-        var name = $(this).closest('.profile').find('h2.name').text();
-        $('#send-message').find('.message-to').text(name);
-    });
+        var buttonSendMessage = $(".btn-send");
+        buttonSendMessage.attr('disabled', 'true');
 
-    // AJAX SEND MESSAGE
-    $('#form-message').on('submit', (function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
+        $('#form-message').on('submit', (function (e) {
+            e.preventDefault();
+            sendMessage();
+        }));
 
-        $("#message").attr('readonly', '');
-        $("#attachment").attr('disabled', 'true');
-        $(".btn-send").attr('disabled', 'true');
+        $("#form-message #message").keyup(function () {
+            if ($(this).val() == '') {
+                buttonSendMessage.attr('disabled', 'true');
+            }
+            else {
+                buttonSendMessage.removeAttr('disabled');
+            }
+        });
 
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function () {
-                console.log("message sent");
-                $("#message").removeAttr('readonly').val('');
-                $("#attachment").removeAttr('disabled').val('');
-                $(".btn-send").removeAttr('disabled');
-                if (!isCheckingNewConversation) {
-                    checkConversation();
+        function sendMessage() {
+            var form = $('#form-message').get(0);
+            var formData = new FormData(form);
+
+            $("#message").attr('readonly', '');
+            $("#attachment").attr('disabled', 'true');
+            $(".btn-send").attr('disabled', 'true');
+
+            $.ajax({
+                type: 'POST',
+                url: $(form).attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //console.log("message sent");
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").attr('disabled', 'true');
+                    $(".file-info").text('');
+                    if (!isCheckingNewConversation) {
+                        checkConversation();
+                    }
+                },
+                error: function (e) {
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").removeAttr('disabled');
+                    //console.log("send message is failed "+e.responseText);
                 }
-            },
-            error: function () {
-                $("#message").removeAttr('readonly').val('');
-                $("#attachment").removeAttr('disabled').val('');
-                $(".btn-send").removeAttr('disabled');
-                console.log("send message is failed");
-            }
-        });
-    }));
+            });
+        }
 
-    function checkConversation() {
-        isCheckingNewConversation = true;
-        $.getJSON($("section[data-href]").data('href') + '?last=' + lastConversationId, function (data) {
-            if ($('#conversation-row-template').length && data.data.length > 0) {
-                var template = $('#conversation-row-template').html();
-                data.data.reverse();
-                var html = Mustache.to_html(template, data);
-                $('#conversations').append(html);
-                $("time.timeago").timeago();
-                $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
-                lastConversationId = $('.conversation:last-child').data('id');
-            }
-            isCheckingNewConversation = false;
-        });
+        function checkConversation() {
+            isCheckingNewConversation = true;
+            $.getJSON($("section[data-href]").data('href') + '?last=' + lastConversationId, function (data) {
+                if ($('#conversation-row-template').length && data.data.length > 0) {
+                    var template = $('#conversation-row-template').html();
+                    data.data.reverse();
+                    var html = Mustache.to_html(template, data);
+                    $('#conversations').append(html);
+                    $("time.timeago").timeago();
+                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                    lastConversationId = $('.conversation:last-child').data('id');
+                }
+                isCheckingNewConversation = false;
+            });
+        }
     }
+
 
     /*
      * --------------------------------------------------------------------------
@@ -1366,11 +1400,13 @@ $(function () {
         return $slug.toLowerCase();
     }
 
-    $("#title").keyup(function () {
-        if (!$("#slug").hasClass('changed')) {
-            $("#slug").val(createSlug($(this).val()));
-        }
-    });
+    if ($("#title").length) {
+        $("#title").keyup(function () {
+            if (!$("#slug").hasClass('changed')) {
+                $("#slug").val(createSlug($(this).val()));
+            }
+        });
+    }
 
     if ($("#slug").length) {
         $("#slug").keyup(function () {
@@ -1704,4 +1740,5 @@ $(function () {
             },
         }
     });
+
 });

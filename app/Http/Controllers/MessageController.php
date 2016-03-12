@@ -11,30 +11,65 @@ use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
 use Infogue\Http\Requests;
-use Infogue\Uploader;
 use Infogue\Message;
+use Infogue\Uploader;
 
 class MessageController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Message Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling send private message between
+    | contributors, this message including send text or attachment.
+    |
+    */
+
+    /**
+     * Instance variable of Message.
+     *
+     * @var Message
+     */
     private $message;
+
+    /**
+     * Instance variable of Conversation.
+     *
+     * @var Conversation
+     */
     private $conversation;
 
+    /**
+     * Create a new message controller instance.
+     *
+     * @param Message $message
+     * @param Conversation $conversation
+     */
     public function __construct(Message $message, Conversation $conversation)
     {
         $this->message = $message;
+
         $this->conversation = $conversation;
     }
 
     /**
-     * Display a listing of the message.
+     * Display a listing of the account message.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $message = new Message();
+        /*
+         * --------------------------------------------------------------------------
+         * Populating account messages
+         * --------------------------------------------------------------------------
+         * Retrieve messages 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
 
-        $messages = $message->retrieveMessages(Auth::user()->id);
+        $messages = $this->message->retrieveMessages(Auth::user()->id);
 
         if (Input::get('page', false)) {
             return $messages;
@@ -44,17 +79,25 @@ class MessageController extends Controller
     }
 
     /**
-     * Show the form for creating a new message.
+     * Show the list of conversation between contributor.
      *
      * @param $username
      * @return \Illuminate\Http\Response
      */
     public function conversation($username)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Retrieve conversation
+         * --------------------------------------------------------------------------
+         * Retrieve conversation 15 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = Contributor::whereUsername($username)->firstOrFail();
 
-        $conversation = new Conversation();
-        $conversations = $conversation->retrieveConversation($contributor->id, Input::get('last', null));
+        $conversations = $this->conversation->retrieveConversation($contributor->id, Input::get('last', null));
 
         if (Input::get('page', false) || Input::has('last')) {
             return $conversations;
@@ -71,19 +114,42 @@ class MessageController extends Controller
      */
     public function send(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Create message
+         * --------------------------------------------------------------------------
+         * Each conversation will handle by one message record as identity, first
+         * check if contributor sender or receiver ever make conversation, if they
+         * did not then create new one of message.
+         */
+
         $sender = Auth::user()->id;
+
         $receiver = (int) $request->input('contributor_id');
 
-        $lastMessage = Conversation::whereSender($sender)->whereReceiver($receiver)->orWhere('sender', $receiver)->whereReceiver($sender)->first();
+        $lastMessage = $this->conversation
+            ->whereSender($sender)
+            ->whereReceiver($receiver)
+            ->orWhere('sender', $receiver)
+            ->whereReceiver($sender)
+            ->first();
 
-        if(count($lastMessage) == 0){
+        if (count($lastMessage) == 0) {
             $message = new Message();
             $message->save();
             $messageId = $message->id;
-        }
-        else{
+        } else {
             $messageId = $lastMessage->message_id;
         }
+
+        /*
+         * --------------------------------------------------------------------------
+         * Create conversation
+         * --------------------------------------------------------------------------
+         * Populate message id from last conversation or last inserted new message
+         * then create the first conversation or continue with last message, check
+         * if there is request of attachment, if so then upload it.
+         */
 
         $conversation = new Conversation();
         $conversation->message_id = $messageId;
@@ -92,57 +158,80 @@ class MessageController extends Controller
         $conversation->message = $request->input('message');
         $conversation->save();
 
-        $contributor = Contributor::findOrFail($receiver);
-        if($contributor->email_message){
-            $this->sendEmailNotification($sender, $receiver, $request->input('message'));
-        }
-
-        if($request->has('async')){
-            $image = new Uploader();
-            if ($image->upload($request, 'attachment', base_path('public/file/'), rand(0, 1000) . uniqid())) {
-                $attachment = new Attachment();
-                $attachment->conversation_id = $conversation->id;
-                $attachment->file = $request->input('attachment');
-                $attachment->save();
+        if($conversation->save()){
+            $contributor = Contributor::findOrFail($receiver);
+            if ($contributor->email_message) {
+                $this->sendEmailNotification(Auth::user(), $contributor, $request->input('message'));
             }
-        }
-        else{
+
+            if ($request->has('async')) {
+                $image = new Uploader();
+                if ($image->upload($request, 'attachment', base_path('public/file/'), 'attachment_'. uniqid())) {
+                    $attachment = new Attachment();
+                    $attachment->conversation_id = $conversation->id;
+                    $attachment->file = $request->input('attachment');
+                    if(!$attachment->save()){
+                        return false;
+                    }
+                }
+                return 'sent';
+            }
+
             return redirect()->back()
                 ->with('status', 'success')
                 ->with('message', 'The message was sent');
         }
+        else{
+            if ($request->has('async')) {
+                return false;
+            }
+
+            return redirect()->back()
+                ->with('status', 'danger')
+                ->with('message', 'The message was not sent');
+        }
     }
 
+    /**
+     * Send message email notification.
+     *
+     * @param $sender
+     * @param $receiver
+     * @param $message
+     */
     public function sendEmailNotification($sender, $receiver, $message)
     {
-        $contributorSender = Contributor::findOrFail($sender);
-        $contributorReceiver = Contributor::findOrFail($receiver);
-
-        $activity = new Activity();
-        $activity->contributor_id = Auth::user()->id;
-        $activity->activity = $activity->sendingMessageActivity($contributorSender->username, $contributorReceiver->username);
-        $activity->save();
+        /*
+         * --------------------------------------------------------------------------
+         * Create sending message activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert following activity.
+         */
+        Activity::create([
+            'contributor_id' => $sender->id,
+            'activity' => Activity::sendingMessageActivity($sender->username, $receiver->username)
+        ]);
 
         $data = [
-            'receiverName' => $contributorReceiver->name,
-            'receiverUsername' => $contributorReceiver->username,
+            'receiverName' => $receiver->name,
+            'receiverUsername' => $receiver->username,
             'receiverMessage' => $message,
-            'senderName' => $contributorSender->name,
-            'senderLocation' => $contributorSender->location,
-            'senderUsername' => $contributorSender->username,
-            'senderAvatar' => $contributorSender->avatar,
-            'senderArticle' => $contributorSender->articles()->count(),
-            'senderFollower' => $contributorSender->followers()->count(),
-            'senderFollowing' => $contributorSender->following()->count(),
+            'senderName' => $sender->name,
+            'senderLocation' => $sender->location,
+            'senderUsername' => $sender->username,
+            'senderAvatar' => $sender->avatar,
+            'senderArticle' => $sender->articles()->count(),
+            'senderFollower' => $sender->followers()->count(),
+            'senderFollowing' => $sender->following()->count(),
         ];
 
-        Mail::send('emails.message', $data, function ($message) use ($contributorReceiver, $contributorSender) {
+        Mail::send('emails.message', $data, function ($message) use ($sender, $receiver) {
 
-            $message->from('no-reply@infogue.id', 'Infogue.id');
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-            $message->to($contributorReceiver->email)->subject($contributorSender->name.' sent you a message');
+            $message->to($receiver->email)->subject($sender->name . ' sent you a message');
 
         });
     }
@@ -158,14 +247,12 @@ class MessageController extends Controller
     {
         $message = Conversation::whereMessageId($id);
 
-        if(count($message->get()) == 0){
+        if (count($message->get()) == 0) {
             abort(404);
-        }
-        else{
-            if($request->input('sender') == Auth::user()->id){
+        } else {
+            if ($request->input('sender') == Auth::user()->id) {
                 $message->update(['is_available_sender' => 0]);
-            }
-            else{
+            } else {
                 $message->update(['is_available_receiver' => 0]);
             }
         }

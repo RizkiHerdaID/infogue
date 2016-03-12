@@ -13,8 +13,28 @@ use Infogue\Http\Requests;
 
 class FollowerController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Follower Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling follow or unfollow request,
+    | showing list of page followers and following contributor account too.
+    |
+    */
+
+    /**
+     * Instance variable of Follower.
+     *
+     * @var Follower
+     */
     private $follower;
 
+    /**
+     * Create a new follower controller instance.
+     *
+     * @param Follower $follower
+     */
     public function __construct(Follower $follower)
     {
         $this->follower = $follower;
@@ -27,6 +47,15 @@ class FollowerController extends Controller
      */
     public function follower()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating account followers
+         * --------------------------------------------------------------------------
+         * Retrieve followers 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = new Contributor();
 
         $followers = $contributor->contributorFollower(Auth::user()->username);
@@ -45,6 +74,15 @@ class FollowerController extends Controller
      */
     public function following()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating account following
+         * --------------------------------------------------------------------------
+         * Retrieve following 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = new Contributor();
 
         $following = $contributor->contributorFollowing(Auth::user()->username);
@@ -64,30 +102,57 @@ class FollowerController extends Controller
      */
     public function follow(Request $request)
     {
-        if(Auth::check()){
-            $follower = new Follower();
+        /*
+         * --------------------------------------------------------------------------
+         * Perform follow request
+         * --------------------------------------------------------------------------
+         * This operation only for authenticate user, a contributor follow another
+         * contributor, populate the data and make sure there is no record following
+         * from contributor A to B before then perform insert data.
+         */
 
-            $follower->contributor_id = Auth::user()->id;
-            $follower->following = $request->input('id');
+        if (Auth::check()) {
+            $contributor_id = Auth::user()->id;
 
-            if($follower->save()){
-                $contributor = Contributor::findOrFail($request->input('id'));
+            $following_id = $request->input('id');
 
-                $activity = new Activity();
-                $activity->contributor_id = Auth::user()->id;
-                $activity->activity = $activity->followActivity(Auth::user()->username, $contributor->username);
-                $activity->save();
+            $isFollowing = Follower::whereContributorId($contributor_id)
+                ->whereFollowing($following_id)->count();
 
-                if($contributor->email_follow){
-                    $this->sendEmailNotification(Auth::user()->id, $request->input('id'));
+            if (!$isFollowing) {
+                $follower = new Follower();
+
+                $follower->contributor_id = $contributor_id;
+
+                $follower->following = $following_id;
+
+                if ($follower->save()) {
+                    $following = Contributor::findOrFail($following_id);
+
+                    /*
+                     * --------------------------------------------------------------------------
+                     * Create following activity
+                     * --------------------------------------------------------------------------
+                     * Create new instance of Activity and insert following activity.
+                     */
+
+                    Activity::create([
+                        'contributor_id' => $contributor_id,
+                        'activity' => Activity::followActivity(Auth::user()->username, $following->username)
+                    ]);
+
+                    if ($following->email_follow) {
+                        $this->sendEmailNotification(Auth::user(), $following);
+                    }
+
+                    return 'success';
                 }
 
-                return 'success';
+                return 'failed';
             }
 
-            return 'failed';
-        }
-        else{
+            return 'success';
+        } else {
             return 'restrict';
         }
     }
@@ -100,24 +165,48 @@ class FollowerController extends Controller
      */
     public function unfollow($id)
     {
-        if(Auth::check()){
-            $follower = Follower::where('contributor_id', Auth::user()->id)->where('following', $id)->first();
+        /*
+         * --------------------------------------------------------------------------
+         * Perform unfollow request
+         * --------------------------------------------------------------------------
+         * This operation only for authenticate user, a contributor stop following
+         * another contributor, populate the data and make sure there is following
+         * record from contributor A to B before then perform delete the relation.
+         */
 
-            if(count($follower) > 0 && $follower->delete()){
+        if (Auth::check()) {
+            $follower = Follower::whereContributorId(Auth::user()->id)
+                ->whereFollowing($id)->first();
+
+            if (count($follower) > 0) {
+                if($follower->delete()){
+                    return 'success';
+                }
+                return 'failed';
+            }
+            else{
                 return 'success';
             }
-
-            return 'failed';
-        }
-        else{
+        } else {
             return 'restrict';
         }
     }
 
-    public function sendEmailNotification($contributor_id, $follow_id)
+    /**
+     * Send following email notification.
+     *
+     * @param $contributor
+     * @param $follow
+     */
+    public function sendEmailNotification($contributor, $follow)
     {
-        $contributor = Contributor::findOrFail($contributor_id);
-        $follow = Contributor::findOrFail($follow_id);
+        /*
+         * --------------------------------------------------------------------------
+         * Send email notification
+         * --------------------------------------------------------------------------
+         * Populate the data from contributor and contributor who followed, passing
+         * the data into email and send by support email service.
+         */
 
         $data = [
             'followerName' => $contributor->name,
@@ -134,11 +223,11 @@ class FollowerController extends Controller
 
         Mail::send('emails.follower', $data, function ($message) use ($follow, $contributor) {
 
-            $message->from('no-reply@infogue.id', 'Infogue.id');
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-            $message->to($follow->email)->subject($contributor->name.' now is following you');
+            $message->to($follow->email)->subject($contributor->name . ' now is following you');
 
         });
     }

@@ -9,6 +9,16 @@ use Infogue\Http\Requests\CreateFeedbackRequest;
 
 class FeedbackController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Feedback Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling save request and store
+    | feedback into storage.
+    |
+    */
+
     /**
      * The instance variable of the Feedback class.
      *
@@ -37,7 +47,7 @@ class FeedbackController extends Controller
         $this->feedback->fill($request->all());
 
         if($this->feedback->save()){
-            return redirect()->route('page.contact')
+            return redirect(route('page.contact').'#feedback')
                 ->with('status','success')
                 ->with('message', Lang::get('alert.feedback_sent'));;
         }

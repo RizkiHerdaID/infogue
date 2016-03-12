@@ -201,18 +201,16 @@ class Article extends Model
             $archive->orderByRaw("RAND()");
         }
         else{
+            $sort_by = $by;
+
             if($by == 'date'){
-                $archive->orderBy('created_at', $sort);
-            }
-            else if($by == 'title'){
-                $archive->orderBy('title', $sort);
-            }
-            else if($by == 'view'){
-                $archive->orderBy('view', $sort);
+                $sort_by = 'created_at';
             }
             else if($by == 'star'){
-                $archive->orderBy('total_rating', $sort);
+                $sort_by = 'total_rating';
             }
+
+            $archive->orderBy($sort_by, $sort);
         }
 
         return $this->preArticleModifier($archive->paginate(12));

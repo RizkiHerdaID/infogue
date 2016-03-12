@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -9,18 +10,40 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
+use Infogue\Uploader;
 
 class ContributorController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Contributor Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling contributor profile request
+    | including profile stream, detail information, article list, followers,
+    | and following page.
+    |
+    */
+
+    /**
+     * Instance variable of Category.
+     *
+     * @var Contributor
+     */
     private $contributor;
 
+    /**
+     * Create a new contributor controller instance.
+     *
+     * @param Contributor $contributor
+     */
     public function __construct(Contributor $contributor)
     {
         $this->contributor = $contributor;
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display detail of contributor information.
      *
      * @param $username
      * @return \Illuminate\Http\Response
@@ -33,13 +56,22 @@ class ContributorController extends Controller
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor article.
      *
      * @param $username
      * @return \Illuminate\Http\Response
      */
     public function article($username)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating article
+         * --------------------------------------------------------------------------
+         * Retrieve article 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = $this->contributor->profile($username);
 
         $articles = $this->contributor->contributorArticle($username);
@@ -52,13 +84,22 @@ class ContributorController extends Controller
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor followers.
      *
      * @param $username
      * @return \Illuminate\Http\Response
      */
     public function follower($username)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating followers
+         * --------------------------------------------------------------------------
+         * Retrieve followers 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = $this->contributor->profile($username);
 
         $followers = $this->contributor->contributorFollower($username);
@@ -71,13 +112,22 @@ class ContributorController extends Controller
     }
 
     /**
-     * Display a listing of the contributor.
+     * Display a listing of the contributor following.
      *
      * @param $username
      * @return \Illuminate\Http\Response
      */
     public function following($username)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating following
+         * --------------------------------------------------------------------------
+         * Retrieve following 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = $this->contributor->profile($username);
 
         $following = $this->contributor->contributorFollowing($username);
@@ -90,13 +140,22 @@ class ContributorController extends Controller
     }
 
     /**
-     * Display the specified contributor.
+     * Display the specified contributor stream or profile.
      *
      * @param $username
      * @return \Illuminate\Http\Response
      */
     public function show($username)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populating stream
+         * --------------------------------------------------------------------------
+         * Retrieve stream article 10 data per request, because we implement lazy
+         * pagination via ajax so return json data when 'page' variable exist, and
+         * return view if doesn't.
+         */
+
         $contributor = $this->contributor->profile($username);
 
         $stream = $this->contributor->stream($username);
@@ -115,7 +174,8 @@ class ContributorController extends Controller
      */
     public function setting()
     {
-        $contributor = Contributor::findOrFail(Auth::user()->id);
+        $contributor = $this->contributor->findOrFail(Auth::user()->id);
+
         return view('contributor.setting', compact('contributor'));
     }
 
@@ -127,12 +187,21 @@ class ContributorController extends Controller
      */
     public function update(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Validating data
+         * --------------------------------------------------------------------------
+         * Define rules before populating data, check if checkbox is unchecked then
+         * gives default value 0, merge notification for date, month, year as
+         * birthday, and throw it back if errors occur.
+         */
+
         $rules = [
             'name' => 'required|max:50',
             'gender' => 'required|in:male,female,other',
-            'date' => 'required',
-            'month' => 'required',
-            'year' => 'required',
+            'date' => 'required|max:31',
+            'month' => 'required|max:12',
+            'year' => 'required|max:'.(int) Carbon::now()->addYear(-8)->format('Y'),
             'location' => 'required|max:30',
             'contact' => 'required|max:20',
             'about' => 'required|min:15|max:160',
@@ -141,35 +210,38 @@ class ContributorController extends Controller
             'email_follow' => 'boolean',
             'email_feed' => 'boolean',
             'mobile_notification' => 'boolean',
+            'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'cover' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'username' => 'required|alpha_dash|max:20|unique:contributors,username,' . Auth::user()->id,
             'email' => 'required|email|max:50|unique:contributors,email,' . Auth::user()->id,
             'password' => 'required|check_password',
             'new_password' => 'confirmed|min:6'
         ];
-        $messages = ['check_password' => 'The old password mismatch with current password'];
-        $validator = Validator::make($request->all(), $rules, $messages);
 
-        if(!$request->has('email_subscription')){
+        $validator = Validator::make($request->all(), $rules);
+
+        if (!$request->has('email_subscription')) {
             $request->merge(['email_subscription' => 0]);
         }
-        if(!$request->has('email_message')){
+        if (!$request->has('email_message')) {
             $request->merge(['email_message' => 0]);
         }
-        if(!$request->has('email_follow')){
+        if (!$request->has('email_follow')) {
             $request->merge(['email_follow' => 0]);
         }
-        if(!$request->has('email_feed')){
+        if (!$request->has('email_feed')) {
             $request->merge(['email_feed' => 0]);
         }
-        if(!$request->has('mobile_notification')){
+        if (!$request->has('mobile_notification')) {
             $request->merge(['mobile_notification' => 0]);
         }
 
-        if ($validator->fails()) {
-            $request->session()->flash('status', 'danger');
-            $request->session()->flash('message', 'Your inputs data are invalid, please check again');
+        $request->merge(['birthday' => implode('-', Input::only('year', 'month', 'date'))]);
 
-            if(empty($request->input('date')) || empty($request->input('month')) || empty($request->input('month'))) {
+        if ($validator->fails()) {
+            $failedRules = $validator->failed();
+
+            if(isset($failedRules['date']['Required']) || isset($failedRules['month']['Required']) || isset($failedRules['year']['Required'])) {
                 $validator->errors()->add('birthday', 'Birthday is required');
             }
 
@@ -178,7 +250,14 @@ class ContributorController extends Controller
             );
         }
 
-        $request->merge(['birthday' => implode('-', Input::only('year', 'month', 'date'))]);
+        /*
+         * --------------------------------------------------------------------------
+         * Populating data and update
+         * --------------------------------------------------------------------------
+         * Retrieve all data, if avatar or cover input is not empty then try to
+         * upload the image and get the filename, if new_password is not empty then
+         * the contributor intend to change their password, in the end perform save.
+         */
 
         $contributor = Contributor::findOrFail(Auth::user()->id);
         $contributor->name = $request->input('name');
@@ -189,10 +268,11 @@ class ContributorController extends Controller
         $contributor->about = $request->input('about');
         $contributor->username = $request->input('username');
         $contributor->email = $request->input('email');
-        if($this->_uploadImage($request, 'avatar', base_path('public/images/contributors/'))){
+        $image = new Uploader();
+        if($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'avatar_'.$contributor->id)){
             $contributor->avatar = $request->input('avatar');
         }
-        if($this->_uploadImage($request, 'cover', base_path('public/images/covers/'))){
+        if($image->upload($request, 'cover', base_path('public/images/covers/'), 'cover_'.$contributor->id)){
             $contributor->cover = $request->input('cover');
         }
         $contributor->instagram = $request->input('instagram');
@@ -211,46 +291,8 @@ class ContributorController extends Controller
 
         $contributor->save();
 
-        return redirect()
-            ->route('account.setting')
+        return redirect(route('account.setting'))
             ->with('status', 'success')
             ->with('message', 'Setting has been updated');
     }
-
-    private function _uploadImage(Request $request, $input, $path)
-    {
-        // modified uploaded filename by id because user id always unique
-        $fileName = $input.'_'.Auth::user()->id;
-
-        // passing all attributed to upload helper
-        $upload = $this->uploadFile($request, $input, $path, $fileName);
-
-        if ($upload['status']) {
-            $request->merge([$input => $upload['filename']]);
-        }
-
-        return $upload['status'];
-    }
-
-    function uploadFile($request, $source, $target, $filename = null)
-    {
-        if ($request->hasFile($source)) {
-            $upload = $request->file($source);
-            if ($upload->isValid())
-            {
-                $fileName = $upload->getClientOriginalName().'.'.$upload->getClientOriginalExtension();
-                if($filename != null){
-                    $fileName = $filename.'.'.$upload->getClientOriginalExtension();
-                    $upload->move($target, $fileName);
-                }
-                else{
-                    $upload->move($target);
-                }
-
-                return ['status' => true, 'filename' => $fileName];
-            }
-        }
-        return ['status' => false, 'filename' => ''];
-    }
-
 }

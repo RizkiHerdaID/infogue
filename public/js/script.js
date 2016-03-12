@@ -1,4 +1,5 @@
 $(function () {
+    var websiteUrl = $('meta[name="url"]').attr('content');
 
     if ($('.newsletter').length) {
         setTimeout(function () {
@@ -21,78 +22,7 @@ $(function () {
     });
 
 
-    // RATING ---------------------------------------------------------------------
-    var rateMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT'];
-    var lastMessage = $(".rating > .rate-message").text();
 
-    renderRate();
-    function renderRate() {
-        $('.rating-wrapper').each(function () {
-            var rating = $(this).data('rating');
-
-            $(this).html("");
-
-            for (var index = 0; index < 5; index++) {
-                if (index < rating) {
-                    $(this).append("<i class='fa fa-circle rated'></i>")
-                }
-                else {
-                    $(this).append("<i class='fa fa-circle unrated'></i>")
-                }
-            }
-        });
-    }
-
-    $(".rating-wrapper.control i").click(function () {
-        $(".rating-wrapper.control i")
-            .removeClass('active')
-            .removeClass('inactive');
-
-        var rate = $(".rating-wrapper.control i").index($(this));
-        $(".rating-wrapper.control i").removeClass('rated').removeClass('unrated');
-        for (var i = 0; i < 5; i++) {
-            if (i <= rate) {
-                $(".rating-wrapper.control")
-                    .children()
-                    .eq(i)
-                    .addClass('rated');
-            }
-            else {
-                $(".rating-wrapper.control")
-                    .children()
-                    .eq(i)
-                    .addClass('unrated');
-            }
-        }
-        lastMessage = rateMessage[rate];
-
-        var article_id = $('.single-view[data-id]').data('id');
-        sendRate(article_id, rate+1);
-    });
-
-    $(".rating-wrapper.control i").hover(function () {
-        var rate = $(".rating-wrapper.control i").index($(this));
-        for (var i = 0; i < 5; i++) {
-            if (i <= rate) {
-                $(".rating-wrapper.control")
-                    .children()
-                    .eq(i)
-                    .addClass('active');
-            }
-            else {
-                $(".rating-wrapper.control")
-                    .children()
-                    .eq(i)
-                    .addClass('inactive');
-            }
-        }
-        $(".rating > .rate-message").text(rateMessage[rate]);
-    }, function () {
-        $(".rating-wrapper.control i")
-            .removeClass('active')
-            .removeClass('inactive');
-        $(".rating > .rate-message").text(lastMessage);
-    });
 
     // PARALLAX EFFECT ------------------------------------------------------------
     $(window).stellar({responsive: true, horizontalScrolling: false});
@@ -230,29 +160,28 @@ $(function () {
 
 
     // TO TOP ---------------------------------------------------------------------
-    function onElementHeightChange(elm, callback){
+    function onElementHeightChange(elm, callback) {
         var lastHeight = elm.clientHeight, newHeight;
-        (function run(){
+        (function run() {
             newHeight = elm.clientHeight;
-            if( lastHeight != newHeight )
+            if (lastHeight != newHeight)
                 callback();
             lastHeight = newHeight;
 
-            if( elm.onElementHeightChangeTimer )
+            if (elm.onElementHeightChangeTimer)
                 clearTimeout(elm.onElementHeightChangeTimer);
 
             elm.onElementHeightChangeTimer = setTimeout(run, 200);
         })();
     }
 
-    onElementHeightChange(document.body, function(){
+    onElementHeightChange(document.body, function () {
         $('footer').waypoint(function () {
             if ($(document).height() > 2000) {
                 $('.to-top').toggleClass('visible');
             }
         }, {offset: '140%'});
     });
-
 
 
     // BROWSER UPGRADE ------------------------------------------------------------
@@ -351,7 +280,7 @@ $(function () {
     });
 
     // CONVERSATION SCROLL ----------------------------------------------------------
-    if($(".message-box").length){
+    if ($(".message-box").length) {
         $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
         $(".message-box").niceScroll({
             cursorcolor: '#4dc4d2',
@@ -359,17 +288,17 @@ $(function () {
         });
     }
 
-    $("a[href='#']").click(function(e) {
+    $("a[href='#']").click(function (e) {
         e.preventDefault();
     });
 
     // DROPDOWN
-    $(".dropdown.select a").click(function(){
-        var text = $(this).text()+" <span class='caret'></span>";
+    $(".dropdown.select a").click(function () {
+        var text = $(this).text() + " <span class='caret'></span>";
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
 
-    $(".dropdown.filter a").click(function(){
+    $(".dropdown.filter a").click(function () {
         var text = $(this).data('filter');
         $(".search-wrapper input[name='filter']").val(text);
     });
@@ -380,42 +309,42 @@ $(function () {
 
     var archive_filter = new Array();
 
-    $('.data-filter .data .dropdown a').click(function(){
+    $('.data-filter .data .dropdown a').click(function () {
         var value = $(this).data('value');
         insert_query(new Array("data", value));
     });
 
-    $(".data-filter .view .btn").click(function(){
+    $(".data-filter .view .btn").click(function () {
         var value = $(this).find('input').val();
         insert_query(new Array("view", value));
     });
 
-    $('.data-filter .sort .dropdown.by a').click(function(){
+    $('.data-filter .sort .dropdown.by a').click(function () {
         var value = $(this).text().toLowerCase();
         insert_query(new Array("by", value));
     });
 
-    $('.data-filter .sort .dropdown.method a').click(function(){
+    $('.data-filter .sort .dropdown.method a').click(function () {
         var value = $(this).data('value');
         insert_query(new Array("sort", value));
     });
 
-    function insert_query($query){
-        if(getQueryVariable('data')){
+    function insert_query($query) {
+        if (getQueryVariable('data')) {
             archive_filter.push(new Array('data', getQueryVariable('data')));
         }
-        if(getQueryVariable('view')){
+        if (getQueryVariable('view')) {
             archive_filter.push(new Array('view', getQueryVariable('view')));
         }
-        if(getQueryVariable('by')){
+        if (getQueryVariable('by')) {
             archive_filter.push(new Array('by', getQueryVariable('by')));
         }
-        if(getQueryVariable('sort')){
+        if (getQueryVariable('sort')) {
             archive_filter.push(new Array('sort', getQueryVariable('sort')));
         }
 
-        for(var i = 0; i < archive_filter.length; i++){
-            if(archive_filter[i][0] == $query[0]){
+        for (var i = 0; i < archive_filter.length; i++) {
+            if (archive_filter[i][0] == $query[0]) {
                 archive_filter.splice(i, 1);
             }
         }
@@ -424,25 +353,28 @@ $(function () {
         filter_archive();
     }
 
-    function getQueryVariable(variable)
-    {
+    function getQueryVariable(variable) {
         var query = window.location.search.substring(1);
         var vars = query.split("&");
-        for (var i=0;i<vars.length;i++) {
+        for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
-            if(pair[0] == variable){return pair[1];}
+            if (pair[0] == variable) {
+                return pair[1];
+            }
         }
-        return(false);
+        return (false);
     }
 
-    function filter_archive(){
+    function filter_archive() {
         archive_filter_url = "?";
-        for(var i = 0; i < archive_filter.length; i++){
-            if(i > 0){ archive_filter_url+='&'; }
-            archive_filter_url+=(archive_filter[i][0]+"="+archive_filter[i][1]);
+        for (var i = 0; i < archive_filter.length; i++) {
+            if (i > 0) {
+                archive_filter_url += '&';
+            }
+            archive_filter_url += (archive_filter[i][0] + "=" + archive_filter[i][1]);
         }
 
-        window.location.replace(archive_base_url+archive_filter_url);
+        window.location.replace(archive_base_url + archive_filter_url);
     }
 
 
@@ -468,7 +400,7 @@ $(function () {
     /**
      * recheck device width for update the variables
      */
-    function setDevice(){
+    function setDevice() {
         var viewportWidth = $(window).width();
         isLarge = (viewportWidth >= 1200);
         isMedium = (viewportWidth >= 993 && viewportWidth <= 1199);
@@ -479,7 +411,7 @@ $(function () {
     /**
      * Navigation & breadcrumb on desktop / medium / large device
      */
-    function initMegaMenu(){
+    function initMegaMenu() {
         /**
          * init superfish plugin
          */
@@ -494,12 +426,12 @@ $(function () {
          * if navigation is open on tablet mode then remove 'open' class
          */
         $("#navigation").show();
-        if($("#navigation").hasClass("open")){
+        if ($("#navigation").hasClass("open")) {
             $("#navigation").removeClass("open");
         }
     }
 
-    function destroyMegaMenu(){
+    function destroyMegaMenu() {
         $('#navigation').superfish('destroy');
     }
 
@@ -507,12 +439,12 @@ $(function () {
     /**
      * Navigation & breadcrumb on tablet / small device
      */
-    function initSidebarMenu(){
+    function initSidebarMenu() {
         /**
          * slide effect when click on navigation toggle
          * animation duration 200ms and toggle class 'open' to set mark the navigation status
          */
-        $(".navigation-toggle").click(function(){
+        $(".navigation-toggle").click(function () {
             $("#navigation").stop(true).slideToggle(200);
             $("#navigation").toggleClass("open");
         });
@@ -528,18 +460,18 @@ $(function () {
          * clear dummy content and set class with 'blank'
          * clear level 1 breadcrumb and set class with 'blank'
          */
-        $('#navigation > li').hover(function(){
+        $('#navigation > li').hover(function () {
             var text = $(this).find("a").first().text();
-            var wrapper = "<a href='#'>"+text+"</a>";
+            var wrapper = "<a href='#'>" + text + "</a>";
             $(".level-dummy").removeClass("blank");
             $(".level-dummy").html(wrapper);
 
-            setTimeout(function(){
+            setTimeout(function () {
                 $(".level-1").removeClass("blank");
                 $(".level-1").html(wrapper);
                 $(".level-1").css("width", $(".level-dummy").width());
             }, 0);
-        }, function(){
+        }, function () {
             $(".level-dummy").addClass("blank");
             $(".level-dummy").html("");
 
@@ -559,17 +491,17 @@ $(function () {
          * clear dummy content and set 'blank' class
          * clear level-2 content and set 'blank' class
          */
-        $('#navigation .sf-mega a').hover(function(){
-            var wrapper = "<a href='#'>"+$(this).text()+"</a>";
+        $('#navigation .sf-mega a').hover(function () {
+            var wrapper = "<a href='#'>" + $(this).text() + "</a>";
             $(".level-dummy").removeClass("blank");
             $(".level-dummy").html(wrapper);
 
-            setTimeout(function(){
+            setTimeout(function () {
                 $(".level-2").removeClass("blank");
                 $(".level-2").html(wrapper);
                 $(".level-2").css("width", $(".level-dummy").width());
             }, 0);
-        }, function(){
+        }, function () {
             $(".level-dummy").addClass("blank");
             $(".level-dummy").html("");
 
@@ -582,10 +514,12 @@ $(function () {
          * close navigation menu when user clicks outside the navigation itself
          * reset all navigation breadcrumb level
          */
-        $('html').click(function() {
-            if(isSmall){
-                $(".level-1").html("").addClass("blank").css("width", "40px");;
-                $(".level-2").html("").addClass("blank").css("width", "40px");;
+        $('html').click(function () {
+            if (isSmall) {
+                $(".level-1").html("").addClass("blank").css("width", "40px");
+                ;
+                $(".level-2").html("").addClass("blank").css("width", "40px");
+                ;
                 $("#navigation").slideUp(200);
             }
         });
@@ -594,8 +528,8 @@ $(function () {
          * stop propagation on navigation wrapper
          * prevent event reach the root (html) as closed the navigation
          */
-        $('.navigation').click(function(event){
-            if(isSmall) {
+        $('.navigation').click(function (event) {
+            if (isSmall) {
                 event.stopPropagation();
             }
         });
@@ -604,7 +538,7 @@ $(function () {
     /**
      * Destroy navigation & breadcrumb on tablet / small device
      */
-    function destroySidebarMenu(){
+    function destroySidebarMenu() {
         /**
          * remove all registered event for sidebar navigation
          */
@@ -623,7 +557,7 @@ $(function () {
      * add arrow on small device
      * make sure navigation is hidden
      */
-    function createRightArrow(){
+    function createRightArrow() {
         /**
          * make sure navigation is hidden, waiting for user click the navigation menu
          * by default it's hidden by css media query, but it's okay to recheck
@@ -634,9 +568,9 @@ $(function () {
          * loop through navigation li
          * add icon arrow right on list which has sub menu
          */
-        $("#navigation > li").each(function(){
-            if($(this).find(".sf-mega").length){
-                if(!$(this).find("a").first().find("i.fa-angle-right").length){
+        $("#navigation > li").each(function () {
+            if ($(this).find(".sf-mega").length) {
+                if (!$(this).find("a").first().find("i.fa-angle-right").length) {
                     $(this).find("a").first().append("<i class='fa fa-angle-right'></i>");
                 }
             }
@@ -647,7 +581,7 @@ $(function () {
      * remove right arrow on first level of navigation which has sub menu
      * make sure navigation is visible in case device turns into larger or smaller
      */
-    function removeRightArrow(){
+    function removeRightArrow() {
         /**
          * show first level menu
          * in case change size from small into medium / large (mega menu)
@@ -665,13 +599,13 @@ $(function () {
     /**
      * Slide navigation mobile / extra small device
      */
-    function initSlideMenu(){
+    function initSlideMenu() {
         /**
          * add toggle functionality to slide right (visible) and slide left (invisible)
          * change icon burger into arrow and reverse
          * put class status while navigation show up or hide
          */
-        $(".toggle-nav").click(function(e) {
+        $(".toggle-nav").click(function (e) {
             e.preventDefault();
             $(".navigation").toggleClass("open");
             $(this).toggleClass("fa-arrow-left");
@@ -682,7 +616,7 @@ $(function () {
          * close slide navigation when user click overlay
          * reverse back navigation icon and adjust the status (remove 'open' class)
          */
-        $("nav.navigation .overlay").click(function(){
+        $("nav.navigation .overlay").click(function () {
             $(".toggle-nav").toggleClass("fa-arrow-left");
             $(".toggle-nav").toggleClass("fa-navicon");
             $(".navigation").removeClass("open");
@@ -692,13 +626,13 @@ $(function () {
          * build a simple accordion to make nice slide effect on sub menu
          * check if one of li has open the close and open the another
          */
-        $("#navigation > li > a").click(function(){
-            if(isExtraSmall){
-                if($(this).parent().hasClass('active')) {
+        $("#navigation > li > a").click(function () {
+            if (isExtraSmall) {
+                if ($(this).parent().hasClass('active')) {
                     $("#navigation > li").removeClass('active');
                     $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
                 }
-                else{
+                else {
                     $("#navigation > li").removeClass('active');
                     $("#navigation > li .sf-mega").stop(true).slideUp().removeClass("open");
 
@@ -718,7 +652,7 @@ $(function () {
          * some additional feature on mobile
          * add toggle search box
          */
-        $(".mobile-search").click(function(){
+        $(".mobile-search").click(function () {
             $(this).toggleClass("active");
             $(".header-section > .search-wrapper").stop(true).fadeToggle(100);
 
@@ -727,11 +661,11 @@ $(function () {
 
         });
 
-        $(".user-dropdown").click(function(){
+        $(".user-dropdown").click(function () {
             $(this).toggleClass('active');
             $(this).next(".list-menu").stop(true).slideToggle(100);
 
-            if(isExtraSmall){
+            if (isExtraSmall) {
                 $(".mobile-search").removeClass("active");
                 $(".header-section > .search-wrapper").stop(true).fadeOut(100);
             }
@@ -741,12 +675,12 @@ $(function () {
          * close search box when click the outside of the search box itself
          * remove class open on button search toggle
          */
-        $('html').click(function() {
+        $('html').click(function () {
             /**
              * hide search on mobile only, because on mobile search act like a drop down
              * remove active class too
              */
-            if(isExtraSmall){
+            if (isExtraSmall) {
                 $(".mobile-search").removeClass("active");
                 $(".header-section > .search-wrapper").stop(true).fadeOut(100);
             }
@@ -760,7 +694,7 @@ $(function () {
          * it prevent to close the search box when user click the wrapper of search box
          * itself until click event reach the html tag and close it as function that we have defined before
          */
-        $('.user-menu').click(function(event){
+        $('.user-menu').click(function (event) {
             event.stopPropagation();
         });
     }
@@ -769,7 +703,7 @@ $(function () {
      * destroy slide menu if necessary
      * unbind all events and remove arrow on first level menu which has sub menu
      */
-    function destroySlideMenu(){
+    function destroySlideMenu() {
         $("#navigation > li > a").find("i.fa-angle-down").remove();
         $("#navigation > li > a").unbind('click');
         $("nav.navigation .overlay").unbind('click');
@@ -784,7 +718,7 @@ $(function () {
      * if device turns smaller add down arrow icon on first menu which has sub menu
      * reset search state of search on mobile
      */
-    function createDownArrow(){
+    function createDownArrow() {
         $(".mobile-search").removeClass("active");
         $(".header-section > .search-wrapper").hide();
 
@@ -792,9 +726,9 @@ $(function () {
          * loop through navigation li
          * add icon arrow down on list which has sub menu
          */
-        $("#navigation > li").each(function(){
-            if($(this).find(".sf-mega").length){
-                if(!$(this).find("a").first().find("i.fa-angle-down").length){
+        $("#navigation > li").each(function () {
+            if ($(this).find(".sf-mega").length) {
+                if (!$(this).find("a").first().find("i.fa-angle-down").length) {
                     $(this).find("a").first().append("<i class='fa fa-angle-down'></i>");
                 }
             }
@@ -805,7 +739,7 @@ $(function () {
      * remove arrow on first level which has sub menu
      * this function called if device turns larger and make sure search wrapper is visible
      */
-    function removeDownArrow(){
+    function removeDownArrow() {
         $("#navigation > li > a").find("i.fa-angle-down").remove();
         $(".header-section > .search-wrapper").show();
     }
@@ -815,11 +749,11 @@ $(function () {
      * reposition and re-adjusting layout component like navigation based on device size
      * activate sticky header and reset navigation status
      */
-    function setLayout(){
+    function setLayout() {
         // equalize the article preview height
         $('.articles, #articles').equalize({equalize: 'height', children: '.article-preview'});
 
-        if(isLarge || isMedium || isSmall){
+        if (isLarge || isMedium || isSmall) {
             /**
              * create parallax effect on tablet and desktop mode
              * init stellar js
@@ -833,7 +767,7 @@ $(function () {
              * add transition when it has 'closed' class after 500ms delay and header has moved out off the screen
              * then transition effect doesn't come up, just make header go away from the screen with fixed position
              */
-            if(closed == null){
+            if (closed == null) {
                 closed = new Waypoint({
                     element: $("header"),
                     handler: function () {
@@ -861,7 +795,7 @@ $(function () {
              * if it has 'closed' class make sure 'transition' keep stick with that
              * it's needed for make header go away with y-translation out of screen
              */
-            if(sticky == null){
+            if (sticky == null) {
                 sticky = new Waypoint({
                     element: $("header"),
                     handler: function () {
@@ -876,15 +810,15 @@ $(function () {
                 });
             }
         }
-        else{
+        else {
             /**
              * disable closed navigation after scrolling on mobile
              * disable navigation sticky after scrolling because on mobile header will always be sticky
              */
-            if(sticky !== undefined){
+            if (sticky !== undefined) {
                 sticky.destroy();
             }
-            if(closed !== undefined){
+            if (closed !== undefined) {
                 closed.destroy();
             }
 
@@ -893,22 +827,22 @@ $(function () {
              * reset background position
              */
             $(window).data('plugin_stellar').destroy();
-            setTimeout(function(){
+            setTimeout(function () {
                 $("div[data-stellar-background-ratio]").not(".reset").removeAttr("style");
             }, 50);
         }
 
-        if(isLarge || isMedium){
+        if (isLarge || isMedium) {
             initMegaMenu();
             removeRightArrow();
             removeDownArrow();
         }
-        else if(isSmall){
+        else if (isSmall) {
             destroyMegaMenu();
             createRightArrow();
             removeDownArrow();
         }
-        else{
+        else {
             destroyMegaMenu();
             removeRightArrow();
             createDownArrow();
@@ -920,17 +854,17 @@ $(function () {
      * @type {number}
      */
     var counter = 0;
-    setInterval(function(){
-        if(isExtraSmall){
-            if(counter++%2 == 0){
+    setInterval(function () {
+        if (isExtraSmall) {
+            if (counter++ % 2 == 0) {
                 $(".sidebar-profile .unauthorized:not(.logged-in) .link-text").fadeOut(200);
-                setTimeout(function(){
+                setTimeout(function () {
                     $(".sidebar-profile .unauthorized:not(.logged-in) .btn").fadeIn(200);
                 }, 500);
             }
-            else{
+            else {
                 $(".sidebar-profile .unauthorized:not(.logged-in) .btn").fadeOut(200);
-                setTimeout(function(){
+                setTimeout(function () {
                     $(".sidebar-profile .unauthorized:not(.logged-in) .link-text").fadeIn(200);
                 }, 500);
             }
@@ -952,17 +886,17 @@ $(function () {
     var isEnded = false;
     var isFirst = true;
 
-    if($('.loading').length){
+    if ($('.loading').length) {
         $('.loading').show();
         $('.btn-load-more').hide();
 
-        if(isFirst){
+        if (isFirst) {
             loadContent();
         }
 
         $(window).scroll(function () {
             if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onLoading && !isEnded) {
-                if(!$('#conversations').length){
+                if (!$('#conversations').length) {
                     loadContent();
                 }
             }
@@ -981,83 +915,83 @@ $(function () {
         generateContent()
     }
 
-    function generateContent(){
-        $.getJSON($("section[data-href]").data('href')+'?page='+page, function (data) {
+    function generateContent() {
+        $.getJSON($("section[data-href]").data('href') + '?page=' + page, function (data) {
             onLoading = false;
             $('.loading').hide();
             $('.btn-load-more').show();
 
-            if($('#articles').length){
+            if ($('#articles').length) {
                 loadArticleCategory(data);
             }
-            else if($('#stream').length){
+            else if ($('#stream').length) {
                 loadStream(data);
             }
-            else if($('#followers').length){
+            else if ($('#followers').length) {
                 loadFollower(data);
             }
-            else if($('#messages').length){
+            else if ($('#messages').length) {
                 loadMessage(data);
             }
-            else if($('#conversations').length){
+            else if ($('#conversations').length) {
                 loadConversation(data);
             }
-        }).fail(function( jqxhr, textStatus, error ) {
-            if(jqxhr.status == 401){
+        }).fail(function (jqxhr, textStatus, error) {
+            if (jqxhr.status == 401) {
                 showInfoUnauthorized(jqxhr.status);
             }
-            else if(jqxhr.status == 401){
+            else if (jqxhr.status == 401) {
                 showInfoNotFound(jqxhr.status);
             }
         });
     }
 
-    function loadArticleCategory(data){
+    function loadArticleCategory(data) {
         if ($('#article-portrait-template').length && data.data.length > 0) {
             var template = $('#article-portrait-template').html();
             var html = Mustache.to_html(template, data);
             $('#articles').append(html);
 
-            generateRating();
+            renderRate();
 
             echo.init();
 
             $('#articles').equalize({equalize: 'height', children: '.article-preview'});
 
-            if(page == data.last_page){
+            if (page == data.last_page) {
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                 isEnded = true;
             }
-            else{
+            else {
                 page++;
             }
         }
-        else{
+        else {
             $('.btn-load-more').text("END OF PAGE").addClass('disabled');
             isEnded = true;
         }
     }
 
-    function loadStream(data){
+    function loadStream(data) {
         if ($('#article-landscape-template').length && data.data.length > 0) {
             var template = $('#article-landscape-template').html();
             var html = Mustache.to_html(template, data);
             $('#stream').append(html);
 
-            generateRating();
+            renderRate();
 
             echo.init();
 
-            if(page == data.last_page){
+            if (page == data.last_page) {
                 $('.btn-load-more').text("END OF STREAM").addClass('disabled');
                 isEnded = true;
             }
-            else{
+            else {
                 page++;
             }
         }
-        else{
-            if(data.total == 0){
+        else {
+            if (data.total == 0) {
                 $('#stream').html("<p class='text-center mtm'>It's lonely here, follow another Contributor to feed the stream</p>");
             }
 
@@ -1066,26 +1000,26 @@ $(function () {
         }
     }
 
-    function loadFollower(data){
+    function loadFollower(data) {
         if ($('#follower-row-template').length && data.data.length > 0) {
             var template = $('#follower-row-template').html();
             var html = Mustache.to_html(template, data);
             $('#followers').append(html);
 
-            if($('a[data-contributor-id]').length){
-                $('#followers').find('button[data-id="'+$('a[data-contributor-id]').data('contributor-id')+'"]').hide();
+            if ($('a[data-contributor-id]').length) {
+                $('#followers').find('button[data-id="' + $('a[data-contributor-id]').data('contributor-id') + '"]').hide();
             }
 
-            if(page == data.last_page){
+            if (page == data.last_page) {
                 $('.btn-load-more').text("END OF PAGE").addClass('disabled');
                 isEnded = true;
             }
-            else{
+            else {
                 page++;
             }
         }
-        else{
-            if(data.total == 0){
+        else {
+            if (data.total == 0) {
                 $('#followers').html("<p class='text-center mtm'>It's lonely here, follow another Contributor</p>");
             }
 
@@ -1094,23 +1028,23 @@ $(function () {
         }
     }
 
-    function loadMessage(data){
+    function loadMessage(data) {
         if ($('#message-row-template').length && data.data.length > 0) {
             var template = $('#message-row-template').html();
             var html = Mustache.to_html(template, data);
             $('#messages').append(html);
             $("time.timeago").timeago();
 
-            if(page == data.last_page){
+            if (page == data.last_page) {
                 $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
                 isEnded = true;
             }
-            else{
+            else {
                 page++;
             }
         }
-        else{
-            if(data.total == 0){
+        else {
+            if (data.total == 0) {
                 $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
             }
 
@@ -1123,7 +1057,8 @@ $(function () {
     var previousScrollHeightMinusTop = 0;
     var lastConversationId = '';
     var isCheckingNewConversation = false;
-    function loadConversation(data){
+
+    function loadConversation(data) {
         if ($('#conversation-row-template').length && data.data.length > 0) {
             var template = $('#conversation-row-template').html();
             data.data.reverse();
@@ -1132,24 +1067,24 @@ $(function () {
             $("time.timeago").timeago();
             lastConversationId = $('.conversation:last-child').data('id');
 
-            if(firstScroll){
+            if (firstScroll) {
                 $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
                 firstScroll = false;
             }
-            else{
+            else {
                 $(".message-box").scrollTop($(".message-box")[0].scrollHeight - previousScrollHeightMinusTop);
             }
 
-            if(page == data.last_page){
+            if (page == data.last_page) {
                 $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
                 isEnded = true;
             }
-            else{
+            else {
                 page++;
             }
         }
-        else{
-            if(data.total == 0){
+        else {
+            if (data.total == 0) {
                 $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
             }
 
@@ -1158,56 +1093,56 @@ $(function () {
         }
     }
 
-    if($('#conversations').length){
-        if(isExtraSmall){
+    if ($('#conversations').length) {
+        if (isExtraSmall) {
             $('footer').hide();
         }
         $(".message-box").scroll(function () {
             previousScrollHeightMinusTop = $(".message-box")[0].scrollHeight - $(".message-box").scrollTop();
 
-            if($(".message-box").scrollTop() < 50  && !onLoading && !isEnded){
+            if ($(".message-box").scrollTop() < 50 && !onLoading && !isEnded) {
                 loadContent();
             }
         });
 
-        setInterval(function(){
-            if(!isCheckingNewConversation){
+        setInterval(function () {
+            if (!isCheckingNewConversation) {
                 checkConversation();
             }
         }, 5000);
     }
 
-    $('.btn-message').click(function(){
+    $('.btn-message').click(function () {
         var name = $(this).closest('.profile').find('h2.name').text();
         $('#send-message').find('.message-to').text(name);
     });
 
     // AJAX SEND MESSAGE
-    $('#form-message').on('submit',(function(e) {
+    $('#form-message').on('submit', (function (e) {
         e.preventDefault();
         var formData = new FormData(this);
 
-        $("#message").attr('readonly','');
-        $("#attachment").attr('disabled','true');
-        $(".btn-send").attr('disabled','true');
+        $("#message").attr('readonly', '');
+        $("#attachment").attr('disabled', 'true');
+        $(".btn-send").attr('disabled', 'true');
 
         $.ajax({
-            type:'POST',
+            type: 'POST',
             url: $(this).attr('action'),
-            data:formData,
-            cache:false,
+            data: formData,
+            cache: false,
             contentType: false,
             processData: false,
-            success:function(){
+            success: function () {
                 console.log("message sent");
                 $("#message").removeAttr('readonly').val('');
                 $("#attachment").removeAttr('disabled').val('');
                 $(".btn-send").removeAttr('disabled');
-                if(!isCheckingNewConversation){
+                if (!isCheckingNewConversation) {
                     checkConversation();
                 }
             },
-            error: function(){
+            error: function () {
                 $("#message").removeAttr('readonly').val('');
                 $("#attachment").removeAttr('disabled').val('');
                 $(".btn-send").removeAttr('disabled');
@@ -1216,9 +1151,9 @@ $(function () {
         });
     }));
 
-    function checkConversation(){
+    function checkConversation() {
         isCheckingNewConversation = true;
-        $.getJSON($("section[data-href]").data('href')+'?last='+lastConversationId, function (data) {
+        $.getJSON($("section[data-href]").data('href') + '?last=' + lastConversationId, function (data) {
             if ($('#conversation-row-template').length && data.data.length > 0) {
                 var template = $('#conversation-row-template').html();
                 data.data.reverse();
@@ -1232,161 +1167,178 @@ $(function () {
         });
     }
 
-    function generateRating(){
-        $('.rating-wrapper').each(function () {
-            var rating = $(this).data('rating');
+    /*
+     * --------------------------------------------------------------------------
+     * Following Action
+     * --------------------------------------------------------------------------
+     * Async following request passing follower and following id, change
+     * the button state and proceed the response.
+     */
 
-            $(this).html("");
-
-            for (var index = 0; index < 5; index++) {
-                if (index < rating) {
-                    $(this).append("<i class='fa fa-circle rated'></i>")
-                }
-                else {
-                    $(this).append("<i class='fa fa-circle'></i>")
-                }
-            }
-        });
-    }
-
-    $(document).on("click", ".btn-follow", function(e){
+    $(document).on("click", ".btn-follow", function (e) {
         e.preventDefault();
+
         var contributor_id = $(this).data("id");
         var button = $(this);
+
         unfollowState(button);
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/account/follow",
-            data:{ id: contributor_id },
-            success:function(data){
-                if(data == "failed"){
+            url: websiteUrl + "/account/follow",
+            data: {id: contributor_id},
+            success: function (data) {
+                if (data == "failed") {
                     followState(button);
-                    showInfo('UNFOLLOW FAILED', 'We apologize, please try again', 'Maybe traffic or connection of internet');
+                    showInfo('UNFOLLOW FAILED', 'We apologize, please try again', 'Maybe traffic on our serve or you lost the internet connection');
                 }
-                else if(data == "restrict"){
+                else if (data == "restrict") {
                     followState(button);
                     showInfoUnauthorized(xhr.status.status);
                 }
             },
-            error:function(e){
+            error: function (e) {
                 followState(button);
             },
             statusCode: {
-                401: function(xhr) {
+                401: function (xhr) {
                     showInfoUnauthorized(xhr.status);
                 },
-                404: function(xhr) {
+                404: function (xhr) {
                     showInfoNotFound(xhr.status);
                 },
             }
         });
     });
 
-    $(document).on("click", ".btn-unfollow", function(e){
+    $(document).on("click", ".btn-unfollow", function (e) {
         e.preventDefault();
+
         var contributor_id = $(this).data("id");
         var button = $(this);
+
         followState(button);
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:8000/account/unfollow/"+contributor_id,
-            data:{ id: contributor_id, _method: "delete" },
-            success:function(data){
-                if(data == "failed"){
+            url: websiteUrl + "/account/unfollow/" + contributor_id,
+            data: {id: contributor_id, _method: "delete"},
+            success: function (data) {
+                if (data == "failed") {
                     unfollowState(button);
                     showInfo('UNFOLLOW FAILED', 'We apologize, please try again', 'Maybe traffic or connection of internet');
                 }
-                else if(data == "restrict"){
+                else if (data == "restrict") {
                     unfollowState(button);
                     showInfoUnauthorized(xhr.status.status);
                 }
             },
-            error:function(e){
+            error: function (e) {
                 unfollowState(button);
             },
             statusCode: {
-                401: function(xhr) {
+                401: function (xhr) {
                     showInfoUnauthorized(xhr.status);
                 },
-                404: function(xhr) {
+                404: function (xhr) {
                     showInfoNotFound(xhr.status);
                 },
             }
         });
     });
 
-    function showInfoUnauthorized(code){
-        showInfo(code+' UNAUTHORIZED', 'You don\'t have authorization to do this action', 'Please Login <a href="http://localhost:8000/auth/login">here</a> or <a href="http://localhost:8000/auth/register">register</a>');
+    function showInfoUnauthorized(code) {
+        showInfo(code + ' UNAUTHORIZED', 'You don\'t have authorization to do this action', 'Please Login <a href="http://localhost:8000/auth/login">here</a> or <a href="http://localhost:8000/auth/register">register</a>');
     }
 
-    function showInfoNotFound(code){
-        showInfo(code+' PAGE NOT FOUND', 'Something is getting wrong', 'Please contact out administrator');
+    function showInfoNotFound(code) {
+        showInfo(code + ' PAGE NOT FOUND', 'Something is getting wrong', 'Please contact out administrator');
     }
 
-    function unfollowState(button){
+    function unfollowState(button) {
         button.text('UNFOLLOW');
         button.removeClass('btn-follow').addClass('active');
         button.addClass('btn-unfollow');
     }
 
-    function followState(button){
+    function followState(button) {
         button.text('FOLLOW');
         button.removeClass('btn-unfollow').removeClass('active');
         button.addClass('btn-follow');
     }
 
-    function showInfo(title, message, submessage){
+    function showInfo(title, message, submessage) {
         $("#modal-info .modal-title").html(title);
         $("#modal-info .modal-message").html(message);
         $("#modal-info .modal-submessage").html(submessage);
         $("#modal-info").modal("show");
     }
 
-    $(document).on("click", ".btn-delete", function(){
+
+    /*
+     * --------------------------------------------------------------------------
+     * Form Function
+     * --------------------------------------------------------------------------
+     * Form action function including delete, share the article, populate data
+     * into update form wrapper, retrieve ajax select data, generate slug,
+     * provide ahead data like tags.
+     */
+
+    $(document).on("click", ".btn-delete", function () {
+        var modal = $('#modal-delete');
         var id = $(this).closest('*[data-id]').data('id');
         var title = $(this).data('label');
-        if($(this).hasClass('delete-message')){
-            $('#modal-delete input[name="sender"]').val($(this).closest('*[data-id]').data('sender'));
-            $('#modal-delete input[name="contributor"]').val(title);
+        var url = modal.find('form').data('url') + '/' + id;
+
+        if ($(this).hasClass('delete-message')) {
+            var sender = $(this).closest('*[data-id]').data('sender');
+            modal.find('input[name="sender"]').val(sender);
+            modal.find('input[name="contributor"]').val(title);
         }
-        $('#modal-delete form').attr('action', $('#modal-delete form').data('url')+'/'+id);
-        $('#modal-delete form .delete-title').text(title);
+
+        modal.find('form').attr('action', url);
+        modal.find('form .delete-title').text(title);
     });
 
-    $('.btn-share').click(function(){
+    $('.btn-share').click(function () {
+        var modal = $('#modal-share');
         var url = $(this).closest('*[data-id]').data('url');
-        $('#modal-share .copy-url').val(url);
-        $('#modal-share .facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u='+url);
-        $('#modal-share .twitter').attr('href', 'https://www.twitter.com/home?status='+url);
-        $('#modal-share .googleplus').attr('href', 'https://plus.google.com/share?url='+url);
+
+        modal.find('.copy-url').val(url);
+        modal.find('.facebook').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + url);
+        modal.find('.twitter').attr('href', 'https://www.twitter.com/home?status=' + url);
+        modal.find('.googleplus').attr('href', 'https://plus.google.com/share?url=' + url);
     });
 
-    $('.btn-draft').click(function(){
+    $('.btn-draft').click(function () {
         var id = $(this).closest('*[data-id]').data('id');
-        $('#form-draft').attr('action', $('#form-draft').data('url')+'/'+id);
+        var url = $('#form-draft').data('url') + '/' + id;
+
+        $('#form-draft').attr('action', url);
         $('#form-draft').submit();
     });
 
+    $('select[name="category"]').change(function () {
+        var url = websiteUrl + "/account/article/subcategory/" + $(this).val();
+        var category = $('select[name="category"] option:selected').text();
 
-    $('select[name="category"]').change(function(){
         loadingSelect($('select[name="subcategory"]'));
-        $.getJSON("http://localhost:8000/account/article/subcategory/"+$(this).val(), function (data) {
-            var output = '<option value="">'+$('select[name="category"] option:selected').text()+' Subcategory</option>';
+
+        $.getJSON(url, function (data) {
+            var output = '<option value="">' + category + ' Subcategory</option>';
             var label = '';
             var isFirst = true;
-            $.each(data, function(i,row){
-                if(row.label != label){
-                    if(!isFirst){
+            $.each(data, function (i, row) {
+                if (row.label != label) {
+                    if (!isFirst) {
                         output += '</optgroup>';
                     }
                     isFirst = false;
                     label = row.label;
-                    output += '<optgroup label="'+row.label+'">';
+                    output += '<optgroup label="' + row.label + '">';
                 }
-                output += "<option value='"+row.id+"'>"+row.subcategory+"</option>";
-                if(data == data.length - 1){
+                output += "<option value='" + row.id + "'>" + row.subcategory + "</option>";
+                if (data == data.length - 1) {
                     output += '</optgroup>';
                 }
             });
@@ -1395,12 +1347,12 @@ $(function () {
         });
     });
 
-    function loadingSelect($tag){
+    function loadingSelect($tag) {
         $tag.attr('disabled', '');
         $tag.html('<option value="loading">Please Wait...</option>');
     }
 
-    function completeSelect($tag){
+    function completeSelect($tag) {
         $tag.removeAttr('disabled');
         $tag.find('option[value="loading"]').remove();
     }
@@ -1414,23 +1366,25 @@ $(function () {
         return $slug.toLowerCase();
     }
 
-    $("#title").keyup(function(){
-        if(!$("#slug").hasClass('changed')){
+    $("#title").keyup(function () {
+        if (!$("#slug").hasClass('changed')) {
             $("#slug").val(createSlug($(this).val()));
         }
     });
 
-    $("#slug").keyup(function(){
-        if($("#title").val() != ''){
-            $(this).addClass('changed');
-        }
-    });
+    if ($("#slug").length) {
+        $("#slug").keyup(function () {
+            if ($("#title").val() != '') {
+                $(this).addClass('changed');
+            }
+        });
+    }
 
-    if($('.bootstrap-tagsinput input').length){
+    if ($('.bootstrap-tagsinput input').length) {
         var tags = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: 'http://localhost:8000/account/article/tags'
+            prefetch: websiteUrl + '/account/article/tags'
         });
 
         $('.bootstrap-tagsinput input').typeahead(null, {
@@ -1439,40 +1393,137 @@ $(function () {
         });
     }
 
-    // count view
-    if($('.single-view[data-id]').length){
+
+    /*
+     * --------------------------------------------------------------------------
+     * Article Function
+     * --------------------------------------------------------------------------
+     * This function list including rating function like render data-rating into
+     * visual icon, hover rating function, sending rating into server and
+     * incrementing number of article view.
+     */
+
+    if ($('.single-view[data-id]').length) {
         var article_id = $('.single-view[data-id]').data('id');
-        setTimeout(function(){
+        setTimeout(function () {
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8000/article/hit",
-                data:{ id: article_id },
-                success:function(data){
-                    console.log('This article hit at '+data);
+                url: websiteUrl + "/article/hit",
+                data: {id: article_id},
+                success: function (data) {
+                    console.log('This article hit at ' + data);
                 },
-                error:function(e){
+                error: function (e) {
                     console.log(e.toString());
                 }
             });
         }, 15000);
     }
 
-    // send rating
-    function sendRate(article_id, rate){
+    var rateMessage = ['WORST', 'BAD', 'GOOD', 'EXCELLENT', 'GREAT'];
+    var lastMessage = $(".rating > .rate-message").text();
+
+    renderRate();
+
+    function renderRate() {
+        $('.rating-wrapper').each(function () {
+            var rating = $(this).data('rating');
+
+            $(this).html("");
+
+            for (var index = 0; index < 5; index++) {
+                if (index < rating) {
+                    $(this).append("<i class='fa fa-circle rated'></i>")
+                }
+                else {
+                    $(this).append("<i class='fa fa-circle unrated'></i>")
+                }
+            }
+        });
+    }
+
+    $(".rating-wrapper.control i").click(function () {
+        $(".rating-wrapper.control i")
+            .removeClass('active')
+            .removeClass('inactive');
+
+        var rate = $(".rating-wrapper.control i").index($(this));
+        $(".rating-wrapper.control i")
+            .removeClass('rated')
+            .removeClass('unrated');
+
+        for (var i = 0; i < 5; i++) {
+            if (i <= rate) {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('rated');
+            }
+            else {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('unrated');
+            }
+        }
+
+        lastMessage = rateMessage[rate];
+
+        var article_id = $('.single-view[data-id]').data('id');
+
+        sendRate(article_id, rate + 1);
+    });
+
+    $(".rating-wrapper.control i").hover(function () {
+        var rate = $(".rating-wrapper.control i").index($(this));
+
+        for (var i = 0; i < 5; i++) {
+            if (i <= rate) {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('active');
+            }
+            else {
+                $(".rating-wrapper.control")
+                    .children()
+                    .eq(i)
+                    .addClass('inactive');
+            }
+        }
+
+        $(".rating > .rate-message").text(rateMessage[rate]);
+    }, function () {
+        $(".rating-wrapper.control i")
+            .removeClass('active')
+            .removeClass('inactive');
+
+        $(".rating > .rate-message").text(lastMessage);
+    });
+
+    function sendRate(article_id, rate) {
         $.ajax({
             type: "POST",
             url: "http://localhost:8000/article/rate",
-            data:{ article_id: article_id, rate: rate },
-            success:function(data){
-                console.log('Article rate avg is '+data);
+            data: {article_id: article_id, rate: rate},
+            success: function (data) {
+                console.log('Article rate avg is ' + data);
             },
-            error:function(e){
+            error: function (e) {
                 console.log(e.toString());
             }
         });
     }
 
-    // FORM VALIDATION
+    /*
+     * --------------------------------------------------------------------------
+     * Form Validation
+     * --------------------------------------------------------------------------
+     * Set validation of basic form, including, register, login, reset, setting,
+     * create/edit article and contact form. Set default configuration so it
+     * will fits on bootstrap form semantic.
+     */
+
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -1493,9 +1544,29 @@ $(function () {
 
     $.validator.addMethod("checkTags", function (value) {
         return ($(".bootstrap-tagsinput").find(".tag").length > 0);
+    }, "Tags are required.");
+
+    $.validator.addMethod("alphaDash", function (value, element) {
+        return this.optional(element) || /^[a-z0-9\-_]+$/i.test(value);
+    }, "This field must contain only letters, numbers, underscore or dashes.");
+
+    $("#form-contact").validate({
+        messages: {
+            name: {
+                required: "Name is required",
+                maxlength: "Name max length is {0} characters",
+            },
+            email: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters",
+            },
+            message: {
+                required: "Message is required",
+                maxlength: "Message max length is {0} characters",
+            },
+        }
     });
 
-    $("#form-contact").validate();
     $("#form-register").validate({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -1513,6 +1584,9 @@ $(function () {
             }
         },
         rules: {
+            username: {
+                alphaDash: true,
+            },
             "password": {
                 minlength: 6,
                 maxlength: 20
@@ -1526,47 +1600,107 @@ $(function () {
         messages: {
             email: {
                 required: "Email is required",
-                maxlength: "Email max length is {0} characters",
+                maxlength: "Email max length is {0} characters.",
             },
             username: {
                 required: "Username is required",
-                maxlength: "Username max length is {0} characters",
+                maxlength: "Username max length is {0} characters.",
             },
             password: {
                 required: "Password is required",
-                maxlength: "Password max length is {0} characters",
+                maxlength: "Password max length is {0} characters.",
             },
             password_confirmation: {
-                required: "Confirm password is required",
-                equalTo: "Type the same value as password"
+                required: "Confirm password is required.",
+                equalTo: "Type the same value as password."
             },
-            agree: "You must agree with terms and condition",
+            agree: "You must agree with terms and condition.",
         }
     });
 
     $("#form-login").validate({
         messages: {
             username: {
-                required: "Username is required",
+                required: "Username is required.",
             },
             password: {
-                required: "Password is required",
+                required: "Password is required.",
             },
         }
     });
 
     $("#form-reset").validate({
         messages: {
-            username: {
-                required: "Username is required",
+            email: {
+                required: "Email is required.",
             },
             password: {
-                required: "Password is required",
-                maxlength: "Password max length is {0} characters",
+                required: "Password is required.",
+                maxlength: "Password max length is {0} characters.",
             },
             password_confirmation: {
-                required: "Confirm password is required",
-                equalTo: "Type the same value as password"
+                required: "Confirm password is required.",
+                equalTo: "Type the same value as password."
+            },
+        }
+    });
+
+    $("#form-setting").validate({
+        groups: {
+            birthday: "date month year"
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr("id") == "date" || element.attr("id") == "month" || element.attr("id") == "year") {
+                element.closest('div').append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: {
+            username: {
+                alphaDash: true,
+            },
+            new_password: {
+                minlength: 6,
+                maxlength: 20
+            },
+            new_password_confirmation: {
+                minlength: 6,
+                maxlength: 20,
+                equalTo: "#new_password"
+            }
+        },
+        messages: {
+            name: {
+                required: "Name is required",
+                maxlength: "Name max length is {0} characters.",
+            },
+            contact: {
+                required: "Contact is required",
+                maxlength: "Contact max length is {0} characters.",
+            },
+            about: {
+                required: "About is required",
+                maxlength: "About max length is {0} characters.",
+            },
+            username: {
+                required: "Username is required",
+                maxlength: "Username max length is {0} characters.",
+            },
+            email: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters.",
+            },
+            location: {
+                required: "Location is required",
+                maxlength: "Location max length is {0} characters.",
+            },
+            date: "Please complete the birthday.",
+            month: "Please complete the birthday.",
+            year: "Please complete the birthday.",
+            password: {
+                required: "Password is required",
+                maxlength: "Password max length is {0} characters.",
             },
         }
     });

@@ -279,7 +279,7 @@ class AuthController extends Controller
          * --------------------------------------------------------------------------
          * Attempting to authenticate user
          * --------------------------------------------------------------------------
-         * Check user availability by username or email, if user is exist make sure
+         * Check user availability by username or email, if user exist make sure
          * the  status is activated unless throwing back on confirm page if 'pending'
          * or back on login page with if 'suspended' follow the information within.
          */

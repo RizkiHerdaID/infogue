@@ -21,14 +21,14 @@ class CategoryController extends Controller
     */
 
     /**
-     * instance variable of Category.
+     * Instance variable of Category.
      *
      * @var Category
      */
     private $category;
 
     /**
-     * instance variable of Subcategory.
+     * Instance variable of Subcategory.
      *
      * @var Subcategory
      */
@@ -61,7 +61,7 @@ class CategoryController extends Controller
          * --------------------------------------------------------------------------
          * Reverse category by slug form into plain name and select article by that
          * name, also construct breadcrumb stack, because we implement lazy
-         * pagination via ajax so return json when 'page' variable is exist.
+         * pagination via ajax so return json when 'page' variable exist.
          */
 
         $categoryName = str_replace('-', ' ', $slug);

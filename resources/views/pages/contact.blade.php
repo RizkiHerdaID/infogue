@@ -6,8 +6,8 @@
 
     <div class="map" style="background: url('{{ asset('images/misc/map.jpg') }}') no-repeat center / cover"></div>
     <div class="container">
-        <!-- begin of contact form -->
-        <div class="section">
+        <!-- contact form -->
+        <div class="section" id="feedback">
             <div class="title">
                 <h1>GET IN TOUCH</h1>
                 <p class="lead">
@@ -21,10 +21,14 @@
                     {!! csrf_field() !!}
 
                     @include('errors.common')
+
                     @if(Session::has('status'))
                         <div class="row">
                             <div class="col-md-8  col-md-push-2">
                                 <div class="alert alert-{{ Session::get('status') }}">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                     {!! '<p>'.Session::get('message').'</p>' !!}
                                 </div>
                             </div>

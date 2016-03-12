@@ -139,7 +139,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Member Since</label>
                             <div class="col-sm-9">
-                                <p class="form-control-static">January, 2016</p>
+                                <p class="form-control-static">{{ \Carbon\Carbon::parse($contributor->created_at)->format('F, Y') }}</p>
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
@@ -246,7 +246,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="col-sm-3 control-label">Mobile</label>
+                            <label for="mobile_notification" class="col-sm-3 control-label">Mobile</label>
                             <div class="col-sm-9">
                                 <div class="checkbox">
                                     <input type="checkbox" name="mobile_notification" value="1" id="mobile_notification" class="css-checkbox" @if(old('mobile_notification', $contributor->mobile_notification)){{ 'checked' }}@endif>

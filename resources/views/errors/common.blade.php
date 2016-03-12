@@ -3,11 +3,9 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
         <span aria-hidden="true">&times;</span>
     </button>
-    <strong>Whoops! Something went wrong!</strong>
+    <strong class="mbm">Whoops! Something went wrong!</strong>
 
-    <br>
-
-    <ul style="margin-bottom: 0; -webkit-padding-start: 20px; margin-left: 20px">
+    <ul style="margin-bottom: 0; margin-left: 20px; list-style: inherit">
         @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
         @endforeach

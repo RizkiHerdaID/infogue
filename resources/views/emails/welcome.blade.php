@@ -10,7 +10,6 @@
     <div style="margin-bottom: 30px; text-align: center">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
         <h2 style="margin-top: 0; color: #4dc4d2">INFORMASI UNTUKMU</h2>
-        <hr style="margin-top: 10px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">
     </div>
 
 

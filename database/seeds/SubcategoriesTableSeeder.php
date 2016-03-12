@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -17,694 +18,918 @@ class SubcategoriesTableSeeder extends Seeder
                 'category_id' => '1',
                 'subcategory' => 'Politic',
                 'label' => 'Featured',
-                'description' => 'Politic Sub Category'
+                'description' => 'Politic Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'World',
                 'label' => 'Featured',
-                'description' => 'World Sub Category'
+                'description' => 'World Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Issues',
                 'label' => 'Featured',
-                'description' => 'Issues Sub Category'
+                'description' => 'Issues Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Opinion',
                 'label' => 'Featured',
-                'description' => 'Opinion Sub Category'
+                'description' => 'Opinion Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Hot',
                 'label' => 'Featured',
-                'description' => 'Hot Sub Category'
+                'description' => 'Hot Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '1',
                 'subcategory' => 'Regional',
                 'label' => 'Light News',
-                'description' => 'Regional Sub Category'
+                'description' => 'Regional Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Profile',
                 'label' => 'Light News',
-                'description' => 'Profile Sub Category'
+                'description' => 'Profile Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Debate',
                 'label' => 'Light News',
-                'description' => 'Debate Sub Category'
+                'description' => 'Debate Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Interview',
                 'label' => 'Light News',
-                'description' => 'Interview Sub Category'
+                'description' => 'Interview Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '1',
                 'subcategory' => 'Latest',
                 'label' => 'Headline',
-                'description' => 'Latest Sub Category'
+                'description' => 'Latest Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '1',
                 'subcategory' => 'Trending',
                 'label' => 'Headline',
-                'description' => 'Trending Sub Category'
+                'description' => 'Trending Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '2',
                 'subcategory' => 'Finance',
                 'label' => 'Business',
-                'description' => 'Finance Sub Category'
+                'description' => 'Finance Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Stock',
                 'label' => 'Business',
-                'description' => 'Stock Sub Category'
+                'description' => 'Stock Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Micro Business',
                 'label' => 'Business',
-                'description' => 'Micro Business Sub Category'
+                'description' => 'Micro Business Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Management',
                 'label' => 'Business',
-                'description' => 'Management Sub Category'
+                'description' => 'Management Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Strategy',
                 'label' => 'Business',
-                'description' => 'Strategy Sub Category'
+                'description' => 'Strategy Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '2',
                 'subcategory' => 'Government',
                 'label' => 'National',
-                'description' => 'Government Sub Category'
+                'description' => 'Government Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Market',
                 'label' => 'National',
-                'description' => 'Market Sub Category'
+                'description' => 'Market Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Exchange',
                 'label' => 'National',
-                'description' => 'Exchange Sub Category'
+                'description' => 'Exchange Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Export',
                 'label' => 'National',
-                'description' => 'Export Sub Category'
+                'description' => 'Export Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Import',
                 'label' => 'National',
-                'description' => 'Import Sub Category'
+                'description' => 'Import Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '2',
                 'subcategory' => 'Accounting',
                 'label' => 'Academic',
-                'description' => 'Accounting Sub Category'
+                'description' => 'Accounting Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Book',
                 'label' => 'Academic',
-                'description' => 'Book Sub Category'
+                'description' => 'Book Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Startup',
                 'label' => 'Academic',
-                'description' => 'Startup Sub Category'
+                'description' => 'Startup Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '2',
                 'subcategory' => 'Policy',
                 'label' => 'Academic',
-                'description' => 'Policy Sub Category'
+                'description' => 'Policy Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '3',
                 'subcategory' => 'International',
                 'label' => 'Extravaganza',
-                'description' => 'International Sub Category'
+                'description' => 'International Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Celebrities',
                 'label' => 'Extravaganza',
-                'description' => 'Celebrities Sub Category'
+                'description' => 'Celebrities Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Film',
                 'label' => 'Extravaganza',
-                'description' => 'Film Sub Category'
+                'description' => 'Film Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Music',
                 'label' => 'Extravaganza',
-                'description' => 'Music Sub Category'
+                'description' => 'Music Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Game',
                 'label' => 'Extravaganza',
-                'description' => 'Game Sub Category'
+                'description' => 'Game Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '3',
                 'subcategory' => 'Jokes',
                 'label' => 'Daily',
-                'description' => 'Jokes Sub Category'
+                'description' => 'Jokes Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Lifestyle',
                 'label' => 'Daily',
-                'description' => 'Lifestyle Sub Category'
+                'description' => 'Lifestyle Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Vacation',
                 'label' => 'Daily',
-                'description' => 'Vacation Sub Category'
+                'description' => 'Vacation Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Festival',
                 'label' => 'Daily',
-                'description' => 'Festival Sub Category'
+                'description' => 'Festival Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '3',
                 'subcategory' => 'Anime',
                 'label' => 'Hobby',
-                'description' => 'Anime Sub Category'
+                'description' => 'Anime Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Handcraft',
                 'label' => 'Hobby',
-                'description' => 'Handcraft Sub Category'
+                'description' => 'Handcraft Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Outdoor',
                 'label' => 'Hobby',
-                'description' => 'Outdoor Sub Category'
+                'description' => 'Outdoor Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Collector',
                 'label' => 'Hobby',
-                'description' => 'Collector Sub Category'
+                'description' => 'Collector Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Art',
                 'label' => 'Hobby',
-                'description' => 'Art Sub Category'
+                'description' => 'Art Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '3',
                 'subcategory' => 'K-Pop',
                 'label' => 'Other',
-                'description' => 'K-Pop Sub Category'
+                'description' => 'K-Pop Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'J-Pop',
                 'label' => 'Other',
-                'description' => 'J-Pop Sub Category'
+                'description' => 'J-Pop Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Trend',
                 'label' => 'Other',
-                'description' => 'Trend Sub Category'
+                'description' => 'Trend Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '3',
                 'subcategory' => 'Party',
                 'label' => 'Other',
-                'description' => 'Party Sub Category'
+                'description' => 'Party Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '4',
                 'subcategory' => 'Soccer',
                 'label' => 'Popular',
-                'description' => 'Soccer Sub Category'
+                'description' => 'Soccer Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Tennis',
                 'label' => 'Popular',
-                'description' => 'Tennis Sub Category'
+                'description' => 'Tennis Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Moto GP',
                 'label' => 'Popular',
-                'description' => 'Moto GP Sub Category'
+                'description' => 'Moto GP Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Formula 1',
                 'label' => 'Popular',
-                'description' => 'Formula 1 Sub Category'
+                'description' => 'Formula 1 Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Basket',
                 'label' => 'Popular',
-                'description' => 'Basket Sub Category'
+                'description' => 'Basket Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Badminton',
                 'label' => 'Popular',
-                'description' => 'Badminton Sub Category'
+                'description' => 'Badminton Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Volley',
                 'label' => 'Popular',
-                'description' => 'Volley Sub Category'
+                'description' => 'Volley Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Athletic',
                 'label' => 'Popular',
-                'description' => 'Athletic Sub Category'
+                'description' => 'Athletic Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Rally',
                 'label' => 'Popular',
-                'description' => 'Rally Sub Category'
+                'description' => 'Rally Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Bicycle',
                 'label' => 'Popular',
-                'description' => 'Bicycle Sub Category'
+                'description' => 'Bicycle Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Extreme Sport',
                 'label' => 'Popular',
-                'description' => 'Extreme Sub Category'
+                'description' => 'Extreme Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Freestyle',
                 'label' => 'Popular',
-                'description' => 'Freestyle Sub Category'
+                'description' => 'Freestyle Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '4',
                 'subcategory' => 'World Cup',
                 'label' => 'Event',
-                'description' => 'World Cup Sub Category'
+                'description' => 'World Cup Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Olympic',
                 'label' => 'Event',
-                'description' => 'Olympic Sub Category'
+                'description' => 'Olympic Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Champion',
                 'label' => 'Event',
-                'description' => 'Champion Sub Category'
+                'description' => 'Champion Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '4',
                 'subcategory' => 'Schedule',
                 'label' => 'Event',
-                'description' => 'Schedule Sub Category'
+                'description' => 'Schedule Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '5',
                 'subcategory' => 'Medication',
                 'label' => 'Medic',
-                'description' => 'Medication Sub Category'
+                'description' => 'Medication Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Disease',
                 'label' => 'Medic',
-                'description' => 'Disease Sub Category'
+                'description' => 'Disease Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Symptom',
                 'label' => 'Medic',
-                'description' => 'Symptom Sub Category'
+                'description' => 'Symptom Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Knowledge',
                 'label' => 'Medic',
-                'description' => 'Knowledge Sub Category'
+                'description' => 'Knowledge Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Drug',
                 'label' => 'Medic',
-                'description' => 'Drug Sub Category'
+                'description' => 'Drug Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '5',
                 'subcategory' => 'Lifestyle',
                 'label' => 'Life',
-                'description' => 'Lifestyle Sub Category'
+                'description' => 'Lifestyle Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Exercise',
                 'label' => 'Life',
-                'description' => 'Exercise Sub Category'
+                'description' => 'Exercise Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Food',
                 'label' => 'Life',
-                'description' => 'Food Sub Category'
+                'description' => 'Food Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Diet',
                 'label' => 'Life',
-                'description' => 'Diet Sub Category'
+                'description' => 'Diet Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '5',
                 'subcategory' => 'Ask Doctor',
                 'label' => 'Doctor',
-                'description' => 'Ask Doctor Sub Category'
+                'description' => 'Ask Doctor Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Medical Journal',
                 'label' => 'Doctor',
-                'description' => 'Medical Journal Sub Category'
+                'description' => 'Medical Journal Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '5',
                 'subcategory' => 'Hospital',
                 'label' => 'Doctor',
-                'description' => 'Hospital Sub Category'
+                'description' => 'Hospital Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '6',
                 'subcategory' => 'Discovery',
                 'label' => 'Knowledge',
-                'description' => 'Discovery Sub Category'
+                'description' => 'Discovery Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Research',
                 'label' => 'Knowledge',
-                'description' => 'Research Sub Category'
+                'description' => 'Research Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Astronomy',
                 'label' => 'Knowledge',
-                'description' => 'Astronomy Sub Category'
+                'description' => 'Astronomy Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Human',
                 'label' => 'Knowledge',
-                'description' => 'Human Sub Category'
+                'description' => 'Human Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Earth',
                 'label' => 'Knowledge',
-                'description' => 'Earth Sub Category'
+                'description' => 'Earth Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Language',
                 'label' => 'Knowledge',
-                'description' => 'Language Sub Category'
+                'description' => 'Language Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Chemistry',
                 'label' => 'Knowledge',
-                'description' => 'Chemistry Sub Category'
+                'description' => 'Chemistry Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Biology',
                 'label' => 'Knowledge',
-                'description' => 'Biology Sub Category'
+                'description' => 'Biology Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Physics',
                 'label' => 'Knowledge',
-                'description' => 'Physics Sub Category'
+                'description' => 'Physics Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'History',
                 'label' => 'Knowledge',
-                'description' => 'History Sub Category'
+                'description' => 'History Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '6',
                 'subcategory' => 'Communication',
                 'label' => 'Engineering',
-                'description' => 'Communication Sub Category'
+                'description' => 'Communication Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Construction',
                 'label' => 'Engineering',
-                'description' => 'Construction Sub Category'
+                'description' => 'Construction Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Electrical',
                 'label' => 'Engineering',
-                'description' => 'Electrical Sub Category'
+                'description' => 'Electrical Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '6',
                 'subcategory' => 'Otomotive',
                 'label' => 'Engineering',
-                'description' => 'Otomotive Sub Category'
+                'description' => 'Otomotive Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '7',
                 'subcategory' => 'IT',
                 'label' => 'Computer',
-                'description' => 'IT Sub Category'
+                'description' => 'IT Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Gadget',
                 'label' => 'Computer',
-                'description' => 'Gadget Sub Category'
+                'description' => 'Gadget Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Software',
                 'label' => 'Computer',
-                'description' => 'Software Sub Category'
+                'description' => 'Software Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Hardware',
                 'label' => 'Computer',
-                'description' => 'Hardware Sub Category'
+                'description' => 'Hardware Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Internet',
                 'label' => 'Computer',
-                'description' => 'Internet Sub Category'
+                'description' => 'Internet Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '7',
                 'subcategory' => 'Future',
                 'label' => 'Concept',
-                'description' => 'Future Sub Category'
+                'description' => 'Future Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Programming',
                 'label' => 'Concept',
-                'description' => 'Programming Sub Category'
+                'description' => 'Programming Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Cyber Security',
                 'label' => 'Concept',
-                'description' => 'Cyber Security Sub Category'
+                'description' => 'Cyber Security Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'UI Interaction',
                 'label' => 'Concept',
-                'description' => 'UI Interaction Sub Category'
+                'description' => 'UI Interaction Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Social Network',
                 'label' => 'Concept',
-                'description' => 'Social Network Sub Category'
+                'description' => 'Social Network Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '7',
                 'subcategory' => 'Blackberry',
                 'label' => 'Handheld',
-                'description' => 'Blackberry Sub Category'
+                'description' => 'Blackberry Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Android',
                 'label' => 'Handheld',
-                'description' => 'Android Sub Category'
+                'description' => 'Android Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'iOS',
                 'label' => 'Handheld',
-                'description' => 'iOS Sub Category'
+                'description' => 'iOS Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '7',
                 'subcategory' => 'Windows Phone',
                 'label' => 'Handheld',
-                'description' => 'Windows Phone Sub Category'
+                'description' => 'Windows Phone Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '10',
                 'subcategory' => 'Motivation',
                 'label' => 'Life',
-                'description' => 'Motivation Sub Category'
+                'description' => 'Motivation Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Family',
                 'label' => 'Life',
-                'description' => 'Family Sub Category'
+                'description' => 'Family Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Career',
                 'label' => 'Life',
-                'description' => 'Career Sub Category'
+                'description' => 'Career Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Friendship',
                 'label' => 'Life',
-                'description' => 'Friendship Sub Category'
+                'description' => 'Friendship Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Relationship',
                 'label' => 'Life',
-                'description' => 'Relationship Sub Category'
+                'description' => 'Relationship Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
 
             [
                 'category_id' => '10',
                 'subcategory' => 'Life Hack',
                 'label' => 'Miscellaneous',
-                'description' => 'Life Hack Sub Category'
+                'description' => 'Life Hack Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'The Lounge',
                 'label' => 'Miscellaneous',
-                'description' => 'The Lounge Sub Category'
+                'description' => 'The Lounge Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Opinion',
                 'label' => 'Miscellaneous',
-                'description' => 'Opinion Sub Category'
+                'description' => 'Opinion Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Society',
                 'label' => 'Miscellaneous',
-                'description' => 'Society Sub Category'
+                'description' => 'Society Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Education',
                 'label' => 'Miscellaneous',
-                'description' => 'Education Sub Category'
+                'description' => 'Education Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Idea',
                 'label' => 'Miscellaneous',
-                'description' => 'Idea Sub Category'
+                'description' => 'Idea Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Sharing',
                 'label' => 'Miscellaneous',
-                'description' => 'Sharing Sub Category'
+                'description' => 'Sharing Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category_id' => '10',
                 'subcategory' => 'Others',
                 'label' => 'Miscellaneous',
-                'description' => 'Others Sub Category'
+                'description' => 'Others Sub Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
         ]);
 

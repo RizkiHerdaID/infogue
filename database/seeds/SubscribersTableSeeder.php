@@ -11,6 +11,6 @@ class SubscribersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Infogue\Subscriber::class, 50)->create();
+        factory(Infogue\Subscriber::class, 5)->create();
     }
 }

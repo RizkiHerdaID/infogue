@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,43 +16,63 @@ class CategoriesTableSeeder extends Seeder
         DB::table('categories')->insert([
             [
                 'category' => 'News',
-                'description' => 'News Category'
+                'description' => 'News Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Economic',
-                'description' => 'Economic Category'
+                'description' => 'Economic Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Entertainment',
-                'description' => 'Entertainment Category'
+                'description' => 'Entertainment Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Sport',
-                'description' => 'Sport Category'
+                'description' => 'Sport Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Health',
-                'description' => 'Health Category'
+                'description' => 'Health Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Science',
-                'description' => 'Science Category'
+                'description' => 'Science Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Technology',
-                'description' => 'Technology Category'
+                'description' => 'Technology Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Photo',
-                'description' => 'Photo Category'
+                'description' => 'Photo Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Video',
-                'description' => 'Video Category'
+                'description' => 'Video Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'category' => 'Others',
-                'description' => 'Others Category'
+                'description' => 'Others Category',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
             ],
         ]);
     }

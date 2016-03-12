@@ -1496,4 +1496,78 @@ $(function () {
     });
 
     $("#form-contact").validate();
+    $("#form-register").validate({
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+            $('#agree-error').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+            $('#agree-error').removeClass('has-error');
+        },
+        errorPlacement: function (error, element) {
+            if (element.attr("id") == "agree") {
+                $('#agree-error').html(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: {
+            "password": {
+                minlength: 6,
+                maxlength: 20
+            },
+            "password_confirmation": {
+                minlength: 6,
+                maxlength: 20,
+                equalTo: "#password"
+            }
+        },
+        messages: {
+            email: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters",
+            },
+            username: {
+                required: "Username is required",
+                maxlength: "Username max length is {0} characters",
+            },
+            password: {
+                required: "Password is required",
+                maxlength: "Password max length is {0} characters",
+            },
+            password_confirmation: {
+                required: "Confirm password is required",
+                equalTo: "Type the same value as password"
+            },
+            agree: "You must agree with terms and condition",
+        }
+    });
+
+    $("#form-login").validate({
+        messages: {
+            username: {
+                required: "Username is required",
+            },
+            password: {
+                required: "Password is required",
+            },
+        }
+    });
+
+    $("#form-reset").validate({
+        messages: {
+            username: {
+                required: "Username is required",
+            },
+            password: {
+                required: "Password is required",
+                maxlength: "Password max length is {0} characters",
+            },
+            password_confirmation: {
+                required: "Confirm password is required",
+                equalTo: "Type the same value as password"
+            },
+        }
+    });
 });

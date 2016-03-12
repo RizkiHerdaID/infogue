@@ -36,29 +36,21 @@
                     <h2 class="form-title">Reset Password</h2>
                     <p class="form-subtitle">Recovering your credential</p>
 
-                    @if(Session::has('status'))
-                        <div class="form-group">
-                            <div class="alert alert-warning">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                {{ Session::get('status') }}
-                            </div>
-                        </div>
-                    @endif
+                    @include('errors.common')
 
-                    <form action="{{ route('login.reset.attempt') }}" method="post">
+                    <form action="{{ route('login.reset.attempt') }}" method="post" id="form-reset">
                         {!! csrf_field() !!}
                         <input type="hidden" name="token" value="{{ $token }}">
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $contributor->email }}" placeholder="Email Address">
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $contributor->email }}" placeholder="Email Address" required>
+                            {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                         </div>
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required pattern=".{6,20}" maxlength="20">
                             {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                         </div>
                         <div class="form-group {{ $errors->has('password_confirmation') ? 'has-error' : '' }}">
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Retype Password">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Retype Password" required pattern=".{6,20}" maxlength="20">
                             {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">RESET MY PASSWORD</button>

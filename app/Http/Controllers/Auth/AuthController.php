@@ -111,10 +111,10 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|alpha_dash|max:50|unique:contributors',
+            'username' => 'required|alpha_dash|min:4|max:20|unique:contributors',
             'email' => 'required|email|max:50|unique:contributors',
-            'password' => 'required|confirmed|min:6',
-            'agree' => 'required'
+            'password' => 'required|confirmed|min:6|max:20',
+            'agree' => 'accepted'
         ]);
     }
 
@@ -174,11 +174,18 @@ class AuthController extends Controller
      */
     public function confirm(Request $request, $token)
     {
-        if (!Session::has('status')) {
-            $request->session()->flash('status', 'Registration Complete');;
-        }
+        $contributor = $this->checkContributorStatus($token);
 
-        return view('auth.confirmation', compact('token'));
+        if($contributor instanceof Contributor){
+            if (!Session::has('status')) {
+                $request->session()->flash('status', 'Registration Complete');;
+            }
+
+            return view('auth.confirmation', compact('token'));
+        }
+        else{
+            return $contributor;
+        }
     }
 
     /**
@@ -214,6 +221,40 @@ class AuthController extends Controller
          * and return the status, it could be 'activated' or 'suspended'.
          */
 
+        $contributor = $this->checkContributorStatus($token);
+
+        if($contributor instanceof Contributor){
+
+            $contributor->status = 'activated';
+
+            $contributor->save();
+
+            /*
+             * --------------------------------------------------------------------------
+             * Create register activity
+             * --------------------------------------------------------------------------
+             * Create new instance of Activity and insert register activity.
+             */
+            Activity::create([
+                'contributor_id' => $contributor->id,
+                'activity' => Activity::registerActivity($contributor->username, 'web')
+            ]);
+
+            return view('auth.activation', compact('contributor'));
+        }
+        else{
+            return $contributor;
+        }
+    }
+
+    /**
+     * Check if user has been activated or suspended
+     *
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function checkContributorStatus($token)
+    {
         $contributor = Contributor::whereToken($token)->firstOrFail();
 
         if ($contributor->status != 'pending') {
@@ -221,22 +262,7 @@ class AuthController extends Controller
                 ->with('status', 'Your account has been ' . $contributor->status);
         }
 
-        $contributor->status = 'activated';
-
-        $contributor->save();
-
-        /*
-         * --------------------------------------------------------------------------
-         * Create register activity
-         * --------------------------------------------------------------------------
-         * Create new instance of Activity and insert register activity.
-         */
-        Activity::create([
-            'contributor_id' => $contributor->id,
-            'activity' => Activity::registerActivity($contributor->username, 'web')
-        ]);
-
-        return view('auth.activation', compact('contributor'));
+        return $contributor;
     }
 
     /**

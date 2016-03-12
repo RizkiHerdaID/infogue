@@ -3,20 +3,47 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
-use Infogue\Article;
 use Infogue\Category;
 use Infogue\Http\Requests;
 use Infogue\Subcategory;
 
 class CategoryController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Category Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling article showing grouped by
+    | category and sub category, the categories are given by slug from category
+    | title and the article list is result of guessing reverse form of slug.
+    |
+    */
+
+    /**
+     * instance variable of Category.
+     *
+     * @var Category
+     */
     private $category;
 
+    /**
+     * instance variable of Subcategory.
+     *
+     * @var Subcategory
+     */
     private $subcategory;
 
+    /**
+     * Create a new category controller instance.
+     *
+     * @param Category $category
+     * @param Subcategory $subcategory
+     */
     public function __construct(Category $category, Subcategory $subcategory)
     {
         $this->category = $category;
+
         $this->subcategory = $subcategory;
     }
 
@@ -28,9 +55,18 @@ class CategoryController extends Controller
      */
     public function category($slug)
     {
-        $category_name = str_replace('-',' ', $slug);
+        /*
+         * --------------------------------------------------------------------------
+         * Populating article by category
+         * --------------------------------------------------------------------------
+         * Reverse category by slug form into plain name and select article by that
+         * name, also construct breadcrumb stack, because we implement lazy
+         * pagination via ajax so return json when 'page' variable is exist.
+         */
 
-        $category = $this->category->where('category', 'like', $category_name)->firstOrFail();
+        $categoryName = str_replace('-', ' ', $slug);
+
+        $category = $this->category->where('category', 'like', $categoryName)->firstOrFail();
 
         $articles = $this->category->categoryArticle($category->id);
 
@@ -43,10 +79,9 @@ class CategoryController extends Controller
 
         $prev_ref = '#';
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $articles;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
@@ -60,9 +95,18 @@ class CategoryController extends Controller
      */
     public function subcategory($category_slug, $subcategory_slug)
     {
-        $category_name = str_replace('-',' ', $category_slug);
+        /*
+         * --------------------------------------------------------------------------
+         * Populating article by sub category
+         * --------------------------------------------------------------------------
+         * Article is retrieved by category then from category select subcategory,
+         * because some categories maybe have similar subcategory name and resulting
+         * same slug, they return view or json depend on 'page' existences.
+         */
 
-        $subcategory_name = str_replace('-',' ', $subcategory_slug);
+        $category_name = str_replace('-', ' ', $category_slug);
+
+        $subcategory_name = str_replace('-', ' ', $subcategory_slug);
 
         $category = $this->category->where('category', 'like', $category_name)->firstOrFail();
 
@@ -80,12 +124,10 @@ class CategoryController extends Controller
 
         $prev_ref = '#';
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $articles;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
-
 }

@@ -162,17 +162,6 @@ class Article extends Model
         return $random;
     }
 
-    public function tag($tag)
-    {
-        $articles = $this->preArticleQuery()->published()
-            ->join('article_tags', 'articles.id', '=', 'article_tags.article_id')
-            ->join('tags', 'tags.id', '=', 'tag_id')
-            ->where('tags.tag', 'like', $tag)
-            ->paginate(9);
-
-        return $this->preArticleModifier($articles);
-    }
-
     public function archive($data, $by, $sort, $contributor = null)
     {
         $archive = $this->preArticleQuery();

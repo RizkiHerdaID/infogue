@@ -148,8 +148,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
         Route::match(['put', 'patch'], '/article/draft/{id}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
-        Route::get('/article/subcategory/{id}', ['as' => 'account.article.subcategory', 'uses' => 'ArticleController@subcategory']);
-        Route::get('/article/tags', ['as' => 'account.article.tags', 'uses' => 'ArticleController@tags']);
+        Route::get('/article/subcategory/{id}', ['as' => 'account.article.subcategory', 'uses' => 'CategoryController@subcategories']);
+        Route::get('/article/tags', ['as' => 'account.article.tags', 'uses' => 'TagController@tags']);
         Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
         Route::get('/following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
 
@@ -162,14 +162,14 @@ Route::group(['middleware' => ['web']], function () {
 
     // Group of article routes...
     Route::group(['as' => 'article.'], function () {
-        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
         Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
         Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
+        Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'TagController@tag']);
+        Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
         Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
         Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
         Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
         Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
-        Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'ArticleController@tag']);
         Route::post('/article/rate', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
         Route::post('/article/hit', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
         Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);

@@ -13,27 +13,57 @@ use Infogue\Category;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CreateArticleRequest;
-use Infogue\Uploader;
 use Infogue\Rating;
 use Infogue\Subcategory;
 use Infogue\Tag;
+use Infogue\Uploader;
 
 class ArticleController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Article Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling showing article page including
+    | archive, latest, headline, featured, random, single article, tags, hit,
+    | rate, and article management.
+    |
+    */
+
+    /**
+     * Instance variable of Article.
+     *
+     * @var Article
+     */
     private $article;
 
+    /**
+     * Create a new article controller instance.
+     *
+     * @param Article $article
+     */
     public function __construct(Article $article)
     {
         $this->article = $article;
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the account article.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Filtering article
+         * --------------------------------------------------------------------------
+         * Populate optional filter on url break down in data, sorting by and sorting
+         * method, retrieve the article via archive method with padding contributor
+         * id to limit selection by their authenticate author.
+         */
+
         $filter_data = Input::has('data') ? Input::get('data') : 'all-data';
         $filter_by = Input::has('by') ? Input::get('by') : 'date';
         $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
@@ -44,12 +74,21 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the account article.
      *
      * @return \Illuminate\Http\Response
      */
     public function stream()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Stream on the fly
+         * --------------------------------------------------------------------------
+         * Retrieve authenticate contributor stream, this page implement lazy
+         * pagination then return json if page variable exists, return view if it
+         * does not.
+         */
+
         $contributor = new Contributor();
 
         $stream = $contributor->stream(Auth::user()->username);
@@ -62,12 +101,21 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the latest article.
      *
      * @return \Illuminate\Http\Response
      */
     public function latest()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Public latest article
+         * --------------------------------------------------------------------------
+         * Retrieve full latest page (with false param), this page implement lazy
+         * pagination then return json if page variable exists, return view if it
+         * does not.
+         */
+
         $latest = $this->article->latest(false);
 
         $breadcrumb = [
@@ -79,21 +127,29 @@ class ArticleController extends Controller
 
         $prev_ref = '#';
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $latest;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the headline article.
      *
      * @return \Illuminate\Http\Response
      */
     public function headline()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Public headline article
+         * --------------------------------------------------------------------------
+         * Retrieve full headline page (with false param), this page implement lazy
+         * pagination then return json if page variable exists, return view if it
+         * does not.
+         */
+
         $headline = $this->article->headline(false);
 
         $breadcrumb = [
@@ -105,21 +161,29 @@ class ArticleController extends Controller
 
         $prev_ref = route('article.latest');
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $headline;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the trending article.
      *
      * @return \Illuminate\Http\Response
      */
     public function trending()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Public trending article
+         * --------------------------------------------------------------------------
+         * Retrieve full headline page (with false param), this page implement lazy
+         * pagination then return json if page variable exists, return view if it
+         * does not.
+         */
+
         $trending = $this->article->trending(false);
 
         $breadcrumb = [
@@ -131,21 +195,29 @@ class ArticleController extends Controller
 
         $prev_ref = route('article.headline');
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $trending;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
 
     /**
-     * Display a listing of the article.
+     * Display a listing of the random article.
      *
      * @return \Illuminate\Http\Response
      */
     public function random()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Public random article
+         * --------------------------------------------------------------------------
+         * Random article with SQL order function through article model, this page
+         * implement lazy  pagination then return json if page variable exists,
+         * return view if it does not.
+         */
+
         $trending = $this->article->random();
 
         $breadcrumb = [
@@ -157,40 +229,9 @@ class ArticleController extends Controller
 
         $prev_ref = route('article.trending');
 
-        if(Input::get('page', false)){
+        if (Input::get('page', false)) {
             return $trending;
-        }
-        else{
-            return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
-        }
-    }
-
-    /**
-     * Display a listing of the article.
-     *
-     * @param $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function tag($tag)
-    {
-        $article_tag = str_replace('-', ' ', $tag);
-
-        $article = $this->article->tag($article_tag);
-
-        $breadcrumb = [
-            'Archive' => route('article.archive'),
-            'Tag' => '#',
-            $article_tag => '#'
-        ];
-
-        $next_ref = '#';
-
-        $prev_ref = '#';
-
-        if(Input::get('page', false)){
-            return $article;
-        }
-        else{
+        } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
@@ -202,6 +243,14 @@ class ArticleController extends Controller
      */
     public function archive()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Filtering article
+         * --------------------------------------------------------------------------
+         * Populate optional filter on url break down in data, sorting by and sorting
+         * method, retrieve the article via archive method.
+         */
+
         $filter_data = Input::has('data') ? Input::get('data') : 'all-data';
         $filter_by = Input::has('by') ? Input::get('by') : 'date';
         $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
@@ -218,29 +267,23 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Show create form
+         * --------------------------------------------------------------------------
+         * Populate category into list for build drop down, and try catch old
+         * subcategory input because it depends on category which accessed via ajax.
+         */
+
         $categories = Category::pluck('category', 'id');
 
         $subcategories = null;
 
-        if(Input::old('category', '') != ''){
+        if (Input::old('category', '') != '') {
             $subcategories = Category::findOrFail(Input::old('category'))->subcategories;
         }
 
         return view('contributor.article_create', compact('categories', 'subcategories'));
-    }
-
-    public function subcategory($id)
-    {
-        $category = Category::findOrFail($id);
-
-        return $category->subcategories;
-    }
-
-    public function tags()
-    {
-        $tags = Tag::pluck('tag');
-
-        return $tags;
     }
 
     /**
@@ -251,26 +294,54 @@ class ArticleController extends Controller
      */
     public function store(CreateArticleRequest $request)
     {
-        $tags_id = [];
+        /*
+         * --------------------------------------------------------------------------
+         * Populate tags
+         * --------------------------------------------------------------------------
+         * tags [many-to] -- article_tags -- [many] articles
+         *
+         * Sync tags and article, extract tags from request, break down between new
+         * tags and tags that available in database, collect available tags first
+         * then insert new tags and merge new inserted tag id with available tags id
+         * finally store them all into article_tags table.
+         */
 
-        // get all tags which already exist with tags are given
+        // get all tags which ALREADY EXIST by tags are given eg:
+        // request tags         = [angga, ari, entertainment, happy, trend, 2016]
+        // all database tags    = [1 => news, 2 => happy, 3 => angga, 4 => love, 5 => 2016]
+        // tags where in        = [3 => angga, 2 => happy, 5 => 2016]
         $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
-        // merge tags which exist into tags_id
-        $tags_id = array_merge($tags_id, $tag->pluck('id')->toArray());
+        // collect tags which existed into tags_id and leave for a while
+        // $tags_id [3, 2, 5]
+        $tags_id = $tag->pluck('id')->toArray();
 
-        // retrieve tags label which already exist to compare with given array
+        // retrieve tags label (name) which already exist to compare with given array
+        // tags label [angga, happy, 2016]
         $available_tags = $tag->pluck('tag')->toArray();
 
         // new tags need to insert into tags table
+        // $new_tags = [ari, entertainment, trend]
         $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
 
+        // loop through new tags and retrieve last inserted id to merge with tags_id that need to insert later
+        // new tags will have id [6 => ari, 7 => entertainment, 8 => trend]
+        // $tags_id will be [3, 2, 5, 6, 7, 8]
         foreach ($new_tags as $tag_label):
             $newTag = new Tag();
             $newTag->tag = $tag_label;
             $newTag->save();
             array_push($tags_id, $newTag->id);
         endforeach;
+
+        /*
+         * --------------------------------------------------------------------------
+         * Populate article data
+         * --------------------------------------------------------------------------
+         * Retrieve all data from request and populate into article object model
+         * then store it into database, check if featured is available then attempt
+         * to upload to asset directory.
+         */
 
         $article = new Article();
         $article->contributor_id = Auth::user()->id;
@@ -289,25 +360,39 @@ class ArticleController extends Controller
 
         $article->save();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Sync and Attach
+         * --------------------------------------------------------------------------
+         * We have all tag ids that need to insert on article_tags [3, 2, 5, 6, 7, 8]
+         * use attach method we insert them through article model related by article
+         * id so everything should be working perfectly.
+         */
+
         Article::find($article->id)->tags()->attach($tags_id);
 
         $this->sendEmailNotification(Auth::user()->id, $article);
 
-        return redirect()
-            ->route('account.article.index')
+        return redirect(route('account.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was created');
     }
 
+    /**
+     * Send email notification to followers that contributor create new article.
+     *
+     * @param $contributor_id
+     * @param $article
+     */
     public function sendEmailNotification($contributor_id, $article)
     {
         $contributor = Contributor::findOrFail($contributor_id);
 
         $followers = $contributor->followers;
 
-        foreach($followers as $follower):
+        foreach ($followers as $follower):
             $follower = $follower->contributor;
-            if($follower->email_feed){
+            if ($follower->email_feed) {
                 $data = [
                     'receiverName' => $follower->name,
                     'receiverUsername' => $follower->username,
@@ -323,11 +408,11 @@ class ArticleController extends Controller
 
                 Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
 
-                    $message->from('no-reply@infogue.id', 'Infogue.id');
+                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->to($follower->email)->subject($contributor->name.' create new article');
+                    $message->to($follower->email)->subject($contributor->name . ' create new article');
 
                 });
             }
@@ -335,25 +420,33 @@ class ArticleController extends Controller
     }
 
     /**
-     * Store user rating for the article.
+     * Store user rating for the article via AJAX.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function rate(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Visitor gives a rating
+         * --------------------------------------------------------------------------
+         * Find article that needs to be rated, find out client ip address from
+         * request, check if the client ip gave rating to this article before, if
+         * they did, then update their rating if they didn't then insert new.
+         */
+
         $article = Article::findOrFail($request->input('article_id'));
 
         $ip = $request->ip();
 
         $is_rated = $article->ratings()->whereIp($ip)->count();
 
-        if($is_rated){
+        if ($is_rated) {
             $rating = Rating::whereArticleId($request->input('article_id'))->whereIp($ip)->firstOrFail();
             $rating->rate = $request->input('rate');
             $rating->save();
-        }
-        else{
+        } else {
             $rating = new Rating();
             $rating->article_id = $request->input('article_id');
             $rating->ip = $ip;
@@ -361,10 +454,17 @@ class ArticleController extends Controller
             $rating->save();
         }
 
-        $activity = new Activity();
-        $activity->contributor_id = $article->contributor_id;
-        $activity->activity = $activity->giveRatingActivity($article->title, $article->slug, $request->input('rate'));
-        $activity->save();
+        /*
+         * --------------------------------------------------------------------------
+         * Create rate article activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert rate article activity.
+         */
+
+        Activity::create([
+            'contributor_id' => $article->contributor_id,
+            'activity' => Activity::giveRatingActivity($article->title, $article->slug, $request->input('rate'))
+        ]);
 
         return ($article->rating()->count() == null) ? 0 : $article->rating->total_rating;
     }
@@ -395,6 +495,14 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populate single article view
+         * --------------------------------------------------------------------------
+         * Find published article by slug, build breadcrumb stack, retrieve article
+         * author, article tags, related and popular article.
+         */
+
         $article = $this->article->published()->whereSlug($slug)->firstOrFail();
 
         $category = $article->subcategory->category->category;
@@ -425,7 +533,7 @@ class ArticleController extends Controller
 
         $author = $contributor->profile($article->contributor->username);
 
-        return view('article.article', compact('breadcrumb','prev_ref', 'next_ref', 'article', 'author', 'tags', 'related', 'popular'));
+        return view('article.article', compact('breadcrumb', 'prev_ref', 'next_ref', 'article', 'author', 'tags', 'related', 'popular'));
     }
 
     /**
@@ -436,16 +544,24 @@ class ArticleController extends Controller
      */
     public function edit($slug)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Show edit form
+         * --------------------------------------------------------------------------
+         * Populate category into list for build drop down, and try catch old
+         * subcategory input because it depends on category, by default subcategory
+         * should be exist on edit because all article should have it.
+         */
+
         $article = Article::whereSlug($slug)->firstOrFail();
 
         $categories = Category::pluck('category', 'id');
 
         $subcategories = null;
 
-        if(Input::old('category', '') != ''){
+        if (Input::old('category', '') != '') {
             $subcategories = Category::findOrFail(Input::old('category'))->subcategories;
-        }
-        else{
+        } else {
             $subcategories = Subcategory::whereCategoryId($article->subcategory->category->id)->get();
         }
 
@@ -462,11 +578,19 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Validate data
+         * --------------------------------------------------------------------------
+         * Build validation rules, slug must be unique except its own, featured
+         * not required to change or re-upload.
+         */
+
         $article = Article::whereSlug($slug)->firstOrFail();
 
         $rules = [
             'title' => 'required|max:70',
-            'slug' => 'required|alpha_dash|max:100|unique:articles,slug,'.$article->id,
+            'slug' => 'required|alpha_dash|max:100|unique:articles,slug,' . $article->id,
             'type' => 'required|in:standard,gallery,video',
             'category' => 'required',
             'subcategory' => 'required',
@@ -487,13 +611,22 @@ class ArticleController extends Controller
             );
         }
 
-        $tags_id = [];
+        /*
+         * --------------------------------------------------------------------------
+         * Populate tags
+         * --------------------------------------------------------------------------
+         * tags [many-to] -- article_tags -- [many] articles
+         *
+         * This process should be similar with create article, little bit difference
+         * at old tags synchronization, some tags maybe removed from article and new
+         * tags need to insert again.
+         */
 
-        // get all tags which already exist with tags are given
+        // get all tags which ALREADY EXIST by tags are given
         $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
-        // merge tags which exist into tags_id
-        $tags_id = array_merge($tags_id, $tag->pluck('id')->toArray());
+        // collect tags which existed into tags_id and leave for a while
+        $tags_id = $tag->pluck('id')->toArray();
 
         // retrieve tags label which already exist to compare with given array
         $available_tags = $tag->pluck('tag')->toArray();
@@ -501,21 +634,25 @@ class ArticleController extends Controller
         // new tags need to insert into tags table
         $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
 
-        //$tags_id_new = [];
-
-        $article->tags()->sync($tag->pluck('id')->toArray());
+        $article->tags()->sync($tags_id);
 
         foreach ($new_tags as $tag_label):
             $newTag = new Tag();
             $newTag->tag = $tag_label;
             $newTag->save();
-            //array_push($tags_id_new, $newTag->id);
+            // insert new tag immediately after inserted
             if (!$article->tags->contains($newTag->id)) {
                 $article->tags()->save($newTag);
             }
         endforeach;
 
-        //$article->tags()->attach($tags_id_new);
+        /*
+         * --------------------------------------------------------------------------
+         * Update the article
+         * --------------------------------------------------------------------------
+         * Finally populate article data like create process and check if featured
+         * need to change and upload the image then update the changes.
+         */
 
         $article->subcategory_id = $request->input('subcategory');
         $article->title = $request->input('title');
@@ -532,8 +669,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        return redirect()
-            ->route('account.article.index')
+        return redirect(route('account.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was updated');
     }
@@ -546,15 +682,15 @@ class ArticleController extends Controller
      */
     public function draft($id)
     {
-        $article = Article::whereId($id)->whereContributorId(Auth::user()->id)->firstOrFail();
+        $article = Article::whereId($id)->firstOrFail();
 
         $article->status = 'draft';
 
         $article->save();
 
-        return redirect()->route('account.article.index')
+        return redirect(route('account.article.index'))
             ->with('status', 'warning')
-            ->with('message', 'The <strong>'.$article->title.'</strong> set to draft');
+            ->with('message', 'The <strong>' . $article->title . '</strong> set to draft');
     }
 
     /**
@@ -569,13 +705,20 @@ class ArticleController extends Controller
 
         $article->delete();
 
-        $activity = new Activity();
-        $activity->contributor_id = Auth::user()->id;
-        $activity->activity = $activity->deleteArticleActivity(Auth::user()->username, $article->title, $article->slug);
-        $activity->save();
+        /*
+         * --------------------------------------------------------------------------
+         * Create delete article activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert delete article activity.
+         */
 
-        return redirect()->route('account.article.index')
+        Activity::create([
+            'contributor_id' => Auth::user()->id,
+            'activity' => Activity::deleteArticleActivity(Auth::user()->username, $article->title, $article->slug)
+        ]);
+
+        return redirect(route('account.article.index'))
             ->with('status', 'danger')
-            ->with('message', 'The <strong>'.$article->title.'</strong> was deleted');;
+            ->with('message', 'The <strong>' . $article->title . '</strong> was deleted');;
     }
 }

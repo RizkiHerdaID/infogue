@@ -130,4 +130,17 @@ class CategoryController extends Controller
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
         }
     }
+
+    /**
+     * Retrieve subcategory by category id request via AJAX.
+     *
+     * @param $id
+     * @return json
+     */
+    public function subcategories($id)
+    {
+        $category = Category::findOrFail($id);
+
+        return $category->subcategories;
+    }
 }

@@ -257,7 +257,7 @@ class MessageController extends Controller
             }
         }
 
-        return redirect()->route('account.message.list')
+        return redirect(route('account.message.list'))
             ->with('status', 'danger')
             ->with('message', 'Conversation with <strong>' . $request->input('contributor') . '</strong> was deleted');
     }

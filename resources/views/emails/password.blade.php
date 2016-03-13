@@ -6,7 +6,7 @@
 </head>
 <body style="font-family: 'Open Sans', sans-serif; color: #555; margin: 0; padding: 0;">
 
-<div style="display: block; padding: 20px">
+<div style="display: block; padding: 20px; border-top: 3px solid #4dc4d2">
     <div style="margin-bottom: 30px; text-align: center">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
         <h2 style="margin-top: 0; color: #4dc4d2">EMERGENCY ACTION</h2>

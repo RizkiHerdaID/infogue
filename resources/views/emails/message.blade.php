@@ -8,11 +8,10 @@
 </head>
 <body style="font-family: 'Open Sans', sans-serif; color: #555; margin: 0; padding: 20px; background: #f5f5f5;">
 
-<div style="display: block; max-width: 550px; padding: 25px; background: #ffffff; margin: auto;">
+<div style="display: block; max-width: 550px; padding: 25px; background: #ffffff; margin: auto; border-top: 3px solid #4dc4d2">
     <div style="margin-bottom: 30px; display: block">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
     </div>
-
 
     <div style="display: block">
         <h2>Hi, {!! $receiverName !!}</h2>

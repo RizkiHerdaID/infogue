@@ -8,22 +8,34 @@
 </head>
 <body style="font-family: 'Open Sans', sans-serif; color: #555; margin: 0; padding: 20px; background: #f5f5f5;">
 
-<div style="display: block; max-width: 550px; padding: 25px; background: #ffffff; margin: auto;">
+<div style="display: block; max-width: 600px; padding: 25px; background: #ffffff; margin: auto; border-top: 3px solid #4dc4d2">
     <div style="margin-bottom: 30px; display: block">
         <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
     </div>
-
 
     <div style="display: block">
         <h2>Hi, Infogue Reader</h2>
         <p style="font-size: 16px; margin-bottom: 0">You have new article feed</p>
         <p style="margin-top: 0; margin-bottom: 20px">a little information about your new stream</p>
-        <div style="margin-bottom: 20px">
-            newsletter should be here!
+        <div style="margin-bottom: 40px">
+            <?php $count = 1 ?>
+            @foreach($newsletters as $newsletter)
+                <div style="display: block; margin-bottom: 20px">
+                    <img src="{{ asset('images/featured/'.$newsletter->featured) }}" width="80" style="float: left">
+                    <div class="info" style="padding-left: 100px">
+                        <h3 style="margin-bottom: 0"><a href="{{ route('article.show', [$newsletter->slug]) }}" style="color: #4dc4d2; text-decoration: none">{{ $newsletter->title }}</a></h3>
+                        <p style="margin-top: 0; margin-bottom: 5px">{{ $newsletter->subcategory->category->category }}  |  {{ $newsletter->subcategory->subcategory }}</p>
+                        <p>{{ str_limit(strip_tags($newsletter->content), 160) }}</p>
+                    </div>
+                    @if($count++ < (count($newsletters) - 1))
+                    <hr style="margin-top: 20px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">
+                    @endif
+                </div>
+            @endforeach
         </div>
         <div style="margin-bottom: 10px; margin-top: 20px; padding: 8px 15px; background: #f5f5f5;">
             <p style="float: left">Checkout more article</p>
-            <a href="{{ route('index') }}" style="float: right; padding: 10px 15px; font-size: 14px; background: #4dc4d2; text-decoration: none; color: #ffffff; margin: 2px; display: inline-block; vertical-align: middle; font-weight: 600;">SEE MY ARTICLE</a>
+            <a href="{{ route('index') }}" style="float: right; padding: 10px 15px; font-size: 14px; background: #4dc4d2; text-decoration: none; color: #ffffff; margin: 2px; display: inline-block; vertical-align: middle; font-weight: 600;">SEE ALL ARTICLE</a>
             <div style="clear: both"></div>
         </div>
         <div style="text-align: center; font-size: 12px; color: #aaa">

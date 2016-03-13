@@ -121,7 +121,7 @@ Route::group(['middleware' => ['web']], function () {
     }]);
 
     // Subscription routes...
-    Route::get('subscribe/broadcast', ['as' => 'subscribe.broadcast', 'uses' => 'SubscriberController@broadcast']);
+    Route::get('subscribe/broadcast/{period?}', ['as' => 'subscribe.broadcast', 'uses' => 'SubscriberController@broadcast']);
     Route::post('subscribe', ['as' => 'subscribe.register', 'uses' => 'SubscriberController@store']);
     Route::get('subscribe/{email}', ['as' => 'subscribe.complete', 'uses' => 'SubscriberController@subscribed']);
     Route::get('unsubscribe/{email}', ['as' => 'subscribe.stop', 'uses' => 'SubscriberController@unsubscribe']);

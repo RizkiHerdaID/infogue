@@ -20,6 +20,23 @@ class SubscriberController extends Controller
     */
 
     /**
+     * Instance variable of Subscriber.
+     *
+     * @var Subscriber
+     */
+    private $subscriber;
+
+    /**
+     * Create a new subscriber controller instance.
+     *
+     * @param Subscriber $subscriber
+     */
+    public function __construct(Subscriber $subscriber)
+    {
+        $this->subscriber = $subscriber;
+    }
+
+    /**
      * Store a newly subscriber in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -27,9 +44,17 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Registering email as subscriber
+         * --------------------------------------------------------------------------
+         * Find out if email has been registered before, if didn't create new one,
+         * otherwise just redirect to view subscribe complete.
+         */
+
         $email = $request->input('email');
 
-        $isSubscriber = Subscriber::whereEmail($email)->count();
+        $isSubscriber = $this->subscriber->whereEmail($email)->count();
 
         if (!$isSubscriber) {
             Subscriber::create(['email' => $email]);
@@ -46,7 +71,14 @@ class SubscriberController extends Controller
      */
     public function subscribed($email)
     {
-        $isSubscriber = Subscriber::whereEmail($email)->count();
+        /*
+         * --------------------------------------------------------------------------
+         * Check subscriber status
+         * --------------------------------------------------------------------------
+         * Find out if email address is subscriber or throw it on error 404.
+         */
+
+        $isSubscriber = $this->subscriber->whereEmail($email)->count();
 
         if ($email == null || !$isSubscriber) {
             abort(404);
@@ -63,7 +95,15 @@ class SubscriberController extends Controller
      */
     public function unsubscribe($email)
     {
-        $isSubscriber = Subscriber::whereEmail($email);
+        /*
+         * --------------------------------------------------------------------------
+         * Stop become subscriber
+         * --------------------------------------------------------------------------
+         * Check if email has been a subscriber, delete if so, throw it on error 404
+         * if doesn't.
+         */
+
+        $isSubscriber = $this->subscriber->whereEmail($email);
 
         if ($email == null || !$isSubscriber->count()) {
             abort(404);
@@ -77,26 +117,45 @@ class SubscriberController extends Controller
     /**
      * Broadcast / send newsletter to all subscriber.
      *
+     * @param string $period
      * @return string
      */
-    public function broadcast()
+    public function broadcast($period = 'daily')
     {
-        $subscribers = Subscriber::all('email');
+        /*
+         * --------------------------------------------------------------------------
+         * Sending newsletter
+         * --------------------------------------------------------------------------
+         * Collect the most viewed article on last period (daily, weekly, or monthly)
+         * make sure they exist at least 1 record then chucking subscriber per 50
+         * records and send them all the newsletter.
+         */
 
-        foreach ($subscribers as $subscriber):
+        $newsletters = $this->subscriber->newsletter($period);
 
-            Mail::send('emails.newsletter', $subscriber->toArray(), function ($message) use ($subscriber) {
+        if ($newsletters->count()) {
 
-                $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+            Subscriber::chunk(50, function ($subscribers) use ($newsletters, $period) {
+                foreach ($subscribers as $subscriber) {
+                    $data = [
+                        'email' => $subscriber->email,
+                        'newsletters' => $newsletters,
+                    ];
+                    Mail::send('emails.newsletter', $data, function ($message) use ($subscriber, $period) {
 
-                $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-                $message->to($subscriber->email)->subject('Weekly infogue.id newsletter');
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
+                        $message->to($subscriber->email)->subject(ucfirst($period) . ' infogue.id newsletter');
+
+                    });
+                }
             });
 
-        endforeach;
-
-        return 'Subscribers has been received newsletter';
+            return 'Newsletter: Subscribers has been received the newsletter on ' . $period . ' period';
+        } else {
+            return 'Newsletter: There is no new article on ' . $period . ' period';
+        }
     }
 }

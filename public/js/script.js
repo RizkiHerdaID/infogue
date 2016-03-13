@@ -1741,4 +1741,13 @@ $(function () {
         }
     });
 
+    $('#form-newsletter').validate({
+        errorClass: 'help-block mts text-left',
+        messages: {
+            email: {
+                required: "Email is required",
+            }
+        }
+    });
+
 });

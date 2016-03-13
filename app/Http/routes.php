@@ -119,7 +119,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('contact', ['as' => 'page.contact', 'uses' => function () {
         return view('pages.contact');
     }]);
-    Route::resource('subscribe', 'SubscriberController', ['only' => ['store']]);
+
+    // Subscription routes...
+    Route::get('subscribe/broadcast', ['as' => 'subscribe.broadcast', 'uses' => 'SubscriberController@broadcast']);
+    Route::post('subscribe', ['as' => 'subscribe.register', 'uses' => 'SubscriberController@store']);
+    Route::get('subscribe/{email}', ['as' => 'subscribe.complete', 'uses' => 'SubscriberController@subscribed']);
+    Route::get('unsubscribe/{email}', ['as' => 'subscribe.stop', 'uses' => 'SubscriberController@unsubscribe']);
 
     // Group of contributor view profile routes...
     Route::group(['as' => 'contributor.', 'prefix' => 'contributor/{username}'], function () {

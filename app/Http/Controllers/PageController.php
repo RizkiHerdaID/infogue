@@ -10,6 +10,16 @@ use Infogue\Http\Requests;
 
 class PageController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Page Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling main page and search
+    | functionality.
+    |
+    */
+
     /**
      * Display a listing of the index resource.
      *

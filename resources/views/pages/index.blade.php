@@ -557,7 +557,7 @@
                     <h3>ENTER YOUR EMAIL AND GET</h3>
                     <h1>NEWSLETTER</h1>
                     <P>Subscribe to our Newsletter and receive knowledge everyday</P>
-                    <form action="{{ route('subscribe.store') }}" method="post">
+                    <form action="{{ route('subscribe.register') }}" method="post" id="form-newsletter">
                         {!! csrf_field() !!}
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary subscribe"><i class="fa fa-envelope-o visible-xs"></i><span class="hidden-xs">SUBSCRIBE</span></button>

@@ -495,7 +495,7 @@ class Article extends Model
 
     /**
      * Find out if there is next or previous article from current article id.
-     * 
+     *
      * @param $id
      * @param $direction
      * @param int $total

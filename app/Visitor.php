@@ -8,21 +8,34 @@ use Illuminate\Support\Facades\Request;
 
 class Visitor extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['date', 'hit', 'unique'];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
     protected static function boot()
     {
         parent::boot();
 
-        static::addGlobalScope('latest', function(Builder $builder) {
+        static::addGlobalScope('latest', function (Builder $builder) {
             $builder->orderBy('visitors.created_at', 'desc');
         });
     }
 
+    /**
+     * Check visitor is revisit or unique new.
+     */
     public function checkVisitor()
     {
         if (isset($_COOKIE["infogue-visitor"]) && $_COOKIE["infogue-visitor"] == Request::ip()) {
-            if(Request::segment(1) == null){
+            if (Request::segment(1) == null) {
                 $this->hit();
             }
         } else {
@@ -30,6 +43,9 @@ class Visitor extends Model
         }
     }
 
+    /**
+     * Perform hit visitor.
+     */
     public function hit()
     {
         $current_date = date("Y-m-d");
@@ -48,6 +64,9 @@ class Visitor extends Model
         }
     }
 
+    /**
+     * Perform revisit or unique visitor.
+     */
     public function revisit()
     {
         $cookie_visitor = "infogue-visitor";

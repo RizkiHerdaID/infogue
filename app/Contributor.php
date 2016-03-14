@@ -3,74 +3,158 @@
 namespace Infogue;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Contributor extends Authenticatable
 {
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
     protected $hidden = ['password', 'deleted_at', 'remember_token'];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
     protected static function boot()
     {
         parent::boot();
 
-        static::addGlobalScope('latest', function(Builder $builder) {
+        static::addGlobalScope('latest', function (Builder $builder) {
             $builder->orderBy('contributors.created_at', 'desc');
         });
     }
 
+    /**
+     * Additional query scope, select activated contributor only.
+     *
+     * @param $query
+     * @return mixed
+     */
     public function scopeActivated($query)
     {
         return $query->where('contributors.status', 'activated');
     }
 
+    /**
+     * One-to-many relationship, retrieve activities by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function activities()
     {
         return $this->hasMany('Infogue\Activity');
     }
 
+    /**
+     * One-to-many relationship, retrieve messages by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function messages()
     {
         return $this->hasMany('Infogue\Message', 'from');
     }
 
+    /**
+     * One-to-many relationship, retrieve articles by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function articles()
     {
         return $this->hasMany('Infogue\Article');
     }
 
-    public function retrieveContributor($by, $sort, $query = null){
+    /**
+     * One-to-many relationship, retrieve followers by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function followers()
+    {
+        return $this->hasMany('Infogue\Follower', 'following');
+    }
+
+    /**
+     * One-to-many relationship, retrieve following by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function following()
+    {
+        return $this->hasMany('Infogue\Follower');
+    }
+
+    /**
+     * Retrieve all contributor with filter, use in admin page.
+     *
+     * @param $by
+     * @param $sort
+     * @param null $query
+     * @return mixed
+     */
+    public function retrieveContributor($by, $sort, $query = null)
+    {
         $contributor = $this->select(DB::raw('contributors.*, IFNULL(follower_total, 0) AS follower_total, IFNULL(article_total, 0) AS article_total'))
             ->leftJoin(DB::raw("(SELECT followers.id, following, COUNT(*) AS follower_total FROM followers GROUP BY following) followers"), 'contributors.id', '=', 'followers.following')
             ->leftJoin(DB::raw("(SELECT articles.id, contributor_id, COUNT(*) AS article_total FROM articles GROUP BY contributor_id) articles"), 'contributors.id', '=', 'articles.contributor_id')
             ->groupBy('contributors.id');
 
-        if($query != null && $query != ''){
+        /*
+         * --------------------------------------------------------------------------
+         * Searching
+         * --------------------------------------------------------------------------
+         * Check if query passed as param and is not empty, try guess similarity by
+         * name, email, location.
+         */
+
+        if ($query != null && $query != '') {
             $contributor->where('username', 'like', "%{$query}%")
                 ->orWhere('name', 'like', "%{$query}%")
                 ->orWhere('email', 'like', "%{$query}%")
                 ->orWhere('location', 'like', "%{$query}%");
         }
 
-        if($by == 'date'){
+        /*
+         * --------------------------------------------------------------------------
+         * Sorting the data
+         * --------------------------------------------------------------------------
+         * Just simply data order, sort by date, name, popularity in ascending,
+         * descending or shuffle list.
+         */
+
+        if ($by == 'date') {
             $contributor->orderBy('created_at', $sort);
-        }
-        else if($by == 'name'){
+        } else if ($by == 'name') {
             $contributor->orderBy('name', $sort);
-        }
-        else if($by == 'popularity'){
+        } else if ($by == 'popularity') {
             $contributor->orderBy('follower_total', $sort);
-        }
-        else if($by == 'article'){
+        } else if ($by == 'article') {
             $contributor->orderBy('article_total', $sort);
         }
 
         return $contributor->paginate(10);
     }
 
+    /**
+     * Retrieve article by contributor.
+     *
+     * @param $username
+     * @return mixed
+     */
     public function contributorArticle($username)
     {
         $contributor = $this->whereUsername($username)->first();
@@ -87,11 +171,12 @@ class Contributor extends Authenticatable
         return $article->preArticleModifier($articles);
     }
 
-    public function followers()
-    {
-        return $this->hasMany('Infogue\Follower', 'following');
-    }
-
+    /**
+     * Retrieve follower by contributor and check if the are users have followed.
+     *
+     * @param $username
+     * @return mixed
+     */
     public function contributorFollower($username)
     {
         $contributor = $this->whereUsername($username)->first();
@@ -105,11 +190,12 @@ class Contributor extends Authenticatable
         return $this->preContributorModifier($contributors);
     }
 
-    public function following()
-    {
-        return $this->hasMany('Infogue\Follower');
-    }
-
+    /**
+     * Retrieve following by contributor and check if the are users have followed.
+     *
+     * @param $username
+     * @return mixed
+     */
     public function contributorFollowing($username)
     {
         $contributor = $this->whereUsername($username)->first();
@@ -123,18 +209,29 @@ class Contributor extends Authenticatable
         return $this->preContributorModifier($contributors);
     }
 
+    /**
+     * Retrieve contributor profile.
+     *
+     * @param $username
+     * @param bool|false $activated
+     * @return mixed
+     */
     public function profile($username, $activated = false)
     {
-        if($activated){
+        if ($activated) {
             $profile = $this->relatedFollowers()->activated()->whereUsername($username)->firstOrFail();
-        }
-        else{
+        } else {
             $profile = $this->relatedFollowers()->whereUsername($username)->firstOrFail();
         }
 
         return $this->preContributorModifier([$profile])[0];
     }
 
+    /**
+     * Check if authenticate user has follow another contributor in list of selection.
+     *
+     * @return mixed
+     */
     public function relatedFollowers()
     {
         $id = 0;
@@ -147,6 +244,12 @@ class Contributor extends Authenticatable
             ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$id}) followings"), 'contributors.id', '=', 'followings.following');
     }
 
+    /**
+     * Retrieve stream by contributor.
+     *
+     * @param $username
+     * @return mixed
+     */
     public function stream($username)
     {
         $contributor = $this->whereUsername($username)->first();
@@ -162,6 +265,12 @@ class Contributor extends Authenticatable
         return $article->preArticleModifier($articles);
     }
 
+    /**
+     * Modifying contributor data for javascript template.
+     *
+     * @param $contributors
+     * @return mixed
+     */
     public function preContributorModifier($contributors)
     {
         foreach ($contributors as $contributor):
@@ -178,6 +287,13 @@ class Contributor extends Authenticatable
         return $contributors;
     }
 
+    /**
+     * Search contributor by query, use in public page.
+     *
+     * @param $query
+     * @param int $take
+     * @return mixed
+     */
     public function search($query, $take = 10)
     {
         $result = $this->relatedFollowers()->activated()

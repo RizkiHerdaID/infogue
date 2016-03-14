@@ -48,7 +48,7 @@ class Article extends Model
     }
 
     /**
-     * additional query scope, select published article only.
+     * Additional query scope, select published article only.
      *
      * @param $query
      * @return mixed

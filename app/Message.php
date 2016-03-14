@@ -78,7 +78,7 @@ class Message extends Model
 
     /**
      * Modifying the message data for javascript template.
-     * 
+     *
      * @param $messages
      * @return mixed
      */

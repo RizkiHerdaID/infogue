@@ -5,9 +5,11 @@ namespace Infogue\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Article;
 use Infogue\Category;
+use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CreateArticleRequest;
@@ -274,6 +276,9 @@ class ArticleController extends Controller
         $result = $article->save();
 
         if($result){
+            if($type == 'status' && $label == 'published'){
+                $this->sendEmailNotification($article);
+            }
             return redirect()
                 ->route('admin.article.index')
                 ->with('status', ($label=='reject' || $label=='general') ? 'warning' : 'success')
@@ -285,6 +290,46 @@ class ArticleController extends Controller
                 ->with('status', 'danger')
                 ->with('message', 'The <strong>'.$article->title.'</strong> fail mark '.$type.' as <strong>'.$label.'</strong>');
         }
+    }
+
+    /**
+     * Send email notification to followers that contributor create new article.
+     *
+     * @param $article
+     */
+    public function sendEmailNotification($article)
+    {
+        $contributor = $article->contributor;
+
+        $followers = $contributor->followers;
+
+        foreach ($followers as $follower):
+            $follower = $follower->contributor;
+            if ($follower->email_feed) {
+                $data = [
+                    'receiverName' => $follower->name,
+                    'receiverUsername' => $follower->username,
+                    'contributorName' => $contributor->name,
+                    'contributorLocation' => $contributor->location,
+                    'contributorUsername' => $contributor->username,
+                    'contributorAvatar' => $contributor->avatar,
+                    'contributorArticle' => $contributor->articles()->count(),
+                    'contributorFollower' => $contributor->followers()->count(),
+                    'contributorFollowing' => $contributor->following()->count(),
+                    'article' => $article,
+                ];
+
+                Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
+
+                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->to($follower->email)->subject($contributor->name . ' create new article');
+
+                });
+            }
+        endforeach;
     }
 
     /**

@@ -129,7 +129,7 @@ class PasswordController extends Controller
 
         /*
          * --------------------------------------------------------------------------
-         * Create register activity
+         * Create reset password activity
          * --------------------------------------------------------------------------
          * Create new instance of Activity and insert reset password activity.
          */

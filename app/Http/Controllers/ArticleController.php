@@ -371,52 +371,21 @@ class ArticleController extends Controller
 
         Article::find($article->id)->tags()->attach($tags_id);
 
-        $this->sendEmailNotification(Auth::user()->id, $article);
+        /*
+         * --------------------------------------------------------------------------
+         * Create article activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert create article activity.
+         */
+
+        Activity::create([
+            'contributor_id' => Auth::user()->id,
+            'activity' => Activity::createArticleActivity(Auth::user()->username, $article->title, $article->slug)
+        ]);
 
         return redirect(route('account.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was created');
-    }
-
-    /**
-     * Send email notification to followers that contributor create new article.
-     *
-     * @param $contributor_id
-     * @param $article
-     */
-    public function sendEmailNotification($contributor_id, $article)
-    {
-        $contributor = Contributor::findOrFail($contributor_id);
-
-        $followers = $contributor->followers;
-
-        foreach ($followers as $follower):
-            $follower = $follower->contributor;
-            if ($follower->email_feed) {
-                $data = [
-                    'receiverName' => $follower->name,
-                    'receiverUsername' => $follower->username,
-                    'contributorName' => $contributor->name,
-                    'contributorLocation' => $contributor->location,
-                    'contributorUsername' => $contributor->username,
-                    'contributorAvatar' => $contributor->avatar,
-                    'contributorArticle' => $contributor->articles()->count(),
-                    'contributorFollower' => $contributor->followers()->count(),
-                    'contributorFollowing' => $contributor->following()->count(),
-                    'article' => $article,
-                ];
-
-                Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
-
-                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
-
-                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
-
-                    $message->to($follower->email)->subject($contributor->name . ' create new article');
-
-                });
-            }
-        endforeach;
     }
 
     /**
@@ -669,6 +638,18 @@ class ArticleController extends Controller
 
         $article->save();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Update article activity
+         * --------------------------------------------------------------------------
+         * Create new instance of Activity and insert update article activity.
+         */
+
+        Activity::create([
+            'contributor_id' => Auth::user()->id,
+            'activity' => Activity::updateArticleActivity(Auth::user()->username, $article->title, $article->slug)
+        ]);
+
         return redirect(route('account.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was updated');
@@ -707,7 +688,7 @@ class ArticleController extends Controller
 
         /*
          * --------------------------------------------------------------------------
-         * Create delete article activity
+         * Delete article activity
          * --------------------------------------------------------------------------
          * Create new instance of Activity and insert delete article activity.
          */

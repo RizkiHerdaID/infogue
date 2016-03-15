@@ -139,7 +139,7 @@ class CategoryController extends Controller
      */
     public function subcategories($id)
     {
-        $category = Category::findOrFail($id);
+        $category = $this->category->findOrFail($id);
 
         return $category->subcategories;
     }

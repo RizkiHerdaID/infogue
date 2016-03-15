@@ -17,11 +17,20 @@ use Infogue\Message;
 use Infogue\Setting;
 use Infogue\Subcategory;
 use Infogue\Uploader;
-use Infogue\User;
 use Infogue\Visitor;
 
 class AdministratorController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling dashboard data, update web
+    | setting and static page like about.
+    |
+    */
+
     /**
      * Display a administrator dashboard.
      *
@@ -175,9 +184,10 @@ class AdministratorController extends Controller
             }
         });
 
-        return redirect(route('admin.setting'))
-            ->with('status', 'success')
-            ->with('message', 'Setting has been updated');;
+        return redirect(route('admin.setting'))->with([
+            'status' => 'success',
+            'message' => 'Setting has been updated',
+        ]);
     }
 
     /**

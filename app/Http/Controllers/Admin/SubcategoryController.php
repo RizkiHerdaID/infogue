@@ -11,8 +11,28 @@ use Infogue\Subcategory;
 
 class SubcategoryController extends Controller
 {
+    /*
+     |--------------------------------------------------------------------------
+     | Subcategory Controller
+     |--------------------------------------------------------------------------
+     |
+     | This controller is responsible for handling subcategory management
+     | including creating, editing, and deleting data.
+     |
+     */
+
+    /**
+     * Instance variable of Subcategory.
+     *
+     * @var Category
+     */
     private $subcategory;
 
+    /**
+     * Create a new subcategory controller instance.
+     *
+     * @param Subcategory $subcategory
+     */
     public function __construct(Subcategory $subcategory)
     {
         $this->subcategory = $subcategory;
@@ -31,9 +51,10 @@ class SubcategoryController extends Controller
         $subcategory->fill($request->all());
 
         if($subcategory->save()){
-            return redirect()->route('admin.category.index')
-                ->with('status','success')
-                ->with('message', 'Subategory <strong>'.$subcategory->subcategory.'</strong> was created');;
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'success',
+                'message' => 'Subategory <strong>'.$subcategory->subcategory.'</strong> was created',
+            ]);
         }
 
         return redirect()->back()->withErrors();
@@ -53,9 +74,10 @@ class SubcategoryController extends Controller
         $subcategory->fill($request->all());
 
         if($subcategory->save()){
-            return redirect()->route('admin.category.index')
-                ->with('status','success')
-                ->with('message', 'Subcategory <strong>'.$subcategory->subcategory.'</strong> was updated');;
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'success',
+                'message' => 'Subategory <strong>'.$subcategory->subcategory.'</strong> was updated',
+            ]);
         }
 
         return redirect()->back()->withErrors();
@@ -70,6 +92,15 @@ class SubcategoryController extends Controller
      */
     public function destroy(Request $request, $id = null)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Delete subcategory
+         * --------------------------------------------------------------------------
+         * Check if selected variable is not empty so user intends to select multiple
+         * rows at once, and prepare the feedback message according the type of
+         * deletion action.
+         */
+
         if(!empty(trim($request->input('selected_sub')))){
             $subcategory_ids = explode(',', $request->input('selected_sub'));
 
@@ -89,7 +120,7 @@ class SubcategoryController extends Controller
 
         $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
 
-        return redirect()->route('admin.category.index')
+        return redirect(route('admin.category.index'))
             ->with('status', $status)
             ->with('message', $message);
     }

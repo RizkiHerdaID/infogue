@@ -10,6 +10,17 @@ use Infogue\Http\Requests;
 
 class FeedbackController extends Controller
 {
+    /*
+     |--------------------------------------------------------------------------
+     | Feedback Controller
+     |--------------------------------------------------------------------------
+     |
+     | This controller is responsible for handling feedback management including
+     | read feedback, marking as important, achieving them and reply the
+     | message to their email.
+     |
+     */
+
     /**
      * Display a listing of the feedback.
      *
@@ -17,10 +28,18 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        $filter_data = Input::has('data') ? Input::get('data') : 'all';
-        $filter_by = Input::has('by') ? Input::get('by') : 'date';
-        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
-        $query = Input::has('query') ? Input::get('query') : null;
+        /*
+         * --------------------------------------------------------------------------
+         * Filtering feedback
+         * --------------------------------------------------------------------------
+         * Populate optional filter on url break down in data, sorting by, sorting
+         * method, and search query, then retrieve the feedback.
+         */
+
+        $filter_data    = Input::has('data') ? Input::get('data') : 'all';
+        $filter_by      = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort    = Input::has('sort') ? Input::get('sort') : 'desc';
+        $query          = Input::has('query') ? Input::get('query') : null;
 
         $feedback = new Feedback();
 
@@ -37,23 +56,22 @@ class FeedbackController extends Controller
      */
     public function reply(Request $request)
     {
-        $id = $request->input('id');
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $message = $request->input('message');
-        $reply = $request->input('reply');
+        $id         = $request->input('id');
+        $name       = $request->input('name');
+        $email      = $request->input('email');
+        $message    = $request->input('message');
+        $reply      = $request->input('reply');
 
         $feedback = new Feedback();
 
         $result = $feedback->reply($id, $name, $email, $message, $reply);
 
-        if($result){
-            return redirect()
-                ->route('admin.feedback.index')
-                ->with('status', 'success')
-                ->with('message', 'Reply of feedback <strong>#'.$id.'</strong> has been sent to <strong>'.$email.'</strong>');
-        }
-        else {
+        if ($result) {
+            return redirect(route('admin.feedback.index'))->with([
+                'status' => 'success',
+                'message' => 'Reply of feedback <strong>#' . $id . '</strong> has been sent to <strong>' . $email . '</strong>'
+            ]);
+        } else {
             return redirect()->back()->withErrors();
         }
     }
@@ -73,17 +91,14 @@ class FeedbackController extends Controller
 
         $result = $feedback->save();
 
-        if($result){
+        if ($result) {
             return redirect()
-                ->route('admin.feedback.index')
-                ->with('status', $label=='important'? 'warning' : 'success')
-                ->with('message', 'Feedback from <strong>'.$feedback->name.'</strong> marked as <strong>'.$label.'</strong>');
-        }
-        else {
-            return redirect()
-                ->back()->withErrors()
-                ->with('status', 'danger')
-                ->with('message', 'Feedback from <strong>'.$feedback->name.'</strong> fail mark as <strong>'.$label.'</strong>');
+                ->route('admin.feedback.index')->with([
+                    'status' => $label == 'important' ? 'warning' : 'success',
+                    'message' => 'Feedback from <strong>' . $feedback->name . '</strong> marked as <strong>' . $label . '</strong>',
+                ]);
+        } else {
+            return redirect()->back()->withErrors();
         }
     }
 
@@ -96,13 +111,22 @@ class FeedbackController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        if(!empty(trim($request->input('selected')))){
+        /*
+         * --------------------------------------------------------------------------
+         * Delete feedback
+         * --------------------------------------------------------------------------
+         * Check if selected variable is not empty so user intends to select multiple
+         * rows at once, and prepare the feedback message according the type of
+         * deletion action.
+         */
+
+        if (!empty(trim($request->input('selected')))) {
             $feedback_ids = explode(',', $request->input('selected'));
+
             $delete = Feedback::whereIn('id', $feedback_ids)->delete();
 
-            $name = count($feedback_ids).' Feedbacks';
-        }
-        else{
+            $name = count($feedback_ids) . ' Feedbacks';
+        } else {
             $feedback = Feedback::findOrFail($id);
 
             $name = $feedback->name;
@@ -112,10 +136,11 @@ class FeedbackController extends Controller
 
         $status = $delete ? 'warning' : 'danger';
 
-        $message = $delete ? '<strong>'.$name.'\'s</strong> feedback was deleted' : 'Something is getting wrong';
+        $message = $delete ? '<strong>' . $name . '\'s</strong> feedback was deleted' : 'Something is getting wrong';
 
-        return redirect()->route('admin.feedback.index')
-            ->with('status', $status)
-            ->with('message', $message);
+        return redirect(route('admin.feedback.index'))->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
     }
 }

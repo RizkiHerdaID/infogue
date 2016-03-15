@@ -12,8 +12,29 @@ use Infogue\Subcategory;
 
 class CategoryController extends Controller
 {
+    /*
+     |--------------------------------------------------------------------------
+     | Category Controller
+     |--------------------------------------------------------------------------
+     |
+     | This controller is responsible for handling article showing grouped by
+     | category and sub category, the categories are given by slug from category
+     | title and the article list is result of guessing reverse form of slug.
+     |
+     */
+
+    /**
+     * Instance variable of Category.
+     *
+     * @var Category
+     */
     private $category;
 
+    /**
+     * Create a new category controller instance.
+     *
+     * @param Category $category
+     */
     public function __construct(Category $category)
     {
         $this->category = $category;
@@ -37,6 +58,19 @@ class CategoryController extends Controller
     }
 
     /**
+     * Retrieve subcategory by category id request via AJAX.
+     *
+     * @param $id
+     * @return json
+     */
+    public function subcategories($id)
+    {
+        $category = $this->category->findOrFail($id);
+
+        return $category->subcategories;
+    }
+
+    /**
      * Store a newly created category in storage.
      *
      * @param Request|CategoryRequest $request
@@ -49,9 +83,10 @@ class CategoryController extends Controller
         $category->fill($request->all());
 
         if($category->save()){
-            return redirect()->route('admin.category.index')
-                ->with('status','success')
-                ->with('message', 'Category <strong>'.$category->category.'</strong> was created');;
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'success',
+                'message' => 'Category <strong>'.$category->category.'</strong> was created'
+            ]);
         }
 
         return redirect()->back()->withErrors();
@@ -71,9 +106,10 @@ class CategoryController extends Controller
         $category->fill($request->all());
 
         if($category->save()){
-            return redirect()->route('admin.category.index')
-                ->with('status','success')
-                ->with('message', 'Category <strong>'.$category->category.'</strong> was updated');;
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'success',
+                'message' => 'Category <strong>'.$category->category.'</strong> was updated'
+            ]);
         }
 
         return redirect()->back()->withErrors();
@@ -88,6 +124,15 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $id = null)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Delete category
+         * --------------------------------------------------------------------------
+         * Check if selected variable is not empty so user intends to select multiple
+         * rows at once, and prepare the feedback message according the type of
+         * deletion action.
+         */
+
         if(!empty(trim($request->input('selected')))){
             $category_ids = explode(',', $request->input('selected'));
             $subcategory_ids = [];
@@ -114,8 +159,9 @@ class CategoryController extends Controller
 
         $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
 
-        return redirect()->route('admin.category.index')
-            ->with('status', $status)
-            ->with('message', $message);
+        return redirect(route('admin.category.index'))->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
     }
 }

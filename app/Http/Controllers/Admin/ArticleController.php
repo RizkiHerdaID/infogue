@@ -19,8 +19,28 @@ use Infogue\Uploader;
 
 class ArticleController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Article Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling showing article page including
+    | management, confirm, set article to headline or trending.
+    |
+    */
+
+    /**
+     * Instance variable of Article.
+     *
+     * @var Article
+     */
     private $article;
 
+    /**
+     * Create a new article controller instance.
+     *
+     * @param Article $article
+     */
     public function __construct(Article $article)
     {
         $this->article = $article;
@@ -33,15 +53,21 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Filtering article
+         * --------------------------------------------------------------------------
+         * Populate optional filter on url break down in data, sorting by and sorting
+         * method, retrieve the article.
+         */
+
         $filter_data = Input::has('data') ? Input::get('data') : 'all';
         $filter_status = Input::has('status') ? Input::get('status') : 'all';
         $filter_by = Input::has('by') ? Input::get('by') : 'date';
         $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
         $query = Input::has('query') ? Input::get('query') : null;
 
-        $article = new Article();
-
-        $articles = $article->retrieveArticle($filter_data, $filter_status, $filter_by, $filter_sort, $query);
+        $articles = $this->article->retrieveArticle($filter_data, $filter_status, $filter_by, $filter_sort, $query);
 
         return view('admin.article.index', compact('articles'));
     }
@@ -53,6 +79,14 @@ class ArticleController extends Controller
      */
     public function create()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Show create form
+         * --------------------------------------------------------------------------
+         * Populate category into list for build drop down, and try catch old
+         * subcategory input because it depends on category which accessed via ajax.
+         */
+
         $categories = Category::pluck('category', 'id');
 
         $subcategories = null;
@@ -64,13 +98,11 @@ class ArticleController extends Controller
         return view('admin.article.create', compact('categories', 'subcategories'));
     }
 
-    public function subcategory($id)
-    {
-        $category = Category::findOrFail($id);
-
-        return $category->subcategories;
-    }
-
+    /**
+     * Retrieve available tags request via AJAX for typeahead.
+     *
+     * @return json
+     */
     public function tags()
     {
         $tags = Tag::pluck('tag');
@@ -86,26 +118,54 @@ class ArticleController extends Controller
      */
     public function store(CreateArticleRequest $request)
     {
-        $tags_id = [];
+        /*
+         * --------------------------------------------------------------------------
+         * Populate tags
+         * --------------------------------------------------------------------------
+         * tags [many-to] -- article_tags -- [many] articles
+         *
+         * Sync tags and article, extract tags from request, break down between new
+         * tags and tags that available in database, collect available tags first
+         * then insert new tags and merge new inserted tag id with available tags id
+         * finally store them all into article_tags table.
+         */
 
-        // get all tags which already exist with tags are given
+        // get all tags which ALREADY EXIST by tags are given eg:
+        // request tags         = [angga, ari, entertainment, happy, trend, 2016]
+        // all database tags    = [1 => news, 2 => happy, 3 => angga, 4 => love, 5 => 2016]
+        // tags where in        = [3 => angga, 2 => happy, 5 => 2016]
         $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
-        // merge tags which exist into tags_id
-        $tags_id = array_merge($tags_id, $tag->pluck('id')->toArray());
+        // collect tags which existed into tags_id and leave for a while
+        // $tags_id [3, 2, 5]
+        $tags_id = $tag->pluck('id')->toArray();
 
-        // retrieve tags label which already exist to compare with given array
+        // retrieve tags label (name) which already exist to compare with given array
+        // tags label [angga, happy, 2016]
         $available_tags = $tag->pluck('tag')->toArray();
 
         // new tags need to insert into tags table
+        // $new_tags = [ari, entertainment, trend]
         $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
 
+        // loop through new tags and retrieve last inserted id to merge with tags_id that need to insert later
+        // new tags will have id [6 => ari, 7 => entertainment, 8 => trend]
+        // $tags_id will be [3, 2, 5, 6, 7, 8]
         foreach ($new_tags as $tag_label):
             $newTag = new Tag();
             $newTag->tag = $tag_label;
             $newTag->save();
             array_push($tags_id, $newTag->id);
         endforeach;
+
+        /*
+         * --------------------------------------------------------------------------
+         * Populate article data
+         * --------------------------------------------------------------------------
+         * Retrieve all data from request and populate into article object model
+         * then store it into database, check if featured is available then attempt
+         * to upload to asset directory.
+         */
 
         $article = new Article();
         $article->contributor_id = Auth::guard('admin')->user()->id;
@@ -118,16 +178,24 @@ class ArticleController extends Controller
         $article->status = $request->input('status');
 
         $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
             $article->featured = $request->input('featured');
         }
 
         $article->save();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Sync and Attach
+         * --------------------------------------------------------------------------
+         * We have all tag ids that need to insert on article_tags [3, 2, 5, 6, 7, 8]
+         * use attach method we insert them through article model related by article
+         * id so everything should be working perfectly.
+         */
+
         Article::find($article->id)->tags()->attach($tags_id);
 
-        return redirect()
-            ->route('admin.article.index')
+        return redirect(route('admin.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was created');
     }
@@ -140,6 +208,14 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Populate single article view
+         * --------------------------------------------------------------------------
+         * Find published article by slug so administrator could review to determine
+         * it's deserve to approve or not.
+         */
+
         $article = $this->article->whereSlug($slug)->firstOrFail();
 
         $tags = $article->tags()->get();
@@ -155,6 +231,15 @@ class ArticleController extends Controller
      */
     public function edit($slug)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Show edit form
+         * --------------------------------------------------------------------------
+         * Populate category into list for build drop down, and try catch old
+         * subcategory input because it depends on category, by default subcategory
+         * should be exist on edit because all article should have it.
+         */
+
         $article = Article::whereSlug($slug)->firstOrFail();
 
         $categories = Category::pluck('category', 'id');
@@ -183,6 +268,14 @@ class ArticleController extends Controller
     {
         $article = Article::whereSlug($slug)->firstOrFail();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Validate data
+         * --------------------------------------------------------------------------
+         * Build validation rules, slug must be unique except its own, featured
+         * not required to change or re-upload.
+         */
+
         $rules = [
             'title' => 'required|max:70',
             'slug' => 'required|alpha_dash|max:100|unique:articles,slug,'.$article->id,
@@ -206,11 +299,22 @@ class ArticleController extends Controller
             );
         }
 
-        // get all tags which already exist with tags are given
+        /*
+         * --------------------------------------------------------------------------
+         * Populate tags
+         * --------------------------------------------------------------------------
+         * tags [many-to] -- article_tags -- [many] articles
+         *
+         * This process should be similar with create article, little bit difference
+         * at old tags synchronization, some tags maybe removed from article and new
+         * tags need to insert again.
+         */
+
+        // get all tags which ALREADY EXIST by tags are given
         $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
-        // merge tags which exist into tags_id
-        $tags_id =$tag->pluck('id')->toArray();
+        // collect tags which existed into tags_id and leave for a while
+        $tags_id = $tag->pluck('id')->toArray();
 
         // retrieve tags label which already exist to compare with given array
         $available_tags = $tag->pluck('tag')->toArray();
@@ -239,14 +343,13 @@ class ArticleController extends Controller
         $article->status = $request->input('status');
 
         $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
             $article->featured = $request->input('featured');
         }
 
         $article->save();
 
-        return redirect()
-            ->route('admin.article.index')
+        return redirect(route('admin.article.index'))
             ->with('status', 'success')
             ->with('message', 'The <strong>' . $article->title . '</strong> was updated');
     }
@@ -279,14 +382,13 @@ class ArticleController extends Controller
             if($type == 'status' && $label == 'published'){
                 $this->sendEmailNotification($article);
             }
-            return redirect()
-                ->route('admin.article.index')
+            return redirect(route('admin.article.index'))
                 ->with('status', ($label=='reject' || $label=='general') ? 'warning' : 'success')
                 ->with('message', 'The <strong>'.$article->title.'</strong> set '.$type.' as <strong>'.$label.'</strong>');
         }
         else {
-            return redirect()
-                ->back()->withErrors()
+            return redirect()->back()
+                ->withErrors()
                 ->with('status', 'danger')
                 ->with('message', 'The <strong>'.$article->title.'</strong> fail mark '.$type.' as <strong>'.$label.'</strong>');
         }
@@ -307,16 +409,16 @@ class ArticleController extends Controller
             $follower = $follower->contributor;
             if ($follower->email_feed) {
                 $data = [
-                    'receiverName' => $follower->name,
-                    'receiverUsername' => $follower->username,
-                    'contributorName' => $contributor->name,
-                    'contributorLocation' => $contributor->location,
-                    'contributorUsername' => $contributor->username,
-                    'contributorAvatar' => $contributor->avatar,
-                    'contributorArticle' => $contributor->articles()->count(),
-                    'contributorFollower' => $contributor->followers()->count(),
-                    'contributorFollowing' => $contributor->following()->count(),
-                    'article' => $article,
+                    'receiverName'          => $follower->name,
+                    'receiverUsername'      => $follower->username,
+                    'contributorName'       => $contributor->name,
+                    'contributorLocation'   => $contributor->location,
+                    'contributorUsername'   => $contributor->username,
+                    'contributorAvatar'     => $contributor->avatar,
+                    'contributorArticle'    => $contributor->articles()->count(),
+                    'contributorFollower'   => $contributor->followers()->count(),
+                    'contributorFollowing'  => $contributor->following()->count(),
+                    'article'               => $article,
                 ];
 
                 Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
@@ -341,8 +443,18 @@ class ArticleController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Delete article
+         * --------------------------------------------------------------------------
+         * Check if selected variable is not empty so user intends to select multiple
+         * rows at once, and prepare the feedback message according the type of
+         * deletion action.
+         */
+
         if(!empty(trim($request->input('selected')))){
             $article_ids = explode(',', $request->input('selected'));
+
             $delete = Article::whereIn('id', $article_ids)->delete();
 
             $title = count($article_ids).' Articles';
@@ -359,8 +471,9 @@ class ArticleController extends Controller
 
         $message = $delete ? 'The <strong>'.$title.'</strong> was deleted' : 'Something is getting wrong';
 
-        return redirect()->route('admin.article.index')
-            ->with('status', $status)
-            ->with('message', $message);
+        return redirect(route('admin.article.index'))->with([
+            'status' => $status,
+            'message' => $message,
+        ]);
     }
 }

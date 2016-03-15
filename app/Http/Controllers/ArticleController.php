@@ -5,7 +5,6 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Activity;
 use Infogue\Article;
@@ -60,7 +59,7 @@ class ArticleController extends Controller
          * Filtering article
          * --------------------------------------------------------------------------
          * Populate optional filter on url break down in data, sorting by and sorting
-         * method, retrieve the article via archive method with padding contributor
+         * method, retrieve the article via archive method with passing contributor
          * id to limit selection by their authenticate author.
          */
 
@@ -354,7 +353,7 @@ class ArticleController extends Controller
         $article->status = $request->input('status');
 
         $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
             $article->featured = $request->input('featured');
         }
 
@@ -632,7 +631,7 @@ class ArticleController extends Controller
         $article->status = $request->input('status');
 
         $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
+        if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
             $article->featured = $request->input('featured');
         }
 

@@ -64,22 +64,22 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
 
         // Basic admin routes...
-        Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdministratorController@index']);
-        Route::get('/setting', ['as' => 'admin.setting', 'uses' => 'AdministratorController@setting']);
-        Route::match(['put', 'patch'], '/setting', ['as' => 'admin.setting.update', 'uses' => 'AdministratorController@update']);
-        Route::get('/about', ['as' => 'admin.about', 'uses' => 'AdministratorController@about']);
+        Route::get('dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdministratorController@index']);
+        Route::get('setting', ['as' => 'admin.setting', 'uses' => 'AdministratorController@setting']);
+        Route::match(['put', 'patch'], 'setting', ['as' => 'admin.setting.update', 'uses' => 'AdministratorController@update']);
+        Route::get('about', ['as' => 'admin.about', 'uses' => 'AdministratorController@about']);
 
         // Admin module routes...
         Route::resource('contributor', 'ContributorController', ['except' => ['show', 'create', 'store']]);
-        Route::get('/article/tags', ['as' => 'admin.article.tags', 'uses' => 'ArticleController@tags']);
-        Route::get('/article/subcategory/{id}', ['as' => 'admin.article.subcategory', 'uses' => 'ArticleController@subcategory']);
+        Route::get('article/tags', ['as' => 'admin.article.tags', 'uses' => 'ArticleController@tags']);
+        Route::get('article/subcategory/{id}', ['as' => 'admin.article.subcategory', 'uses' => 'CategoryController@subcategories']);
         Route::match(['put', 'patch'], '/article/mark/{type}/{label}/{id}', ['as' => 'admin.article.mark', 'uses' => 'ArticleController@mark']);
         Route::resource('article', 'ArticleController');
         Route::resource('category', 'CategoryController', ['except' => ['show', 'create', 'edit']]);
         Route::resource('subcategory', 'SubcategoryController', ['only' => ['store', 'update', 'destroy']]);
         Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'destroy']]);
-        Route::post('/feedback/reply', ['as' => 'admin.feedback.reply', 'uses' => 'FeedbackController@reply']);
-        Route::match(['put', 'patch'], '/feedback/mark/{label}/{id}', ['as' => 'admin.feedback.mark', 'uses' => 'FeedbackController@mark']);
+        Route::post('feedback/reply', ['as' => 'admin.feedback.reply', 'uses' => 'FeedbackController@reply']);
+        Route::match(['put', 'patch'], 'feedback/mark/{label}/{id}', ['as' => 'admin.feedback.mark', 'uses' => 'FeedbackController@mark']);
     });
 
     // Index routes...

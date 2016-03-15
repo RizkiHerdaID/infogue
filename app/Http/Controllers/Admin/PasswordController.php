@@ -2,16 +2,14 @@
 
 namespace Infogue\Http\Controllers\Admin;
 
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Infogue\Activity;
-use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 use Infogue\User;
 
 class PasswordController extends Controller
@@ -29,8 +27,18 @@ class PasswordController extends Controller
 
     use ResetsPasswords;
 
+    /**
+     * Where to redirect users after reset.
+     *
+     * @var string
+     */
     protected $redirectTo = '/admin/dashboard';
 
+    /**
+     * Default authentication guard.
+     *
+     * @var string
+     */
     protected $guard = 'admin';
 
     protected $broker = 'admins';
@@ -43,6 +51,11 @@ class PasswordController extends Controller
         $this->middleware('guest:admin');
     }
 
+    /**
+     * Display the form to request a password reset link.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showLinkRequestForm()
     {
         return view('admin.auth.email');
@@ -62,7 +75,7 @@ class PasswordController extends Controller
 
         $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
             $message->subject($this->getEmailSubject());
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
         });
 
         switch ($response) {
@@ -75,15 +88,32 @@ class PasswordController extends Controller
         }
     }
 
+    /**
+     * Display the password reset view for the given token.
+     *
+     * If no token is present, display the link request form.
+     *
+     * @param  string|null  $token
+     * @return \Illuminate\Http\Response
+     */
     public function showResetForm($token = null)
     {
         if (is_null($token)) {
             return $this->getEmail();
         }
 
+        /*
+         * --------------------------------------------------------------------------
+         * Checking password reset request token
+         * --------------------------------------------------------------------------
+         * Check if user has been creating request for changing their password
+         * otherwise throw it 404 error page, then retrieve their profile to make
+         * sure they are going to update the correct account.
+         */
+
         $reset = DB::table('password_resets')->whereToken($token)->first();
 
-        if($reset == null){
+        if ($reset == null) {
             abort(404);
         }
 
@@ -92,20 +122,38 @@ class PasswordController extends Controller
         return view('admin.auth.reset')->with(compact('token', 'user'));
     }
 
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
     protected function resetPassword($user, $password)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Update password
+         * --------------------------------------------------------------------------
+         * Hash new password and update database related the user.
+         */
+
         $user->password = bcrypt($password);
 
         $user->save();
 
+        /*
+         * --------------------------------------------------------------------------
+         * Send email notification
+         * --------------------------------------------------------------------------
+         * Make sure user is noticed by email information that they recently change
+         * their password.
+         */
+
         Mail::send('emails.admin.reset', ['name' => $user->name], function ($message) use ($user) {
-
-            $message->from('no-reply@infogue.id', 'Infogue.id');
-
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
-
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
             $message->to($user->email)->subject('Password has been reset');
-
         });
 
         Auth::guard($this->getGuard())->login($user);

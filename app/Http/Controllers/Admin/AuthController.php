@@ -32,10 +32,25 @@ class AuthController extends Controller
      */
     protected $redirectTo = '/admin/dashboard';
 
+    /**
+     * Where to redirect users after logout.
+     *
+     * @var string
+     */
     protected $redirectAfterLogout = '/';
 
+    /**
+     * Default username field for login.
+     *
+     * @var string
+     */
     protected $username = 'email';
 
+    /**
+     * Default authentication guard.
+     *
+     * @var string
+     */
     protected $guard = 'admin';
 
     /**
@@ -46,14 +61,33 @@ class AuthController extends Controller
         $this->middleware('guest:admin', ['except' => 'logout']);
     }
 
+    /**
+     * Show the admin login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function showLoginForm()
     {
         return view('admin.auth.login');
     }
 
+    /**
+     * Handle admin login request to the application.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request)
     {
         $this->validateLogin($request);
+
+        /*
+         * --------------------------------------------------------------------------
+         * Protect login functionality just in case brute force attempting
+         * --------------------------------------------------------------------------
+         * Count user login attempting and lockout the login response if user
+         * fail to login 7 times just in case hacking or bot effort.
+         */
 
         $throttles = $this->isUsingThrottlesLoginsTrait();
 
@@ -63,17 +97,24 @@ class AuthController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
+        /*
+         * --------------------------------------------------------------------------
+         * Authenticate the user
+         * --------------------------------------------------------------------------
+         * Take the default guard (admin) if credential is valid and redirect to
+         * intended page, by default it will be directed to dashboard.
+         */
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
 
-        if ($throttles && ! $lockedOut) {
+        if ($throttles && !$lockedOut) {
             $this->incrementLoginAttempts($request);
         }
 
         return $this->sendFailedLoginResponse($request);
     }
-
 }

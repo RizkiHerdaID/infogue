@@ -22,15 +22,6 @@ use Infogue\Visitor;
 
 class AdministratorController extends Controller
 {
-    private $user;
-    private $setting;
-
-    public function __construct(User $user, Setting $setting)
-    {
-        $this->user = $user;
-        $this->setting = $setting;
-    }
-
     /**
      * Display a administrator dashboard.
      *
@@ -41,12 +32,12 @@ class AdministratorController extends Controller
         $activities = Activity::with('contributor')->paginate(8);
 
         $statistics = [
-            'ARTICLES' => Article::count(),
-            'MEMBERS' => Contributor::count(),
-            'CATEGORIES' => Subcategory::count(),
-            'MESSAGES' => Message::count(),
-            'FEEDBACK' => Feedback::count(),
-            'VISITORS' => (int) Visitor::sum('unique')
+            'ARTICLES'      => Article::count(),
+            'MEMBERS'       => Contributor::count(),
+            'CATEGORIES'    => Subcategory::count(),
+            'MESSAGES'      => Message::count(),
+            'FEEDBACK'      => Feedback::count(),
+            'VISITORS'      => (int) Visitor::sum('unique')
         ];
 
         $visitors = Visitor::take(10)->get();
@@ -72,55 +63,64 @@ class AdministratorController extends Controller
      */
     public function update(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Validating data
+         * --------------------------------------------------------------------------
+         * Define rules before populating data, check if checkbox is unchecked then
+         * gives default value 0, regex rule for checking coordinate, and merge
+         * error message for notification.
+         */
+
         $rules = [
-            'website' => 'required|max:50',
-            'keywords' => 'required|max:300',
-            'status' => 'required|in:online,maintenance',
-            'address' => 'required|max:100',
-            'contact' => 'required|max:50',
-            'email' => 'required|email|max:30',
-            'description' => 'required|max:160',
-            'owner' => 'required|max:30',
-            'latitude' => 'required|regex:/^[+-]?\d+\.\d+$/',
-            'longitude' => 'required|regex:/^[+-]?\d+\.\d+$/',
-            'facebook' => 'required|url',
-            'twitter' => 'required|url',
-            'googleplus' => 'required|url',
-            'favicon' => 'mimes:jpg,jpeg,gif,png,ico|max:500',
-            'background' => 'mimes:jpg,jpeg,gif,png|max:1000',
-            'article' => 'boolean',
-            'feedback' => 'boolean',
-            'member' => 'boolean',
-            'approve' => 'boolean',
-            'name' => 'required|max:50',
-            'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
-            'password' => 'required|check_password:admin',
-            'new_password' => 'confirmed|min:6'
+            'website'       => 'required|max:50',
+            'keywords'      => 'required|max:300',
+            'status'        => 'required|in:online,maintenance',
+            'address'       => 'required|max:100',
+            'contact'       => 'required|max:50',
+            'email'         => 'required|email|max:30',
+            'description'   => 'required|max:160',
+            'owner'         => 'required|max:30',
+            'latitude'      => 'required|regex:/^[+-]?\d+\.\d+$/',
+            'longitude'     => 'required|regex:/^[+-]?\d+\.\d+$/',
+            'facebook'      => 'required|url',
+            'twitter'       => 'required|url',
+            'googleplus'    => 'required|url',
+            'favicon'       => 'mimes:jpg,jpeg,gif,png,ico|max:500',
+            'background'    => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'article'       => 'boolean',
+            'feedback'      => 'boolean',
+            'member'        => 'boolean',
+            'approve'       => 'boolean',
+            'name'          => 'required|max:50',
+            'avatar'        => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'password'      => 'required|check_password:admin',
+            'new_password'  => 'confirmed|min:6'
         ];
 
-        $validator = Validator::make($request->all(), $rules);
-
-        if(!$request->has('article')){
+        if (!$request->has('article')) {
             $request->merge(['article' => 0]);
         }
-        if(!$request->has('feedback')){
+        if (!$request->has('feedback')) {
             $request->merge(['feedback' => 0]);
         }
-        if(!$request->has('member')){
+        if (!$request->has('member')) {
             $request->merge(['member' => 0]);
         }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $failedRules = $validator->failed();
 
-            if(isset($failedRules['latitude']['Required']) || isset($failedRules['longitude']['Required'])) {
+            if (isset($failedRules['latitude']['Required']) || isset($failedRules['longitude']['Required'])) {
                 $validator->errors()->add('location', 'Location is required');
             }
-            if(isset($failedRules['latitude']['Regex']) || isset($failedRules['longitude']['Regex'])) {
+            if (isset($failedRules['latitude']['Regex']) || isset($failedRules['longitude']['Regex'])) {
                 $validator->errors()->add('location', 'Invalid GPS coordinate');
             }
 
-            if(isset($failedRules['article']['Boolean']) || isset($failedRules['feedback']['Boolean']) || isset($failedRules['member']['Boolean'])) {
+            if (isset($failedRules['article']['Boolean']) || isset($failedRules['feedback']['Boolean']) || isset($failedRules['member']['Boolean'])) {
                 $validator->errors()->add('notification', 'Notification should be has yes or no value');
             }
 
@@ -129,7 +129,7 @@ class AdministratorController extends Controller
             );
         }
 
-        DB::transaction(function () use($request) {
+        DB::transaction(function () use ($request) {
             try {
                 Setting::where('key', 'Website Name')->update(['value' => $request->input('website')]);
                 Setting::where('key', 'Keywords')->update(['value' => $request->input('keywords')]);
@@ -158,25 +158,24 @@ class AdministratorController extends Controller
                     Setting::where('key', 'Background')->update(['value' => $request->input('background')]);
                 }
 
-                $user = User::findOrFail(Auth::guard('admin')->user()->id);
+                $user = Auth::guard('admin')->user();
                 $user->name = $request->input('name');
                 if ($request->has('new_password') && !empty($request->get('new_password'))) {
                     $request->merge(['password' => Hash::make($request->input('new_password'))]);
                     $user->password = $request->input('password');
                 }
-                if ($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'admin_'.Auth::guard('admin')->user()->id)) {
+                if ($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'admin_' . Auth::guard('admin')->user()->id)) {
                     $user->avatar = $request->input('avatar');
                 }
                 $user->save();
-            }
-            catch(\Exception $e){
+            } catch (\Exception $e) {
                 return redirect()->back()
-                    ->withErrors( $e->getErrors() )
+                    ->withErrors($e->getErrors())
                     ->withInput();
             }
         });
 
-        return redirect()->route('admin.setting')
+        return redirect(route('admin.setting'))
             ->with('status', 'success')
             ->with('message', 'Setting has been updated');;
     }
@@ -190,5 +189,4 @@ class AdministratorController extends Controller
     {
         return view('admin.about.index');
     }
-
 }

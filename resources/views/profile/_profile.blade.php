@@ -47,7 +47,7 @@
 <div class="modal fade color" id="send-message" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('account.message.send') }}" class="form-strip form-horizontal" method="post">
+            <form action="{{ route('account.message.send') }}" id="form-message" class="form-strip form-horizontal" method="post">
                 {!! csrf_field() !!}
                 <input type="hidden" id="contributor_id" name="contributor_id" value="{{ $contributor->id }}">
                 <div class="modal-header">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message" class="mbs">MESSAGE : </label>
-                        <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Type message here"></textarea>
+                        <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Type message here" required></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

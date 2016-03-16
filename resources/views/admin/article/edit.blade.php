@@ -170,7 +170,7 @@
                         <div class="form-group {{ $errors->has('content') ? 'has-error' : '' }}">
                             <label for="content" class="col-sm-3 control-label">Content</label>
                             <div class="col-sm-9">
-                                <textarea class="form-control summernote" name="content" id="content" cols="30" rows="10" placeholder="Write article here">@if($article->content_update == ''){!! old('content', $article->content) !!}@else{!! old('content', $article->content_update) !!}@endif</textarea>
+                                <textarea class="form-control summernote" name="content" id="content" cols="30" rows="10" placeholder="Write article here" required>@if($article->content_update == ''){!! old('content', $article->content) !!}@else{!! old('content', $article->content_update) !!}@endif</textarea>
                                 {!! $errors->first('content', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                         <div class="form-group no-line">
                             <div class="col-sm-offset-3 col-sm-9 pts pbm">
                                 <button class="btn btn-primary">SAVE CHANGES</button>
-                                <a href="#" data-toggle="modal" data-target="#discard" class="btn btn-danger">DISCARD</a>
+                                <a href="#" data-toggle="modal" data-target="#modal-discard" class="btn btn-danger">DISCARD</a>
                             </div>
                         </div>
                     </fieldset>
@@ -217,24 +217,21 @@
         </div>
     </div>
 
-    <div class="modal fade no-line" id="discard" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-discard" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="#">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title"><i class="fa fa-save"></i> DISCARD ARTICLE</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label class="mbn">Are you sure want to discard the article?</label>
-                        <p class="mbn"><small class="text-muted">All filled content will be lost.</small></p>
-                        <input type="hidden" class="form-control" value="0"/>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" data-dismiss="modal" class="btn btn-primary">NO</a>
-                        <a href="{{ route('admin.article.index') }}" class="btn btn-danger">YES</a>
-                    </div>
-                </form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-save"></i> DISCARD ARTICLE</h4>
+                </div>
+                <div class="modal-body">
+                    <label class="mbn">Are you sure want to discard the article?</label>
+                    <p class="mbn"><small class="text-muted">All filled content will be lost.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary">NO</a>
+                    <a href="{{ route('admin.article.index') }}" class="btn btn-danger">YES</a>
+                </div>
             </div>
         </div>
     </div>

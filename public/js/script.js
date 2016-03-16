@@ -1751,7 +1751,7 @@ $(function () {
         }
     });
 
-    $('#form-newsletter').validate({
+    $('#form-newsletter, #form-subscribe').validate({
         errorClass: 'help-block mts text-left',
         messages: {
             email: {
@@ -1759,4 +1759,6 @@ $(function () {
             }
         }
     });
+
+    $('#form-message').validate();
 });

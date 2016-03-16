@@ -344,9 +344,10 @@
                         <div class="col-md-12">
                             <h3>SUBSCRIBE</h3>
                             <p>Get our latest updates, we don't spam</p>
-                            <form action="#" method="post">
-                                <div class="subscribe-email">
-                                    <input type="email" class="form-control" placeholder="Email address"/>
+                            <form action="{{ route('subscribe.register') }}" method="post" id="form-subscribe">
+                                {!! csrf_field() !!}
+                                <div class="form-group subscribe-email">
+                                    <input type="email" class="form-control" placeholder="Email address" required/>
                                     <button type="submit"><i class="fa fa-envelope-o"></i></button>
                                 </div>
                             </form>

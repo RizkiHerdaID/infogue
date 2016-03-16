@@ -2,41 +2,6 @@
 
 /*
 |--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-Route::get('editorial', ['as' => 'page.editorial', 'uses' => function () {
-    return view('pages.editorial');
-}]);
-
-Route::get('career', ['as' => 'page.career', 'uses' => function () {
-    return view('pages.career');
-}]);
-
-Route::get('faq', ['as' => 'page.faq', 'uses' => function () {
-    return view('pages.faq');
-}]);
-
-Route::get('privacy', ['as' => 'page.privacy', 'uses' => function () {
-    return view('pages.privacy');
-}]);
-
-Route::get('disclaimer', ['as' => 'page.disclaimer', 'uses' => function () {
-    return view('pages.disclaimer');
-}]);
-
-Route::get('terms', ['as' => 'page.terms', 'uses' => function () {
-    return view('pages.terms');
-}]);
-
-/*
-|--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
 |
@@ -47,6 +12,32 @@ Route::get('terms', ['as' => 'page.terms', 'uses' => function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+    // Group of static page...
+    Route::get('editorial', ['as' => 'page.editorial', 'uses' => function () {
+        return view('pages.editorial');
+    }]);
+
+    Route::get('career', ['as' => 'page.career', 'uses' => function () {
+        return view('pages.career');
+    }]);
+
+    Route::get('faq', ['as' => 'page.faq', 'uses' => function () {
+        return view('pages.faq');
+    }]);
+
+    Route::get('privacy', ['as' => 'page.privacy', 'uses' => function () {
+        return view('pages.privacy');
+    }]);
+
+    Route::get('disclaimer', ['as' => 'page.disclaimer', 'uses' => function () {
+        return view('pages.disclaimer');
+    }]);
+
+    Route::get('terms', ['as' => 'page.terms', 'uses' => function () {
+        return view('pages.terms');
+    }]);
+
+    // Group of login administrator feature...
     Route::group(['namespace' => 'Admin'], function () {
         // Authentication routes...
         Route::get('admin', ['as' => 'admin.login.form', 'uses' => 'AuthController@showLoginForm']);

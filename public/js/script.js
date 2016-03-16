@@ -1,13 +1,22 @@
 $(function () {
     var websiteUrl = $('meta[name="url"]').attr('content');
 
+    /*
+     * --------------------------------------------------------------------------
+     * Web Module Script
+     * --------------------------------------------------------------------------
+     * Handle all module script including scroll, libraries like equalizer, time,
+     * tags, typeahead, parallax, slide show.
+     */
+
+    // NEWSLETTER DIALOG
     if ($('.newsletter').length) {
         setTimeout(function () {
             $('.newsletter').modal('show');
         }, 3000);
     }
 
-    // SMOOTH SCROLL---------------------------------------------------------------
+    // SMOOTH SCROLL
     $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);
@@ -21,94 +30,18 @@ $(function () {
         }
     });
 
-
-    // PARALLAX EFFECT ------------------------------------------------------------
+    // PARALLAX EFFECT
     $(window).stellar({responsive: true, horizontalScrolling: false});
 
-
-    // EQUALIZE SOMETHING ---------------------------------------------------------
+    // EQUALIZE SOMETHING
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
 
+    // BROWSER UPGRADE ------------------------------------------------------------
+    $('.browserupgrade').waypoint(function () {
+        $('.browserupgrade').toggleClass('bottom');
+    }, {offset: "30"});
 
-    // FEATURED SLIDE SHOW --------------------------------------------------------
-    var imagesFeatured = new Array();
-    var position = 2;
-    var tid;
-
-    setLargeFeatured();
-
-    $('.featured-mini img').each(function () {
-        //console.log($(this).data("echo"));
-        imagesFeatured.push($(this).data("echo"));
-    });
-
-    if (imagesFeatured.length > 0) {
-        tid = setInterval(changeFeatured, 5000);
-    }
-
-    function changeFeatured() {
-        if (imagesFeatured.length > 0) {
-            setFeatured();
-
-            position++;
-            if (position > imagesFeatured.length) {
-                position = 1;
-            }
-        }
-    }
-
-    function abortChangeFeatured() { // to be called when you want to stop the timer
-        clearInterval(tid);
-    }
-
-    $(".slide").click(function () {
-        position = $(".slide").index($(this)) + 1;
-        changeFeatured();
-
-        abortChangeFeatured();
-        tid = setInterval(changeFeatured, 5000);
-    });
-
-    function setFeatured() {
-        var imageSection = $(".featured-list div:nth-child(" + position + ")").find(".featured-mini");
-
-        $(".featured-mini").removeClass("active");
-        imageSection.addClass("active");
-
-        var title = imageSection.find(".src-title").text();
-        var category = imageSection.find(".src-category").text();
-        var description = imageSection.find(".src-description").text();
-        var image = imagesFeatured[position - 1];
-
-        //console.log("change "+position);
-        //console.log("title "+imageSection.find(".src-title").text());
-        //console.log("category "+imageSection.find(".src-category").text());
-        //console.log("description "+imageSection.find(".src-description").text());
-
-        $(".slide-title").text(title);
-        $(".slide-category").text(category);
-        $(".slide-description").text(description);
-        $('.featured-large .featured-image').data("featured", image);
-
-        setLargeFeatured();
-    }
-
-    function setLargeFeatured() {
-        var largeFeature = $('.featured-large .featured-image');
-        var image = largeFeature.data('featured');
-
-        largeFeature.css('opacity', 0);
-        setTimeout(function () {
-            largeFeature.css('opacity', 1);
-        }, 300);
-
-        largeFeature.css('content', ' ');
-        largeFeature.css('background', "url('" + image + "') center center");
-        largeFeature.css('background-size', 'cover');
-    }
-
-
-    // IMAGE LAZY LOADING ---------------------------------------------------------
+    // IMAGE LAZY LOADING
     echo.init({
         offset: 50,
         throttle: 250,
@@ -125,6 +58,95 @@ $(function () {
             }, 150);
         }
     });
+
+    /*
+     * --------------------------------------------------------------------------
+     * Featured Slide Show
+     * --------------------------------------------------------------------------
+     * Present slide show image with pager navigation featured article on home
+     * page, populating pager section and put the large one into big featured,
+     * set time interval each 5 seconds and show next featured article cycling.
+     */
+
+    if($('.featured-wrapper').length){
+        var imagesFeatured = new Array();
+        var position = 2;
+        var tid;
+
+        setLargeFeatured();
+
+        $('.featured-mini img').each(function () {
+            imagesFeatured.push($(this).data("echo"));
+        });
+
+        if (imagesFeatured.length > 0) {
+            tid = setInterval(changeFeatured, 5000);
+        }
+
+        function changeFeatured() {
+            if (imagesFeatured.length > 0) {
+                setFeatured();
+
+                position++;
+                if (position > imagesFeatured.length) {
+                    position = 1;
+                }
+            }
+        }
+
+        function abortChangeFeatured() {
+            clearInterval(tid);
+        }
+
+        $(".slide").click(function () {
+            position = $(".slide").index($(this)) + 1;
+            changeFeatured();
+
+            abortChangeFeatured();
+            tid = setInterval(changeFeatured, 5000);
+        });
+
+        function setFeatured() {
+            var imageSection = $(".featured-list div:nth-child(" + position + ")").find(".featured-mini");
+
+            $(".featured-mini").removeClass("active");
+            imageSection.addClass("active");
+
+            var title = imageSection.find(".src-title").text();
+            var category = imageSection.find(".src-category").text();
+            var description = imageSection.find(".src-description").text();
+            var image = imagesFeatured[position - 1];
+
+            $(".slide-title").text(title);
+            $(".slide-category").text(category);
+            $(".slide-description").text(description);
+            $('.featured-large .featured-image').data("featured", image);
+
+            setLargeFeatured();
+        }
+
+        function setLargeFeatured() {
+            var largeFeature = $('.featured-large .featured-image');
+            var image = largeFeature.data('featured');
+
+            largeFeature.css('opacity', 0);
+            setTimeout(function () {
+                largeFeature.css('opacity', 1);
+            }, 300);
+
+            largeFeature.css('content', ' ');
+            largeFeature.css('background', "url('" + image + "') center center");
+            largeFeature.css('background-size', 'cover');
+        }
+    }
+
+    /*
+     * --------------------------------------------------------------------------
+     * Image fitness
+     * --------------------------------------------------------------------------
+     * Check changes of viewport if it affect how image fill the container,
+     * does't need wide or tall class depend on image ratio against the wrapper.
+     */
 
     $(window).resize(function () {
         $(".featured-image").each(function () {
@@ -156,8 +178,7 @@ $(function () {
             .addClass(imgClass);
     }
 
-
-    // TO TOP ---------------------------------------------------------------------
+    // TO TOP LINK
     function onElementHeightChange(elm, callback) {
         var lastHeight = elm.clientHeight, newHeight;
         (function run() {
@@ -180,13 +201,6 @@ $(function () {
             }
         }, {offset: '140%'});
     });
-
-
-    // BROWSER UPGRADE ------------------------------------------------------------
-    $('.browserupgrade').waypoint(function () {
-        $('.browserupgrade').toggleClass('bottom');
-    }, {offset: "30"});
-
 
     // NICE SCROLL ----------------------------------------------------------------
     $("html").niceScroll({

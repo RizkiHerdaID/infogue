@@ -319,7 +319,7 @@
                     <h3>QUICK LINKS</h3>
                     <?php $counter = 0; $isFirst = true; ?>
                     @foreach($site_menus as $category)
-                        @if($counter <= 12)
+                        @if($counter < 12)
                             @if($counter > 0 && $counter % 6 == 0)
                                 {!! "</ul>" !!}
                             @endif

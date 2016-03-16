@@ -10,7 +10,7 @@
 
 <div style="display: block; max-width: 550px; padding: 25px; background: #ffffff; margin: auto; border-top: 3px solid #4dc4d2">
     <div style="margin-bottom: 30px; display: block">
-        <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
+        <img src="{{ asset('images/misc/logo-color.png') }}" alt="Infogue Logo">
     </div>
 
     <div style="display: block">
@@ -43,17 +43,17 @@
             <ul style="list-style: none; margin-bottom: 20px; font-size: 20px; padding: 0">
                 <li style="display: inline-block; margin-left: 0;">
                     <a href="{{ $site_settings['Facebook'] }}" style="color: #3b5998; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-facebook.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-facebook.png') }}" width="30" height="30" alt="Facebook" title="Facebook">
                     </a>
                 </li>
                 <li style="display: inline-block;">
                     <a href="{{ $site_settings['Twitter'] }}" style="color: #00aced; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-twitter.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-twitter.png') }}" width="30" height="30" alt="Twitter" title="Twitter">
                     </a>
                 </li>
                 <li style="display: inline-block;">
                     <a href="{{ $site_settings['Google Plus'] }}" style="color: #dd4b39; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-google.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-google.png') }}" width="30" height="30" alt="Google Plus" title="Google Plus">
                     </a>
                 </li>
             </ul>

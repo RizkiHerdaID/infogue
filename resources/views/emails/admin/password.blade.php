@@ -12,7 +12,6 @@
         <h2 style="margin-top: 0; color: #4dc4d2">ADMIN FORGOT PASSWORD</h2>
     </div>
 
-
     <div style="text-align: center">
         <p style="font-size: 16px; margin-bottom: 5px">We always concern about your account security, if you don't remember your password, Click button below to reset your password account.</p>
         <p style="margin-bottom: 10px">
@@ -30,17 +29,17 @@
             <ul style="list-style: none; margin-bottom: 20px; font-size: 20px; padding: 0">
                 <li style="display: inline-block; margin-left: 0;">
                     <a href="{{ $site_settings['Facebook'] }}" style="color: #3b5998; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-facebook.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-facebook.png') }}" width="30" height="30" alt="Facebook" title="Facebook">
                     </a>
                 </li>
                 <li style="display: inline-block;">
                     <a href="{{ $site_settings['Twitter'] }}" style="color: #00aced; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-twitter.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-twitter.png') }}" width="30" height="30" alt="Twitter" title="Twitter">
                     </a>
                 </li>
                 <li style="display: inline-block;">
                     <a href="{{ $site_settings['Google Plus'] }}" style="color: #dd4b39; text-decoration: none">
-                        <img src="http://jagamana.com/assets/img/layout/social-google.png" width="30" height="30" alt="Facebook" title="Facebook">
+                        <img src="{{ asset('images/misc/social-google.png') }}" width="30" height="30" alt="Google Plus" title="Google Plus">
                     </a>
                 </li>
             </ul>

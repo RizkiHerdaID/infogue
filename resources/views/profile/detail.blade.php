@@ -106,7 +106,7 @@
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-facebook"></i>Facebook</strong>
-                                            <span class="value">@if($contributor->facebook != null)><a href="{{ $contributor->facebook }}" target="_blank">{{ $contributor->facebook }}</a>@else{{ '-' }}@endif</span>
+                                            <span class="value">@if($contributor->facebook != null)<a href="{{ $contributor->facebook }}" target="_blank">{{ $contributor->facebook }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-google-plus"></i>Google+</strong>
@@ -114,7 +114,7 @@
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-instagram"></i>Instagram</strong>
-                                            <span class="value">@if($contributor->instagram != null)><a href="{{ $contributor->instagram }}" target="_blank">{{ $contributor->instagram }}</a>@else{{ '-' }}@endif</span>
+                                            <span class="value">@if($contributor->instagram != null)<a href="{{ $contributor->instagram }}" target="_blank">{{ $contributor->instagram }}</a>@else{{ '-' }}@endif</span>
                                         </li>
                                     </ul>
                                 </div>

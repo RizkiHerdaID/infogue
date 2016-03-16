@@ -204,7 +204,7 @@
 
                     <div class="sidebar-profile visible-xs">
                         @if(Auth::check())
-                            <a href="contributor_stream.html">
+                            <a href="{{ route('contributor.stream', [Auth::user()->username]) }}">
                                 <img src="{{ asset('images/contributors/'.Auth::user()->avatar) }}"/>
                                 <div class="info">
                                     <p class="name">{{ Auth::user()->name }}</p>
@@ -213,7 +213,7 @@
                             </a>
                         @else
                             <div class="unauthorized">
-                                <a href="{{ route('register.form') }}" class="btn btn-outline btn-light">CREATE ARTICLE</a>
+                                <a href="{{ route('login.form') }}" class="btn btn-outline btn-light">CREATE ARTICLE</a>
                                 <div class="link-text" style="display: none">
                                     <a href="{{ route('login.form') }}" class="link-login">Welcome, Sign In</a>
                                     <a href="{{ route('register.form') }}" class="link-register">Don't have account? Register here</a>

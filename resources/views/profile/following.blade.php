@@ -19,6 +19,7 @@
                 @include('profile._sidebar')
 
                 <div class="col-md-8 no-padding-mobile">
+                    <!-- account content -->
                     <div class="account-profile">
                         <div class="cover" style="background: url('{{ asset('images/covers/'.$contributor->cover) }}') no-repeat center / cover"></div>
                         <div class="profile-wrapper">
@@ -27,11 +28,11 @@
 
                             <section class="list-data" data-href="{{ Request::url() }}">
                                 <h3 class="title">FOLLOWING <a href="{{ route('contributor.stream', [$contributor->username]) }}">BACK TO PROFILE</a></h3>
+                                <!-- content -->
                                 <div class="content">
-                                    <div role="list" id="followers">
-
-                                    </div>
+                                    <div role="list" id="followers"></div>
                                 </div>
+                                <!-- end of content -->
                                 <div class="text-center pm">
                                     <div class="loading"></div>
                                     <a href="#" class="btn btn-primary btn-load-more">LOAD MORE</a>
@@ -39,6 +40,7 @@
                             </section>
                         </div>
                     </div>
+                    <!-- end of account content -->
                 </div>
             </div>
         </section>

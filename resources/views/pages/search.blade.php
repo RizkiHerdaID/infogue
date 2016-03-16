@@ -16,11 +16,11 @@
             </div>
         </div>
 
-        @if(\Illuminate\Support\Facades\Input::get('filter') != 'article' && isset($contributor_result))
+        @if(Input::get('filter') != 'article' && isset($contributor_result))
         <div class="panel panel-simple">
             <div class="panel-heading small">{{ $contributor_result->total() }} People Found
-                @if(\Illuminate\Support\Facades\Request::segment(2) == null)
-                    <a href="{{ route('search.people') }}?{{ parse_url(\Illuminate\Support\Facades\Input::fullUrl())['query'] }}" class="pull-right small">View All</a>
+                @if(Request::segment(2) == null)
+                    <a href="{{ route('search.people') }}?{{ parse_url(Input::fullUrl())['query'] }}" class="pull-right small">View All</a>
                 @else
                     <span class="pull-right small">Page {{ $contributor_result->currentPage() }} of {{ $contributor_result->lastPage() }}</span>
                 @endif
@@ -43,23 +43,23 @@
                     @endforelse
                 </div>
             </div>
-            @if($contributor_result->count() < $contributor_result->total() && \Illuminate\Support\Facades\Request::segment(2) == null)
+            @if($contributor_result->count() < $contributor_result->total() && Request::segment(2) == null)
             <div class="text-center">
-                <a class="btn btn-default" href="{{ route('search.people') }}?{{ parse_url(\Illuminate\Support\Facades\Input::fullUrl())['query'] }}">View All People</a>
+                <a class="btn btn-default" href="{{ route('search.people') }}?{{ parse_url(Input::fullUrl())['query'] }}">View All People</a>
             </div>
             @else
                 <div class="text-center">
-                    {!! $contributor_result->appends(\Illuminate\Support\Facades\Input::all())->links() !!}
+                    {!! $contributor_result->appends(Input::all())->links() !!}
                 </div>
             @endif
         </div>
         @endif
 
-        @if(\Illuminate\Support\Facades\Input::get('filter') != 'contributor' && isset($article_result))
+        @if(Input::get('filter') != 'contributor' && isset($article_result))
         <div class="panel panel-simple">
             <div class="panel-heading small">{{ $article_result->total() }} Articles Found
-                @if(\Illuminate\Support\Facades\Request::segment(2) == null)
-                    <a href="{{ route('search.article') }}?{{ parse_url(\Illuminate\Support\Facades\Input::fullUrl())['query'] }}" class="pull-right small">View All</a>
+                @if(Request::segment(2) == null)
+                    <a href="{{ route('search.article') }}?{{ parse_url(Input::fullUrl())['query'] }}" class="pull-right small">View All</a>
                 @else
                     <span class="pull-right small">Page {{ $article_result->currentPage() }} of {{ $article_result->lastPage() }}</span>
                 @endif
@@ -106,13 +106,13 @@
                 <p class="text-center center-block">No result found</p>
             @endforelse
 
-            @if($article_result->count() < $article_result->total() && \Illuminate\Support\Facades\Request::segment(2) == null)
+            @if($article_result->count() < $article_result->total() && Request::segment(2) == null)
             <div class="text-center">
-                <a class="btn btn-default" href="{{ route('search.article') }}?{{ parse_url(\Illuminate\Support\Facades\Input::fullUrl())['query'] }}">View All Articles</a>
+                <a class="btn btn-default" href="{{ route('search.article') }}?{{ parse_url(Input::fullUrl())['query'] }}">View All Articles</a>
             </div>
             @else
                 <div class="text-center">
-                    {!! $article_result->appends(\Illuminate\Support\Facades\Input::all())->links() !!}
+                    {!! $article_result->appends(Input::all())->links() !!}
                 </div>
             @endif
         </div>

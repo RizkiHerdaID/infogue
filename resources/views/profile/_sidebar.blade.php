@@ -25,7 +25,6 @@
         </div>
     </div>
 @else
-
     <div class="col-md-4 hidden-sm hidden-xs">
         <div class="contributor-menu unauthorized hidden-xs">
             <div class="featured">
@@ -60,15 +59,16 @@
                     @endif
 
                     <div class="form-group {{ $errors->has('username') ? 'has-error' : '' }}">
-                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="Email Address or Username">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" placeholder="Email Address or Username" required>
                         {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-group clearfix">
                         <div class="checkbox pull-left mtn">
-                            <input type="checkbox" id="remember" name="remember" class="css-checkbox">
+                            <input type="checkbox" id="remember" name="remember" class="css-checkbox" @if(old('remember', 0)) checked @endif>
                             <label for="remember" class="css-label">Remember Me</label>
                         </div>
                         <a href="{{ route('login.forgot') }}" class="forgot-link clearfix pull-right">Forgot Password?</a>
@@ -78,5 +78,4 @@
             </div>
         </div>
     </div>
-
 @endif

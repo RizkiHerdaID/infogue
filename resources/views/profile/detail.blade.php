@@ -19,6 +19,7 @@
                 @include('profile._sidebar')
 
                 <div class="col-md-8 no-padding-mobile">
+                    <!-- account content -->
                     <div class="account-profile detail">
                         <div class="cover" style="background: url('{{ asset('images/covers/'.$contributor->cover) }}') no-repeat center / cover"></div>
                         <div class="profile-wrapper">
@@ -33,10 +34,10 @@
                                     <li><a href="{{ route('contributor.article', [$contributor->username]) }}"><strong>{{ $contributor->articles()->where('status', 'published')->count() }}</strong>ARTICLES</a></li>
                                     <li><a href="{{ route('contributor.follower', [$contributor->username]) }}"><strong>{{ $contributor->followers()->count() }}</strong>FOLLOWERS</a></li>
                                 </ul>
-
                             </section>
                             <section class="list-data">
                                 <h3 class="title">PROFILE DETAIL <a href="{{ route('contributor.stream', [$contributor->username]) }}">BACK TO PROFILE</a></h3>
+                                <!-- content -->
                                 <div class="content">
                                     <ul class="list-group">
                                         <li class="list-group-item active">
@@ -118,9 +119,11 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <!-- end of content -->
                             </section>
                         </div>
                     </div>
+                    <!-- end of account content -->
                 </div>
             </div>
         </section>

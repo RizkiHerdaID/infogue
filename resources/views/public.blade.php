@@ -39,18 +39,18 @@
     <![endif]-->
 
     <header>
-        <!-- begin of header content -->
+        <!-- header content -->
         <div class="header">
             <div class="container">
-                <!-- begin of header wrapper -->
+                <!-- header wrapper -->
                 <div class="header-wrapper">
                     <div class="logo">
                         <i class="fa fa-navicon visible-xs toggle-nav"></i>
                         <h1><a href="{{ route('index') }}">InfoGue</a></h1>
                     </div>
-                    <!-- begin of header section -->
+                    <!-- header section -->
                     <div class="header-section">
-                        <!-- begin of top section -->
+                        <!-- top section -->
                         <section class="control-wrapper">
                             <ul class="featured-link hidden-xs">
                                 <li><a href="{{ route('article.latest') }}">LATEST</a></li>
@@ -126,9 +126,9 @@
                         </section>
                         <!-- end of top section -->
 
-                        <!-- begin of search wrapper -->
+                        <!-- search wrapper -->
                         <section class="search-wrapper">
-                            <!-- begin of search box -->
+                            <!-- search box -->
                             <div class="search">
                                 <form action="{{ route('search') }}" method="get">
                                     <input type="hidden" value="all" name="filter">
@@ -161,7 +161,7 @@
                             </div>
                             <!-- end of search box -->
 
-                            <!-- begin of header social -->
+                            <!-- header social -->
                             <ul class="social hidden-xs">
                                 <li>
                                     <a href="{{ $site_settings['Facebook'] }}" class="facebook" target="_blank">
@@ -187,11 +187,11 @@
                 </div>
                 <!-- end of header wrapper -->
 
-                <!-- begin of main navigation -->
+                <!-- main navigation -->
                 <nav class="navigation">
                     <div class="overlay"></div>
 
-                    <!-- begin of navigation breadcrumb on tablet -->
+                    <!-- navigation breadcrumb on tablet -->
                     <div class="breadcrumb-wrapper visible-sm">
                         <ol class="breadcrumb">
                             <li><a href="#" class="navigation-toggle"><i class="fa fa-navicon"></i>NAVIGATION</a></li>
@@ -226,7 +226,7 @@
                         <li><a href="{{ route('index') }}">Home</a></li>
 
                         @foreach($site_menus as $category)
-                            <!-- begin of {{ $category->category }} -->
+                            <!-- {{ $category->category }} -->
                             <li>
                                 <a href="{{ route('article.category', [str_slug($category->category)]) }}" class="menu-category">
                                     {{ $category->category }}
@@ -286,9 +286,9 @@
 
     <footer>
         <div class="container">
-            <!-- begin of top footer -->
+            <!-- top footer -->
             <div class="row">
-                <!-- begin of about -->
+                <!-- about -->
                 <div class="col-md-4 col-sm-6 hidden-sm">
                     <div class="about">
                         <ul class="social pull-right visible-xs">
@@ -314,7 +314,7 @@
                 </div>
                 <!-- end of about -->
 
-                <!-- begin of quick links -->
+                <!-- quick links -->
                 <div class="col-md-4 col-sm-6 hidden-xs clearfix">
                     <h3>QUICK LINKS</h3>
                     <?php $counter = 0; $isFirst = true; ?>
@@ -338,7 +338,7 @@
                 </div>
                 <!-- end of quick links -->
 
-                <!-- begin of subscribe -->
+                <!-- subscribe -->
                 <div class="col-md-4 col-sm-6 hidden-xs">
                     <div class="row">
                         <div class="col-md-12">
@@ -366,7 +366,7 @@
             </div>
             <!-- end of top footer -->
 
-            <!-- begin of bottom footer -->
+            <!-- bottom footer -->
             <div class="row bottom">
                 <div class="col-sm-8">
                     <ul class="featured-link hidden-xs">

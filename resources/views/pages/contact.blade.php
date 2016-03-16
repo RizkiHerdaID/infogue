@@ -66,7 +66,6 @@
                     <li class="pm pbn"><a href="{{ $site_settings['Facebook'] }}" target="_blank">Facebook</a></li>
                     <li class="pm pbn"><a href="{{ $site_settings['Twitter'] }}" target="_blank">Twitter</a></li>
                     <li class="pm pbn"><a href="{{ $site_settings['Google Plus'] }}" target="_blank">Google+</a></li>
-                    <li class="pm pbn"><a href="http://www.instagram.com/infogue" target="_blank">Instagram</a></li>
                 </ul>
             </div>
         </div>

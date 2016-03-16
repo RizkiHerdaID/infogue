@@ -228,7 +228,7 @@
                         @foreach($site_menus as $category)
                             <!-- begin of {{ $category->category }} -->
                             <li>
-                                <a href="{{ route('article.category', [str_slug($category->category)]) }}">
+                                <a href="{{ route('article.category', [str_slug($category->category)]) }}" class="menu-category">
                                     {{ $category->category }}
                                 </a>
 

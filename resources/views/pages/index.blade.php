@@ -143,7 +143,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row articles">
             <?php $counter = 1; ?>
             @forelse($trending as $article)
                 <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">
@@ -187,7 +187,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row articles">
             <?php $counter = 1; ?>
             @forelse($latest as $article)
                 <div class="col-md-4 col-sm-6 @if($counter == 4) {{ 'visible-sm visible-xs' }} @endif">

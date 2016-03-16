@@ -16,6 +16,11 @@ $(function () {
         }, 3000);
     }
 
+    // PREVENT # LINK TRIGGERED
+    $("a[href='#']").click(function (e) {
+        e.preventDefault();
+    });
+
     // SMOOTH SCROLL
     $('a[href*="#"]:not([href="#"]):not([data-toggle="tab"]):not([data-toggle="collapse"])').click(function () {
         if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
@@ -30,8 +35,18 @@ $(function () {
         }
     });
 
-    // PARALLAX EFFECT
-    $(window).stellar({responsive: true, horizontalScrolling: false});
+    // NICE SCROLL EXCEPT EDGE
+    if (!/Edge/.test(navigator.userAgent)) {
+        $("html").niceScroll({
+            cursorcolor: '#4dc4d2',
+            cursorborder: 'none'
+        });
+    }
+
+    // PARALLAX EFFECT EXCEPT IE OR EDGE
+    if (!document.documentMode && !/Edge/.test(navigator.userAgent)) {
+        $(window).stellar({responsive: true, horizontalScrolling: false});
+    }
 
     // EQUALIZE SOMETHING
     $('.featured-list').equalize({equalize: 'height', children: '.featured-mini'});
@@ -58,6 +73,21 @@ $(function () {
             }, 150);
         }
     });
+
+    // SUMMERNOTE
+    if ($('.summernote').length) {
+        $('.summernote').summernote({
+            toolbar: [
+                ['font', ['style']],
+                ['style', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'paragraph']],
+                ['insert', ['picture', 'video', 'link']],
+                ['misc', ['fullscreen']]
+            ],
+            placeholder: 'Write here...',
+            height: 200
+        });
+    }
 
     /*
      * --------------------------------------------------------------------------
@@ -202,31 +232,7 @@ $(function () {
         }, {offset: '140%'});
     });
 
-    // NICE SCROLL ----------------------------------------------------------------
-    $("html").niceScroll({
-        cursorcolor: '#4dc4d2',
-        cursorborder: 'none'
-    });
-
-    /*
-     $(".navigation").niceScroll({
-     cursorcolor: '#6dd7e3',
-     cursorborder: 'none',
-     cursoropacitymax: 0,
-     scrollspeed: 75,
-     smoothscroll: false
-     });
-
-
-     $("#navigation").niceScroll({
-     cursorcolor: '#6dd7e3',
-     cursorborder: 'none',
-     scrollspeed: 75,
-     smoothscroll: false
-     });
-     */
-
-    // STICKY STATIC NAV ----------------------------------------------------------
+    // STICKY STATIC NAV
     if ($('.static-page').length) {
         var staticNav = new Waypoint({
             element: $('.static-nav'),
@@ -258,8 +264,7 @@ $(function () {
         });
     }
 
-
-    // ACCORDION ---------------------------------------------------------------------
+    // SIMPLE ACCORDION
     $("#accordion .panel-title a").click(function () {
         $("#accordion .panel-heading").removeClass('active');
         var heading = $(this).parent().parent();
@@ -271,27 +276,12 @@ $(function () {
         }
     });
 
-    // SUMMERNOTE -------------------------------------------------------------------
-    if ($('.summernote').length) {
-        $('.summernote').summernote({
-            toolbar: [
-                ['font', ['style']],
-                ['style', ['bold', 'italic', 'underline']],
-                ['para', ['ul', 'paragraph']],
-                ['insert', ['picture', 'video', 'link']],
-                ['misc', ['fullscreen']]
-            ],
-            placeholder: 'write here...',
-            height: 200
-        });
-    }
-
-    // FILE INPUT -------------------------------------------------------------------
+    // FILE INPUT
     $('.file-input').change(function () {
         $(this).parent().find('.file-info').text($(this).val());
     });
 
-    // CONVERSATION SCROLL ----------------------------------------------------------
+    // CONVERSATION SCROLL
     if ($(".message-box").length) {
         $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
         $(".message-box").niceScroll({
@@ -300,11 +290,7 @@ $(function () {
         });
     }
 
-    $("a[href='#']").click(function (e) {
-        e.preventDefault();
-    });
-
-    // DROPDOWN
+    // DROPDOWN AS SELECT
     $(".dropdown.select a").click(function () {
         var text = $(this).text() + " <span class='caret'></span>";
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
@@ -529,9 +515,7 @@ $(function () {
         $('html').click(function () {
             if (isSmall) {
                 $(".level-1").html("").addClass("blank").css("width", "40px");
-                ;
                 $(".level-2").html("").addClass("blank").css("width", "40px");
-                ;
                 $("#navigation").slideUp(200);
             }
         });
@@ -670,7 +654,6 @@ $(function () {
 
             $(".user-dropdown").removeClass("active");
             $(".list-menu").stop(true).slideUp(100);
-
         });
 
         $(".user-dropdown").click(function () {
@@ -706,7 +689,7 @@ $(function () {
          * it prevent to close the search box when user click the wrapper of search box
          * itself until click event reach the html tag and close it as function that we have defined before
          */
-        $('.user-menu').click(function (event) {
+        $('.user-menu, .header-section > .search-wrapper').click(function (event) {
             event.stopPropagation();
         });
     }
@@ -732,7 +715,6 @@ $(function () {
      */
     function createDownArrow() {
         $(".mobile-search").removeClass("active");
-        $(".header-section > .search-wrapper").hide();
 
         /**
          * loop through navigation li
@@ -770,7 +752,9 @@ $(function () {
              * create parallax effect on tablet and desktop mode
              * init stellar js
              */
-            $(window).data('plugin_stellar').init();
+            if($(window).data('plugin_stellar') != null){
+                $(window).data('plugin_stellar').init();
+            }
 
             /**
              * init waypoint.js to check scroll offset at -200px
@@ -838,7 +822,10 @@ $(function () {
              * disable parallax effect on mobile
              * reset background position
              */
-            $(window).data('plugin_stellar').destroy();
+            if($(window).data('plugin_stellar') != null){
+                $(window).data('plugin_stellar').destroy();
+            }
+
             setTimeout(function () {
                 $("div[data-stellar-background-ratio]").not(".reset").removeAttr("style");
             }, 50);
@@ -850,7 +837,7 @@ $(function () {
             removeDownArrow();
         }
         else if (isSmall) {
-            destroyMegaMenu();
+            initMegaMenu();
             createRightArrow();
             removeDownArrow();
         }
@@ -858,6 +845,17 @@ $(function () {
             destroyMegaMenu();
             removeRightArrow();
             createDownArrow();
+        }
+
+        if (isLarge || isMedium) {
+            $('.menu-category').click(function(){
+                return true;
+            });
+        }
+        else{
+            $('.menu-category').click(function(){
+                return false;
+            });
         }
     }
 
@@ -1322,7 +1320,6 @@ $(function () {
         $("#modal-info").modal("show");
     }
 
-
     /*
      * --------------------------------------------------------------------------
      * Form Function
@@ -1442,7 +1439,6 @@ $(function () {
             source: tags
         });
     }
-
 
     /*
      * --------------------------------------------------------------------------
@@ -1763,5 +1759,4 @@ $(function () {
             }
         }
     });
-
 });

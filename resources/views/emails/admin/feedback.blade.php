@@ -10,7 +10,7 @@
 
 <div style="display: block;">
     <div style="margin-bottom: 30px; display: block">
-        <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
+        <img src="{{ asset('images/misc/logo-color.png') }}" alt="Infogue Logo">
     </div>
 
     <div style="display: block">

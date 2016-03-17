@@ -8,7 +8,7 @@
 
 <div style="display: block; padding: 20px">
     <div style="margin-bottom: 30px; text-align: center">
-        <img src="http://infogue.angga-ari.com/builds/production/images/misc/logo-color.png" alt="Infogue Logo">
+        <img src="{{ asset('images/misc/logo-color.png') }}" alt="Infogue Logo">
         <h2 style="margin-top: 0; color: #4dc4d2">ADMIN FORGOT PASSWORD</h2>
     </div>
 

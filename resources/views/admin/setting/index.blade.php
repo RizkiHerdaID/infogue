@@ -225,10 +225,11 @@
                                 <p class="form-control-static">{{ explode('@', Auth::guard('admin')->user()->email)[0] }}</p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Email</label>
+                        <div class="form-group {{ $errors->has('admin_email') ? 'has-error' : '' }}">
+                            <label for="admin_email" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
-                                <p class="form-control-static">{{ Auth::guard('admin')->user()->email }}</p>
+                                <input type="text" class="form-control" id="admin_email" name="admin_email" placeholder="Admin email address" value="{{ old('name', Auth::guard('admin')->user()->email) }}" required maxlength="30">
+                                {!! $errors->first('admin_email', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">

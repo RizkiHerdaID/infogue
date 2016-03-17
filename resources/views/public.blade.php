@@ -7,8 +7,8 @@
     <meta name="keywords" content="{{ $site_settings['Keywords'] }}">
     <meta name="author" content="{{ $site_settings['Owner'] }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <meta name="url" content="{{ route('index') }}"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="url" content="{{ route('index') }}">
 
     <meta property="og:url" content="{{ Request::url() }}"/>
     <meta property="og:type" content="website"/>
@@ -33,8 +33,8 @@
 
     <!--[if lt IE 8]>
     <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+        You are using an <strong>outdated</strong> browser.
+        Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
     </p>
     <![endif]-->
 

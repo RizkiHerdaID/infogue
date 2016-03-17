@@ -20,8 +20,7 @@ class PasswordController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
+    | and uses a simple trait to include this behavior.
     |
     */
 
@@ -41,6 +40,11 @@ class PasswordController extends Controller
      */
     protected $guard = 'admin';
 
+    /**
+     * Default broker guard set in config file.
+     *
+     * @var string
+     */
     protected $broker = 'admins';
 
     /**

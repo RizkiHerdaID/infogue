@@ -101,6 +101,7 @@ class AdministratorController extends Controller
             'feedback'      => 'boolean',
             'member'        => 'boolean',
             'approve'       => 'boolean',
+            'admin_email'   => 'required|email|max:30',
             'name'          => 'required|max:50',
             'avatar'        => 'mimes:jpg,jpeg,gif,png|max:1000',
             'password'      => 'required|check_password:admin',

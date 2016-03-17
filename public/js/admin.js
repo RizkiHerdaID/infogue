@@ -542,6 +542,16 @@ $(function () {
         }
     }
 
+
+    /*
+     * --------------------------------------------------------------------------
+     * Form Validation
+     * --------------------------------------------------------------------------
+     * Set validation of basic form, including, login, email, reset, setting,
+     * and article management. Set default configuration so it will fits on
+     * bootstrap error form semantic.
+     */
+
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -564,6 +574,56 @@ $(function () {
         return ($(".bootstrap-tagsinput").find(".tag").length > 0);
     });
 
+    // LOGIN FORM
+    $("#form-login").validate({
+        errorClass: 'help-block text-left',
+        messages:{
+            email: {
+                required : 'Email is required'
+            },
+            password: {
+                required : 'Password is required'
+            },
+        }
+    });
+
+    // EMAIL FORM
+    $("#form-email").validate({
+        errorClass: 'help-block text-left',
+        messages:{
+            email: {
+                required : 'Registered email is required'
+            },
+        }
+    });
+
+    // RESET FORM
+    $("#form-reset").validate({
+        errorClass: 'help-block text-left',
+        rules: {
+            password: {
+                minlength: 6,
+                maxlength: 20
+            },
+            password_confirmation: {
+                minlength: 6,
+                maxlength: 20,
+                equalTo: "#password"
+            }
+        },
+        messages:{
+            email: {
+                required : 'Registered email is required'
+            },
+            password: {
+                required : 'New password email is required'
+            },
+            password_confirmation: {
+                required : 'Password confirmation is required'
+            },
+        }
+    });
+
     $("#form-setting").validate({
         rules: {
             "keywords-dummy": "checkTags",
@@ -580,7 +640,14 @@ $(function () {
         messages: {
             "keywords-dummy": "Keywords are required",
             password: "Password is required to save",
-            contact: "Contact or Fax is required",
+            contact: {
+                required: "Contact or Fax is required",
+                maxlength: "Contact max length is {0} characters"
+            },
+            website: {
+                required: "Contact or Fax is required",
+                maxlength: "Contact max length is {0} characters"
+            },
         }
     });
 

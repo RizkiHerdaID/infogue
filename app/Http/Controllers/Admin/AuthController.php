@@ -14,12 +14,11 @@ class AuthController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Registration & Login Controller
+    | Admin Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | This controller handles the authentication of existing users. By default,
+    | this controller uses a simple trait to add these behaviors.
     |
     */
 
@@ -83,10 +82,10 @@ class AuthController extends Controller
 
         /*
          * --------------------------------------------------------------------------
-         * Protect login functionality just in case brute force attempting
+         * Protect login just in case brute force attempting
          * --------------------------------------------------------------------------
-         * Count user login attempting and lockout the login response if user
-         * fail to login 7 times just in case hacking or bot effort.
+         * Count user login attempting and lockout the login response if the user
+         * fail to login 7 times just in case hacking or unsuspected action.
          */
 
         $throttles = $this->isUsingThrottlesLoginsTrait();
@@ -101,7 +100,7 @@ class AuthController extends Controller
          * --------------------------------------------------------------------------
          * Authenticate the user
          * --------------------------------------------------------------------------
-         * Take the default guard (admin) if credential is valid and redirect to
+         * Take the default guard (admin) if credential is valid then redirect to
          * intended page, by default it will be directed to dashboard.
          */
 

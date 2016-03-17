@@ -5,22 +5,7 @@
 @section('content')
 
     <div id="content-wrapper">
-        <header>
-            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
-            <div class="title">
-                <h1>Dashboard</h1>
-            </div>
-            <div class="control hidden-xs">
-                <div class="account clearfix">
-                    <div class="avatar-wrapper">
-                        <img src="{{ asset('images/contributors/'.Auth::guard('admin')->user()->avatar) }}" class="img-circle img-rounded">
-                        <div class="notify"></div>
-                    </div>
-                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>{{ Auth::guard('admin')->user()->name }}</strong></p>
-                </div>
-                <a href="{{ route('admin.login.destroy') }}" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
-            </div>
-        </header>
+        @include('admin.layouts._header')
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
@@ -28,19 +13,30 @@
                 <li class="blank"></li>
             </ol>
         </div>
+        <!-- content -->
         <div class="content">
             <div class="row">
                 <div class="col-md-6">
+                    <!-- activity -->
                     <div class="title-section">
                         <h1 class="title">Activities</h1>
-                        <p class="subtitle">User behavior, logs and activities <a href="#" class="pull-right">{{ $activities->total() }} More</a></p>
+                        <p class="subtitle">User behavior, logs and activities
+                            <a href="#" data-toggle="modal" data-target="#modal-developer" class="pull-right">{{ $activities->total() }} More</a>
+                        </p>
                     </div>
                     <div class="content-section">
                         @forelse($activities as $activity)
                             <div class="list-activity">
                                 <img src="{{ asset('images/contributors/'.$activity->contributor->avatar) }}"/>
                                 <div class="info">
-                                    <p class="name"><a href="{{ route('contributor.stream', [$activity->contributor->username]) }}" style="color: inherit" target="_blank">{{ $activity->contributor->name }}</a> <span class="pull-right timestamp"><time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at }}</time></span></p>
+                                    <p class="name">
+                                        <a href="{{ route('contributor.stream', [$activity->contributor->username]) }}" style="color: inherit" target="_blank">
+                                            {{ $activity->contributor->name }}
+                                        </a>
+                                        <span class="pull-right timestamp">
+                                            <time class="timeago" datetime="{{ $activity->created_at }}">{{ $activity->created_at }}</time>
+                                        </span>
+                                    </p>
                                     <p class="description">{!! $activity->activity !!}</p>
                                 </div>
                             </div>
@@ -50,18 +46,22 @@
                             </div>
                         @endforelse
                     </div>
+                    <!-- end of activity -->
                 </div>
                 <div class="col-md-6">
+                    <!-- visitor -->
                     <div class="title-section">
                         <h1 class="title">Visitor</h1>
-                        <p class="subtitle">Web visitor statistic <a href="#" class="pull-right">View History</a></p>
+                        <p class="subtitle">Web visitor statistic
+                            <a href="#" data-toggle="modal" data-target="#modal-developer" class="pull-right">View History</a>
+                        </p>
                     </div>
                     <div class="content-section">
                         <div class="row">
                             <div class="col-sm-1 col-xs-2 prn">
                                 <div class="legend-left">
                                     <ul class="list-unstyled">
-                                        <li>70</li>
+                                        <li>70+</li>
                                         <li>60</li>
                                         <li>50</li>
                                         <li>40</li>
@@ -77,7 +77,7 @@
                                         <div class="bar @if($i < 4) {!! 'sm-screen' !!} @endif @if($i <4 && $i > 1) {!! 'md-screen' !!} @endif">
                                             <div class="bar-wrapper">
                                                 <div class="base"></div>
-                                                <div class="fill" data-value="{{ $visitors[$i]->unique }}"></div>
+                                                <div class="fill" data-value="{{ $visitors[$i]->unique > 70 ? 70 : $visitors[$i]->unique }}"></div>
                                             </div>
                                             <p>{{ Carbon\Carbon::parse($visitors[$i]->date)->format('d/m') }}</p>
                                         </div>
@@ -99,26 +99,32 @@
                             </ul>
                         </div>
                     </div>
+                    <!-- end of visitor -->
+
+                    <!-- statistic -->
                     <div class="title-section">
                         <h1 class="title">Statistics</h1>
-                        <p class="subtitle">Several data information <a href="#" class="pull-right">View Details</a></p>
+                        <p class="subtitle">Several data information
+                            <a href="#" data-toggle="modal" data-target="#modal-developer" class="pull-right">View Details</a>
+                        </p>
                     </div>
                     <div class="content-section">
                         <div class="row statistic-box">
                             @foreach($statistics as $statistic => $value)
                                 <div class="col-md-4 col-xs-6">
                                     <div class="box">
-                                        <h1>{{ $value }}</h1>
+                                        <h1>{{ formatSortNumeric($value) }}</h1>
                                         <p>{{ $statistic }}</p>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
+                    <!-- end of statistic -->
                 </div>
             </div>
-
+            <div class="mbl"></div>
         </div>
-    </div> <!-- End of page-content-wrapper -->
-
+        <!-- end of content -->
+    </div>
 @endsection

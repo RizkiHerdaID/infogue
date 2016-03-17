@@ -7,7 +7,7 @@
     <meta name="description" content="{{ $site_settings['Description'] }}">
     <meta name="keywords" content="{{ $site_settings['Keywords'] }}">
     <meta name="author" content="{{ $site_settings['Owner'] }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="url" content="{{ route('index') }}">
 
@@ -24,67 +24,42 @@
 </head>
 <body>
     <div id="wrapper">
-        <!-- sidebar -->
-        <div id="sidebar-wrapper">
-            <div class="sidebar-brand">
-                <a href="{{ route('admin.dashboard') }}">
-                    <img src="{{ asset('images/misc/logo-administrator.png') }}">
-                </a>
-            </div>
-            <div class="sidebar-statistic">
-                <div>
-                    <h3>{{ $site_statistic['article'] }}</h3>
-                    <p>ARTICLES</p>
-                </div>
-                <div>
-                    <h3>{{ $site_statistic['member'] }}</h3>
-                    <p>MEMBERS</p>
-                </div>
-            </div>
-            <a href="{{ route('admin.article.create') }}" class="btn btn-outline btn-light create">CREATE ARTICLE</a>
-            <nav role="navigation">
-                <?php $segment = Request::segment(2); ?>
-                <ul>
-                    <li @if($segment == 'dashboard'){!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
-                    </li>
-                    <li @if($segment == 'setting') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.setting') }}"><i class="fa fa-wrench"></i>Setting</a>
-                    </li>
-                    <li @if($segment == 'contributor') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.contributor.index') }}"><i class="fa fa-child"></i>Contributor</a>
-                    </li>
-                    <li @if($segment == 'article') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.article.index') }}"><i class="fa fa-file-text-o"></i>Article</a>
-                    </li>
-                    <li @if($segment == 'category') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.category.index') }}"><i class="fa fa-bars"></i>Category</a>
-                    </li>
-                    <li @if($segment == 'feedback') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.feedback.index') }}"><i class="fa fa-comments-o"></i>Feedback</a>
-                    </li>
-                    <li @if($segment == 'about') {!! 'class="active"' !!}@endif>
-                        <a href="{{ route('admin.about') }}"><i class="fa fa-info-circle"></i>About</a>
-                    </li>
-                    <li class="visible-xs">
-                        <a href="{{ route('admin.login.destroy') }}"><i class="fa fa-sign-out"></i>Sign Out</a>
-                    </li>
-                </ul>
-            </nav>
-
-            <div class="copyright">
-                <img src="{{ asset('images/misc/logo-small.png') }}"/>
-                <p>&copy; {{ date('Y') }} All Rights Reserved.</p>
-            </div>
-        </div>
-        <!-- end of sidebar -->
+        @include('admin.layouts._navigation')
 
         <!-- page content -->
         @yield('content')
         <!-- end of page content -->
-
     </div>
     <!-- end of wrapper -->
+
+    <div class="modal fade" id="modal-developer" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-code"></i> DEVELOPER INFO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mlm">
+                        <label class="mbn text-danger">This featured will be available in next version.</label>
+                        <p><small class="text-muted">This module in not available yet!</small></p>
+                        <p>CURRENT VERSION v1.0</p>
+                    </div>
+                    <hr>
+                    <div class="mtm mlm text-muted">
+                        <label class="mbn">REQUEST THIS FEATURE</label>
+                        <p><a href="mailto:anggadarkprince@gmail.com">Angga Ari Wijaya</a> (Starter of Sketch Project Studio).</p>
+                        <p>Developer <strong>Contact:</strong> (+62) 8565547868 <br>
+                            <strong>Address:</strong> Gresik, Jatim - Indonesia</p>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <a href="#" data-dismiss="modal" class="btn btn-default">I'VE GOT IT</a>
+                    <a href="mailto:mailto:anggadarkprince@gmail.com" class="btn btn-primary">REQUEST NEXT UPDATE</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="{{ asset('library/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('library/bootstrap/dist/js/bootstrap.min.js') }}"></script>

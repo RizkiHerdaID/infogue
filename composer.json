@@ -22,7 +22,8 @@
         ],
         "psr-4": {
             "Infogue\\": "app/"
-        }
+        },
+        "files": ["app/Http/helpers.php"]
     },
     "autoload-dev": {
         "classmap": [

@@ -26,16 +26,18 @@ $(function () {
         }
     }
 
-    $("html").niceScroll({
-        cursorcolor: '#4dc4d2',
-        cursorborder: 'none',
-        horizrailenabled: false
-    });
+    if (!/Edge/.test(navigator.userAgent)) {
+        $("html").niceScroll({
+            cursorcolor: '#4dc4d2',
+            cursorborder: 'none',
+            horizrailenabled: false
+        });
 
-    $(".modal").niceScroll({
-        cursorcolor: '#4dc4d2',
-        cursorborder: 'none'
-    });
+        $(".modal").niceScroll({
+            cursorcolor: '#4dc4d2',
+            cursorborder: 'none'
+        });
+    }
 
     if ($("#wrapper").height() < $(window).height()) {
         $("#wrapper").css('position', 'absolute').css('height', '100%').css('width', '100%');

@@ -1,31 +1,15 @@
 $(function () {
     var websiteUrl = $('meta[name="url"]').attr('content');
-    var wrapper = $("#wrapper");
 
-    $(window).resize(function () {
-        setLayout();
-    });
+    /*
+     * --------------------------------------------------------------------------
+     * Javascript Libraries
+     * --------------------------------------------------------------------------
+     * Setup all libraries including nicescroll, summernote wysiwyg, timeago,
+     * input tags, validation and typeahead.
+     */
 
-    function setLayout() {
-        if ($(window).height() < 450) {
-            $(".login-footer").fadeOut(300);
-        }
-        else {
-            $(".login-footer").fadeIn(300);
-        }
-
-        if ($(window).width() < 767) {
-            if (!wrapper.hasClass('toggled')) {
-                wrapper.addClass('toggled');
-            }
-        }
-        else {
-            if (wrapper.hasClass('toggled')) {
-                wrapper.removeClass('toggled');
-            }
-        }
-    }
-
+    // ADD NICE SCROLL EXCEPT IE:EDGE
     if (!/Edge/.test(navigator.userAgent)) {
         $("html").niceScroll({
             cursorcolor: '#4dc4d2',
@@ -37,37 +21,126 @@ $(function () {
             cursorcolor: '#4dc4d2',
             cursorborder: 'none'
         });
+
+        $("#sidebar-wrapper").niceScroll({
+            cursorcolor: '#4dc4d2',
+            cursorborder: 'none'
+        });
     }
 
+    // SUMMERNOTE
+    if ($('.summernote').length) {
+        $('.summernote').summernote({
+            toolbar: [
+                ['font', ['style']],
+                ['style', ['bold', 'italic', 'underline']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['picture', 'video', 'link']],
+                ['misc', ['fullscreen']]
+            ],
+            placeholder: 'Write here...',
+            height: 200
+        });
+
+        // CHANGE DEFAULT UPLOAD IMAGE INPUT
+        $(".note-group-select-from-files").find(".note-image-input").remove();
+        var inputFile = "<div class='css-file'>" +
+            "<span class='file-info'>No file selected</span>" +
+            "<button class='btn btn-primary' type='button'>SELECT<span class='hidden-xs'> IMAGE</span></button>" +
+            "<input type='file' class='file-input note-image-input form-control' name='files' accept='image/*' multiple='multiple'/>" +
+            "</div>";
+        $(".note-group-select-from-files").append(inputFile);
+
+        // CHANGE DEFAULT CHECKBOX
+        $(".link-dialog .checkbox").remove();
+        var inputCheckbox = "<div class='checkbox'>" +
+            "<input type='checkbox' name='link' id='link' class='css-checkbox' checked>" +
+            "<label for='link' class='css-label'>Open in new window</label>" +
+            "</div>";
+        $(".link-dialog .modal-body").append(inputCheckbox);
+
+        // ADD LITTLE NOTIFICATION ON FULLSCREEN BUTTON
+        setTimeout(function () {
+            $(".note-btn.btn-fullscreen").tooltip('show');
+        }, 1000);
+
+        setTimeout(function () {
+            $(".note-btn.btn-fullscreen").tooltip('hide');
+        }, 5000);
+    }
+
+    // TIME AGO
+    $("time.timeago").timeago();
+
+
+    /*
+     * --------------------------------------------------------------------------
+     * Application Function
+     * --------------------------------------------------------------------------
+     * Snippet script necessary to build this application.
+     */
+
+    // SET FULL HEIGHT IF CONTENT TOO SHORT
     if ($("#wrapper").height() < $(window).height()) {
         $("#wrapper").css('position', 'absolute').css('height', '100%').css('width', '100%');
         $(".content").css('min-height', $(window).height() - $('header').height() - $('breadcrumb-wrapper').height() - 40 - 40);
     }
 
-    $("#sidebar-wrapper").niceScroll({
-        cursorcolor: '#4dc4d2',
-        cursorborder: 'none'
-    });
-
+    // SIMPLE CHART HEIGHT
     $(".chart .fill").each(function () {
         $(this).height($(this).data('value'));
     });
 
+    // RENDER RATING NUMBER INTO VISUAL
+    renderRate();
+
+    function renderRate() {
+        $('.rating-wrapper').each(function () {
+            var rating = $(this).data('rating');
+
+            $(this).html("");
+
+            for (var index = 0; index < 5; index++) {
+                if (index < rating) {
+                    $(this).append("<i class='fa fa-circle rated'></i>")
+                }
+                else {
+                    $(this).append("<i class='fa fa-circle unrated'></i>")
+                }
+            }
+        });
+    }
+
+
+    /*
+     * --------------------------------------------------------------------------
+     * Checkbox & Select Rows
+     * --------------------------------------------------------------------------
+     * Checkbox table to select rows, this functions checking if multiple
+     * control button is needed or not, select all by single click and change
+     * selected row color by adding bootstrap class.
+     */
+
+    // HIDE MULTIPLE ROW CONTROL
+    $('.group-control').hide();
+
+    // SELECT ROW WITH CHECKBOX
     $("tbody .css-checkbox").change(function () {
+        var subtable = $(this).closest("tbody").next(".sub-table");
         if ($(this).is(':checked')) {
             $(this).closest("tr").addClass('success');
-            $(this).closest("tbody").next(".sub-table").find(".css-checkbox").prop('checked', true);
-            $(this).closest("tbody").next(".sub-table").find("tr").addClass('success');
+            subtable.find(".css-checkbox").prop('checked', true);
+            subtable.find("tr").addClass('success');
         }
         else {
             $(this).closest("tr").removeClass('success');
-            $(this).closest("tbody").next(".sub-table").find(".css-checkbox").prop('checked', false);
-            $(this).closest("tbody").next(".sub-table").find("tr").removeClass('success');
+            subtable.find(".css-checkbox").prop('checked', false);
+            subtable.find("tr").removeClass('success');
         }
-        checkboxs_check();
+        selectedCheckboxCheck();
     });
 
-    $('.group-control').hide();
+    // SELECT ALL ROWS
     $("thead .css-checkbox").change(function () {
         if ($(this).is(':checked')) {
             $("tbody .css-checkbox").prop('checked', true);
@@ -77,10 +150,11 @@ $(function () {
             $("tbody .css-checkbox").prop('checked', false);
             $("tbody").find("tr").removeClass('success');
         }
-        checkboxs_check();
+        selectedCheckboxCheck();
     });
 
-    function checkboxs_check() {
+    // CHECK IF THERE IS ROW SELECTED
+    function selectedCheckboxCheck() {
         var isChecked = false;
         $("tbody .css-checkbox").each(function () {
             if ($(this).is(':checked')) {
@@ -96,12 +170,24 @@ $(function () {
         }
     }
 
+
+    /*
+     * --------------------------------------------------------------------------
+     * Filter Data
+     * --------------------------------------------------------------------------
+     * Filtering data by dropdown option, the filters including data, status,
+     * sorting, and sorting method, change dropdown like select and build
+     * query string.
+     */
+
+    // DROPDOWN AS SELECT
     $(".dropdown.select a").click(function (e) {
         e.preventDefault();
         var text = $(this).text().toUpperCase() + " <span class='caret'></span>";
         $(this).closest(".dropdown").find("button.dropdown-toggle").html(text);
     });
 
+    // FILTER DATA
     $('.filter .dropdown.data a').click(function () {
         var value = $(this).text().toLowerCase();
         if ($(this).data('value') != null) {
@@ -110,27 +196,32 @@ $(function () {
         filterData('data', (value == 'all data') ? 'all' : value);
     });
 
+    // FILTER STATUS
     $('.filter .dropdown.status a').click(function () {
         var value = $(this).text().toLowerCase();
         filterData('status', (value == 'all status') ? 'all' : value);
     });
 
+    // FILTER SORT ATTRIBUTE
     $('.filter .dropdown.by a').click(function () {
         var value = $(this).text().toLowerCase();
         filterData('by', value);
     });
 
+    // FILTER SORT METHOD
     $('.filter .dropdown.method a').click(function () {
         var value = $(this).text().toLowerCase();
         filterData('sort', (value == 'ascending') ? 'asc' : 'desc');
     });
 
+    // BUILD QUERY FILTER
     function filterData(key, value) {
         var url = window.location.origin + window.location.pathname;
         var query = window.location.search.substring(1);
         var newQuery = '?';
         var vars = query.split("&").clean('');
         var isNewQuery = true;
+
         for (var i = 0; i < vars.length; i++) {
             var pair = vars[i].split("=");
             if (pair[0] == key) {
@@ -156,6 +247,7 @@ $(function () {
         window.location.replace(url + newQuery);
     }
 
+    // CREATE FUNCTION ON ARRAY
     Array.prototype.clean = function (deleteValue) {
         for (var i = 0; i < this.length; i++) {
             if (this[i] == deleteValue) {
@@ -167,25 +259,12 @@ $(function () {
     };
 
 
-    // RATING ------------------------------------------------------------------------
-    renderRate();
-    function renderRate() {
-        $('.rating-wrapper').each(function () {
-            var rating = $(this).data('rating');
-
-            $(this).html("");
-
-            for (var index = 0; index < 5; index++) {
-                if (index < rating) {
-                    $(this).append("<i class='fa fa-circle rated'></i>")
-                }
-                else {
-                    $(this).append("<i class='fa fa-circle unrated'></i>")
-                }
-            }
-        });
-    }
-
+    /*
+     * --------------------------------------------------------------------------
+     * Quick Action
+     * --------------------------------------------------------------------------
+     * Asynchronous method gives immediately respond of button.
+     */
 
     // APPROVE
     $(".approve").click(function (e) {
@@ -205,7 +284,7 @@ $(function () {
             .text("SUSPEND");
     });
 
-    // HEADLINE & TRENDING FUNCTIONALITY ---------------------------------
+    // HEADLINE FUNCTIONALITY
     $(".headline").click(function (e) {
         e.preventDefault();
         var row = $(this).closest("tr");
@@ -220,6 +299,7 @@ $(function () {
         }
     });
 
+    // TRENDING FUNCTIONALITY
     $(".trending").click(function (e) {
         e.preventDefault();
         var row = $(this).closest("tr");
@@ -234,6 +314,7 @@ $(function () {
         }
     });
 
+    // ADD FAKE FOCUS ON TAGS DIV
     $('.bootstrap-tagsinput').focusin(function () {
         $(this).addClass('focus');
     });
@@ -241,67 +322,27 @@ $(function () {
         $(this).removeClass('focus');
     });
 
-
-    // FILE INPUT -------------------------------------------------------------------
+    // FILE INPUT VALUE
     $('.file-input').change(function () {
         $(this).parent().find('.file-info').text($(this).val());
     });
 
 
-    // SUMMERNOTE -------------------------------------------------------------------
-    if ($('.summernote').length) {
-        $('.summernote').summernote({
-            toolbar: [
-                ['font', ['style']],
-                ['style', ['bold', 'italic', 'underline']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['picture', 'video', 'link']],
-                ['misc', ['fullscreen']]
-            ],
-            placeholder: 'write here...',
-            height: 200
-        });
-
-        $(".note-group-select-from-files").find(".note-image-input").remove();
-        var inputFile = "<div class='css-file'>" +
-            "<span class='file-info'>No file selected</span>" +
-            "<button class='btn btn-primary' type='button'>SELECT<span class='hidden-xs'> IMAGE</span></button>" +
-            "<input type='file' class='file-input note-image-input form-control' name='files' accept='image/*' multiple='multiple'/>" +
-            "</div>";
-        $(".note-group-select-from-files").append(inputFile);
-
-        $(".link-dialog .checkbox").remove();
-        var inputCheckbox = "<div class='checkbox'>" +
-            "<input type='checkbox' name='link' id='link' class='css-checkbox' checked>" +
-            "<label for='link' class='css-label'>Open in new window</label>" +
-            "</div>";
-        $(".link-dialog .modal-body").append(inputCheckbox);
-
-        setTimeout(function () {
-            $(".note-btn.btn-fullscreen").tooltip('show');
-        }, 1000);
-
-        setTimeout(function () {
-            $(".note-btn.btn-fullscreen").tooltip('hide');
-        }, 5000);
-    }
-
-    // SUB TABLE --------------------------------------------------------------------
-    $(".table-multiple tbody:not(.sub-table) > tr > td").not(":last-child").click(function () {
-        $(this).closest("tr").toggleClass("active");
-
-        $(".table-multiple")
-            .find($(this).closest("tr").data("target"))
-            .toggleClass("open");
-    });
-
-    $("time.timeago").timeago();
+    /*
+     * --------------------------------------------------------------------------
+     * Reset Form
+     * --------------------------------------------------------------------------
+     * Set default value or empty the form. Add prevent # link to trigger
+     * redirection.
+     */
 
     $("a[href='#']").click(function (e) {
         e.preventDefault();
 
+        // SETTING FORM
         if ($(this).hasClass("reset-setting")) {
             $("#website").val("InfoGue.id");
+            $('#keywords').tagsinput('removeAll');
             $('#keywords').tagsinput('add', 'news');
             $('#keywords').tagsinput('add', 'technology');
             $('#keywords').tagsinput('add', 'science');
@@ -313,21 +354,23 @@ $(function () {
             $("#online").prop("checked", true);
             $("#address").val("Avenue Street 23 Jakarta, Indonesia");
             $("#contact").val("+6285655479868");
-            $("#email").val("anggadarkprince@gmail.com");
-            $("#description").val("Public social news feeder");
+            $("#email").val("support@infogue.id");
+            $("#description").val("The most update web portal news. We always provide latest article and information with high integrity and truth. Knowledge is beyond among us to share with you.");
             $("#owner").val("Angga Ari Wijaya");
-            $("#latitude").val("0.34574576574");
-            $("#longitude").val("0.45734573457");
-            $("#facebook").val("angga.ari");
-            $("#twitter").val("@anggadarkprince");
-            $("#google").val("+AnggaAriWijaya");
+            $("#latitude").val("6.1745");
+            $("#longitude").val("106.8227");
+            $("#facebook").val("https://www.facebook.com/infogue");
+            $("#twitter").val("https://www.twitter.com/infogue");
+            $("#googleplus").val("https://plus.google.com/+InfoGue");
             $("#article").prop("checked", true);
             $("#feedback").prop("checked", true);
             $("#member").prop("checked", true);
             $("#yes").prop("checked", true);
-            $("#name").val("Adminisrtator");
+            $("#name").val("Administrator");
+            $("#email_admin").val("admin@infogue.id");
         }
 
+        // ARTICLE FORM
         if ($(this).hasClass("reset-article")) {
             $("#title").val("");
             $("#slug").val("");
@@ -341,6 +384,7 @@ $(function () {
             $("#slug").removeClass('changed');
         }
 
+        // CONTRIBUTOR
         if ($(this).hasClass("reset-contributor")) {
             $("#name").val("");
             $('#date').val("");
@@ -361,11 +405,33 @@ $(function () {
             $("#push-notification").prop("checked", true);
         }
 
+        // SIMPLE PRINT DIV
         if ($(this).hasClass("print")) {
             printDiv("content");
         }
     });
 
+    // PRINTER
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+        location.reload();
+    }
+
+
+    /*
+     * --------------------------------------------------------------------------
+     * Article & Slug
+     * --------------------------------------------------------------------------
+     * Building method to create slug by passing plain text, check if the slug
+     * input text has been edited then stop to guess slug.
+     */
+
+    // STRING TO SLUG
     function createSlug(str) {
         var $slug;
         var trimmed = $.trim(str);
@@ -375,37 +441,32 @@ $(function () {
         return $slug.toLowerCase();
     }
 
-
+    // CREATE SLUG WHEN TITLE IS TYPED
     $("#title").keyup(function () {
         if (!$("#slug").hasClass('changed')) {
             $("#slug").val(createSlug($(this).val()));
         }
     });
 
-
+    // ADD MARK WHEN SLUG IS CHANGING
     $("#slug").keyup(function () {
         $(this).addClass('changed');
     });
 
 
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-
-        document.body.innerHTML = printContents;
-
-        window.print();
-
-        document.body.innerHTML = originalContents;
-        location.reload();
-    }
+    /*
+     * --------------------------------------------------------------------------
+     * Layout Resizer
+     * --------------------------------------------------------------------------
+     * Check device dimension, is it small, medium or large then try to fits
+     * the layout according dimension, this function including change sidebar
+     * to sliding off-canvas navigation and chart resizing.
+     */
 
     var isLarge = false;
     var isMedium = false;
     var isSmall = false;
     var isExtraSmall = false;
-
-    var wrapper = $("#wrapper");
 
     setDevice();
     setLayout();
@@ -417,7 +478,7 @@ $(function () {
         setLayout();
     });
 
-    // GLOBAL LAYOUT --------------------------------------------------------------
+    // FIND OUT DEVICE DIMENSION ON RESIZE
     function setDevice() {
         var viewportWidth = $(window).width();
         isLarge = (viewportWidth >= 1200);
@@ -426,9 +487,12 @@ $(function () {
         isExtraSmall = (viewportWidth <= 767);
     }
 
+    // CHANGE THE LAYOUT ON RESIZE
     function setLayout() {
+        // Responsive table
         resizeTable();
 
+        // Hide login footer
         if ($(window).height() < 450) {
             $(".login-footer").fadeOut(300);
         }
@@ -436,18 +500,7 @@ $(function () {
             $(".login-footer").fadeIn(300);
         }
 
-        if (isExtraSmall) {
-            if (!wrapper.hasClass('toggled')) {
-                wrapper.addClass('toggled');
-                wrapper.find("#content-wrapper").removeAttr('style');
-            }
-        }
-        else {
-            if (wrapper.hasClass('toggled')) {
-                wrapper.removeClass('toggled');
-            }
-        }
-
+        // Toggle some part of chart on dashboard
         if (isSmall || isLarge) {
             $(".bar.sm-screen").css('display', 'table-cell');
         }
@@ -457,7 +510,31 @@ $(function () {
     }
 
 
-    // NAVIGATION -----------------------------------------------------------------
+    /*
+     * --------------------------------------------------------------------------
+     * Off-Canvas
+     * --------------------------------------------------------------------------
+     * Sliding push off-canvas function, check device dimension and set class
+     * and position of wrapper, add toggle function on navigation button toggle
+     * finally prevent event triggered on navigation container itself.
+     */
+
+    var wrapper = $("#wrapper");
+
+    // SET SIDE BAR MUST BE OPENED OR CLOSED
+    if (isExtraSmall) {
+        if (!wrapper.hasClass('toggled')) {
+            wrapper.addClass('toggled');
+            wrapper.find("#content-wrapper").removeAttr('style');
+        }
+    }
+    else {
+        if (wrapper.hasClass('toggled')) {
+            wrapper.removeClass('toggled');
+        }
+    }
+
+    // NAVIGATION TOGGLE
     $(".toggle-nav").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -474,6 +551,7 @@ $(function () {
         resizeContentWrapper();
     });
 
+    // CLOSE NAVIGATION WHEN CLICK OUTSIDE
     $(".content").click(function () {
         if ($(window).width() <= 767) {
             if (!wrapper.hasClass('toggled')) {
@@ -483,7 +561,12 @@ $(function () {
         }
     });
 
+    // PREVENT EVENT ON SIDEBAR ITSELF
+    $('#sidebar-wrapper').click(function (event) {
+        event.stopPropagation();
+    });
 
+    // PUSH AND MAINTAIN SIZE OF CONTENT
     function resizeContentWrapper() {
         if ($(window).width() <= 767) {
             if (!wrapper.hasClass('toggled')) {
@@ -495,18 +578,29 @@ $(function () {
         }
     }
 
+    /*
+     * --------------------------------------------------------------------------
+     * Responsive Table & Subtable
+     * --------------------------------------------------------------------------
+     * Check dimension of device and decide class and position of table rows,
+     * add label if necessary, check empty row and replace with label title, and
+     * add subtable toggle open.
+     */
 
-    // TABLE ---------------------------------------------------------------------
+    // TABLE
     function resizeTable() {
         if (isSmall || isExtraSmall) {
+            // RETRIEVE HEADING TEXT AND PUT IN ARRAY
             var heading = $(".table > thead th").map(function () {
                 var text = $.trim($(this).text()).toUpperCase();
+                // REPLACE EMPTY HEADING
                 if (text == '') {
                     text = 'SELECT'
                 }
                 return text;
             }).get();
 
+            // ADD LABEL HEADING BEFORE DATA IN EACH ROW
             $(".table tbody:not(.sub-table) td").find(".label-title").remove();
             $(".table tbody:not(.sub-table) tr").each(function () {
                 for (var i = 0; i < heading.length; i++) {
@@ -514,7 +608,7 @@ $(function () {
                 }
             });
 
-            // SUB TABLE
+            // SUB TABLE HEADING
             var headingSub = $(".table > tbody.sub-table .sub-head th").map(function () {
                 var text = $.trim($(this).text()).toUpperCase();
                 if (text == '') {
@@ -522,8 +616,9 @@ $(function () {
                 }
                 return text;
             }).get();
-            headingSub[0] = '';
+            headingSub[0] = ''; // KEEP THE FIRST EMPTY ON TITLE
 
+            // ADD LABEL HEADING BEFORE SUB DATA IN EACH ROW
             $(".table tbody.sub-table td").find(".label-title").remove();
             $(".table tbody.sub-table tr:not(.sub-head)").each(function () {
                 for (var i = 0; i < heading.length; i++) {
@@ -532,10 +627,12 @@ $(function () {
             });
         }
         else {
+            // RESTORE TABLE AND REMOVE LABELS TITLE
             $(".table tbody:not(.sub-table) td").find(".label-title").remove();
             $(".table tbody.sub-table td").find(".label-title").remove();
         }
 
+        // CHANGE FILTER DROPDOWN POSITION OM MOBILE
         if (isExtraSmall) {
             $(".filter ul.dropdown-menu").removeClass("dropdown-menu-right").addClass("dropdown-menu-left");
         }
@@ -543,6 +640,15 @@ $(function () {
             $(".filter ul.dropdown-menu").removeClass("dropdown-menu-left").addClass("dropdown-menu-right");
         }
     }
+
+    // SUB TABLE TOGGLE OPEN
+    $(".table-multiple tbody:not(.sub-table) > tr > td").not(":last-child").click(function () {
+        $(this).closest("tr").toggleClass("active");
+
+        $(".table-multiple")
+            .find($(this).closest("tr").data("target"))
+            .toggleClass("open");
+    });
 
 
     /*
@@ -554,6 +660,7 @@ $(function () {
      * bootstrap error form semantic.
      */
 
+    // OVERRIDE DEFAULT SETTING
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -572,6 +679,7 @@ $(function () {
         }
     });
 
+    // CUSTOM VALIDATION RULE
     $.validator.addMethod("checkTags", function (value) {
         return ($(".bootstrap-tagsinput").find(".tag").length > 0);
     });
@@ -626,9 +734,10 @@ $(function () {
         }
     });
 
+    // SETTING FORM
     $("#form-setting").validate({
         rules: {
-            "keywords-dummy": "checkTags",
+            keywords_dummy: "checkTags",
             new_password: {
                 minlength: 6,
                 maxlength: 20
@@ -640,19 +749,46 @@ $(function () {
             }
         },
         messages: {
-            "keywords-dummy": "Keywords are required",
-            password: "Password is required to save",
+            website: {
+                required: "Website name is required",
+                maxlength: "Website name max length is {0} characters"
+            },
+            keywords_dummy: "Keywords are required",
             contact: {
                 required: "Contact or Fax is required",
                 maxlength: "Contact max length is {0} characters"
             },
-            website: {
-                required: "Contact or Fax is required",
-                maxlength: "Contact max length is {0} characters"
+            address: {
+                required: "Address is required",
+                maxlength: "Address max length is {0} characters"
             },
+            email: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters"
+            },
+            description: {
+                required: "Description is required",
+                maxlength: "Description max length is {0} characters"
+            },
+            latitude: {
+                required: "Latitude is required",
+            },
+            longitude: {
+                required: "Longitude is required",
+            },
+            email_admin: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters"
+            },
+            name: {
+                required: "Name is required",
+                maxlength: "Name max length is {0} characters"
+            },
+            password: "Password is required to save",
         }
     });
 
+    // ARTICLE FORM
     $("#form-article").validate({
         errorPlacement: function (error, element) {
             $(".note-btn.btn-fullscreen").tooltip('hide');
@@ -678,6 +814,7 @@ $(function () {
         }
     });
 
+    // CONTRIBUTOR FORM
     $("#form-contributor").validate({
         groups: {
             birthday: "date month year"
@@ -712,6 +849,17 @@ $(function () {
         }
     });
 
+
+    /*
+     * --------------------------------------------------------------------------
+     * Form Functions
+     * --------------------------------------------------------------------------
+     * List of function which used to creating and manipulating data, including
+     * retrieve subcategory, deleting, showing detail, populating data-* into
+     * form and etc.
+     */
+
+    // RETRIEVE SUBCATEGORY VIA AJAX
     $('select[name="category"]').change(function () {
         loadingSelect($('select[name="subcategory"]'));
         $.getJSON(websiteUrl + "/admin/article/subcategory/" + $(this).val(), function (data) {
@@ -737,16 +885,19 @@ $(function () {
         });
     });
 
+    // SET SELECT LOADING
     function loadingSelect($tag) {
         $tag.attr('disabled', '');
         $tag.html('<option value="loading">Please Wait...</option>');
     }
 
+    // REMOVE SELECT LOADING STATUS
     function completeSelect($tag) {
         $tag.removeAttr('disabled');
         $tag.find('option[value="loading"]').remove();
     }
 
+    // DELETE BUTTON
     $(document).on("click", ".btn-delete", function () {
         var selectedRows = new Array();
         var selectedRowSubs = new Array();
@@ -794,6 +945,7 @@ $(function () {
         $('#modal-delete form .delete-title').text(title);
     });
 
+    // MARKING DATA
     $('.btn-mark').click(function () {
         var id = $(this).closest('*[data-id]').data('id');
         var label = $(this).text().toString().toLowerCase();
@@ -811,6 +963,7 @@ $(function () {
         $('#form-mark').submit();
     });
 
+    // SHOW FEEDBACK DETAIL
     $('.btn-feedback-detail').click(function () {
         var feedback = $(this).closest('*[data-id]');
         var id = feedback.data('id');
@@ -827,6 +980,7 @@ $(function () {
         $('#modal-detail .btn-feedback-reply').data('id', id);
     });
 
+    // REPLY FEEDBACK
     $('.btn-feedback-reply').click(function () {
         var feedback = $('tr[data-id="' + $(this).data('id') + '"]').closest('*[data-id]');
         var id = feedback.data('id');
@@ -845,6 +999,7 @@ $(function () {
         $('#modal-reply textarea[name="reply"]').html('Hi ' + name + ',\n\r--reply here\n\rRegard,\nInfogue Support');
     });
 
+    // SHOW ARTICLE DETAIL
     $('.btn-article-detail').click(function () {
         var article = $(this).closest('*[data-id]');
         $('#modal-detail .title').text(article.data('title')).attr('href', article.data('article-ref')).unbind('click');
@@ -866,6 +1021,7 @@ $(function () {
         }
     });
 
+    // TYPEAHEAD RETRIEVE ALL TAGS
     if ($('.bootstrap-tagsinput input').length) {
         var tags = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -880,6 +1036,8 @@ $(function () {
     }
 
     var firstCategoryRequest = true;
+
+    // ADD CATEGORY
     $('.btn-category-create').click(function () {
         var categoryModal = $('#modal-category');
 
@@ -899,6 +1057,7 @@ $(function () {
         categoryModal.find('textarea[name="description"]').val('');
     });
 
+    // EDIT CATEGORY
     $('.btn-category-edit').click(function () {
         var categoryModal = $('#modal-category');
         var categoryData = $(this).closest('*[data-id]');
@@ -923,10 +1082,12 @@ $(function () {
         categoryModal.find('textarea[name="description"]').val(description);
     });
 
+    // ADDITIONAL DELETE INFO
     $('.btn-delete-category').click(function () {
         $('#modal-delete form .title').text(' CATEGORY');
     });
 
+    // ADD SUBCATEGORY
     $('.btn-subcategory-create').click(function () {
         var subcategoryModal = $('#modal-subcategory');
 
@@ -948,6 +1109,7 @@ $(function () {
         subcategoryModal.find('textarea[name="description"]').val('');
     });
 
+    // EDIT SUBCATEGORY
     $('.btn-subcategory-edit').click(function () {
         var subcategoryModal = $('#modal-subcategory');
         var subcategoryData = $(this).closest('*[data-id]');
@@ -976,6 +1138,7 @@ $(function () {
         subcategoryModal.find('textarea[name="description"]').val(description);
     });
 
+    // ADDITIONAL DELETE INFO
     $('.btn-delete-subcategory').click(function () {
         $('#modal-delete form .title').text(' SUBCATEGORY');
     });

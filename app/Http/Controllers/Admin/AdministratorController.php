@@ -27,7 +27,7 @@ class AdministratorController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller is responsible for handling dashboard data, update web
-    | setting and static page like about.
+    | setting and view static page.
     |
     */
 
@@ -101,7 +101,7 @@ class AdministratorController extends Controller
             'feedback'      => 'boolean',
             'member'        => 'boolean',
             'approve'       => 'boolean',
-            'admin_email'   => 'required|email|max:30',
+            'email_admin'   => 'required|email|max:30|unique:Users,email,' . Auth::guard('admin')->user()->id,
             'name'          => 'required|max:50',
             'avatar'        => 'mimes:jpg,jpeg,gif,png|max:1000',
             'password'      => 'required|check_password:admin',
@@ -131,7 +131,7 @@ class AdministratorController extends Controller
             }
 
             if (isset($failedRules['article']['Boolean']) || isset($failedRules['feedback']['Boolean']) || isset($failedRules['member']['Boolean'])) {
-                $validator->errors()->add('notification', 'Notification should be has yes or no value');
+                $validator->errors()->add('notification', 'Notification should be yes or no value');
             }
 
             $this->throwValidationException(
@@ -170,6 +170,7 @@ class AdministratorController extends Controller
 
                 $user = Auth::guard('admin')->user();
                 $user->name = $request->input('name');
+                $user->email = $request->input('email_admin');
                 if ($request->has('new_password') && !empty($request->get('new_password'))) {
                     $request->merge(['password' => Hash::make($request->input('new_password'))]);
                     $user->password = $request->input('password');

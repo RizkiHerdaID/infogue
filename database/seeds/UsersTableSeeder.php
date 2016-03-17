@@ -15,9 +15,18 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
+                'name' => 'Infogue Support',
+                'email' => 'support@infogue.id',
+                'password' => bcrypt('admin1234'),
+                'avatar' => 'admin_1.jpg',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
+            [
                 'name' => 'Angga Ari Wijaya',
                 'email' => 'anggadarkprince@gmail.com',
                 'password' => bcrypt('admin1234'),
+                'avatar' => 'admin_1.jpg',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
@@ -25,6 +34,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Super Admin',
                 'email' => 'sketchprojectstudio@gmail.com',
                 'password' => bcrypt('su1234'),
+                'avatar' => 'admin_2.jpg',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]

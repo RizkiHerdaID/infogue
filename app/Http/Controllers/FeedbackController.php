@@ -46,13 +46,14 @@ class FeedbackController extends Controller
     {
         $this->feedback->fill($request->all());
 
-        if($this->feedback->save()){
-            return redirect(route('page.contact').'#feedback')
-                ->with('status','success')
-                ->with('message', Lang::get('alert.feedback_sent'));;
+        if ($this->feedback->save()) {
+            return redirect(route('page.contact') . '#feedback')
+                ->with([
+                    'status' => 'success',
+                    'message' => Lang::get('alert.feedback.send')
+                ]);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
     }
-
 }

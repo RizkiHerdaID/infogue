@@ -13,6 +13,21 @@ return [
     |
     */
 
-    'feedback_sent' => 'Feedback successfully sent',
+    'error'                 => [
+        'generic'   => 'Ops, something is getting wrong',
+        'action'    => ':action :module :status'
+    ],
+    'feedback'              => [
+        'send'          => 'We have received your message and will get in touch shortly, Thanks!',
+        'reply'         => 'Feedback ticket #<strong>:id</strong> has been sent to <strong>:email</strong>',
+        'important'     => 'Feedback from <strong>:name</strong> marked as important',
+        'archived'      => 'Feedback from <strong>:name</strong> marked as archive',
+        'delete'        => '<strong>:name</strong>\'s feedback was deleted',
+        'delete_all'    => ':count feedbacks were deleted',
+    ],
+    'setting'               => [
+        'update'        => 'Settings have been updated by <strong>:name</strong>',
+        'fail'          => 'Unable to save settings, try again!'
+    ]
 
 ];

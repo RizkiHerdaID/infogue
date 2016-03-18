@@ -4,6 +4,7 @@ namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Infogue\Feedback;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -69,10 +70,10 @@ class FeedbackController extends Controller
         if ($result) {
             return redirect(route('admin.feedback.index'))->with([
                 'status' => 'success',
-                'message' => 'Reply of feedback <strong>#' . $id . '</strong> has been sent to <strong>' . $email . '</strong>'
+                'message' => Lang::get('alert.feedback.reply', ['id' => $id, 'email' => $email])
             ]);
         } else {
-            return redirect()->back()->withErrors();
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
         }
     }
 
@@ -92,13 +93,13 @@ class FeedbackController extends Controller
         $result = $feedback->save();
 
         if ($result) {
-            return redirect()
-                ->route('admin.feedback.index')->with([
-                    'status' => $label == 'important' ? 'warning' : 'success',
-                    'message' => 'Feedback from <strong>' . $feedback->name . '</strong> marked as <strong>' . $label . '</strong>',
+            return redirect(route('admin.feedback.index'))
+                ->with([
+                    'status' => ($label == 'important') ? 'warning' : 'success',
+                    'message' => Lang::get('alert.feedback.'.$label, ['name' => $feedback->name]),
                 ]);
         } else {
-            return redirect()->back()->withErrors();
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
         }
     }
 
@@ -120,27 +121,29 @@ class FeedbackController extends Controller
          * deletion action.
          */
 
-        if (!empty(trim($request->input('selected')))) {
-            $feedback_ids = explode(',', $request->input('selected'));
+        $selected = $request->input('selected');
+
+        if (!empty(trim($selected))) {
+            $feedback_ids = explode(',', $selected);
 
             $delete = Feedback::whereIn('id', $feedback_ids)->delete();
 
-            $name = count($feedback_ids) . ' Feedbacks';
+            $message = Lang::get('alert.feedback.delete_all', ['count' => $delete]);
         } else {
             $feedback = Feedback::findOrFail($id);
 
-            $name = $feedback->name;
+            $message = Lang::get('alert.feedback.delete', ['name' => $feedback->name]);
 
             $delete = $feedback->delete();
         }
 
-        $status = $delete ? 'warning' : 'danger';
-
-        $message = $delete ? '<strong>' . $name . '\'s</strong> feedback was deleted' : 'Something is getting wrong';
-
-        return redirect(route('admin.feedback.index'))->with([
-            'status' => $status,
-            'message' => $message,
-        ]);
+        if ($delete) {
+            return redirect(route('admin.feedback.index'))->with([
+                'status' => 'warning',
+                'message' => $message,
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+        }
     }
 }

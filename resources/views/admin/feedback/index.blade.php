@@ -5,22 +5,7 @@
 @section('content')
 
     <div id="content-wrapper">
-        <header>
-            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
-            <div class="title">
-                <h1>Feedback</h1>
-            </div>
-            <div class="control hidden-xs">
-                <div class="account clearfix">
-                    <div class="avatar-wrapper">
-                        <img src="{{ asset('images/contributors/'.Auth::guard('admin')->user()->avatar) }}" class="img-circle img-rounded">
-                        <div class="notify"></div>
-                    </div>
-                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>{{ Auth::guard('admin')->user()->name }}</strong></p>
-                </div>
-                <a href="{{ route('admin.login.destroy') }}" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
-            </div>
-        </header>
+        @include('admin.layouts._header')
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
@@ -238,7 +223,7 @@
                         </div>
                         <div class="form-group">
                             <label for="reply-message" class="mbs">MESSAGE : </label>
-                            <textarea name="reply" class="form-control message" id="reply-message" cols="30" rows="5" placeholder="Type message here" required></textarea>
+                            <textarea name="reply" class="form-control message" id="reply-message" cols="30" rows="7" placeholder="Type message here" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -262,7 +247,7 @@
                         <h4 class="modal-title"><i class="fa fa-trash"></i> DELETE FEEDBACK</h4>
                     </div>
                     <div class="modal-body">
-                        <label class="mbn">Are you sure delete the <span class="delete-title text-danger"></span>?</label>
+                        <label class="mbn">Are you sure delete the <span class="delete-title text-danger"></span> feedback?</label>
                         <p class="mbn"><small class="text-muted">All related data will be deleted.</small></p>
                     </div>
                     <div class="modal-footer">

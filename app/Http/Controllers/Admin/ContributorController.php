@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
@@ -93,19 +94,19 @@ class ContributorController extends Controller
             'new_password'          => 'confirmed|min:6'
         ];
 
-        if(!$request->has('email_subscription')){
+        if(!$request->has('email_subscription')) {
             $request->merge(['email_subscription' => 0]);
         }
-        if(!$request->has('email_message')){
+        if (!$request->has('email_message')) {
             $request->merge(['email_message' => 0]);
         }
-        if(!$request->has('email_follow')){
+        if (!$request->has('email_follow')) {
             $request->merge(['email_follow' => 0]);
         }
-        if(!$request->has('email_feed')){
+        if (!$request->has('email_feed')) {
             $request->merge(['email_feed' => 0]);
         }
-        if(!$request->has('mobile_notification')){
+        if (!$request->has('mobile_notification')) {
             $request->merge(['mobile_notification' => 0]);
         }
 
@@ -118,7 +119,7 @@ class ContributorController extends Controller
             $month = isset($failedRules['month']['Required']);
             $year = isset($failedRules['year']['Required']);
 
-            if($date || $month || $year) {
+            if ($date || $month || $year) {
                 $validator->errors()->add('birthday', 'Birthday is required');
             }
 
@@ -158,23 +159,23 @@ class ContributorController extends Controller
         $contributor->mobile_notification   = $request->input('mobile_notification');
 
         $image = new Uploader();
-        if($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'avatar_'.$id)){
+        if ($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'avatar_' . $id)) {
             $contributor->avatar = $request->input('avatar');
         }
-        if($image->upload($request, 'cover', base_path('public/images/covers/'), 'cover_'.$id)){
+        if ($image->upload($request, 'cover', base_path('public/images/covers/'), 'cover_' . $id)) {
             $contributor->cover = $request->input('cover');
         }
         if ($request->has('new_password') && !empty($request->get('new_password'))) {
             $contributor->password = Hash::make($request->input('new_password'));
         }
 
-        if($contributor->save()){
-            return redirect(route('admin.contributor.index'))
-                ->with('status', 'success')
-                ->with('message', '<strong>'.$contributor->name.'</strong> data has been updated');
-        }
-        else{
-            return redirect()->back()->withErrors(['error' => 'Something is getting wrong']);
+        if ($contributor->save()) {
+            return redirect(route('admin.contributor.index'))->with([
+                'status' => 'success',
+                'message' => Lang::get('alert.contributor.update', ['name' => $contributor->name]),
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
         }
     }
 
@@ -191,33 +192,32 @@ class ContributorController extends Controller
          * --------------------------------------------------------------------------
          * Delete contributor
          * --------------------------------------------------------------------------
-         * Check if selected variable is not empty so user intends to select multiple
+         * Check if selected variable is not empty then user intends to select multiple
          * rows at once, and prepare the feedback message according the type of
          * deletion action.
          */
 
-        if(!empty(trim($request->input('selected')))){
+        if(!empty(trim($request->input('selected')))) {
             $contributor_ids = explode(',', $request->input('selected'));
 
             $delete = Contributor::whereIn('id', $contributor_ids)->delete();
 
-            $name = count($contributor_ids).' Contributors';
-        }
-        else{
+            $message = Lang::get('alert.contributor.delete_all', ['count' => $delete]);
+        } else {
             $contributor = Contributor::findOrFail($id);
 
-            $name = $contributor->name;
+            $message = Lang::get('alert.contributor.delete', ['name' => $contributor->name]);
 
             $delete = $contributor->delete();
         }
 
-        $status = $delete ? 'warning' : 'danger';
-
-        $message = $delete ? 'The <strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
-
-        return redirect(route('admin.contributor.index'))->with([
-            'status' => $status,
-            'message' => $message,
-        ]);
+        if ($delete) {
+            return redirect(route('admin.contributor.index'))->with([
+                'status' => 'warning',
+                'message' => $message,
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+        }
     }
 }

@@ -82,10 +82,10 @@ class CategoryController extends Controller
 
         $category->fill($request->all());
 
-        if($category->save()){
+        if ($category->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Category <strong>'.$category->category.'</strong> was created'
+                'message' => 'Category <strong>' . $category->category . '</strong> was created'
             ]);
         }
 
@@ -105,10 +105,10 @@ class CategoryController extends Controller
 
         $category->fill($request->all());
 
-        if($category->save()){
+        if ($category->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Category <strong>'.$category->category.'</strong> was updated'
+                'message' => 'Category <strong>' . $category->category . '</strong> was updated'
             ]);
         }
 
@@ -133,11 +133,11 @@ class CategoryController extends Controller
          * deletion action.
          */
 
-        if(!empty(trim($request->input('selected')))){
+        if (!empty(trim($request->input('selected')))) {
             $category_ids = explode(',', $request->input('selected'));
             $subcategory_ids = [];
 
-            if($request->input('selected_sub') != ''){
+            if ($request->input('selected_sub') != '') {
                 $subcategory_ids = explode(',', $request->input('selected_sub'));
 
                 Subcategory::whereIn('id', $subcategory_ids)->delete();
@@ -145,9 +145,8 @@ class CategoryController extends Controller
 
             $delete = Category::whereIn('id', $category_ids)->delete();
 
-            $name = (count($category_ids) + count($subcategory_ids)).' Categories';
-        }
-        else{
+            $name = (count($category_ids) + count($subcategory_ids)) . ' Categories';
+        } else {
             $category = Category::findOrFail($id);
 
             $name = $category->category;
@@ -157,7 +156,7 @@ class CategoryController extends Controller
 
         $status = $delete ? 'warning' : 'danger';
 
-        $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
+        $message = $delete ? '<strong>' . $name . '</strong> was deleted' : 'Something is getting wrong';
 
         return redirect(route('admin.category.index'))->with([
             'status' => $status,

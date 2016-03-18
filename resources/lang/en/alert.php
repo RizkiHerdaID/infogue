@@ -27,7 +27,12 @@ return [
     ],
     'setting'               => [
         'update'        => 'Settings have been updated by <strong>:name</strong>',
-        'fail'          => 'Unable to save settings, try again!'
+        'fail'          => 'Unable to save settings, try again!',
+    ],
+    'contributor'           => [
+        'update'        => 'Contributor <strong>:name</strong> has been updated',
+        'delete'        => 'Contributor <strong>:name</strong> was deleted',
+        'delete_all'    => ':count contributors were deleted',
     ]
 
 ];

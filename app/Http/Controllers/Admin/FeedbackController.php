@@ -93,11 +93,10 @@ class FeedbackController extends Controller
         $result = $feedback->save();
 
         if ($result) {
-            return redirect(route('admin.feedback.index'))
-                ->with([
-                    'status' => ($label == 'important') ? 'warning' : 'success',
-                    'message' => Lang::get('alert.feedback.'.$label, ['name' => $feedback->name]),
-                ]);
+            return redirect(route('admin.feedback.index'))->with([
+                'status' => ($label == 'important') ? 'warning' : 'success',
+                'message' => Lang::get('alert.feedback.'.$label, ['name' => $feedback->name]),
+            ]);
         } else {
             return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
         }

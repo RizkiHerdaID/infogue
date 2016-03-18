@@ -28,7 +28,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            {{ Session::get('message') }}
+                            {!! Session::get('message') !!}
                         </div>
                     </div>
                 @endif

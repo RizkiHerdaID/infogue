@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Activity;
 use Infogue\Article;
@@ -178,7 +179,9 @@ class AdministratorController extends Controller
                 if ($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'admin_' . Auth::guard('admin')->user()->id)) {
                     $user->avatar = $request->input('avatar');
                 }
+
                 $user->save();
+
             } catch (\Exception $e) {
                 return redirect()->back()
                     ->withErrors($e->getErrors())
@@ -188,7 +191,7 @@ class AdministratorController extends Controller
 
         return redirect(route('admin.setting'))->with([
             'status' => 'success',
-            'message' => 'Setting has been updated',
+            'message' => Lang::get('alert.setting.update', ['name' => Auth::guard('admin')->user()->name]),
         ]);
     }
 

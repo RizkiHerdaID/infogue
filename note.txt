@@ -1,10 +1,12 @@
 .back-gray{
 	remove z-index - conflict with select image summernote
 }
-
 .css-file{
 	remove shadow inset
 }
 .bootstrap-tagsinput {
 	remove shadow inset
+}
+.article-preview.single-view article img{
+  max-width: 100% !important;
 }

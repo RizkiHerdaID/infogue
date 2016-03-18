@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateArticlesTable extends Migration
 {
@@ -33,6 +34,9 @@ class CreateArticlesTable extends Migration
             $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
 
             $table->index(['id', 'slug']);
+
+            DB::statement("ALTER TABLE articles MODIFY content LONGBLOB");
+            DB::statement("ALTER TABLE articles MODIFY content_update LONGBLOB");
         });
     }
 

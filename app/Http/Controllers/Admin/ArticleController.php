@@ -202,7 +202,7 @@ class ArticleController extends Controller
                 return $article;
             } catch (\Exception $e) {
                 return redirect()->back()
-                    ->withErrors(['error' => Lang::get('alert.error.generic')])
+                    ->withErrors(['error' => Lang::get('alert.error.transaction')])
                     ->withInput();
             }
         });
@@ -368,7 +368,7 @@ class ArticleController extends Controller
 
             } catch (\Exception $e) {
                 return redirect()->back()
-                    ->withErrors(['error' => Lang::get('alert.error.generic')])
+                    ->withErrors(['error' => Lang::get('alert.error.transaction')])
                     ->withInput();
             }
         });
@@ -423,7 +423,7 @@ class ArticleController extends Controller
                 ])
             ]);
         } else {
-            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
         }
     }
 
@@ -494,7 +494,7 @@ class ArticleController extends Controller
         } else {
             $article = Article::findOrFail($id);
 
-            $message = Lang::get('alert.article.delete', ['name' => $article->title]);
+            $message = Lang::get('alert.article.delete', ['title' => $article->title]);
 
             $delete = $article->delete();
         }
@@ -505,7 +505,7 @@ class ArticleController extends Controller
                 'message' => $message,
             ]);
         } else {
-            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
         }
     }
 }

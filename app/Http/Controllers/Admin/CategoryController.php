@@ -3,7 +3,9 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Infogue\Category;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -17,28 +19,10 @@ class CategoryController extends Controller
      | Category Controller
      |--------------------------------------------------------------------------
      |
-     | This controller is responsible for handling article showing grouped by
-     | category and sub category, the categories are given by slug from category
-     | title and the article list is result of guessing reverse form of slug.
+     | This controller is responsible for handling category list and manage
+     | the data including creating, updating and deleting data.
      |
      */
-
-    /**
-     * Instance variable of Category.
-     *
-     * @var Category
-     */
-    private $category;
-
-    /**
-     * Create a new category controller instance.
-     *
-     * @param Category $category
-     */
-    public function __construct(Category $category)
-    {
-        $this->category = $category;
-    }
 
     /**
      * Display a listing of the category.
@@ -47,6 +31,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Filtering category
+         * --------------------------------------------------------------------------
+         * Populate optional filter on url break down in data, sorting by and sorting
+         * method, retrieve the category.
+         */
+
         $filter_by = Input::has('by') ? Input::get('by') : 'timestamp';
         $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
 
@@ -65,7 +57,7 @@ class CategoryController extends Controller
      */
     public function subcategories($id)
     {
-        $category = $this->category->findOrFail($id);
+        $category = Category::findOrFail($id);
 
         return $category->subcategories;
     }
@@ -85,11 +77,11 @@ class CategoryController extends Controller
         if ($category->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Category <strong>' . $category->category . '</strong> was created'
+                'message' => Lang::get('alert.category.create', ['category' => $category->category])
             ]);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
     }
 
     /**
@@ -108,11 +100,11 @@ class CategoryController extends Controller
         if ($category->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Category <strong>' . $category->category . '</strong> was updated'
+                'message' => Lang::get('alert.category.update', ['category' => $category->category])
             ]);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
     }
 
     /**
@@ -134,33 +126,49 @@ class CategoryController extends Controller
          */
 
         if (!empty(trim($request->input('selected')))) {
-            $category_ids = explode(',', $request->input('selected'));
-            $subcategory_ids = [];
+            $delete = DB::transaction(function () use ($request) {
+                try {
+                    $category_ids = explode(',', $request->input('selected'));
+                    $delete_subcategory = 0;
 
-            if ($request->input('selected_sub') != '') {
-                $subcategory_ids = explode(',', $request->input('selected_sub'));
+                    if ($request->input('selected_sub') != '') {
+                        $subcategory_ids = explode(',', $request->input('selected_sub'));
 
-                Subcategory::whereIn('id', $subcategory_ids)->delete();
-            }
+                        $delete_subcategory = Subcategory::whereIn('id', $subcategory_ids)->delete();
+                    }
 
-            $delete = Category::whereIn('id', $category_ids)->delete();
+                    $delete = Category::whereIn('id', $category_ids)->delete();
 
-            $name = (count($category_ids) + count($subcategory_ids)) . ' Categories';
+                    return $delete + $delete_subcategory;
+
+                } catch (\Exception $e) {
+                    return redirect()->back()
+                        ->withErrors(['error' => Lang::get('alert.error.transaction')])
+                        ->withInput();
+                }
+            });
+
+            $message = Lang::get('alert.category.delete_all', ['count' => $delete]);
+
         } else {
             $category = Category::findOrFail($id);
 
-            $name = $category->category;
+            $message = Lang::get('alert.category.delete', ['category' => $category->category]);
 
             $delete = $category->delete();
         }
 
-        $status = $delete ? 'warning' : 'danger';
+        if ($delete instanceof RedirectResponse) {
+            return $delete;
+        }
 
-        $message = $delete ? '<strong>' . $name . '</strong> was deleted' : 'Something is getting wrong';
-
-        return redirect(route('admin.category.index'))->with([
-            'status' => $status,
-            'message' => $message,
-        ]);
+        if ($delete) {
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'warning',
+                'message' => $message,
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
+        }
     }
 }

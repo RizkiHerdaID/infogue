@@ -115,6 +115,6 @@ class Feedback extends Model
 
         });
 
-        return count(Mail::failures() == 0) ? true : false;
+        return Mail::failures();
     }
 }

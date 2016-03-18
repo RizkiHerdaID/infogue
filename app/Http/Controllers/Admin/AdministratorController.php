@@ -42,12 +42,12 @@ class AdministratorController extends Controller
         $activities = Activity::with('contributor')->paginate(8);
 
         $statistics = [
-            'ARTICLES'      => Article::count(),
-            'MEMBERS'       => Contributor::count(),
-            'CATEGORIES'    => Subcategory::count(),
-            'MESSAGES'      => Message::count(),
-            'FEEDBACK'      => Feedback::count(),
-            'VISITORS'      => (int) Visitor::sum('unique')
+            'ARTICLES' => Article::count(),
+            'MEMBERS' => Contributor::count(),
+            'CATEGORIES' => Subcategory::count(),
+            'MESSAGES' => Message::count(),
+            'FEEDBACK' => Feedback::count(),
+            'VISITORS' => (int)Visitor::sum('unique')
         ];
 
         $visitors = Visitor::take(10)->get();
@@ -83,30 +83,30 @@ class AdministratorController extends Controller
          */
 
         $rules = [
-            'website'       => 'required|max:50',
-            'keywords'      => 'required|max:300',
-            'status'        => 'required|in:online,maintenance',
-            'address'       => 'required|max:100',
-            'contact'       => 'required|max:50',
-            'email'         => 'required|email|max:30',
-            'description'   => 'required|max:160',
-            'owner'         => 'required|max:30',
-            'latitude'      => 'required|regex:/^[+-]?\d+\.\d+$/',
-            'longitude'     => 'required|regex:/^[+-]?\d+\.\d+$/',
-            'facebook'      => 'required|url',
-            'twitter'       => 'required|url',
-            'googleplus'    => 'required|url',
-            'favicon'       => 'mimes:jpg,jpeg,gif,png,ico|max:500',
-            'background'    => 'mimes:jpg,jpeg,gif,png|max:1000',
-            'article'       => 'boolean',
-            'feedback'      => 'boolean',
-            'member'        => 'boolean',
-            'approve'       => 'boolean',
-            'email_admin'   => 'required|email|max:30|unique:Users,email,' . Auth::guard('admin')->user()->id,
-            'name'          => 'required|max:50',
-            'avatar'        => 'mimes:jpg,jpeg,gif,png|max:1000',
-            'password'      => 'required|check_password:admin',
-            'new_password'  => 'confirmed|min:6'
+            'website' => 'required|max:50',
+            'keywords' => 'required|max:300',
+            'status' => 'required|in:online,maintenance',
+            'address' => 'required|max:100',
+            'contact' => 'required|max:50',
+            'email' => 'required|email|max:30',
+            'description' => 'required|max:160',
+            'owner' => 'required|max:30',
+            'latitude' => 'required|regex:/^[+-]?\d+\.\d+$/',
+            'longitude' => 'required|regex:/^[+-]?\d+\.\d+$/',
+            'facebook' => 'required|url',
+            'twitter' => 'required|url',
+            'googleplus' => 'required|url',
+            'favicon' => 'mimes:jpg,jpeg,gif,png,ico|max:500',
+            'background' => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'article' => 'boolean',
+            'feedback' => 'boolean',
+            'member' => 'boolean',
+            'approve' => 'boolean',
+            'email_admin' => 'required|email|max:30|unique:Users,email,' . Auth::guard('admin')->user()->id,
+            'name' => 'required|max:50',
+            'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'password' => 'required|check_password:admin',
+            'new_password' => 'confirmed|min:6'
         ];
 
         if (!$request->has('article')) {
@@ -125,10 +125,11 @@ class AdministratorController extends Controller
             $failedRules = $validator->failed();
 
             if (isset($failedRules['latitude']['Required']) || isset($failedRules['longitude']['Required'])) {
-                $validator->errors()->add('location', 'Location is required');
+                $validator->errors()->add('location.Required', 'Location is required');
             }
+
             if (isset($failedRules['latitude']['Regex']) || isset($failedRules['longitude']['Regex'])) {
-                $validator->errors()->add('location', 'Invalid GPS coordinate');
+                $validator->errors()->add('location.Regex', 'Invalid GPS coordinate');
             }
 
             if (isset($failedRules['article']['Boolean']) || isset($failedRules['feedback']['Boolean']) || isset($failedRules['member']['Boolean'])) {
@@ -140,7 +141,7 @@ class AdministratorController extends Controller
             );
         }
 
-        DB::transaction(function () use ($request) {
+        $result = DB::transaction(function () use ($request) {
             try {
                 Setting::where('key', 'Website Name')->update(['value' => $request->input('website')]);
                 Setting::where('key', 'Keywords')->update(['value' => $request->input('keywords')]);
@@ -180,14 +181,18 @@ class AdministratorController extends Controller
                     $user->avatar = $request->input('avatar');
                 }
 
-                $user->save();
+                return $user->save();
 
             } catch (\Exception $e) {
                 return redirect()->back()
-                    ->withErrors($e->getErrors())
+                    ->withErrors(['error' => Lang::get('alert.error.transaction')])
                     ->withInput();
             }
         });
+
+        if ($result instanceof RedirectResponse) {
+            return $result;
+        }
 
         return redirect(route('admin.setting'))->with([
             'status' => 'success',

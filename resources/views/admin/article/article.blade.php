@@ -109,6 +109,9 @@
                     .article-preview.single-view article {
                         line-height: 1.8em;
                     }
+                    .article-preview.single-view article img{
+                        max-width: 100% !important;
+                    }
                     .article-preview.single-view article p {
                         line-height: 2em;
                         margin-bottom: 10px;

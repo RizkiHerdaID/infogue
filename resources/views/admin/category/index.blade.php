@@ -238,7 +238,7 @@
                                     <label for="description">DESCRIPTION</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <textarea id="description" name="description" class="form-control" cols="30" rows="3" placeholder="Short category description" maxlength="50">{{ old('description') }}</textarea>
+                                    <textarea id="description" name="description" class="form-control" cols="30" rows="3" placeholder="Short category description" required maxlength="50">{{ old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -288,7 +288,7 @@
                                     <label for="subcategory">SUB CATEGORY</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" id="subcategory" name="subcategory" class="form-control" value="{{ old('subcategory') }}" placeholder="Sub category name"/>
+                                    <input type="text" id="subcategory" name="subcategory" class="form-control" value="{{ old('subcategory') }}" placeholder="Sub category name" required/>
                                 </div>
                             </div>
                         </div>
@@ -298,7 +298,7 @@
                                     <label for="label">GROUP LABEL</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <input type="text" id="label" name="label" class="form-control" value="{{ old('label') }}" placeholder="Label group in menu"/>
+                                    <input type="text" id="label" name="label" class="form-control" value="{{ old('label') }}" placeholder="Label group in menu" required maxlength="30"/>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                                     <label for="description">DESCRIPTION</label>
                                 </div>
                                 <div class="col-sm-9">
-                                <textarea class="form-control" id="description" name="description" cols="30" rows="3" placeholder="Short sub category description">{{ old('description') }}</textarea>
+                                <textarea class="form-control" id="description" name="description" cols="30" rows="3" placeholder="Short sub category description" required maxlength="50">{{ old('description') }}</textarea>
                                 </div>
                             </div>
                         </div>

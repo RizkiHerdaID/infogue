@@ -39,7 +39,10 @@ $(function () {
                 ['misc', ['fullscreen']]
             ],
             placeholder: 'Write here...',
-            height: 200
+            height: 200,
+            onImageUpload: function (files, editor, welEditable) {
+                console.log(files[0]+'  '+editor+'  '+welEditable);
+            }
         });
 
         // CHANGE DEFAULT UPLOAD IMAGE INPUT
@@ -860,6 +863,46 @@ $(function () {
             date: "Please complete the birthday",
             month: "Please complete the birthday",
             year: "Please complete the birthday",
+        }
+    });
+
+    $("#form-category").validate({
+        messages: {
+            category: {
+                required: "Category name is required",
+                maxlength: "Category max length is {0} characters"
+            },
+            description: {
+                required: "Description is required",
+                maxlength: "Description max length is {0} characters"
+            },
+        }
+    });
+
+    $("#form-subcategory").validate({
+        errorPlacement: function (error, element) {
+            if (element.attr("id") == "category_id") {
+                error.insertAfter(element.closest('label'));
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        messages: {
+            category: {
+                required: "Category is required",
+            },
+            subcategory: {
+                required: "Subcategory name is required",
+                maxlength: "Subcategory max length is {0} characters"
+            },
+            label: {
+                required: "Label is required",
+                maxlength: "Label max length is {0} characters"
+            },
+            description: {
+                required: "Description is required",
+                maxlength: "Description max length is {0} characters"
+            },
         }
     });
 

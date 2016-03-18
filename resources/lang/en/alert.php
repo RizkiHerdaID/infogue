@@ -13,12 +13,12 @@ return [
     |
     */
 
-    'error'                 => [
-        'generic'   => 'Ops, something is getting wrong',
-        'database'  => 'We have trouble on our server, please try again!',
-        'action'    => ':action :module :status'
+    'error'             => [
+        'generic'       => 'Ops, something is getting wrong',
+        'database'      => 'We have trouble on our server, please try again!',
+        'transaction'   => 'Transaction fail to proceed, database rolled back'
     ],
-    'feedback'              => [
+    'feedback'          => [
         'send'          => 'We have received your message and will get in touch shortly, Thanks!',
         'reply'         => 'Feedback ticket #<strong>:id</strong> has been sent to <strong>:email</strong>',
         'important'     => 'Feedback from <strong>:name</strong> marked as important',
@@ -26,20 +26,32 @@ return [
         'delete'        => '<strong>:name</strong>\'s feedback was deleted',
         'delete_all'    => ':count feedbacks were deleted',
     ],
-    'setting'               => [
+    'setting'           => [
         'update'        => 'Settings have been updated by <strong>:name</strong>',
         'fail'          => 'Unable to save settings, try again!',
     ],
-    'contributor'           => [
+    'contributor'       => [
         'update'        => 'Contributor <strong>:name</strong> has been updated',
         'delete'        => 'Contributor <strong>:name</strong> was deleted',
         'delete_all'    => ':count contributors were deleted',
     ],
-    'article'               => [
+    'article'           => [
         'mark'          => 'The <strong>:title</strong> set :type as <strong>:label</strong>',
         'create'        => 'The <strong>:title</strong> has been created',
         'update'        => 'The <strong>:title</strong> has been updated',
-        'delete'        => 'Article <strong>:name</strong> was deleted',
+        'delete'        => 'Article <strong>:title</strong> was deleted',
         'delete_all'    => ':count articles were deleted',
+    ],
+    'category'          => [
+        'create'        => 'Category <strong>:category</strong> has been created',
+        'update'        => 'Category <strong>:category</strong> has been updated',
+        'delete'        => 'Category <strong>:category</strong> and all related subcategories were deleted',
+        'delete_all'    => ':count categories were deleted',
+    ],
+    'subcategory'       => [
+        'create'        => 'Subcategory <strong>:subcategory</strong> has been created',
+        'update'        => 'Subcategory <strong>:subcategory</strong> has been updated',
+        'delete'        => 'Subcategory <strong>:subcategory</strong> and all related articles were deleted',
+        'delete_all'    => ':count subcategories were deleted',
     ]
 ];

@@ -479,6 +479,8 @@ class Article extends Model
     {
         foreach ($articles as $article):
 
+            $content = preg_replace('#data:image/[^;]+;base64,#', ' ', $article->content);
+
             $article->featured_ref = asset('images/featured/' . $article->featured);
             $article->article_ref = route('article.show', [$article->slug]);
             $article->contributor_ref = route('contributor.stream', [$article->username]);
@@ -486,7 +488,7 @@ class Article extends Model
             $article->category_ref = route('article.category', [str_slug($article->category)]);
             $article->subcategory_ref = route('article.subcategory', [str_slug($article->category), str_slug($article->username)]);
             $article->published_at = Carbon::parse($article->created_at)->format('d F Y');
-            $article->content = str_limit(strip_tags($article->content), 160);
+            $article->content = str_limit(strip_tags(preg_replace('#<[^>]+>#', ' ', $content)), 160);
 
         endforeach;
 

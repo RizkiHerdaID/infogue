@@ -3,7 +3,7 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Infogue\Category;
+use Illuminate\Support\Facades\Lang;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\SubcategoryRequest;
@@ -22,23 +22,6 @@ class SubcategoryController extends Controller
      */
 
     /**
-     * Instance variable of Subcategory.
-     *
-     * @var Category
-     */
-    private $subcategory;
-
-    /**
-     * Create a new subcategory controller instance.
-     *
-     * @param Subcategory $subcategory
-     */
-    public function __construct(Subcategory $subcategory)
-    {
-        $this->subcategory = $subcategory;
-    }
-
-    /**
      * Store a newly created subcategory in storage.
      *
      * @param Request|SubcategoryRequest $request
@@ -50,14 +33,14 @@ class SubcategoryController extends Controller
 
         $subcategory->fill($request->all());
 
-        if($subcategory->save()){
+        if ($subcategory->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Subategory <strong>'.$subcategory->subcategory.'</strong> was created',
+                'message' => Lang::get('alert.subcategory.create', ['subcategory' => $subcategory->subcategory])
             ]);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
     }
 
     /**
@@ -73,14 +56,14 @@ class SubcategoryController extends Controller
 
         $subcategory->fill($request->all());
 
-        if($subcategory->save()){
+        if ($subcategory->save()) {
             return redirect(route('admin.category.index'))->with([
                 'status' => 'success',
-                'message' => 'Subategory <strong>'.$subcategory->subcategory.'</strong> was updated',
+                'message' => Lang::get('alert.subcategory.update', ['subcategory' => $subcategory->subcategory])
             ]);
         }
 
-        return redirect()->back()->withErrors();
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
     }
 
     /**
@@ -101,27 +84,27 @@ class SubcategoryController extends Controller
          * deletion action.
          */
 
-        if(!empty(trim($request->input('selected_sub')))){
+        if (!empty(trim($request->input('selected_sub')))) {
             $subcategory_ids = explode(',', $request->input('selected_sub'));
 
             $delete = Subcategory::whereIn('id', $subcategory_ids)->delete();
 
-            $name = count($subcategory_ids).' Subcategories';
-        }
-        else{
+            $message = Lang::get('alert.subcategory.delete_all', ['count' => $delete]);
+        } else {
             $subcategory = Subcategory::findOrFail($id);
 
-            $name = $subcategory->subcategory;
+            $message = Lang::get('alert.subcategory.delete', ['subcategory' => $subcategory->subcategory]);
 
             $delete = $subcategory->delete();
         }
 
-        $status = $delete ? 'warning' : 'danger';
-
-        $message = $delete ? '<strong>'.$name.'</strong> was deleted' : 'Something is getting wrong';
-
-        return redirect(route('admin.category.index'))
-            ->with('status', $status)
-            ->with('message', $message);
+        if ($delete) {
+            return redirect(route('admin.category.index'))->with([
+                'status' => 'warning',
+                'message' => $message,
+            ]);
+        } else {
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
+        }
     }
 }

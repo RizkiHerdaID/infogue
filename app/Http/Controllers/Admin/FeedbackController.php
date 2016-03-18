@@ -37,10 +37,10 @@ class FeedbackController extends Controller
          * method, and search query, then retrieve the feedback.
          */
 
-        $filter_data    = Input::has('data') ? Input::get('data') : 'all';
-        $filter_by      = Input::has('by') ? Input::get('by') : 'date';
-        $filter_sort    = Input::has('sort') ? Input::get('sort') : 'desc';
-        $query          = Input::has('query') ? Input::get('query') : null;
+        $filter_data = Input::has('data') ? Input::get('data') : 'all';
+        $filter_by = Input::has('by') ? Input::get('by') : 'date';
+        $filter_sort = Input::has('sort') ? Input::get('sort') : 'desc';
+        $query = Input::has('query') ? Input::get('query') : null;
 
         $feedback = new Feedback();
 
@@ -57,23 +57,23 @@ class FeedbackController extends Controller
      */
     public function reply(Request $request)
     {
-        $id         = $request->input('id');
-        $name       = $request->input('name');
-        $email      = $request->input('email');
-        $message    = $request->input('message');
-        $reply      = $request->input('reply');
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $message = $request->input('message');
+        $reply = $request->input('reply');
 
         $feedback = new Feedback();
 
         $result = $feedback->reply($id, $name, $email, $message, $reply);
 
-        if ($result) {
+        if (count($result == 0)) {
             return redirect(route('admin.feedback.index'))->with([
                 'status' => 'success',
                 'message' => Lang::get('alert.feedback.reply', ['id' => $id, 'email' => $email])
             ]);
         } else {
-            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+            return redirect()->back()->withErrors($result);
         }
     }
 
@@ -95,10 +95,10 @@ class FeedbackController extends Controller
         if ($result) {
             return redirect(route('admin.feedback.index'))->with([
                 'status' => ($label == 'important') ? 'warning' : 'success',
-                'message' => Lang::get('alert.feedback.'.$label, ['name' => $feedback->name]),
+                'message' => Lang::get('alert.feedback.' . $label, ['name' => $feedback->name]),
             ]);
         } else {
-            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
         }
     }
 
@@ -142,7 +142,7 @@ class FeedbackController extends Controller
                 'message' => $message,
             ]);
         } else {
-            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+            return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
         }
     }
 }

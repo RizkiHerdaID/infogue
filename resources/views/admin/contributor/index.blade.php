@@ -90,6 +90,7 @@
                         <th>Email</th>
                         <th>Article</th>
                         <th>Popularity</th>
+                        <th>Status</th>
                         <th class="text-center">Action</th>
                     </tr>
                     </thead>
@@ -132,6 +133,20 @@
                                 }
                             ?>
                             <td><div class="rating-wrapper pn" data-rating="{{ $popularity }}"></div></td>
+                            <?php
+                            $label = 'default';
+
+                            if($contributor->status == 'activated'){
+                                $label = 'success';
+                            }
+                            if($contributor->status == 'pending'){
+                                $label = 'warning';
+                            }
+                            if($contributor->status == 'suspended'){
+                                $label = 'danger';
+                            }
+                            ?>
+                            <td><span class="label label-{{ $label }}">{{ strtoupper($contributor->status) }}</span></td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -149,7 +164,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center">No contributor available</td>
+                            <td colspan="7" class="text-center">No contributor available</td>
                         </tr>
                     @endforelse
                     </tbody>

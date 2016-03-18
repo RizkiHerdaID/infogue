@@ -15,6 +15,7 @@ return [
 
     'error'                 => [
         'generic'   => 'Ops, something is getting wrong',
+        'database'  => 'We have trouble on our server, please try again!',
         'action'    => ':action :module :status'
     ],
     'feedback'              => [
@@ -33,6 +34,12 @@ return [
         'update'        => 'Contributor <strong>:name</strong> has been updated',
         'delete'        => 'Contributor <strong>:name</strong> was deleted',
         'delete_all'    => ':count contributors were deleted',
+    ],
+    'article'               => [
+        'mark'          => 'The <strong>:title</strong> set :type as <strong>:label</strong>',
+        'create'        => 'The <strong>:title</strong> has been created',
+        'update'        => 'The <strong>:title</strong> has been updated',
+        'delete'        => 'Article <strong>:name</strong> was deleted',
+        'delete_all'    => ':count articles were deleted',
     ]
-
 ];

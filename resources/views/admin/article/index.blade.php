@@ -5,22 +5,7 @@
 @section('content')
 
     <div id="content-wrapper">
-        <header>
-            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
-            <div class="title">
-                <h1>Article</h1>
-            </div>
-            <div class="control hidden-xs">
-                <div class="account clearfix">
-                    <div class="avatar-wrapper">
-                        <img src="{{ asset('images/contributors/'.Auth::guard('admin')->user()->avatar) }}" class="img-circle img-rounded">
-                        <div class="notify"></div>
-                    </div>
-                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>{{ Auth::guard('admin')->user()->name }}</strong></p>
-                </div>
-                <a href="{{ route('admin.login.destroy') }}" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
-            </div>
-        </header>
+        @include('admin.layouts._header')
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
@@ -122,7 +107,7 @@
                     </div>
                     <div class="group-control">
                         <a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-danger btn-sm btn-delete all"><i class="fa fa-trash"></i> DELETE</a>
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> APPROVE</a>
+                        <!-- <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> APPROVE</a> -->
                     </div>
                 </div>
             </div>
@@ -207,12 +192,16 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
-                                        <li class="dropdown-header">QUICK ACTION</li>
-                                        <li @if($article->status == 'published'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="published" data-type="status"><i class="fa fa-check"></i> @if($article->status == 'published'){{ 'Approved' }}@else{{ 'Approve' }}@endif</a></li>
-                                        <li @if($article->status == 'reject'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="reject" data-type="status"><i class="fa fa-remove"></i> @if($article->status == 'reject'){{ 'Rejected' }}@else{{ 'Reject' }}@endif</a></li>
-                                        <li @if($article->state == 'trending'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="trending" data-type="state"><i class="fa fa-trophy"></i> @if($article->state != 'trending'){!! 'Set' !!}@endif Trending</a></li>
-                                        <li @if($article->state == 'headline'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="headline" data-type="state"><i class="fa fa-star"></i> @if($article->state != 'headline'){!! 'Set' !!}@endif Headline</a></li>
-                                        <li><a href="#" class="btn-mark" data-value="general" data-type="state"><i class="fa fa-file-text"></i> Set General</a></li>
+                                        @if($article->status != 'draft')
+                                            <li class="dropdown-header">QUICK ACTION</li>
+                                            <li @if($article->status == 'published'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="published" data-type="status"><i class="fa fa-check"></i> @if($article->status == 'published'){{ 'Approved' }}@else{{ 'Approve' }}@endif</a></li>
+                                            <li @if($article->status == 'reject'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="reject" data-type="status"><i class="fa fa-remove"></i> @if($article->status == 'reject'){{ 'Rejected' }}@else{{ 'Reject' }}@endif</a></li>
+                                            @if($article->status != 'reject' && $article->status != 'pending')
+                                                <li @if($article->state == 'trending'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="trending" data-type="state"><i class="fa fa-trophy"></i> @if($article->state != 'trending'){!! 'Set' !!}@endif Trending</a></li>
+                                                <li @if($article->state == 'headline'){!! 'class="active"' !!}@endif><a href="#" class="btn-mark" data-value="headline" data-type="state"><i class="fa fa-star"></i> @if($article->state != 'headline'){!! 'Set' !!}@endif Headline</a></li>
+                                                <li><a href="#" class="btn-mark" data-value="general" data-type="state"><i class="fa fa-file-text"></i> Set General</a></li>
+                                            @endif
+                                        @endif
                                         <li class="dropdown-header">CONTROL</li>
                                         <li><a href="{{ route('admin.article.show', [$article->slug]) }}"><i class="fa fa-eye"></i> View</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-article-detail"><i class="fa fa-info-circle"></i> Detail</a></li>

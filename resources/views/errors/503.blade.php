@@ -34,11 +34,21 @@
             p{
                 font-size: 35px;
                 margin-bottom: 5px;
+                margin-top: 0;
             }
 
             .title {
                 font-size: 60px;
-                margin-bottom: 40px;
+                margin-bottom: 10px;
+            }
+
+            span{
+                font-size: 25px;
+            }
+
+            a{
+                color: #4dc4d2;
+                text-decoration: none;
             }
         </style>
     </head>
@@ -47,6 +57,7 @@
             <div class="content">
                 <p>Be right back.</p>
                 <div class="title">We're maintaining now.</div>
+                <span>This website currently maintain by <a href="mailto:anggadarkprince@gmail.com">Angga Ari Wijaya</a></span>
             </div>
         </div>
     </body>

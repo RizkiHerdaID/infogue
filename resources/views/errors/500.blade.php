@@ -34,11 +34,21 @@
         p{
             font-size: 25px;
             margin-bottom: 5px;
+            margin-top: 0;
         }
 
         .title {
             font-size: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 10px;
+        }
+
+        span{
+            font-size: 25px;
+        }
+
+        a{
+            color: #4dc4d2;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -47,6 +57,8 @@
     <div class="content">
         <p>Whoops, looks like something went wrong.</p>
         <div class="title">We apologize, there is glitch on our machine.</div>
+        <p>Please contact <a href="{{ route('page.contact') }}">our support</a> if it still continues</p>
+        This website currently maintain by <a href="mailto:anggadarkprince@gmail.com">Angga Ari Wijaya</a>
     </div>
 </div>
 </body>

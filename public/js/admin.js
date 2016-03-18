@@ -398,11 +398,11 @@ $(function () {
             $("#facebook").val("");
             $("#twitter").val("");
             $("#googleplus").val("");
-            $("#subscribe").prop("checked", true);
-            $("#message").prop("checked", true);
-            $("#follow").prop("checked", true);
-            $("#stream").prop("checked", true);
-            $("#push-notification").prop("checked", true);
+            $("#email_subscription").prop("checked", true);
+            $("#email_message").prop("checked", true);
+            $("#email_follow").prop("checked", true);
+            $("#email_feed").prop("checked", true);
+            $("#mobile_notification").prop("checked", true);
         }
 
         // SIMPLE PRINT DIV
@@ -561,11 +561,6 @@ $(function () {
         }
     });
 
-    // PREVENT EVENT ON SIDEBAR ITSELF
-    $('#sidebar-wrapper').click(function (event) {
-        event.stopPropagation();
-    });
-
     // PUSH AND MAINTAIN SIZE OF CONTENT
     function resizeContentWrapper() {
         if ($(window).width() <= 767) {
@@ -684,30 +679,30 @@ $(function () {
         return ($(".bootstrap-tagsinput").find(".tag").length > 0);
     });
 
-    // LOGIN FORM
+    // VALIDATE LOGIN FORM
     $("#form-login").validate({
         errorClass: 'help-block text-left',
-        messages:{
+        messages: {
             email: {
-                required : 'Email is required'
+                required: 'Email is required'
             },
             password: {
-                required : 'Password is required'
+                required: 'Password is required'
             },
         }
     });
 
-    // EMAIL FORM
+    // VALIDATE EMAIL FORM
     $("#form-email").validate({
         errorClass: 'help-block text-left',
-        messages:{
+        messages: {
             email: {
-                required : 'Registered email is required'
+                required: 'Registered email is required'
             },
         }
     });
 
-    // RESET FORM
+    // VALIDATE RESET FORM
     $("#form-reset").validate({
         errorClass: 'help-block text-left',
         rules: {
@@ -721,20 +716,20 @@ $(function () {
                 equalTo: "#password"
             }
         },
-        messages:{
+        messages: {
             email: {
-                required : 'Registered email is required'
+                required: 'Registered email is required'
             },
             password: {
-                required : 'New password email is required'
+                required: 'New password email is required'
             },
             password_confirmation: {
-                required : 'Password confirmation is required'
+                required: 'Password confirmation is required'
             },
         }
     });
 
-    // SETTING FORM
+    // VALIDATE SETTING FORM
     $("#form-setting").validate({
         rules: {
             keywords_dummy: "checkTags",
@@ -788,7 +783,7 @@ $(function () {
         }
     });
 
-    // ARTICLE FORM
+    // VALIDATE ARTICLE FORM
     $("#form-article").validate({
         errorPlacement: function (error, element) {
             $(".note-btn.btn-fullscreen").tooltip('hide');
@@ -814,7 +809,7 @@ $(function () {
         }
     });
 
-    // CONTRIBUTOR FORM
+    // VALIDATE CONTRIBUTOR FORM
     $("#form-contributor").validate({
         groups: {
             birthday: "date month year"
@@ -838,14 +833,33 @@ $(function () {
             }
         },
         messages: {
-            name: "Name is required",
-            contact: "Contact is required",
-            about: "About is required",
-            location: "Location is required",
+            name: {
+                required: "Name is required",
+                maxlength: "Name max length is {0} characters"
+            },
+            contact: {
+                required: "Contact is required",
+                maxlength: "Contact max length is {0} characters"
+            },
+            about: {
+                required: "About is required",
+                maxlength: "About max length is {0} characters"
+            },
+            location: {
+                required: "Location is required",
+                maxlength: "Location max length is {0} characters"
+            },
+            username: {
+                required: "Username is required",
+                maxlength: "Location max length is {0} characters"
+            },
+            email: {
+                required: "Email is required",
+                maxlength: "Email max length is {0} characters"
+            },
             date: "Please complete the birthday",
             month: "Please complete the birthday",
             year: "Please complete the birthday",
-            password: "Password is required to update"
         }
     });
 
@@ -924,22 +938,22 @@ $(function () {
         }
         var totalData = selectedRows.length + selectedRowSubs.length;
         var id = $(this).closest('*[data-id]').data('id');
-        if(id == undefined){
+        if (id == undefined) {
             id = 0;
         }
         var title = $(this).hasClass('all') ? totalData + ' selected data' : $(this).data('label');
 
         if ($(this).hasClass('btn-delete-category') || (selectedRows.length > 0 && $('.btn-delete-category').length > 0)) {
             $('#modal-delete form').attr('action', $('#modal-delete form').data('url') + '/category/' + id);
-            console.log('category '+$('#modal-delete form').attr('action'));
+            console.log('category ' + $('#modal-delete form').attr('action'));
         }
         else if ($(this).hasClass('btn-delete-subcategory') || (selectedRowSubs.length > 0 && $('.btn-delete-subcategory').length > 0)) {
             $('#modal-delete form').attr('action', $('#modal-delete form').data('url') + '/subcategory/' + id);
-            console.log('subcategory '+$('#modal-delete form').attr('action'));
+            console.log('subcategory ' + $('#modal-delete form').attr('action'));
         }
         else {
             $('#modal-delete form').attr('action', $('#modal-delete form').data('url') + '/' + id);
-            console.log('general '+$('#modal-delete form').attr('action'));
+            console.log('general ' + $('#modal-delete form').attr('action'));
         }
 
         $('#modal-delete form .delete-title').text(title);

@@ -5,22 +5,7 @@
 @section('content')
 
     <div id="content-wrapper">
-        <header>
-            <a href="#menu-toggle" class="toggle-nav"><i class="fa fa-bars"></i></a>
-            <div class="title">
-                <h1>Contributor</h1>
-            </div>
-            <div class="control hidden-xs">
-                <div class="account clearfix">
-                    <div class="avatar-wrapper">
-                        <img src="{{ asset('images/contributors/'.Auth::guard('admin')->user()->avatar) }}" class="img-circle img-rounded">
-                        <div class="notify"></div>
-                    </div>
-                    <p class="avatar-greeting pull-left hidden-sm">Hi, <strong>{{ Auth::guard('admin')->user()->name }}</strong></p>
-                </div>
-                <a href="{{ route('admin.login.destroy') }}" class="sign-out"><i class="fa fa-sign-out"></i> SIGN OUT</a>
-            </div>
-        </header>
+        @include('admin.layouts._header')
         <div class="breadcrumb-wrapper">
             <ol class="breadcrumb mtn">
                 <li><a href="{{ route('index') }}" target="_blank">INFOGUE.ID</a></li>
@@ -82,6 +67,7 @@
                     </div>
                 </div>
             </div>
+            @include('errors.common')
             @if(Session::has('status'))
                 <div class="alert alert-{{ Session::get('status') }}">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">

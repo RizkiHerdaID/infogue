@@ -37,7 +37,7 @@ class ContributorController extends Controller
          * --------------------------------------------------------------------------
          * Filtering contributor
          * --------------------------------------------------------------------------
-         * Populate optional filter on url break down in data, sorting by, sorting
+         * Populate optional filter on url break down into data, sorting by, sorting
          * method, and search query, then retrieve the contributor.
          */
 
@@ -168,15 +168,13 @@ class ContributorController extends Controller
             $contributor->password = Hash::make($request->input('new_password'));
         }
 
-        $result = $contributor->save();
-
-        if($result){
+        if($contributor->save()){
             return redirect(route('admin.contributor.index'))
                 ->with('status', 'success')
                 ->with('message', '<strong>'.$contributor->name.'</strong> data has been updated');
         }
         else{
-            return redirect()->back()->withErrors();
+            return redirect()->back()->withErrors(['error' => 'Something is getting wrong']);
         }
     }
 

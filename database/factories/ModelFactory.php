@@ -44,7 +44,7 @@ $factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
 
     $statuses = ['pending', 'activated', 'suspended'];
 
-    $genders = ['male, female', 'other'];
+    $genders = ['male', 'female', 'other'];
 
     return [
         'token' => uniqid(),

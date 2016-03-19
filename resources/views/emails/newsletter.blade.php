@@ -25,7 +25,7 @@
                     <div class="info" style="padding-left: 100px">
                         <h3 style="margin-bottom: 0"><a href="{{ route('article.show', [$newsletter->slug]) }}" style="color: #4dc4d2; text-decoration: none">{{ $newsletter->title }}</a></h3>
                         <p style="margin-top: 0; margin-bottom: 5px">{{ $newsletter->subcategory->category->category }}  |  {{ $newsletter->subcategory->subcategory }}</p>
-                        <p>{{ str_limit(strip_tags($newsletter->content), 160) }}</p>
+                        <p>{{ str_limit(strip_tags(preg_replace('#<[^>]+>#', ' ', preg_replace('#data:image/[^;]+;base64,#', '&nbsp;', $newsletter->content))), 160) }}</p>
                     </div>
                     @if($count++ < (count($newsletters) - 1))
                     <hr style="margin-top: 20px; margin-bottom: 20px; border: 0; border-top: 1px solid #ededed;">

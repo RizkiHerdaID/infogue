@@ -347,7 +347,7 @@
                             <form action="{{ route('subscribe.register') }}" method="post" id="form-subscribe">
                                 {!! csrf_field() !!}
                                 <div class="form-group subscribe-email">
-                                    <input type="email" class="form-control" placeholder="Email address" required/>
+                                    <input type="email" name="email" class="form-control" placeholder="Email address" required/>
                                     <button type="submit"><i class="fa fa-envelope-o"></i></button>
                                 </div>
                             </form>

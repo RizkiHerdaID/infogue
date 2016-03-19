@@ -3,9 +3,12 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Infogue\Feedback;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CreateFeedbackRequest;
+use Infogue\Setting;
+use Infogue\User;
 
 class FeedbackController extends Controller
 {
@@ -20,23 +23,6 @@ class FeedbackController extends Controller
     */
 
     /**
-     * The instance variable of the Feedback class.
-     *
-     * @var Feedback
-     */
-    private $feedback;
-
-    /**
-     * Create a new Feedback model instance.
-     *
-     * @param Feedback $feedback
-     */
-    public function __construct(Feedback $feedback)
-    {
-        $this->feedback = $feedback;
-    }
-
-    /**
      * Store a newly feedback in storage.
      *
      * @param \Illuminate\Http\Request|CreateFeedbackRequest $request
@@ -44,16 +30,43 @@ class FeedbackController extends Controller
      */
     public function store(CreateFeedbackRequest $request)
     {
-        $this->feedback->fill($request->all());
+        $feedback = new Feedback();
 
-        if ($this->feedback->save()) {
-            return redirect(route('page.contact') . '#feedback')
-                ->with([
-                    'status' => 'success',
-                    'message' => Lang::get('alert.feedback.send')
-                ]);
+        $feedback->fill($request->all());
+
+        if ($feedback->save()) {
+            $this->sendAdminFeedbackNotification($feedback);
+
+            return redirect(route('page.contact') . '#feedback')->with([
+                'status' => 'success',
+                'message' => Lang::get('alert.feedback.send')
+            ]);
         }
 
-        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.generic')]);
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
+    }
+
+    /**
+     * Send notification email for admin or support.
+     *
+     * @param $feedback
+     */
+    public function sendAdminFeedbackNotification($feedback)
+    {
+        $notification = Setting::whereKey('Email Feedback')->first();
+
+        if ($notification->value) {
+            $admins = User::all(['name', 'email']);
+
+            foreach ($admins as $admin) {
+                Mail::send('emails.admin.message', ['admin' => $admin, 'feedback' => $feedback], function ($message) use ($admin) {
+                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->to($admin->email)->subject('Someone sent feedback message');
+                });
+            }
+        }
     }
 }

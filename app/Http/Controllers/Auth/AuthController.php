@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
+use Infogue\Setting;
 use Infogue\User;
 use Laravel\Socialite\Facades\Socialite;
 use Validator;
@@ -26,7 +27,7 @@ class AuthController extends Controller
     |
     | This controller handles the registration of new users, as well as the
     | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
+    | a simple trait to add these behaviors.
     |
     */
 
@@ -89,15 +90,17 @@ class AuthController extends Controller
          * Registering user
          * --------------------------------------------------------------------------
          * Generate token, must be unique (additional random number to gain
-         * the uniqueness) then sending email activation and gives information
-         * feedback to user.
+         * the uniqueness) then send email activation and give the user information
+         * feedback to activate their account.
          */
 
-        $token = rand(0, 1000) . uniqid();
+        $token = uniqid() . rand(0, 1000);
 
-        $this->create($request->all(), $token);
+        $contributor = $this->create($request->all(), $token);
 
         $this->sendingActivationEmail($token);
+
+        $this->sendAdminContributorNotification($contributor);
 
         return redirect(route('register.confirm', [$token]));
     }
@@ -153,16 +156,38 @@ class AuthController extends Controller
         ];
 
         Mail::send('emails.welcome', $data, function ($message) use ($contributor) {
-
             $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
             $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
             $message->to($contributor->email)->subject('Welcome to Infogue.id');
-
         });
 
         return $contributor;
+    }
+
+    /**
+     * Send notification email for admin or support.
+     *
+     * @param $contributor
+     */
+    public function sendAdminContributorNotification($contributor)
+    {
+        $notification = Setting::whereKey('Email Contributor')->first();
+
+        if ($notification->value) {
+            $admins = User::all(['name', 'email']);
+
+            foreach ($admins as $admin) {
+                Mail::send('emails.admin.contributor', ['admin' => $admin, 'contributor' => $contributor], function ($message) use ($admin, $contributor) {
+                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                    $message->to($admin->email)->subject($contributor->name . ' joins Infogue.id');
+                });
+            }
+        }
     }
 
     /**
@@ -176,14 +201,13 @@ class AuthController extends Controller
     {
         $contributor = $this->checkContributorStatus($token);
 
-        if($contributor instanceof Contributor){
+        if ($contributor instanceof Contributor) {
             if (!Session::has('status')) {
                 $request->session()->flash('status', 'Registration Complete');;
             }
 
             return view('auth.confirmation', compact('token'));
-        }
-        else{
+        } else {
             return $contributor;
         }
     }
@@ -223,7 +247,7 @@ class AuthController extends Controller
 
         $contributor = $this->checkContributorStatus($token);
 
-        if($contributor instanceof Contributor){
+        if ($contributor instanceof Contributor) {
 
             $contributor->status = 'activated';
 
@@ -241,8 +265,7 @@ class AuthController extends Controller
             ]);
 
             return view('auth.activation', compact('contributor'));
-        }
-        else{
+        } else {
             return $contributor;
         }
     }
@@ -277,11 +300,11 @@ class AuthController extends Controller
 
         /*
          * --------------------------------------------------------------------------
-         * Attempting to authenticate user
+         * Attempt to authenticate user
          * --------------------------------------------------------------------------
          * Check user availability by username or email, if user exist make sure
-         * the  status is activated unless throwing back on confirm page if 'pending'
-         * or back on login page with if 'suspended' follow the information within.
+         * the  status is activated unless throwing back on confirm page if 'pending',
+         * then back to login page if 'suspended' and include the information within.
          */
 
         $username = $request->input('username');
@@ -302,10 +325,10 @@ class AuthController extends Controller
 
         /*
          * --------------------------------------------------------------------------
-         * Protect login functionality just in case brute force attempting
+         * Protect login functionality
          * --------------------------------------------------------------------------
          * Count user login attempting and lockout the login response if user
-         * fail to login 7 times just in case hacking or bot effort.
+         * fail to login 7 times just in case hacking effort.
          */
 
         $throttles = $this->isUsingThrottlesLoginsTrait();
@@ -340,7 +363,7 @@ class AuthController extends Controller
          * Counting login attempt
          * --------------------------------------------------------------------------
          * Check if user now throttling by attempting login in row and not locked
-         * out yet and then throw back on login page because credential is invalid
+         * out yet and then throw back to login page because credential is invalid
          * or maybe user never been exist on storage before.
          */
 

@@ -21,6 +21,11 @@
                                         {!! method_field('put') !!}
                                         <fieldset>
                                             <legend>INFORMATION</legend>
+                                            @if (count($errors) > 0)
+                                                <div class="form-group">
+                                                    @include('errors.common')
+                                                </div>
+                                            @endif
                                             @if(Session::has('status'))
                                                 <div class="form-group">
                                                     <div class="alert alert-{{ Session::get('status') }}">

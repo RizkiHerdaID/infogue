@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers\Auth;
 
+use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Password;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller
 {
@@ -21,8 +21,7 @@ class PasswordController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
+    | and uses a simple trait to include this behavior.
     |
     */
 
@@ -51,25 +50,36 @@ class PasswordController extends Controller
     }
 
     /**
-     * Send a reset link to the given user.
+     * Send a reset link to the user.
      *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function sendResetLinkEmail(Request $request)
     {
+        /*
+         * --------------------------------------------------------------------------
+         * Send reset email
+         * --------------------------------------------------------------------------
+         * Validate input email, check if email has been registered before, get
+         * default broker to find out email file location and finally send the
+         * reset email to user.
+         */
+
         $this->validate($request, ['email' => 'required|email']);
 
         $broker = $this->getBroker();
 
         $response = Password::broker($broker)->sendResetLink($request->only('email'), function (Message $message) {
             $message->subject($this->getEmailSubject());
+
             $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
         });
 
         switch ($response) {
             case Password::RESET_LINK_SENT:
                 return $this->getSendResetLinkEmailSuccessResponse($response);
+
             case Password::INVALID_USER:
             default:
                 return $this->getSendResetLinkEmailFailureResponse($response);
@@ -120,19 +130,13 @@ class PasswordController extends Controller
          * --------------------------------------------------------------------------
          * Update password
          * --------------------------------------------------------------------------
-         * Hash new password and update database related the user.
+         * Hash new password and update database related the user. Create new
+         * instance of Activity and insert reset password activity.
          */
 
         $user->password = bcrypt($password);
 
         $user->save();
-
-        /*
-         * --------------------------------------------------------------------------
-         * Create reset password activity
-         * --------------------------------------------------------------------------
-         * Create new instance of Activity and insert reset password activity.
-         */
 
         Activity::create([
             'contributor_id' => $user->id,
@@ -148,13 +152,11 @@ class PasswordController extends Controller
          */
 
         Mail::send('emails.reset', ['name' => $user->name], function ($message) use ($user) {
-
             $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
             $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
             $message->to($user->email)->subject('Password has been reset');
-
         });
 
         Auth::guard($this->getGuard())->login($user);

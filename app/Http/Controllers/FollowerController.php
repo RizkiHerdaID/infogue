@@ -24,28 +24,12 @@ class FollowerController extends Controller
     */
 
     /**
-     * Instance variable of Follower.
-     *
-     * @var Follower
-     */
-    private $follower;
-
-    /**
-     * Create a new follower controller instance.
-     *
-     * @param Follower $follower
-     */
-    public function __construct(Follower $follower)
-    {
-        $this->follower = $follower;
-    }
-
-    /**
      * Show the follower list on account profile.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function follower()
+    public function follower(Request $request)
     {
         /*
          * --------------------------------------------------------------------------
@@ -60,7 +44,7 @@ class FollowerController extends Controller
 
         $followers = $contributor->contributorFollower(Auth::user()->username);
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $followers;
         } else {
             return view('contributor.follower', compact('followers'));
@@ -70,9 +54,10 @@ class FollowerController extends Controller
     /**
      * Show the following list on account profile.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function following()
+    public function following(Request $request)
     {
         /*
          * --------------------------------------------------------------------------
@@ -87,7 +72,7 @@ class FollowerController extends Controller
 
         $following = $contributor->contributorFollowing(Auth::user()->username);
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $following;
         } else {
             return view('contributor.following', compact('contributor', 'following'));
@@ -111,7 +96,7 @@ class FollowerController extends Controller
          * from contributor A to B before then perform insert data.
          */
 
-        if (Auth::check()) {
+        if (Auth::check() && $request->ajax()) {
             $contributor_id = Auth::user()->id;
 
             $following_id = $request->input('id');
@@ -160,10 +145,11 @@ class FollowerController extends Controller
     /**
      * Stop following specified contributor.
      *
+     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function unfollow($id)
+    public function unfollow(Request $request, $id)
     {
         /*
          * --------------------------------------------------------------------------
@@ -174,17 +160,16 @@ class FollowerController extends Controller
          * record from contributor A to B before then perform delete the relation.
          */
 
-        if (Auth::check()) {
+        if (Auth::check() && $request->ajax()) {
             $follower = Follower::whereContributorId(Auth::user()->id)
                 ->whereFollowing($id)->first();
 
             if (count($follower) > 0) {
-                if($follower->delete()){
+                if ($follower->delete()) {
                     return 'success';
                 }
                 return 'failed';
-            }
-            else{
+            } else {
                 return 'success';
             }
         } else {
@@ -222,13 +207,11 @@ class FollowerController extends Controller
         ];
 
         Mail::send('emails.follower', $data, function ($message) use ($follow, $contributor) {
-
             $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
             $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
             $message->to($follow->email)->subject($contributor->name . ' now is following you');
-
         });
     }
 }

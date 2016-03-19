@@ -31,6 +31,7 @@ return [
         'fail'          => 'Unable to save settings, try again!',
     ],
     'contributor'       => [
+        'account'       => 'Account has been updated',
         'update'        => 'Contributor <strong>:name</strong> has been updated',
         'delete'        => 'Contributor <strong>:name</strong> was deleted',
         'delete_all'    => ':count contributors were deleted',
@@ -53,5 +54,13 @@ return [
         'update'        => 'Subcategory <strong>:subcategory</strong> has been updated',
         'delete'        => 'Subcategory <strong>:subcategory</strong> and all related articles were deleted',
         'delete_all'    => ':count subcategories were deleted',
+    ],
+    'message'           => [
+        'send'          => 'Your message was sent to <strong>:receiver</strong>',
+        'delete'        => 'Conversation with <strong>:receiver</strong> was deleted'
+    ],
+    'subscribe'         => [
+        'broadcast'     => 'Newsletter: Subscribers has been received the newsletter on <strong>:period</strong> period',
+        'noupdate'      => 'Newsletter: There is no new article on <strong>:period</strong> period'
     ]
 ];

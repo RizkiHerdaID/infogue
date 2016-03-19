@@ -22,11 +22,11 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('login.reset.email') }}" method="post">
+                    <form action="{{ route('login.reset.email') }}" method="post" id="form-email">
                         {!! csrf_field() !!}
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label for="email">REGISTERED EMAIL</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email Address">
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required>
                             {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">RESET</button>

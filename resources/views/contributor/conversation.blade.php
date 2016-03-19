@@ -18,9 +18,7 @@
                                 <div class="content">
                                     <div class="message-box">
                                         <div class="loading" style="display: block"></div>
-                                        <div id="conversations">
-
-                                        </div>
+                                        <div id="conversations"></div>
                                     </div>
                                     <div class="chat-box">
                                         <form action="{{ route('account.message.send') }}" id="form-message" method="post" enctype="multipart/form-data">

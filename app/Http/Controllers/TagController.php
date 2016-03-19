@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Infogue\Http\Requests;
 use Infogue\Tag;
@@ -39,10 +40,11 @@ class TagController extends Controller
     /**
      * Display a listing of the article by tags are given.
      *
+     * @param Request $request
      * @param $tag
      * @return \Illuminate\Http\Response
      */
-    public function tag($tag)
+    public function tag(Request $request, $tag)
     {
         /*
          * --------------------------------------------------------------------------
@@ -69,7 +71,7 @@ class TagController extends Controller
 
         $prev_ref = '#';
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $article;
         } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
@@ -79,12 +81,17 @@ class TagController extends Controller
     /**
      * Retrieve available tags request via AJAX for typeahead.
      *
+     * @param Request $request
      * @return json
      */
-    public function tags()
+    public function tags(Request $request)
     {
-        $tags = Tag::pluck('tag');
+        if($request->ajax()){
+            $tags = Tag::pluck('tag');
 
-        return $tags;
+            return $tags;
+        } else {
+            abort(403, 'Resources are restricted.');
+        }
     }
 }

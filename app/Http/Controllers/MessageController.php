@@ -4,7 +4,9 @@ namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Infogue\Activity;
 use Infogue\Attachment;
@@ -56,9 +58,10 @@ class MessageController extends Controller
     /**
      * Display a listing of the account message.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         /*
          * --------------------------------------------------------------------------
@@ -71,7 +74,7 @@ class MessageController extends Controller
 
         $messages = $this->message->retrieveMessages(Auth::user()->id);
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $messages;
         } else {
             return view('contributor.message', compact('messages'));
@@ -81,10 +84,11 @@ class MessageController extends Controller
     /**
      * Show the list of conversation between contributor.
      *
+     * @param Request $request
      * @param $username
      * @return \Illuminate\Http\Response
      */
-    public function conversation($username)
+    public function conversation(Request $request, $username)
     {
         /*
          * --------------------------------------------------------------------------
@@ -99,7 +103,7 @@ class MessageController extends Controller
 
         $conversations = $this->conversation->retrieveConversation($contributor->id, Input::get('last', null));
 
-        if (Input::get('page', false) || Input::has('last')) {
+        if ((Input::get('page', false) || Input::has('last')) && $request->ajax()) {
             return $conversations;
         } else {
             return view('contributor.conversation', compact('contributor', 'conversations'));
@@ -125,7 +129,7 @@ class MessageController extends Controller
 
         $sender = Auth::user()->id;
 
-        $receiver = (int) $request->input('contributor_id');
+        $receiver = (int)$request->input('contributor_id');
 
         $lastMessage = $this->conversation
             ->whereSender($sender)
@@ -151,45 +155,50 @@ class MessageController extends Controller
          * if there is request of attachment, if so then upload it.
          */
 
-        $conversation = new Conversation();
-        $conversation->message_id = $messageId;
-        $conversation->sender = $sender;
-        $conversation->receiver = $receiver;
-        $conversation->message = $request->input('message');
-        $conversation->save();
+        $conversation = new Conversation([
+            'message_id' => $messageId,
+            'sender' => $sender,
+            'receiver' => $receiver,
+            'message' => $request->input('message'),
+        ]);
+        //$conversation->message_id = $messageId;
+        //$conversation->sender = $sender;
+        //$conversation->receiver = $receiver;
+        //$conversation->message = $request->input('message');
 
-        if($conversation->save()){
+        if ($conversation->save()) {
             $contributor = Contributor::findOrFail($receiver);
             if ($contributor->email_message) {
                 $this->sendEmailNotification(Auth::user(), $contributor, $request->input('message'));
             }
 
-            if ($request->has('async')) {
+            if ($request->has('async') && $request->ajax()) {
                 $image = new Uploader();
-                if ($image->upload($request, 'attachment', base_path('public/file/'), 'attachment_'. uniqid())) {
+                if ($image->upload($request, 'attachment', base_path('public/file/'), 'attachment_' . uniqid())) {
                     $attachment = new Attachment();
                     $attachment->conversation_id = $conversation->id;
                     $attachment->file = $request->input('attachment');
-                    if(!$attachment->save()){
+                    if (!$attachment->save()) {
                         return false;
                     }
                 }
                 return 'sent';
             }
 
-            return redirect()->back()
-                ->with('status', 'success')
-                ->with('message', 'The message was sent');
+            return redirect()->back()->with([
+                'status' => 'success',
+                'message' => Lang::get('alert.message.send', ['receiver' => $contributor->name])
+            ]);
         }
-        else{
-            if ($request->has('async')) {
-                return false;
-            }
 
-            return redirect()->back()
-                ->with('status', 'danger')
-                ->with('message', 'The message was not sent');
+        if ($request->has('async') && $request->ajax()) {
+            return false;
         }
+
+        return redirect()->back()->with([
+            'status' => 'danger',
+            'message' => Lang::get('alert.error.database')
+        ]);
     }
 
     /**
@@ -226,13 +235,11 @@ class MessageController extends Controller
         ];
 
         Mail::send('emails.message', $data, function ($message) use ($sender, $receiver) {
-
             $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
             $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
             $message->to($receiver->email)->subject($sender->name . ' sent you a message');
-
         });
     }
 
@@ -249,16 +256,38 @@ class MessageController extends Controller
 
         if (count($message->get()) == 0) {
             abort(404);
-        } else {
-            if ($request->input('sender') == Auth::user()->id) {
-                $message->update(['is_available_sender' => 0]);
-            } else {
-                $message->update(['is_available_receiver' => 0]);
-            }
         }
 
-        return redirect(route('account.message.list'))
-            ->with('status', 'danger')
-            ->with('message', 'Conversation with <strong>' . $request->input('contributor') . '</strong> was deleted');
+        $result = DB::transaction(function () use ($request, $message, $id) {
+            try{
+                if ($request->input('sender') == Auth::user()->id) {
+                    $message->update(['is_available_sender' => 0]);
+                } else {
+                    $message->update(['is_available_receiver' => 0]);
+                }
+
+                Conversation::whereIsAvailableSender(0)->whereIsAvailableReceiver(0)->delete();
+
+                $message = Message::find($id);
+
+                $conversations = $message->conversations()->count();
+
+                if(!$conversations){
+                    $message->delete();
+                }
+
+                return redirect(route('account.message.list'))->with([
+                    'status' => 'danger',
+                    'message' => Lang::get('alert.message.delete', ['receiver' => $request->input('contributor')])
+                ]);
+
+            } catch (\Exception $e) {
+                return redirect()->back()
+                    ->withErrors(['error' => Lang::get('alert.error.transaction')])
+                    ->withInput();
+            }
+        });
+
+        return $result;
     }
 }

@@ -20,6 +20,11 @@
                                         {!! csrf_field() !!}
                                         <fieldset>
                                             <legend>INFORMATION</legend>
+                                            @if (count($errors) > 0)
+                                                <div class="form-group">
+                                                    @include('errors.common')
+                                                </div>
+                                            @endif
                                             @if(Session::has('status'))
                                                 <div class="form-group">
                                                     <div class="alert alert-{{ Session::get('status') }}">
@@ -120,6 +125,7 @@
                                                 <label for="tags" class="col-sm-3 control-label">Tags</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control typeahead" id="tags" name="tags" value="{{ old('tags') }}" placeholder="Tag separated by coma" data-role="tagsinput" required maxlength="200">
+                                                    <input type="text" class="form-control-dummy" id="tags-dummy" name="tags-dummy" />
                                                     {!! $errors->first('tags', '<span class="help-block">:message</span>') !!}
                                                 </div>
                                             </div>

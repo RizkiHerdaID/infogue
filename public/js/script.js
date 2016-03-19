@@ -1570,6 +1570,7 @@ $(function () {
      * will fits on bootstrap form semantic.
      */
 
+    // OVERRIDE DEFAULT SETTING
     $.validator.setDefaults({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -1588,14 +1589,20 @@ $(function () {
         }
     });
 
+    // CUSTOM VALIDATION RULE
     $.validator.addMethod("checkTags", function (value) {
         return ($(".bootstrap-tagsinput").find(".tag").length > 0);
     }, "Tags are required.");
+
+    $.validator.addMethod("checkSummernote", function (value, element) {
+        return $('.summernote').summernote('isEmpty');
+    }, "This field is required.");
 
     $.validator.addMethod("alphaDash", function (value, element) {
         return this.optional(element) || /^[a-z0-9\-_]+$/i.test(value);
     }, "This field must contain only letters, numbers, underscore or dashes.");
 
+    // VALIDATE CONTACT FORM
     $("#form-contact").validate({
         messages: {
             name: {
@@ -1613,6 +1620,7 @@ $(function () {
         }
     });
 
+    // VALIDATE REGISTER FORM
     $("#form-register").validate({
         highlight: function (element) {
             $(element).closest('.form-group').addClass('has-error');
@@ -1664,6 +1672,7 @@ $(function () {
         }
     });
 
+    // VALIDATE LOGIN FORM
     $("#form-login").validate({
         messages: {
             username: {
@@ -1675,7 +1684,29 @@ $(function () {
         }
     });
 
+    // VALIDATE EMAIL FORM
+    $("#form-email").validate({
+        errorClass: 'help-block text-left',
+        messages: {
+            email: {
+                required: 'Registered email is required'
+            },
+        }
+    });
+
+    // VALIDATE RESET FORM
     $("#form-reset").validate({
+        rules: {
+            password: {
+                minlength: 6,
+                maxlength: 20
+            },
+            password_confirmation: {
+                minlength: 6,
+                maxlength: 20,
+                equalTo: "#password"
+            }
+        },
         messages: {
             email: {
                 required: "Email is required.",
@@ -1691,6 +1722,33 @@ $(function () {
         }
     });
 
+    // VALIDATE ARTICLE FORM
+    $("#form-article").validate({
+        errorPlacement: function (error, element) {
+            if (element.attr("id") == "featured" || element.attr("id") == "category" || element.attr("id") == "subcategory") {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        rules: {
+            "tags-dummy": "checkTags",
+            content: "checkSummernote"
+        },
+        messages: {
+            "tags-dummy": "Tags are required",
+            title: {
+                required: "Title is required",
+                maxlength: "Title max length is {0} characters"
+            },
+            slug: {
+                required: "Slug is required",
+                maxlength: "Slug max length is {0} characters"
+            },
+        }
+    });
+
+    // VALIDATE SETTING FORM
     $("#form-setting").validate({
         groups: {
             birthday: "date month year"
@@ -1703,6 +1761,10 @@ $(function () {
             }
         },
         rules: {
+            about: {
+                minlength: 15,
+                maxlength: 160
+            },
             username: {
                 alphaDash: true,
             },
@@ -1751,7 +1813,8 @@ $(function () {
         }
     });
 
-    $('#form-newsletter, #form-subscribe').validate({
+    // VALIDATE NEWSLETTER FORM
+    $('#form-newsletter').validate({
         errorClass: 'help-block mts text-left',
         messages: {
             email: {
@@ -1760,5 +1823,21 @@ $(function () {
         }
     });
 
-    $('#form-message').validate();
+    $('#form-subscribe').validate({
+        errorClass: 'help-block mts',
+            messages: {
+            email: {
+                required: "Email is required",
+            }
+        }
+    });
+
+    // VALIDATE MESSAGE FORM
+    $('#form-message').validate({
+        messages: {
+            message: {
+                required: "Message can't be blank",
+            }
+        }
+    });
 });

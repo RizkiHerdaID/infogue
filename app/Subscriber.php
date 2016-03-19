@@ -34,8 +34,7 @@ class Subscriber extends Model
         $take = 5;
 
         if ($range == 'daily') {
-            $date = Carbon::now();
-            $take = 5;
+            $date = Carbon::now()->addDay(-1);
         } else if ($range == 'weekly') {
             $date = Carbon::now()->addWeek(-1);
             $take = 10;

@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Infogue\Category;
 use Infogue\Http\Requests;
@@ -50,10 +51,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the category.
      *
+     * @param Request $request
      * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function category($slug)
+    public function category(Request $request, $slug)
     {
         /*
          * --------------------------------------------------------------------------
@@ -79,7 +81,7 @@ class CategoryController extends Controller
 
         $prev_ref = '#';
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $articles;
         } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
@@ -89,11 +91,12 @@ class CategoryController extends Controller
     /**
      * Display a listing of the subcategory.
      *
+     * @param Request $request
      * @param $category_slug
      * @param $subcategory_slug
      * @return \Illuminate\Http\Response
      */
-    public function subcategory($category_slug, $subcategory_slug)
+    public function subcategory(Request $request, $category_slug, $subcategory_slug)
     {
         /*
          * --------------------------------------------------------------------------
@@ -124,7 +127,7 @@ class CategoryController extends Controller
 
         $prev_ref = '#';
 
-        if (Input::get('page', false)) {
+        if (Input::get('page', false) && $request->ajax()) {
             return $articles;
         } else {
             return view('article.category', compact('breadcrumb', 'next_ref', 'prev_ref'));
@@ -134,13 +137,18 @@ class CategoryController extends Controller
     /**
      * Retrieve subcategory by category id request via AJAX.
      *
+     * @param Request $request
      * @param $id
      * @return json
      */
-    public function subcategories($id)
+    public function subcategories(Request $request, $id)
     {
-        $category = $this->category->findOrFail($id);
+        if ($request->ajax()) {
+            $category = $this->category->findOrFail($id);
 
-        return $category->subcategories;
+            return $category->subcategories;
+        } else {
+            abort(403, 'Resources are restricted.');
+        }
     }
 }

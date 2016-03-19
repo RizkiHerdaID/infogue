@@ -57,7 +57,7 @@
     <div class="content">
         <p>Whoops, looks like something went wrong.</p>
         <div class="title">We apologize, there is glitch on our machine.</div>
-        <p>Please contact <a href="{{ route('page.contact') }}">our support</a> if it still continues</p>
+        <p>Please <a href="{{ route('page.contact') }}#feedback">contact our support</a> if it still continues</p>
         This website currently maintain by <a href="mailto:anggadarkprince@gmail.com">Angga Ari Wijaya</a>
     </div>
 </div>

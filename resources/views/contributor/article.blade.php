@@ -67,6 +67,8 @@
                                     </div>
                                 </div>
                                 <div class="content">
+                                    @include('errors.common')
+
                                     @if(Session::has('status'))
                                         <div class="alert alert-{{ Session::get('status') }}" style="border-radius: 0">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
@@ -112,7 +114,9 @@
                                                                     <li><a href="{{ route('account.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
                                                                     <li><a href="#" data-toggle="modal" data-target="#modal-delete" data-label="{{ $article->title }}" class="btn-delete"><i class="fa fa-trash"></i> Delete</a></li>
                                                                     <li class="dropdown-header">QUICK ACTION</li>
+                                                                    @if($article->status == 'published')
                                                                     <li><a href="#" class="btn-draft"><i class="fa fa-edit"></i> Set as Draft</a></li>
+                                                                    @endif
                                                                     <li><a href="#" data-toggle="modal" data-target="#modal-share" class="btn-share"><i class="fa fa-share-alt"></i> Share</a></li>
                                                                 </ul>
                                                             </div>

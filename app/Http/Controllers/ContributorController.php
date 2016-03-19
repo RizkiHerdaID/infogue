@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
@@ -196,12 +197,14 @@ class ContributorController extends Controller
          * birthday, and throw it back if errors occur.
          */
 
+        $user = Auth::user();
+
         $rules = [
             'name' => 'required|max:50',
             'gender' => 'required|in:male,female,other',
             'date' => 'required|max:31',
             'month' => 'required|max:12',
-            'year' => 'required|max:'.(int) Carbon::now()->addYear(-8)->format('Y'),
+            'year' => 'required|max:' . (int)Carbon::now()->addYear(-8)->format('Y'),
             'location' => 'required|max:30',
             'contact' => 'required|max:20',
             'about' => 'required|min:15|max:160',
@@ -212,13 +215,11 @@ class ContributorController extends Controller
             'mobile_notification' => 'boolean',
             'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'cover' => 'mimes:jpg,jpeg,gif,png|max:1000',
-            'username' => 'required|alpha_dash|max:20|unique:contributors,username,' . Auth::user()->id,
-            'email' => 'required|email|max:50|unique:contributors,email,' . Auth::user()->id,
+            'username' => 'required|alpha_dash|max:20|unique:contributors,username,' . $user->id,
+            'email' => 'required|email|max:50|unique:contributors,email,' . $user->id,
             'password' => 'required|check_password',
             'new_password' => 'confirmed|min:6'
         ];
-
-        $validator = Validator::make($request->all(), $rules);
 
         if (!$request->has('email_subscription')) {
             $request->merge(['email_subscription' => 0]);
@@ -238,11 +239,17 @@ class ContributorController extends Controller
 
         $request->merge(['birthday' => implode('-', Input::only('year', 'month', 'date'))]);
 
+        $validator = Validator::make($request->all(), $rules);
+
         if ($validator->fails()) {
             $failedRules = $validator->failed();
 
-            if(isset($failedRules['date']['Required']) || isset($failedRules['month']['Required']) || isset($failedRules['year']['Required'])) {
-                $validator->errors()->add('birthday', 'Birthday is required');
+            $date = isset($failedRules['date']['Required']);
+            $month = isset($failedRules['month']['Required']);
+            $year = isset($failedRules['year']['Required']);
+
+            if ($date || $month || $year) {
+                $validator->errors()->add('birthday', Lang::get('alert.validation.birthday'));
             }
 
             $this->throwValidationException(
@@ -259,7 +266,7 @@ class ContributorController extends Controller
          * the contributor intend to change their password, in the end perform save.
          */
 
-        $contributor = Contributor::findOrFail(Auth::user()->id);
+        $contributor = Contributor::findOrFail($user->id);
         $contributor->name = $request->input('name');
         $contributor->gender = $request->input('gender');
         $contributor->birthday = $request->input('birthday');
@@ -269,10 +276,10 @@ class ContributorController extends Controller
         $contributor->username = $request->input('username');
         $contributor->email = $request->input('email');
         $image = new Uploader();
-        if($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'avatar_'.$contributor->id)){
+        if ($image->upload($request, 'avatar', base_path('public/images/contributors/'), 'avatar_' . $contributor->id)) {
             $contributor->avatar = $request->input('avatar');
         }
-        if($image->upload($request, 'cover', base_path('public/images/covers/'), 'cover_'.$contributor->id)){
+        if ($image->upload($request, 'cover', base_path('public/images/covers/'), 'cover_' . $contributor->id)) {
             $contributor->cover = $request->input('cover');
         }
         $contributor->instagram = $request->input('instagram');
@@ -289,10 +296,13 @@ class ContributorController extends Controller
             $contributor->password = $request->input('password');
         }
 
-        $contributor->save();
+        if ($contributor->save()) {
+            return redirect(route('account.setting'))->with([
+                'status' => 'success',
+                'message' => Lang::get('alert.contributor.account'),
+            ]);
+        }
 
-        return redirect(route('account.setting'))
-            ->with('status', 'success')
-            ->with('message', 'Setting has been updated');
+        return redirect()->back()->withErrors(['error' => Lang::get('alert.error.database')]);
     }
 }

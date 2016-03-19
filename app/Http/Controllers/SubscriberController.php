@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
 use Infogue\Http\Requests;
 use Infogue\Subscriber;
@@ -53,6 +54,10 @@ class SubscriberController extends Controller
          */
 
         $email = $request->input('email');
+
+        if($email == ''){
+            abort(404);
+        }
 
         $isSubscriber = $this->subscriber->whereEmail($email)->count();
 
@@ -142,20 +147,18 @@ class SubscriberController extends Controller
                         'newsletters' => $newsletters,
                     ];
                     Mail::send('emails.newsletter', $data, function ($message) use ($subscriber, $period) {
-
                         $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
                         $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
                         $message->to($subscriber->email)->subject(ucfirst($period) . ' infogue.id newsletter');
-
                     });
                 }
             });
 
-            return 'Newsletter: Subscribers has been received the newsletter on ' . $period . ' period';
+            return Lang::get('alert.subscribe.broadcast', ['period' => $period]);
         } else {
-            return 'Newsletter: There is no new article on ' . $period . ' period';
+            return Lang::get('alert.subscribe.noupdate', ['period' => $period]);
         }
     }
 }

@@ -162,6 +162,7 @@
                             <?php
                                 $label = 'default';
                                 $status = 'default';
+                                $update = '';
 
                                 if($article->status == 'published'){
                                     $label = 'success';
@@ -176,6 +177,10 @@
                                     $label = 'danger';
                                 }
 
+                                if($article->content_update != ''){
+                                    $update = 'UPDATE';
+                                }
+
                                 if($article->state == 'trending'){
                                     $status = 'success';
                                 }
@@ -183,7 +188,7 @@
                                     $status = 'warning';
                                 }
                             ?>
-                            <td><span class="label label-{{ $label }}">{{ strtoupper($article->status) }}</span></td>
+                            <td><span class="label label-{{ $label }}">{{ strtoupper($article->status) }}{{ ' '.$update }}</span></td>
                             <td><span class="label label-{{ $status }}">{{ strtoupper($article->state) }}</span></td>
                             <td class="text-center">
                                 <div class="dropdown">

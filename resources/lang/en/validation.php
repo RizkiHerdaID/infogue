@@ -77,6 +77,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
     'check_password'       => 'The old password mismatch with current password',
+    'birthday'             => 'The birthday is required',
 
     /*
     |--------------------------------------------------------------------------

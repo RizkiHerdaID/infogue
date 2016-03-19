@@ -16,6 +16,7 @@
                             <section class="list-data" data-href="{{ Request::url() }}">
                                 <h3 class="title">MESSAGES</h3>
                                 <div class="content">
+                                    @include('errors.common')
                                     @if(Session::has('status'))
                                         <div class="alert alert-{{ Session::get('status') }}" style="border-radius: 0">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
@@ -24,9 +25,7 @@
                                             {!! Session::get('message') !!}
                                         </div>
                                     @endif
-                                    <div role="list" id="messages">
-
-                                    </div>
+                                    <div role="list" id="messages"></div>
                                 </div>
                                 <div class="text-center pm">
                                     <div class="loading"></div>

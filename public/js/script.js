@@ -143,11 +143,12 @@ $(function () {
             imageSection.addClass("active");
 
             var title = imageSection.find(".src-title").text();
+            var href = imageSection.find(".src-title").attr('href');
             var category = imageSection.find(".src-category").text();
             var description = imageSection.find(".src-description").text();
             var image = imagesFeatured[position - 1];
 
-            $(".slide-title").text(title);
+            $(".slide-title").text(title).attr('href', href);
             $(".slide-category").text(category);
             $(".slide-description").text(description);
             $('.featured-large .featured-image').data("featured", image);

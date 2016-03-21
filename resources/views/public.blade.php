@@ -445,8 +445,8 @@
     <script src="{{ asset('library/waypoints/lib/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('library/mustache/mustache.min.js') }}"></script>
     <script src="{{ asset('library/summernote/dist/summernote.min.js') }}"></script>
-    <script src="//info-gue.disqus.com/count.js" id="dsq-count-scr" async></script>
     <script src="{{ asset('js/script.js') }}"></script>
+    <script src="//info-gue.disqus.com/count.js" id="dsq-count-scr" async></script>
 
     <script>
         (function (b, o, i, l, e, r) {

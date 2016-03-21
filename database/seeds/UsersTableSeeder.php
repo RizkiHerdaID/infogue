@@ -26,15 +26,15 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Angga Ari Wijaya',
                 'email' => 'anggadarkprince@gmail.com',
                 'password' => bcrypt('admin1234'),
-                'avatar' => 'admin_1.jpg',
+                'avatar' => 'admin_2.jpg',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
                 'name' => 'Super Admin',
                 'email' => 'sketchprojectstudio@gmail.com',
-                'password' => bcrypt('su1234'),
-                'avatar' => 'admin_2.jpg',
+                'password' => bcrypt('admin1234'),
+                'avatar' => 'admin_3.jpg',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]

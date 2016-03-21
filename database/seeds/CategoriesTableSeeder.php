@@ -57,14 +57,14 @@ class CategoriesTableSeeder extends Seeder
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
-                'category' => 'Photo',
-                'description' => 'Photo Category',
+                'category' => 'Education',
+                'description' => 'Education Category',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
             [
-                'category' => 'Video',
-                'description' => 'Video Category',
+                'category' => 'Teen',
+                'description' => 'Teen Category',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],

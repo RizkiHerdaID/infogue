@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ContributorsTableSeeder extends Seeder
@@ -11,7 +12,7 @@ class ContributorsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        DB::table('contributors')->insert([
             [
                 'token' => uniqid(),
                 'vendor' => 'web',

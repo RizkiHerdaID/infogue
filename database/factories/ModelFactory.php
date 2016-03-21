@@ -127,7 +127,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
 
     return [
         'contributor_id' => rand(1, 100),
-        'subcategory_id' => rand(1, 100),
+        'subcategory_id' => rand(1, 130),
         'title' => $title,
         'slug' => str_slug($title),
         'featured' => 'featured_'.rand(1, 28).'.jpg',

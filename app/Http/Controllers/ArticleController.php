@@ -359,7 +359,7 @@ class ArticleController extends Controller
                 $autoApprove = Setting::whereKey('Auto Approve')->first();
                 $status = $request->input('status');
                 if ($autoApprove->value) {
-                    if($status == 'pending'){
+                    if ($status == 'pending') {
                         $status = 'published';
                     }
                 }
@@ -438,19 +438,21 @@ class ArticleController extends Controller
             $admins = User::all(['name', 'email']);
 
             foreach ($admins as $admin) {
-                Mail::send('emails.admin.article', ['admin' => $admin, 'contributor' => $contributor, 'article' => $article], function ($message) use ($admin, $contributor, $doUpdate) {
-                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.article', ['admin' => $admin, 'contributor' => $contributor, 'article' => $article], function ($message) use ($admin, $contributor, $doUpdate) {
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                    $subject = $contributor->name . ' create new article [PENDING]';
+                        $subject = $contributor->name . ' create new article [PENDING]';
 
-                    if ($doUpdate) {
-                        $subject = $contributor->name . ' updated the article [PENDING UPDATE]';
-                    }
+                        if ($doUpdate) {
+                            $subject = $contributor->name . ' updated the article [PENDING UPDATE]';
+                        }
 
-                    $message->to($admin->email)->subject($subject);
-                });
+                        $message->to($admin->email)->subject($subject);
+                    });
+                }
             }
         }
     }
@@ -714,7 +716,7 @@ class ArticleController extends Controller
                 if ($autoApprove->value) {
                     $content = $request->input('content');
                     $content_update = '';
-                    if($status == 'pending'){
+                    if ($status == 'pending') {
                         $status = 'published';
                     }
                 }

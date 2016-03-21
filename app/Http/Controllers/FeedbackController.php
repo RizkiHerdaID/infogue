@@ -59,13 +59,15 @@ class FeedbackController extends Controller
             $admins = User::all(['name', 'email']);
 
             foreach ($admins as $admin) {
-                Mail::send('emails.admin.message', ['admin' => $admin, 'feedback' => $feedback], function ($message) use ($admin) {
-                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.message', ['admin' => $admin, 'feedback' => $feedback], function ($message) use ($admin) {
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->to($admin->email)->subject('Someone sent feedback message');
-                });
+                        $message->to($admin->email)->subject('Someone sent feedback message');
+                    });
+                }
             }
         }
     }

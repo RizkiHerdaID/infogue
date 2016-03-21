@@ -179,13 +179,15 @@ class AuthController extends Controller
             $admins = User::all(['name', 'email']);
 
             foreach ($admins as $admin) {
-                Mail::send('emails.admin.contributor', ['admin' => $admin, 'contributor' => $contributor], function ($message) use ($admin, $contributor) {
-                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.contributor', ['admin' => $admin, 'contributor' => $contributor], function ($message) use ($admin, $contributor) {
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                    $message->to($admin->email)->subject($contributor->name . ' joins Infogue.id');
-                });
+                        $message->to($admin->email)->subject($contributor->name . ' joins Infogue.id');
+                    });
+                }
             }
         }
     }
@@ -460,6 +462,8 @@ class AuthController extends Controller
                 'contributor_id' => $contributor->id,
                 'activity' => Activity::registerActivity($contributor->username, 'facebook')
             ]);
+
+            $this->sendAdminContributorNotification($contributor);
         }
 
         Auth::login($contributor->first());
@@ -542,6 +546,8 @@ class AuthController extends Controller
                 'contributor_id' => $contributor->id,
                 'activity' => Activity::registerActivity($contributor->username, 'twitter')
             ]);
+
+            $this->sendAdminContributorNotification($contributor);
         }
 
         Auth::login($contributor->first());

@@ -51,7 +51,7 @@ class ContributorController extends Controller
      */
     public function detail($username)
     {
-        $contributor = $this->contributor->profile($username);
+        $contributor = $this->contributor->profile($username, true);
 
         return view('profile.detail', compact('contributor'));
     }
@@ -73,7 +73,7 @@ class ContributorController extends Controller
          * return view if doesn't.
          */
 
-        $contributor = $this->contributor->profile($username);
+        $contributor = $this->contributor->profile($username, true);
 
         $articles = $this->contributor->contributorArticle($username);
 
@@ -101,7 +101,7 @@ class ContributorController extends Controller
          * return view if doesn't.
          */
 
-        $contributor = $this->contributor->profile($username);
+        $contributor = $this->contributor->profile($username, true);
 
         $followers = $this->contributor->contributorFollower($username);
 
@@ -129,7 +129,7 @@ class ContributorController extends Controller
          * return view if doesn't.
          */
 
-        $contributor = $this->contributor->profile($username);
+        $contributor = $this->contributor->profile($username, true);
 
         $following = $this->contributor->contributorFollowing($username);
 
@@ -157,7 +157,7 @@ class ContributorController extends Controller
          * return view if doesn't.
          */
 
-        $contributor = $this->contributor->profile($username);
+        $contributor = $this->contributor->profile($username, true);
 
         $stream = $this->contributor->stream($username);
 

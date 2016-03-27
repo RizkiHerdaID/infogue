@@ -2,12 +2,14 @@
 
 namespace Infogue\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Infogue\Article;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
+use Infogue\Rating;
 use Infogue\Uploader;
 
 class ArticleController extends Controller
@@ -16,7 +18,7 @@ class ArticleController extends Controller
 
     public function __construct(Article $article)
     {
-        $this->middleware('auth:api', ['except' => 'show']);
+        //$this->middleware('auth:api', ['except' => 'show']);
 
         $this->article = $article;
     }
@@ -93,9 +95,9 @@ class ArticleController extends Controller
 
         $followers = $contributor->followers;
 
-        foreach($followers as $follower):
+        foreach ($followers as $follower):
             $follower = $follower->contributor;
-            if($follower->email_feed){
+            if ($follower->email_feed) {
                 $data = [
                     'receiverName' => $follower->name,
                     'receiverUsername' => $follower->username,
@@ -110,20 +112,18 @@ class ArticleController extends Controller
                 ];
 
                 Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
-
                     $message->from('no-reply@infogue.id', 'Infogue.id');
 
                     $message->replyTo('no-reply@infogue.id', 'Infogue.id');
 
-                    $message->to($follower->email)->subject($contributor->name.' create new article');
-
+                    $message->to($follower->email)->subject($contributor->name . ' create new article');
                 });
             }
         endforeach;
     }
 
     /**
-     * Store a newly created article in storage.
+     * Add hit counter on certain article.
      *
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
@@ -132,11 +132,44 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($request->input('id'));
 
-        $article->view = $article->view + 1;
+        $article->increment('view');
 
-        $article->save();
+        return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+        ];
+    }
 
-        return $article->view;
+    /**
+     * Rate a article between 1 to 5.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function rate(Request $request)
+    {
+        $article = Article::findOrFail($request->input('article_id'));
+
+        $ipAddress = $request->ip();
+
+        $isRated = $article->ratings()->whereIp($ipAddress)->count();
+
+        if ($isRated) {
+            $rating = Rating::whereArticleId($request->input('article_id'))->whereIp($ipAddress)->firstOrFail();
+            $rating->rate = $request->input('rate');
+        } else {
+            $rating = new Rating();
+            $rating->article_id = $request->input('article_id');
+            $rating->ip = $ipAddress;
+            $rating->rate = $request->input('rate');
+        }
+
+        return [
+            'request_id' => uniqid(),
+            'status' => $rating->save() ? 'success' : 'failure',
+            'timestamp' => Carbon::now(),
+        ];
     }
 
     /**
@@ -147,12 +180,19 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $article = $this->article->published()
+        $article = $this->article
             ->whereSlug($slug)
             ->with('subcategory', 'subcategory.category', 'tags', 'contributor')
             ->firstOrFail();
 
-        return $article;
+        $article->rating = round($article->ratings()->avg('rate'));
+
+        return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'article' => $article
+        ];
     }
 
     /**

@@ -2,10 +2,12 @@
 
 namespace Infogue\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use Infogue\Category;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Subcategory;
+use Infogue\XMLConstruct;
 
 class CategoryController extends Controller
 {
@@ -28,7 +30,12 @@ class CategoryController extends Controller
     {
         $menu = Category::with('subcategories')->get();
 
-        return $menu;
+        return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'categories' => $menu
+        ];
     }
 
     /**
@@ -45,7 +52,12 @@ class CategoryController extends Controller
 
         $articles = $this->category->categoryArticle($category->id);
 
-        return $articles;
+        return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'articles' => $articles
+        ];
     }
 
     /**
@@ -65,8 +77,13 @@ class CategoryController extends Controller
 
         $subcategory = $category->subcategories()->where('subcategory', 'like', $subcategory_name)->firstOrFail();
 
-        $articles = $this->subcategory->subcategoryArticle($subcategory->id);
+        $articles = $this->subcategory->subcategoryArticle($subcategory->id)->toArray();
 
-        return $articles;
+        return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'articles' => $articles
+        ];
     }
 }

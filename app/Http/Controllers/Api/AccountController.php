@@ -2,8 +2,11 @@
 
 namespace Infogue\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Lang;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -11,8 +14,28 @@ use Infogue\Uploader;
 
 class AccountController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Account Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling contributor registration
+    | contributor login and update their data.
+    |
+    */
+    
+    /**
+     * Instance variable of Contributor.
+     *
+     * @var Article
+     */
     private $contributor;
 
+    /**
+     * Create a new account controller instance.
+     *
+     * @param Contributor $contributor
+     */
     public function __construct(Contributor $contributor)
     {
         $this->contributor = $contributor;
@@ -32,9 +55,14 @@ class AccountController extends Controller
             ->orWhere('email', '=', $request->input('email'))->first();
 
         if (count($exist)) {
-            return 'exist';
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'exist',
+                'message' => 'Username or Email is already exist',
+                'timestamp' => Carbon::now(),
+            ], 400);
         } else {
-            return Contributor::create([
+            Contributor::create([
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'email' => $request->input('email'),
@@ -42,6 +70,13 @@ class AccountController extends Controller
                 'token' => $token,
                 'vendor' => 'web',
             ]);
+
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'success',
+                'message' => 'Registering user is success',
+                'timestamp' => Carbon::now(),
+            ], 200);
         }
     }
 
@@ -56,12 +91,18 @@ class AccountController extends Controller
         $user = Contributor::where('email', $request->input('username'))
             ->orWhere('username', $request->input('username'))->first();
 
-        $respond = [];
+        $respond = [
+            'request_id' => uniqid(),
+            'timestamp' => Carbon::now(),
+        ];
 
-        if ($user->count()) {
+        if (count($user)) {
+            $respond['status'] = $user->status;
+
             if ($user->status != 'activated') {
-                $respond['status'] = $user->status;
-                $respond['login'] = 'failed';
+                $respond['login'] = 'restrict';
+                $respond['message'] = 'The account is pending or suspended';
+                $code = 403;
             } else {
                 $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -70,19 +111,23 @@ class AccountController extends Controller
                 $credentials = $request->only($field, 'password');
 
                 if (Auth::attempt($credentials)) {
-                    $respond['status'] = $user->status;
-                    $respond['login'] = 'success';
+                    $respond['login'] = 'granted';
+                    $respond['message'] = 'Credentials are valid';
+                    $code = 200;
                 } else {
-                    $respond['status'] = $user->status;
-                    $respond['login'] = 'failed';
+                    $respond['login'] = 'mismatch';
+                    $respond['message'] = 'Username or password is incorrect';
+                    $code = 401;
                 }
             }
         } else {
             $respond['status'] = 'unregistered';
-            $respond['login'] = 'failed';
+            $respond['login'] = 'restrict';
+            $respond['message'] = 'These credentials do not match our records';
+            $code = 403;
         }
 
-        return $respond;
+        return response()->json($respond, $code);
     }
 
     /**
@@ -94,6 +139,18 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         $contributor = Contributor::findOrFail($request->input('contributor_id'));
+
+        $credential = Hash::check($request->input('password'), $contributor->password);
+
+        if(!$credential){
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'mismatch',
+                'message' => 'Current password is mismatch',
+                'timestamp' => Carbon::now(),
+            ], 401);
+        }
+
         $contributor->name = $request->input('name');
         $contributor->gender = $request->input('gender');
         $contributor->birthday = $request->input('birthday');
@@ -123,6 +180,21 @@ class AccountController extends Controller
             $contributor->password = $request->input('password');
         }
 
-        return $contributor->save();
+        if($contributor->save()){
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'success',
+                'message' => 'Setting was updated',
+                'timestamp' => Carbon::now(),
+            ]);
+        }
+        else{
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'failure',
+                'message' => Lang::get('database.generic'),
+                'timestamp' => Carbon::now(),
+            ], 500);
+        }
     }
 }

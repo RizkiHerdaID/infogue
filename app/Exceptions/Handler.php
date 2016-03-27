@@ -47,26 +47,43 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if($e instanceof ModelNotFoundException) {
-            if($request->segment(1) == 'api' || $request->ajax()){
-                $e = new NotFoundHttpException($e->getMessage(), $e);
-                $result = collect([
+        if ($request->segment(1) == 'api' || $request->ajax()) {
+            if ($this->isHttpException($e)) {
+                $message = 'Http exception occurred';
+                switch ($e->getStatusCode()) {
+                    case 404:
+                        $message = 'Method not found';
+                        break;
+                    case 405:
+                        $message = 'Method not allowed';
+                        break;
+                }
+
+                return response()->json([
                     'request_id' => uniqid(),
-                    'status' => $e->getStatusCode(),
+                    'status' => 'failure',
+                    'message' => $message,
                     'timestamp' => Carbon::now(),
-                ]);
-                return response($result, $e->getStatusCode());
+                ], $e->getStatusCode());
+            } else if ($e instanceof ModelNotFoundException) {
+                $e = new NotFoundHttpException($e->getMessage(), $e);
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'not found',
+                    'message' => $e->getMessage(),
+                    'timestamp' => Carbon::now(),
+                ], $e->getStatusCode());
             }
         }
 
         if (!config('app.debug', false) && !$this->isHttpException($e)) {
-            if($request->segment(1) == 'api' || $request->ajax()){
-                $result = collect([
+            if ($request->segment(1) == 'api' || $request->ajax()) {
+                return response()->json([
                     'request_id' => uniqid(),
-                    'status' => 500,
+                    'status' => 'failure',
+                    'message' => 'Internal server error',
                     'timestamp' => Carbon::now(),
-                ]);
-                return response($result, 500);
+                ], 500);
             }
 
             return response()->view('errors.500', ['exception' => $e], 500);

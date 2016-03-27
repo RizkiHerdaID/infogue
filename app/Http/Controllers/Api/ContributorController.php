@@ -10,8 +10,29 @@ use Infogue\Http\Requests;
 
 class ContributorController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Contributor Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling contributor profile request
+    | including profile stream, detail information, article list, followers,
+    | and following page.
+    |
+    */
+
+    /**
+     * Instance variable of Contributor.
+     *
+     * @var Article
+     */
     private $contributor;
 
+    /**
+     * Create a new contributor controller instance.
+     *
+     * @param Contributor $contributor
+     */
     public function __construct(Contributor $contributor)
     {
         $this->contributor = $contributor;
@@ -28,13 +49,13 @@ class ContributorController extends Controller
     {
         $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
 
-        return [
+        return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
             'is_following' => $contributor->following_text == 'FOLLOW' ? false : true,
             'contributor' => $contributor
-        ];
+        ]);
     }
 
     /**
@@ -101,9 +122,17 @@ class ContributorController extends Controller
         return $this->responseData($contributor, 'following', $following);
     }
 
+    /**
+     * Populate and return json data for general purpose.
+     *
+     * @param $contributor
+     * @param $key
+     * @param $data
+     * @return array
+     */
     private function responseData($contributor, $key, $data)
     {
-        return [
+        return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
             'contributor_id' => $contributor->id,
@@ -117,6 +146,6 @@ class ContributorController extends Controller
             'is_following' => $contributor->following_text == 'FOLLOW' ? false : true,
             'timestamp' => Carbon::now(),
             $key => $data
-        ];
+        ]);
     }
 }

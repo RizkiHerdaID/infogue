@@ -420,8 +420,6 @@ class AuthController extends Controller
 
         $user = Socialite::driver('facebook')->user();
 
-        dd($user);
-
         $contributor = Contributor::whereVendor('facebook')->whereToken($user->id);
 
         if ($contributor->count() == 0) {
@@ -434,6 +432,10 @@ class AuthController extends Controller
              * the data including avatar, cover and facebook profile information.
              */
 
+            if(Contributor::whereEmail($user->email)->count()){
+                return redirect()->route('login.form')->with('status', 'Email has been registered via web or twitter');
+            }
+
             $contributor = new Contributor();
 
             $avatar = file_get_contents("https://graph.facebook.com/{$user->id}/picture?type=large");
@@ -441,13 +443,12 @@ class AuthController extends Controller
 
             $contributor->token = $user->id;
             $contributor->name = $user->name;
-            $contributor->username = $user->username . '.fb';
+            $contributor->username = explode('@', $user->email)[0] . '.fb';
             $contributor->password = Hash::make(uniqid());
             $contributor->email = $user->email;
             $contributor->vendor = 'facebook';
             $contributor->status = 'activated';
-            $contributor->about = $user->bio;
-            $contributor->facebook = 'https://facebook.com/' . $user->username;
+            $contributor->avatar = 'facebook-' . $user->id . '.jpg';
 
             $contributor->save();
 

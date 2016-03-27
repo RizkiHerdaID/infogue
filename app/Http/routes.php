@@ -183,9 +183,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
         Route::get('/category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
 
-        Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'ContributorController@register']);
-        Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'ContributorController@login']);
-        Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'ContributorController@update']);
+        Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'AccountController@register']);
+        Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'AccountController@login']);
+        Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'AccountController@update']);
 
         Route::post('/follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
         Route::delete('/unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);

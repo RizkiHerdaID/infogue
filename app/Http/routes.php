@@ -122,10 +122,10 @@ Route::group(['middleware' => ['web']], function () {
         // Group of contributor view profile routes...
         Route::group(['as' => 'contributor.', 'prefix' => 'contributor/{username}'], function () {
             Route::get('/', ['as' => 'stream', 'uses' => 'ContributorController@show']);
-            Route::get('/detail', ['as' => 'detail', 'uses' => 'ContributorController@detail']);
-            Route::get('/article', ['as' => 'article', 'uses' => 'ContributorController@article']);
-            Route::get('/follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
-            Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);
+            Route::get('detail', ['as' => 'detail', 'uses' => 'ContributorController@detail']);
+            Route::get('article', ['as' => 'article', 'uses' => 'ContributorController@article']);
+            Route::get('follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
+            Route::get('following', ['as' => 'following', 'uses' => 'ContributorController@following']);
         });
 
         // Group of logged in account profile routes...
@@ -140,55 +140,59 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::resource('article', 'ArticleController', ['except' => ['show']]);
-            Route::match(['put', 'patch'], '/article/draft/{id}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
-            Route::get('/article/subcategory/{id}', ['as' => 'account.article.subcategory', 'uses' => 'CategoryController@subcategories']);
-            Route::get('/article/tags', ['as' => 'account.article.tags', 'uses' => 'TagController@tags']);
-            Route::get('/follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
-            Route::get('/following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
+            Route::match(['put', 'patch'], 'article/draft/{id}', ['as' => 'account.article.draft', 'uses' => 'ArticleController@draft']);
+            Route::get('article/subcategory/{id}', ['as' => 'account.article.subcategory', 'uses' => 'CategoryController@subcategories']);
+            Route::get('article/tags', ['as' => 'account.article.tags', 'uses' => 'TagController@tags']);
+            Route::get('follower', ['as' => 'account.follower', 'uses' => 'FollowerController@follower']);
+            Route::get('following', ['as' => 'account.following', 'uses' => 'FollowerController@following']);
 
-            Route::post('/follow', ['as' => 'account.follow', 'uses' => 'FollowerController@follow']);
-            Route::delete('/unfollow/{id}', ['as' => 'account.unfollow', 'uses' => 'FollowerController@unfollow']);
+            Route::post('follow', ['as' => 'account.follow', 'uses' => 'FollowerController@follow']);
+            Route::delete('unfollow/{id}', ['as' => 'account.unfollow', 'uses' => 'FollowerController@unfollow']);
 
-            Route::get('/setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
+            Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
             Route::match(['put', 'patch'], '/setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
         });
 
         // Group of article routes...
         Route::group(['as' => 'article.'], function () {
-            Route::get('/category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
-            Route::get('/category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
-            Route::get('/tag/{tag}', ['as' => 'tag', 'uses' => 'TagController@tag']);
-            Route::get('/archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
-            Route::get('/archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
-            Route::get('/archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
-            Route::get('/archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
-            Route::get('/archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
-            Route::post('/article/rate', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
-            Route::post('/article/hit', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
-            Route::get('/{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
+            Route::get('category/{category}', ['as' => 'category', 'uses' => 'CategoryController@category']);
+            Route::get('category/{category}/{subcategory}', ['as' => 'subcategory', 'uses' => 'CategoryController@subcategory']);
+            Route::get('tag/{tag}', ['as' => 'tag', 'uses' => 'TagController@tag']);
+            Route::get('archive', ['as' => 'archive', 'uses' => 'ArticleController@archive']);
+            Route::get('archive/latest', ['as' => 'latest', 'uses' => 'ArticleController@latest']);
+            Route::get('archive/headline', ['as' => 'headline', 'uses' => 'ArticleController@headline']);
+            Route::get('archive/trending', ['as' => 'trending', 'uses' => 'ArticleController@trending']);
+            Route::get('archive/random', ['as' => 'random', 'uses' => 'ArticleController@random']);
+            Route::post('article/rate', ['as' => 'rate', 'uses' => 'ArticleController@rate']);
+            Route::post('article/hit', ['as' => 'hit', 'uses' => 'ArticleController@hit']);
+            Route::get('{slug}', ['as' => 'show', 'uses' => 'ArticleController@show']);
         });
     });
 
     // Group of API for external devices...
     Route::group(['namespace' => 'Api', 'prefix' => 'api'], function () {
+        Route::get('/version', ['as' => 'api.version', 'uses' => 'ApiController@index']);
+
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);
         Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
+        Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
 
         Route::get('/category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
         Route::get('/category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
         Route::get('/category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
 
-        Route::post('/register', ['as' => 'api.register', 'uses' => 'ContributorController@register']);
-        Route::post('/login', ['as' => 'api.login', 'uses' => 'ContributorController@login']);
-        Route::match(['put', 'patch'], '/', ['as' => 'api.account.update', 'uses' => 'ContributorController@update']);
+        Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'ContributorController@register']);
+        Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'ContributorController@login']);
+        Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'ContributorController@update']);
 
         Route::post('/follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
-        Route::delete('/unfollow/{$id}', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
+        Route::delete('/unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
 
         Route::group(['as' => 'api.contributor.', 'prefix' => 'contributor/{username}'], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'ContributorController@show']);
+            Route::get('/stream', ['as' => 'stream', 'uses' => 'ContributorController@stream']);
             Route::get('/article', ['as' => 'article', 'uses' => 'ContributorController@article']);
             Route::get('/follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
             Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);

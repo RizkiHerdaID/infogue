@@ -56,24 +56,6 @@ $(function () {
         $('.browserupgrade').toggleClass('bottom');
     }, {offset: "30"});
 
-    // IMAGE LAZY LOADING
-    echo.init({
-        offset: 50,
-        throttle: 250,
-        callback: function (element, op) {
-            //console.log(element, 'has been', op + 'ed')
-            $(element).css('opacity', '0');
-
-            setTimeout(function () {
-                if (op === 'load') {
-                    changeClass($(element));
-                    $(element).addClass('transition');
-                    $(element).css('opacity', '1');
-                }
-            }, 150);
-        }
-    });
-
     // SUMMERNOTE
     if ($('.summernote').length) {
         $('.summernote').summernote({
@@ -170,6 +152,24 @@ $(function () {
             largeFeature.css('background-size', 'cover');
         }
     }
+
+    // IMAGE LAZY LOADING
+    echo.init({
+        offset: 50,
+        throttle: 250,
+        callback: function (element, op) {
+            //console.log(element, 'has been', op + 'ed')
+            $(element).css('opacity', '0');
+
+            setTimeout(function () {
+                if (op === 'load') {
+                    changeClass($(element));
+                    $(element).addClass('transition');
+                    $(element).css('opacity', '1');
+                }
+            }, 150);
+        }
+    });
 
     /*
      * --------------------------------------------------------------------------

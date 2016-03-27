@@ -175,15 +175,16 @@ class Contributor extends Authenticatable
      * Retrieve follower by contributor and check if the are users have followed.
      *
      * @param $username
+     * @param null $contributor_id
      * @return mixed
      */
-    public function contributorFollower($username)
+    public function contributorFollower($username, $contributor_id = null)
     {
         $contributor = $this->whereUsername($username)->first();
 
         $follower = $contributor->followers()->pluck('contributor_id')->toArray();
 
-        $contributors = $this->relatedFollowers()
+        $contributors = $this->relatedFollowers($contributor_id)
             ->whereIn('contributors.id', $follower)
             ->paginate(10);
 
@@ -194,15 +195,16 @@ class Contributor extends Authenticatable
      * Retrieve following by contributor and check if the are users have followed.
      *
      * @param $username
+     * @param null $contributor_id
      * @return mixed
      */
-    public function contributorFollowing($username)
+    public function contributorFollowing($username, $contributor_id = null)
     {
         $contributor = $this->whereUsername($username)->first();
 
         $following = $contributor->following()->pluck('following')->toArray();
 
-        $contributors = $this->relatedFollowers()
+        $contributors = $this->relatedFollowers($contributor_id)
             ->whereIn('contributors.id', $following)
             ->paginate(10);
 
@@ -214,14 +216,17 @@ class Contributor extends Authenticatable
      *
      * @param $username
      * @param bool|false $activated
+     * @param null $contributor_id
      * @return mixed
      */
-    public function profile($username, $activated = false)
+    public function profile($username, $activated = false, $contributor_id = null)
     {
         if ($activated) {
-            $profile = $this->relatedFollowers()->activated()->whereUsername($username)->firstOrFail();
+            $profile = $this->relatedFollowers($contributor_id)
+                ->activated()->whereUsername($username)->firstOrFail();
         } else {
-            $profile = $this->relatedFollowers()->whereUsername($username)->firstOrFail();
+            $profile = $this->relatedFollowers($contributor_id)
+                ->whereUsername($username)->firstOrFail();
         }
 
         return $this->preContributorModifier([$profile])[0];
@@ -230,14 +235,19 @@ class Contributor extends Authenticatable
     /**
      * Check if authenticate user has follow another contributor in list of selection.
      *
+     * @param null $id_contributor
      * @return mixed
      */
-    public function relatedFollowers()
+    public function relatedFollowers($id_contributor = null)
     {
         $id = 0;
 
         if (Auth::check()) {
             $id = Auth::id();
+        }
+        
+        if($id_contributor != null){
+            $id = $id_contributor;
         }
 
         return $this->select(DB::raw('contributors.*, CASE WHEN following IS NULL THEN 0 ELSE 1 END AS is_following'))
@@ -279,6 +289,7 @@ class Contributor extends Authenticatable
             $contributor->about = (empty($contributor->about)) ? 'No Description' : $contributor->about;
             $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
             $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
+            $contributor->cover_ref = asset("images/covers/{$contributor->cover}");
             $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
             $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
 

@@ -125,7 +125,7 @@ class SettingsTableSeeder extends Seeder
             ],
             [
                 'key' => 'Auto Approve',
-                'value' => '1',
+                'value' => '0',
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],

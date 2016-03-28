@@ -24,7 +24,7 @@ class ContributorController extends Controller
     /**
      * Instance variable of Contributor.
      *
-     * @var Article
+     * @var Contributor
      */
     private $contributor;
 

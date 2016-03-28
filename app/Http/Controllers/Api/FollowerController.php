@@ -2,20 +2,27 @@
 
 namespace Infogue\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Infogue\Activity;
+use Infogue\Contributor;
 use Infogue\Follower;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 
 class FollowerController extends Controller
 {
-    private $follower;
-
-    public function __construct(Follower $follower)
-    {
-        $this->follower = $follower;
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | Follower Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling follow or unfollow request,
+    | showing list of page followers and following contributor account too.
+    |
+    */
 
     /**
      * Store a relation between 2 contributors.
@@ -25,73 +32,103 @@ class FollowerController extends Controller
      */
     public function follow(Request $request)
     {
-        $follower = new Follower();
+        $contributor_id = $request->input('contributor_id');
+        $following_id = $request->input('following_id');
 
-        $follower->contributor_id = $request->input('contributor_id');
-        $follower->following = $request->input('following_id');
+        if($contributor_id == $following_id){
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => 'Contributor cannot follow their self',
+                'timestamp' => Carbon::now(),
+            ], 400);
+        }
+                
+        $isFollowing = Follower::whereContributorId($contributor_id)
+            ->whereFollowing($following_id)->count();
 
-        if ($follower->save()) {
-            $contributor = Contributor::findOrFail($request->input('following_id'));
+        if (!$isFollowing) {
+            $follower = new Follower();
+            $follower->contributor_id = $contributor_id;
+            $follower->following = $following_id;
 
-            $activity = new Activity();
-            $activity->contributor_id = $request->input('contributor_id');
-            $activity->activity = $activity->followActivity($request->input('contributor_username'), $contributor->username);
-            $activity->save();
+            if ($follower->save()) {
+                $contributor = Contributor::findOrFail($contributor_id);
+                $following = Contributor::findOrFail($following_id);
 
-            if ($contributor->email_follow) {
-                $this->sendEmailNotification($request->input('contributor_id'), $request->input('following_id'));
+                Activity::create([
+                    'contributor_id' => $contributor_id,
+                    'activity' => Activity::followActivity($contributor->username, $following->username)
+                ]);
+                
+                if ($following->email_follow) {
+                    $follower->sendEmailNotification($contributor, $following);
+                }
+
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => $contributor->name.' now is following '.$following->name,
+                    'timestamp' => Carbon::now(),
+                ]);
             }
 
-            return 'success';
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'failure',
+                'message' => Lang::get('database.generic'),
+                'timestamp' => Carbon::now(),
+            ], 500);
         }
 
-        return 'failed';
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'denied',
+            'message' => 'Contributor is already follow the other',
+            'timestamp' => Carbon::now(),
+        ], 400);
     }
 
     /**
      * Stop following specified contributor.
      *
      * @param Request $request
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function unfollow(Request $request, $id)
+    public function unfollow(Request $request)
     {
-        $follower = Follower::where('contributor_id', $request->input('contributor_id'))->where('following', $id)->first();
+        $contributor_id = $request->input('contributor_id');
+        $following_id = $request->input('following_id');
 
-        if (count($follower) > 0 && $follower->delete()) {
-            return 'success';
+        $follower = Follower::whereContributorId($contributor_id)
+            ->whereFollowing($following_id)->first();
+
+        if (count($follower) > 0) {
+            $contributor = Contributor::findOrFail($contributor_id)->name;
+            $following = Contributor::findOrFail($following_id)->name;
+
+            if($follower->delete()){
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => $contributor.' is stop following '. $following,
+                    'timestamp' => Carbon::now(),
+                ]);
+            }
+
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'failure',
+                'message' => Lang::get('database.generic'),
+                'timestamp' => Carbon::now(),
+            ], 500);
         }
 
-        return 'failed';
-    }
-
-    public function sendEmailNotification($contributor_id, $follow_id)
-    {
-        $contributor = Contributor::findOrFail($contributor_id);
-        $follow = Contributor::findOrFail($follow_id);
-
-        $data = [
-            'followerName' => $contributor->name,
-            'followerLocation' => $contributor->location,
-            'followerAbout' => $contributor->about,
-            'followerUsername' => $contributor->username,
-            'followerAvatar' => $contributor->avatar,
-            'followerArticle' => $contributor->articles()->count(),
-            'followerFollower' => $contributor->followers()->count(),
-            'followerFollowing' => $contributor->following()->count(),
-            'contributorName' => $follow->name,
-            'contributorUsername' => $follow->username
-        ];
-
-        Mail::send('emails.follower', $data, function ($message) use ($follow, $contributor) {
-
-            $message->from('no-reply@infogue.id', 'Infogue.id');
-
-            $message->replyTo('no-reply@infogue.id', 'Infogue.id');
-
-            $message->to($follow->email)->subject($contributor->name . ' now is following you');
-
-        });
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'denied',
+            'message' => 'Contributor has not followed the other before',
+            'timestamp' => Carbon::now(),
+        ], 400);
     }
 }

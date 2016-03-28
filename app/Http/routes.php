@@ -171,7 +171,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // Group of API for external devices...
     Route::group(['namespace' => 'Api', 'prefix' => 'api'], function () {
-        Route::get('/version', ['as' => 'api.version', 'uses' => 'ApiController@index']);
+        Route::get('version', ['as' => 'api.version', 'uses' => 'ApiController@index']);
 
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
@@ -179,16 +179,16 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
         Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
 
-        Route::get('/category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
-        Route::get('/category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
-        Route::get('/category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
+        Route::get('category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
+        Route::get('category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
+        Route::get('category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
 
         Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'AccountController@register']);
         Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'AccountController@login']);
         Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'AccountController@update']);
 
-        Route::post('/follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
-        Route::delete('/unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
+        Route::post('follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
+        Route::delete('unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
 
         Route::group(['as' => 'api.contributor.', 'prefix' => 'contributor/{username}'], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'ContributorController@show']);

@@ -205,7 +205,7 @@ class ApiController extends Controller
                         'params' => [],
                         'inputs' => [
                             'contributor_id' => 'integer',
-                            'following' => 'integer',
+                            'following_id' => 'integer',
                         ]
                     ],
                     'unfollow' => [

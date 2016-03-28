@@ -4,21 +4,48 @@ namespace Infogue\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Infogue\Activity;
 use Infogue\Article;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Rating;
+use Infogue\Setting;
+use Infogue\Tag;
 use Infogue\Uploader;
+use Infogue\User;
 
 class ArticleController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Article Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling showing article page
+    | including archive, latest, headline, featured, random, single article,
+    | tags, hit, rate, and article management.
+    |
+    */
+
+    /**
+     * Instance variable of Article.
+     *
+     * @var Article
+     */
     private $article;
 
+    /**
+     * Create a new article controller instance.
+     *
+     * @param Article $article
+     */
     public function __construct(Article $article)
     {
-        //$this->middleware('auth:api', ['except' => 'show']);
+        //$this->middleware('auth:api', ['except' => ['show', 'index']]);
 
         $this->article = $article;
     }
@@ -44,54 +71,155 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $tags_list = explode(',', $request->get('tags'));
+        $exist = Article::whereSlug($request->input('slug'))->count();
 
-        // get all tags which already exist with tags are given
-        $tag = Tag::whereIn('tag', $tags_list);
-
-        // merge tags which exist into tags_id
-        $tags_id = $tag->pluck('id')->toArray();
-
-        // retrieve tags label which already exist to compare with given array
-        $available_tags = $tag->pluck('tag')->toArray();
-
-        // new tags need to insert into tags table
-        $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
-
-        foreach ($new_tags as $tag_label):
-            $newTag = new Tag();
-            $newTag->tag = $tag_label;
-            $newTag->save();
-            array_push($tags_id, $newTag->id);
-        endforeach;
-
-        $article = new Article();
-        $article->contributor_id = $request->input('contributor_id');
-        $article->subcategory_id = $request->input('subcategory');
-        $article->title = $request->input('title');
-        $article->slug = $request->input('slug');
-        $article->type = $request->input('type');
-        $article->content = $request->input('content');
-        $article->excerpt = $request->input('excerpt');
-        $article->status = $request->input('status');
-
-        $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
-            $article->featured = $request->input('featured');
+        if ($exist) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => 'Unique slug has taken',
+                'timestamp' => Carbon::now(),
+            ], 400);
         }
 
-        $save = $article->save();
+        $articleController = $this;
 
-        Article::find($article->id)->tags()->attach($tags_id);
+        $result = DB::transaction(function () use ($request, $articleController) {
+            try {
+                /*
+                 * --------------------------------------------------------------------------
+                 * Populate tags
+                 * --------------------------------------------------------------------------
+                 * Sync tags and article, extract tags from request, break down between new
+                 * tags and tags that available in database, collect available tags first
+                 * then insert new tags and merge new inserted tag id with available tags id
+                 * finally store them all into article_tags table.
+                 */
+                
+                $availableTags = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
-        $this->sendEmailNotification($request->input('contributor_id'), $article);
+                $availableTagsId = $availableTags->pluck('id')->toArray();
 
-        return $save;
+                $availableTagsName = $availableTags->pluck('tag')->toArray();
+
+                $newTags = array_diff(explode(',', $request->get('tags')), $availableTagsName);
+
+                foreach ($newTags as $tagLabel):
+                    $newTag = new Tag();
+                    $newTag->tag = $tagLabel;
+                    $newTag->save();
+                    array_push($availableTagsId, $newTag->id);
+                endforeach;
+
+                /*
+                 * --------------------------------------------------------------------------
+                 * Populate article data
+                 * --------------------------------------------------------------------------
+                 * Retrieve all data from request and populate into article object model
+                 * then store it into database, check if featured is available then attempt
+                 * to upload to asset directory.
+                 */
+
+                $autoApprove = Setting::whereKey('Auto Approve')->first();
+                $status = $request->input('status');
+                if ($autoApprove->value) {
+                    if ($status == 'pending') {
+                        $status = 'published';
+                    }
+                }
+
+                $contributor = Contributor::findOrFail($request->input('contributor_id'));
+
+                $article = new Article();
+                $article->contributor_id = $contributor->id;
+                $article->subcategory_id = $request->input('subcategory');
+                $article->title = $request->input('title');
+                $article->slug = $request->input('slug');
+                $article->type = $request->input('type');
+                $article->content = $request->input('content');
+                $article->excerpt = $request->input('excerpt');
+                $article->status = $status;
+
+                $image = new Uploader();
+                if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
+                    $article->featured = $request->input('featured');
+                }
+
+                $article->save();
+
+                Article::find($article->id)->tags()->attach($availableTagsId);
+
+                Activity::create([
+                    'contributor_id' => $contributor->id,
+                    'activity' => Activity::createArticleActivity($contributor->username, $article->title, $article->slug)
+                ]);
+
+                if ($autoApprove->value) {
+                    $articleController->sendFollowerEmailNotification($article);
+                } else {
+                    $articleController->sendAdminArticleNotification($contributor, $article);
+                }
+
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => 'Article was created',
+                    'auto_approve' => $autoApprove->value,
+                    'timestamp' => Carbon::now(),
+                ]);
+
+            } catch (\Exception $e) {
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'failure',
+                    'message' => Lang::get('alert.error.transaction'),
+                    'timestamp' => Carbon::now(),
+                ], 500);
+            }
+        });
+
+        return $result;
     }
 
-    public function sendEmailNotification($contributor_id, $article)
+    /**
+     * Send notification email for admin or support.
+     *
+     * @param $contributor
+     * @param $article
+     * @param bool|false $doUpdate
+     */
+    public function sendAdminArticleNotification($contributor, $article, $doUpdate = false)
     {
-        $contributor = Contributor::findOrFail($contributor_id);
+        $notification = Setting::whereKey('Email Article')->first();
+
+        if ($notification->value) {
+            $admins = User::all(['name', 'email']);
+
+            foreach ($admins as $admin) {
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.article', ['admin' => $admin, 'contributor' => $contributor, 'article' => $article], function ($message) use ($admin, $contributor, $doUpdate) {
+                        $message->from(env('MAIL_ADDRESS', 'noreply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                        $subject = $contributor->name . ' create new article [PENDING]';
+
+                        if ($doUpdate) {
+                            $subject = $contributor->name . ' updated the article [PENDING UPDATE]';
+                        }
+
+                        $message->to($admin->email)->subject($subject);
+                    });
+                }
+            }
+        }
+    }
+
+    /**
+     * Send email notification to followers that contributor create new article.
+     *
+     * @param $article
+     */
+    public function sendFollowerEmailNotification($article)
+    {
+        $contributor = $article->contributor;
 
         $followers = $contributor->followers;
 
@@ -112,10 +240,7 @@ class ArticleController extends Controller
                 ];
 
                 Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
-                    $message->from('no-reply@infogue.id', 'Infogue.id');
-
-                    $message->replyTo('no-reply@infogue.id', 'Infogue.id');
-
+                    $message->from(env('MAIL_ADDRESS', 'noreply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
                     $message->to($follower->email)->subject($contributor->name . ' create new article');
                 });
             }
@@ -130,15 +255,16 @@ class ArticleController extends Controller
      */
     public function hit(Request $request)
     {
-        $article = Article::findOrFail($request->input('id'));
+        $article = Article::findOrFail($request->input('article_id'));
 
         $article->increment('view');
 
-        return [
+        return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
+            'message' => $article->view,
             'timestamp' => Carbon::now(),
-        ];
+        ]);
     }
 
     /**
@@ -149,15 +275,17 @@ class ArticleController extends Controller
      */
     public function rate(Request $request)
     {
-        $article = Article::findOrFail($request->input('article_id'));
-
+        $article_id = $request->input('article_id');
+        $rate = $request->input('rate');
         $ipAddress = $request->ip();
+
+        $article = Article::findOrFail($article_id);
 
         $isRated = $article->ratings()->whereIp($ipAddress)->count();
 
         if ($isRated) {
-            $rating = Rating::whereArticleId($request->input('article_id'))->whereIp($ipAddress)->firstOrFail();
-            $rating->rate = $request->input('rate');
+            $rating = Rating::whereArticleId($article_id)->whereIp($ipAddress)->firstOrFail();
+            $rating->rate = $rate;
         } else {
             $rating = new Rating();
             $rating->article_id = $request->input('article_id');
@@ -165,11 +293,14 @@ class ArticleController extends Controller
             $rating->rate = $request->input('rate');
         }
 
-        return [
+        $result = $rating->save();
+
+        return response()->json([
             'request_id' => uniqid(),
-            'status' => $rating->save() ? 'success' : 'failure',
+            'status' => $result ? 'success' : 'failure',
+            'message' => $result ? round($article->ratings()->avg('rate')) : Lang::get('database.generic'),
             'timestamp' => Carbon::now(),
-        ];
+        ], $result ? 200 : 500);
     }
 
     /**
@@ -187,12 +318,12 @@ class ArticleController extends Controller
 
         $article->rating = round($article->ratings()->avg('rate'));
 
-        return [
+        return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
-            'article' => $article
-        ];
+            'article' => $article,
+        ]);
     }
 
     /**
@@ -204,59 +335,145 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        $articleController = $this;
+
         $article = Article::whereSlug($slug)->firstOrFail();
 
-        $tags_list = explode(',', $request->get('tags'));
+        $exist = Article::whereSlug($request->input('slug'))->where('id', '!=', $article->id)->count();
 
-        // get all tags which already exist with tags are given
-        $tag = Tag::whereIn('tag', $tags_list);
-
-        // merge tags which exist into tags_id
-        $tags_id = $tag->pluck('id')->toArray();
-
-        // retrieve tags label which already exist to compare with given array
-        $available_tags = $tag->pluck('tag')->toArray();
-
-        // new tags need to insert into tags table
-        $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
-
-        $article->tags()->sync($tags_id);
-
-        foreach ($new_tags as $tag_label):
-            $newTag = new Tag();
-            $newTag->tag = $tag_label;
-            $newTag->save();
-            if (!$article->tags->contains($newTag->id)) {
-                $article->tags()->save($newTag);
-            }
-        endforeach;
-
-        $article->subcategory_id = $request->input('subcategory');
-        $article->title = $request->input('title');
-        $article->slug = $request->input('slug');
-        $article->type = $request->input('type');
-        $article->content_update = $request->input('content');
-        $article->excerpt = $request->input('excerpt');
-        $article->status = $request->input('status');
-
-        $image = new Uploader();
-        if ($image->upload($request, 'featured', base_path('public/images/featured/'), rand(0, 1000) . uniqid())) {
-            $article->featured = $request->input('featured');
+        if ($exist) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => 'Unique slug has taken',
+                'timestamp' => Carbon::now(),
+            ], 400);
         }
 
-        return $article->save();
+        $result = DB::transaction(function () use ($request, $article, $articleController) {
+            try {
+                /*
+                 * --------------------------------------------------------------------------
+                 * Populate tags
+                 * --------------------------------------------------------------------------
+                 * Sync last tags and new article, extract tags from request, break down 
+                 * between new tags and tags that available in database, merge new inserted 
+                 * tag id with available tags id and remove the old which is removed.
+                 */
+                
+                $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
+
+                $tags_id = $tag->pluck('id')->toArray();
+
+                $available_tags = $tag->pluck('tag')->toArray();
+
+                $new_tags = array_diff(explode(',', $request->get('tags')), $available_tags);
+
+                $article->tags()->sync($tags_id);
+
+                foreach ($new_tags as $tag_label):
+                    $newTag = new Tag();
+                    $newTag->tag = $tag_label;
+                    $newTag->save();
+                    
+                    if (!$article->tags->contains($newTag->id)) {
+                        $article->tags()->save($newTag);
+                    }
+                endforeach;
+
+                /*
+                 * --------------------------------------------------------------------------
+                 * Update the article
+                 * --------------------------------------------------------------------------
+                 * Finally populate article data like create process and check if featured
+                 * need to change and upload the image then update the changes.
+                 */
+
+                $autoApprove = Setting::whereKey('Auto Approve')->first();
+                $content = $article->content;
+                $content_update = $request->input('content');
+                $status = $request->input('status');
+
+                if ($autoApprove->value) {
+                    $content = $request->input('content');
+                    $content_update = '';
+                    if ($status == 'pending') {
+                        $status = 'published';
+                    }
+                }
+
+                $article->subcategory_id = $request->input('subcategory');
+                $article->title = $request->input('title');
+                $article->slug = $request->input('slug');
+                $article->type = $request->input('type');
+                $article->content = $content;
+                $article->content_update = $content_update;
+                $article->excerpt = $request->input('excerpt');
+                $article->status = $status;
+
+                $image = new Uploader();
+                if ($image->upload($request, 'featured', base_path('public/images/featured/'), 'featured_' . uniqid())) {
+                    $article->featured = $request->input('featured');
+                }
+
+                $article->save();
+
+                $contributor = Contributor::findOrFail($request->input('contributor_id'));
+
+                Activity::create([
+                    'contributor_id' => $contributor->id,
+                    'activity' => Activity::updateArticleActivity($contributor->username, $article->title, $article->slug)
+                ]);
+
+                if (!$autoApprove->value) {
+                    $articleController->sendAdminArticleNotification($contributor, $article, true);
+                }
+
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => 'Article was updated',
+                    'auto_approve' => $autoApprove->value,
+                    'timestamp' => Carbon::now(),
+                ]);
+
+            } catch (\Exception $e) {
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'failure',
+                    'message' => Lang::get('alert.error.transaction'),
+                    'timestamp' => Carbon::now(),
+                ], 500);
+            }
+        });
+
+        return $result;
     }
 
     /**
      * Remove the specified article from storage.
      *
-     * @param  int $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::whereSlug($slug)->firstOrFail();
 
-        return $article->delete();
+        if ($article->delete()) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'success',
+                'message' => 'Article was deleted',
+                'timestamp' => Carbon::now(),
+            ]);
+        }
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'failure',
+            'message' => Lang::get('alert.error.generic'),
+            'timestamp' => Carbon::now(),
+        ], 500);
     }
 }

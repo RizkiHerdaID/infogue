@@ -5,7 +5,6 @@ namespace Infogue\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Mail;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Follower;
@@ -127,18 +126,16 @@ class FollowerController extends Controller
                     ]);
 
                     if ($following->email_follow) {
-                        $this->sendEmailNotification(Auth::user(), $following);
+                        $follower->sendEmailNotification(Auth::user(), $following);
                     }
-
-                    return 'success';
+                    return response('success');
                 }
 
-                return 'failed';
+                return response('failed', 500);
             }
-
-            return 'success';
+            return response('success');
         } else {
-            return 'restrict';
+            return response('restrict', 401);
         }
     }
 
@@ -166,52 +163,14 @@ class FollowerController extends Controller
 
             if (count($follower) > 0) {
                 if ($follower->delete()) {
-                    return 'success';
+                    return response('success');
                 }
-                return 'failed';
+                return response('failed', 500);
             } else {
-                return 'success';
+                return response('success');
             }
         } else {
-            return 'restrict';
+            return response('restrict', 401);
         }
-    }
-
-    /**
-     * Send following email notification.
-     *
-     * @param $contributor
-     * @param $follow
-     */
-    public function sendEmailNotification($contributor, $follow)
-    {
-        /*
-         * --------------------------------------------------------------------------
-         * Send email notification
-         * --------------------------------------------------------------------------
-         * Populate the data from contributor and contributor who followed, passing
-         * the data into email and send by support email service.
-         */
-
-        $data = [
-            'followerName' => $contributor->name,
-            'followerLocation' => $contributor->location,
-            'followerAbout' => $contributor->about,
-            'followerUsername' => $contributor->username,
-            'followerAvatar' => $contributor->avatar,
-            'followerArticle' => $contributor->articles()->count(),
-            'followerFollower' => $contributor->followers()->count(),
-            'followerFollowing' => $contributor->following()->count(),
-            'contributorName' => $follow->name,
-            'contributorUsername' => $follow->username
-        ];
-
-        Mail::send('emails.follower', $data, function ($message) use ($follow, $contributor) {
-            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
-
-            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
-
-            $message->to($follow->email)->subject($contributor->name . ' now is following you');
-        });
     }
 }

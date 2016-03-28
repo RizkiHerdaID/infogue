@@ -19,8 +19,10 @@ class ApiController extends Controller
                 'category' => [
                     'menu' => [
                         'method' => 'GET/HEAD',
-                        'url' => url('api') . '/category',
-                        'params' => []
+                        'url' => url('api') . '/category?{filter=:category}',
+                        'params' => [
+                            'category' => 'Data filter enum:merge|category|subcategory|subcategory:parent_id'
+                        ]
                     ],
                     'category_article' => [
                         'method' => 'GET/HEAD',
@@ -214,7 +216,7 @@ class ApiController extends Controller
                         'params' => [],
                         'inputs' => [
                             'contributor_id' => 'integer',
-                            'following' => 'integer',
+                            'following_id' => 'integer',
                         ]
                     ],
                 ]

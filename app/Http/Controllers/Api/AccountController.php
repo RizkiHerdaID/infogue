@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Mail;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
+use Infogue\Setting;
 use Infogue\Uploader;
+use Infogue\User;
 
 class AccountController extends Controller
 {
@@ -19,27 +22,10 @@ class AccountController extends Controller
     | Account Controller
     |--------------------------------------------------------------------------
     |
-    | This controller is responsible for handling contributor registration
-    | contributor login and update their data.
+    | This controller is responsible for handling api for contributor
+    | registration contributor login and update their data.
     |
     */
-    
-    /**
-     * Instance variable of Contributor.
-     *
-     * @var Article
-     */
-    private $contributor;
-
-    /**
-     * Create a new account controller instance.
-     *
-     * @param Contributor $contributor
-     */
-    public function __construct(Contributor $contributor)
-    {
-        $this->contributor = $contributor;
-    }
 
     /**
      * Store a newly created account in storage.
@@ -62,7 +48,7 @@ class AccountController extends Controller
                 'timestamp' => Carbon::now(),
             ], 400);
         } else {
-            Contributor::create([
+            $contributor = Contributor::create([
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'email' => $request->input('email'),
@@ -71,12 +57,66 @@ class AccountController extends Controller
                 'vendor' => 'web',
             ]);
 
+            $this->sendingActivationEmail($contributor);
+
+            $this->sendAdminContributorNotification($contributor);
+
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'success',
                 'message' => 'Registering user is success',
                 'timestamp' => Carbon::now(),
             ], 200);
+        }
+    }
+
+    /**
+     * Send registered user with email activation.
+     *
+     * @param $contributor
+     * @return Collection
+     */
+    public function sendingActivationEmail($contributor)
+    {
+        $data = [
+            'name' => $contributor->username,
+            'token' => $contributor->token
+        ];
+
+        Mail::send('emails.welcome', $data, function ($message) use ($contributor) {
+            $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+            $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+            $message->to($contributor->email)->subject('Welcome to Infogue.id');
+        });
+
+        return $contributor;
+    }
+
+    /**
+     * Send notification email for admin or support.
+     *
+     * @param $contributor
+     */
+    public function sendAdminContributorNotification($contributor)
+    {
+        $notification = Setting::whereKey('Email Contributor')->first();
+
+        if ($notification->value) {
+            $admins = User::all(['name', 'email']);
+
+            foreach ($admins as $admin) {
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.contributor', ['admin' => $admin, 'contributor' => $contributor], function ($message) use ($admin, $contributor) {
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                        $message->to($admin->email)->subject($contributor->name . ' joins Infogue.id');
+                    });
+                }
+            }
         }
     }
 
@@ -142,7 +182,7 @@ class AccountController extends Controller
 
         $credential = Hash::check($request->input('password'), $contributor->password);
 
-        if(!$credential){
+        if (!$credential) {
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'mismatch',
@@ -180,19 +220,18 @@ class AccountController extends Controller
             $contributor->password = $request->input('password');
         }
 
-        if($contributor->save()){
+        if ($contributor->save()) {
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'success',
                 'message' => 'Setting was updated',
                 'timestamp' => Carbon::now(),
             ]);
-        }
-        else{
+        } else {
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'failure',
-                'message' => Lang::get('database.generic'),
+                'message' => Lang::get('alert.database.generic'),
                 'timestamp' => Carbon::now(),
             ], 500);
         }

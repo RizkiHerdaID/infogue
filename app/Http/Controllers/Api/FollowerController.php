@@ -5,7 +5,6 @@ namespace Infogue\Http\Controllers\Api;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Mail;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Follower;
@@ -76,7 +75,7 @@ class FollowerController extends Controller
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'failure',
-                'message' => Lang::get('database.generic'),
+                'message' => Lang::get('alert.database.generic'),
                 'timestamp' => Carbon::now(),
             ], 500);
         }
@@ -119,7 +118,7 @@ class FollowerController extends Controller
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'failure',
-                'message' => Lang::get('database.generic'),
+                'message' => Lang::get('alert.database.generic'),
                 'timestamp' => Carbon::now(),
             ], 500);
         }

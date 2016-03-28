@@ -150,7 +150,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::delete('unfollow/{id}', ['as' => 'account.unfollow', 'uses' => 'FollowerController@unfollow']);
 
             Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
-            Route::match(['put', 'patch'], '/setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
+            Route::match(['put', 'patch'], 'setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
         });
 
         // Group of article routes...
@@ -173,11 +173,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::group(['namespace' => 'Api', 'prefix' => 'api'], function () {
         Route::get('version', ['as' => 'api.version', 'uses' => 'ApiController@index']);
 
+        Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
+        Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
+        Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
+        
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);
-        Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
-        Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
 
         Route::get('category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
         Route::get('category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);

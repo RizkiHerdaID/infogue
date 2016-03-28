@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers\Api;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Infogue\Category;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -11,10 +12,37 @@ use Infogue\XMLConstruct;
 
 class CategoryController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Category Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling article showing grouped by
+    | category and sub category, the categories are given by slug from category
+    | title and the article list is result of guessing reverse form of slug.
+    |
+    */
+
+    /**
+     * Instance variable of Category.
+     *
+     * @var Category
+     */
     private $category;
 
+    /**
+     * Instance variable of Subcategory.
+     *
+     * @var Subcategory
+     */
     private $subcategory;
 
+    /**
+     * Create a new category controller instance.
+     *
+     * @param Category $category
+     * @param Subcategory $subcategory
+     */
     public function __construct(Category $category, Subcategory $subcategory)
     {
         $this->category = $category;
@@ -24,17 +52,34 @@ class CategoryController extends Controller
     /**
      * Display a listing of the category.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menu = Category::with('subcategories')->get();
+        $filter = $request->get('filter', 'merge');
+
+        $sub = explode(':', $filter);
+        if($sub[0] == 'subcategory'){
+            if(isset($sub[1]) && $sub[1] > 0){
+                $menu = Subcategory::whereCategoryId($sub[1])->get();
+            }
+            else{
+                $menu = Subcategory::all();
+            }
+        }
+        else if($filter == 'category'){
+            $menu = Category::all();
+        }
+        else{
+            $menu = Category::with('subcategories')->get();
+        }
 
         return [
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
-            'categories' => $menu
+            'menus' => $menu
         ];
     }
 

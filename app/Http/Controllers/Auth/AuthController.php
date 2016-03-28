@@ -136,6 +136,7 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'token' => $token,
+            'api_token' => str_random(60),
             'vendor' => 'web',
         ]);
     }
@@ -442,6 +443,7 @@ class AuthController extends Controller
             file_put_contents('images/contributors/facebook-' . $user->id . '.jpg', $avatar);
 
             $contributor->token = $user->id;
+            $contributor->api_token = str_random(60);
             $contributor->name = $user->name;
             $contributor->username = explode('@', $user->email)[0] . '.fb';
             $contributor->password = Hash::make(uniqid());
@@ -522,6 +524,7 @@ class AuthController extends Controller
             file_put_contents('images/covers/twitter-' . $user->id . '.jpg', $cover);
 
             $contributor->token = $user->id;
+            $contributor->api_token = str_random(60);
             $contributor->name = $user->name;
             $contributor->username = $user->nickname . '.twitter';
             $contributor->password = Hash::make(uniqid());

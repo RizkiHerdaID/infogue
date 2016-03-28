@@ -15,6 +15,7 @@ class ContributorsTableSeeder extends Seeder
         DB::table('contributors')->insert([
             [
                 'token' => uniqid(),
+                'api_token' => str_random(60),
                 'vendor' => 'web',
                 'name' => 'Administrator',
                 'username' => 'support',
@@ -42,6 +43,7 @@ class ContributorsTableSeeder extends Seeder
             ],
             [
                 'token' => uniqid(),
+                'api_token' => str_random(60),
                 'vendor' => 'web',
                 'name' => 'Angga Ari Wijaya',
                 'username' => 'anggadarkprince',
@@ -69,6 +71,7 @@ class ContributorsTableSeeder extends Seeder
             ],
             [
                 'token' => uniqid(),
+                'api_token' => str_random(60),
                 'vendor' => 'web',
                 'name' => 'Sketch Project Studio',
                 'username' => 'sketchproject',

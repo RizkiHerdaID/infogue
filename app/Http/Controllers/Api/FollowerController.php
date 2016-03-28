@@ -24,6 +24,14 @@ class FollowerController extends Controller
     */
 
     /**
+     * Create a new follower controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    /**
      * Store a relation between 2 contributors.
      *
      * @param  \Illuminate\Http\Request $request

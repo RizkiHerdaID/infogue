@@ -28,6 +28,14 @@ class AccountController extends Controller
     */
 
     /**
+     * Create a new account controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['only' => ['update']]);
+    }
+
+    /**
      * Store a newly created account in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -54,6 +62,7 @@ class AccountController extends Controller
                 'email' => $request->input('email'),
                 'password' => bcrypt($request->input('password')),
                 'token' => $token,
+                'api_token' => str_random(60),
                 'vendor' => 'web',
             ]);
 

@@ -57,6 +57,9 @@ class Handler extends ExceptionHandler
                     case 405:
                         $message = 'Method not allowed';
                         break;
+                    case 401:
+                        $message = 'Unauthorized';
+                        break;
                 }
 
                 return response()->json([

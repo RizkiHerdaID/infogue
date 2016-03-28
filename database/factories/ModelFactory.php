@@ -48,6 +48,7 @@ $factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
 
     return [
         'token' => uniqid(),
+        'api_token' => str_random(60),
         'vendor' => $vendors[array_rand($vendors, 1)],
         'name' => $faker->name,
         'username' => $faker->userName,

@@ -45,7 +45,7 @@ class ArticleController extends Controller
      */
     public function __construct(Article $article)
     {
-        //$this->middleware('auth:api', ['except' => ['show', 'index']]);
+        $this->middleware('auth:api', ['except' => ['show', 'index', 'rate', 'hit']]);
 
         $this->article = $article;
     }

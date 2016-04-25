@@ -4,6 +4,7 @@ namespace Infogue\Http\Controllers\Api;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Infogue\Article;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -47,7 +48,7 @@ class ContributorController extends Controller
      */
     public function show(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
+        $contributor = $this->contributor->profile($username, false, $requests->get('contributor_id'), true);
 
         return response()->json([
             'request_id' => uniqid(),
@@ -67,7 +68,7 @@ class ContributorController extends Controller
      */
     public function stream(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
+        $contributor = $this->contributor->profile($username, false, $requests->get('contributor_id'));
 
         $stream = $this->contributor->stream($username);
 
@@ -83,9 +84,18 @@ class ContributorController extends Controller
      */
     public function article(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
-
-        $articles = $this->contributor->contributorArticle($username);
+		$contributor_id = $requests->get('contributor_id');
+		$my_article = filter_var($requests->get('my_article'), FILTER_VALIDATE_BOOLEAN);
+		
+		if($my_article){
+			$article = new Article();
+			$articles = $article->archive('all-data', 'date', 'desc', $contributor_id);
+		}
+		else{
+			$articles = $this->contributor->contributorArticle($username);
+		}
+		
+        $contributor = $this->contributor->profile($username, true, $contributor_id, true);       
 
         return $this->responseData($contributor, 'articles', $articles);
     }
@@ -99,7 +109,7 @@ class ContributorController extends Controller
      */
     public function follower(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
+        $contributor = $this->contributor->profile($username, false, $requests->get('contributor_id'), true);
 
         $followers = $this->contributor->contributorFollower($username, $requests->get('contributor_id'), true);
 
@@ -115,7 +125,7 @@ class ContributorController extends Controller
      */
     public function following(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
+        $contributor = $this->contributor->profile($username, false, $requests->get('contributor_id'), true);
 
         $following = $this->contributor->contributorFollowing($username, $requests->get('contributor_id'), true);
 
@@ -136,6 +146,7 @@ class ContributorController extends Controller
             'request_id' => uniqid(),
             'status' => 'success',
             'contributor_id' => $contributor->id,
+			'api_token' => $contributor->api_token,
             'email' => $contributor->email,
             'username' => $contributor->username,
             'name' => $contributor->name,

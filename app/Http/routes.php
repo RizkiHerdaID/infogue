@@ -181,11 +181,12 @@ Route::group(['middleware' => ['web']], function () {
             'create', 'edit'
         ]]);
 
-		Route::get('category/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
-		Route::get('category/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
-		Route::get('category/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);
-		Route::get('category/headline', ['as' => 'api.headline', 'uses' => 'CategoryController@headline']);
-		Route::get('category/random', ['as' => 'api.random', 'uses' => 'CategoryController@random']);
+		Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
+		Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
+		Route::get('featured/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);
+		Route::get('featured/headline', ['as' => 'api.headline', 'uses' => 'CategoryController@headline']);
+		Route::get('featured/random', ['as' => 'api.random', 'uses' => 'CategoryController@random']);
+		
         Route::get('category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
         Route::get('category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
         Route::get('category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
@@ -201,7 +202,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'ContributorController@show']);
             Route::get('/stream', ['as' => 'stream', 'uses' => 'ContributorController@stream']);
             Route::get('/article', ['as' => 'article', 'uses' => 'ContributorController@article']);
-            Route::get('/follower', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
+            Route::get('/followers', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
             Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);
         });
     });

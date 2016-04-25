@@ -35,7 +35,7 @@ class Category extends Model
             ->where('articles.status', 'published')
             ->where('category_id', $id)
             ->orderBy('articles.created_at', 'desc')
-            ->paginate(9);
+            ->paginate(12);
 
         return $article->preArticleModifier($articles);
     }

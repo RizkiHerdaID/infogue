@@ -63,7 +63,7 @@ class AccountController extends Controller
                 'password' => bcrypt($request->input('password')),
                 'token' => $token,
                 'api_token' => str_random(60),
-                'vendor' => 'web',
+                'vendor' => 'mobile',
             ]);
 
             $this->sendingActivationEmail($contributor);
@@ -151,6 +151,7 @@ class AccountController extends Controller
             if ($user->status != 'activated') {
                 $respond['login'] = 'restrict';
                 $respond['message'] = 'The account is pending or suspended';
+				$respond['token'] = $user->token;
                 $code = 403;
             } else {
                 $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -160,8 +161,14 @@ class AccountController extends Controller
                 $credentials = $request->only($field, 'password');
 
                 if (Auth::attempt($credentials)) {
+					$contributor = new Contributor();
+					$user = $contributor->profile($user->username, true);
+					$user->article_total = $user->articles()->where('status', 'published')->count();
+					$user->followers_total = $user->followers()->count();
+					$user->following_total = $user->following()->count();
                     $respond['login'] = 'granted';
                     $respond['message'] = 'Credentials are valid';
+					$respond['user'] = $user;
                     $code = 200;
                 } else {
                     $respond['login'] = 'mismatch';

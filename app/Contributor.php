@@ -178,7 +178,7 @@ class Contributor extends Authenticatable
      * @param null $contributor_id
      * @return mixed
      */
-    public function contributorFollower($username, $contributor_id = null)
+    public function contributorFollower($username, $contributor_id = null, $includeStatistic = false)
     {
         $contributor = $this->whereUsername($username)->first();
 
@@ -188,7 +188,7 @@ class Contributor extends Authenticatable
             ->whereIn('contributors.id', $follower)
             ->paginate(10);
 
-        return $this->preContributorModifier($contributors);
+        return $this->preContributorModifier($contributors, $includeStatistic);
     }
 
     /**
@@ -198,7 +198,7 @@ class Contributor extends Authenticatable
      * @param null $contributor_id
      * @return mixed
      */
-    public function contributorFollowing($username, $contributor_id = null)
+    public function contributorFollowing($username, $contributor_id = null, $includeStatistic = false)
     {
         $contributor = $this->whereUsername($username)->first();
 
@@ -208,7 +208,7 @@ class Contributor extends Authenticatable
             ->whereIn('contributors.id', $following)
             ->paginate(10);
 
-        return $this->preContributorModifier($contributors);
+        return $this->preContributorModifier($contributors, $includeStatistic);
     }
 
     /**
@@ -219,7 +219,7 @@ class Contributor extends Authenticatable
      * @param null $contributor_id
      * @return mixed
      */
-    public function profile($username, $activated = false, $contributor_id = null)
+    public function profile($username, $activated = false, $contributor_id = null, $includeStatistic = false)
     {
         if ($activated) {
             $profile = $this->relatedFollowers($contributor_id)
@@ -229,7 +229,7 @@ class Contributor extends Authenticatable
                 ->whereUsername($username)->firstOrFail();
         }
 
-        return $this->preContributorModifier([$profile])[0];
+        return $this->preContributorModifier([$profile], $includeStatistic)[0];
     }
 
     /**
@@ -281,7 +281,7 @@ class Contributor extends Authenticatable
      * @param $contributors
      * @return mixed
      */
-    public function preContributorModifier($contributors)
+    public function preContributorModifier($contributors, $includeStatistic = false)
     {
         foreach ($contributors as $contributor):
 
@@ -292,6 +292,12 @@ class Contributor extends Authenticatable
             $contributor->cover_ref = asset("images/covers/{$contributor->cover}");
             $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
             $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
+			
+			if($includeStatistic){
+				$contributor->article_total = $contributor->articles()->where('status', 'published')->count();
+				$contributor->followers_total = $contributor->followers()->count();
+				$contributor->following_total = $contributor->following()->count();
+			}
 
         endforeach;
 

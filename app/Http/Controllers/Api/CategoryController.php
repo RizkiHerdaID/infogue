@@ -5,6 +5,7 @@ namespace Infogue\Http\Controllers\Api;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Infogue\Category;
+use Infogue\Article;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Subcategory;
@@ -131,4 +132,64 @@ class CategoryController extends Controller
             'articles' => $articles
         ];
     }
+	
+	public function latest(){
+		$article = new Article();
+		$latest = $article->latest(false);
+		
+		return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'articles' => $latest,
+                    'timestamp' => Carbon::now(),
+                ]);
+	}
+	
+	public function popular(){
+		$article = new Article();
+		$popular = $article->archive('popular', 'view', 'desc');
+		
+		return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'articles' => $popular,
+                    'timestamp' => Carbon::now(),
+                ]);
+	}
+	
+	public function trending(){
+		$article = new Article();
+		$trending = $article->archive('trending', 'view', 'desc');
+		
+		return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'articles' => $trending,
+                    'timestamp' => Carbon::now(),
+                ]);
+	}
+	
+	public function headline(){
+		$article = new Article();
+		$headline = $article->archive('headline', 'view', 'desc');
+		
+		return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'articles' => $headline,
+                    'timestamp' => Carbon::now(),
+                ]);
+	}
+	
+	public function random(){
+		$article = new Article();
+		$random = $article->archive('all-data', 'view', 'random');
+		
+		return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'articles' => $random,
+                    'timestamp' => Carbon::now(),
+                ]);
+	}
 }

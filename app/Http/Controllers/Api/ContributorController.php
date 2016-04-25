@@ -47,7 +47,7 @@ class ContributorController extends Controller
      */
     public function show(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
+        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
 
         return response()->json([
             'request_id' => uniqid(),
@@ -83,7 +83,7 @@ class ContributorController extends Controller
      */
     public function article(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
+        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
 
         $articles = $this->contributor->contributorArticle($username);
 
@@ -99,9 +99,9 @@ class ContributorController extends Controller
      */
     public function follower(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
+        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
 
-        $followers = $this->contributor->contributorFollower($username);
+        $followers = $this->contributor->contributorFollower($username, $requests->get('contributor_id'), true);
 
         return $this->responseData($contributor, 'followers', $followers);
     }
@@ -115,9 +115,9 @@ class ContributorController extends Controller
      */
     public function following(Request $requests, $username)
     {
-        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'));
+        $contributor = $this->contributor->profile($username, true, $requests->get('contributor_id'), true);
 
-        $following = $this->contributor->contributorFollower($username);
+        $following = $this->contributor->contributorFollowing($username, $requests->get('contributor_id'), true);
 
         return $this->responseData($contributor, 'following', $following);
     }
@@ -143,6 +143,9 @@ class ContributorController extends Controller
             'about' => $contributor->about,
             'avatar' => $contributor->avatar_ref,
             'cover' => $contributor->cover_ref,
+			'article_total' => $contributor->article_total,
+			'followers_total' => $contributor->followers_total,
+			'following_total' => $contributor->following_total,
             'is_following' => $contributor->following_text == 'FOLLOW' ? false : true,
             'timestamp' => Carbon::now(),
             $key => $data

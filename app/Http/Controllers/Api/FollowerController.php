@@ -46,7 +46,7 @@ class FollowerController extends Controller
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'denied',
-                'message' => 'Contributor cannot follow their self',
+                'message' => 'You cannot follow yourself',
                 'timestamp' => Carbon::now(),
             ], 400);
         }
@@ -91,7 +91,7 @@ class FollowerController extends Controller
         return response()->json([
             'request_id' => uniqid(),
             'status' => 'denied',
-            'message' => 'Contributor is already follow the other',
+            'message' => 'You already follow this contributor',
             'timestamp' => Carbon::now(),
         ], 400);
     }
@@ -134,7 +134,7 @@ class FollowerController extends Controller
         return response()->json([
             'request_id' => uniqid(),
             'status' => 'denied',
-            'message' => 'Contributor has not followed the other before',
+            'message' => 'You has not followed this contributor before',
             'timestamp' => Carbon::now(),
         ], 400);
     }

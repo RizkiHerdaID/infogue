@@ -309,14 +309,24 @@ class ArticleController extends Controller
      * @param $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Request $requests, $slug)
     {
-        $article = $this->article
+		$article = $this->article
             ->whereSlug($slug)
-            ->with('subcategory', 'subcategory.category', 'tags', 'contributor')
+            ->with('subcategory', 'subcategory.category', 'tags')
             ->firstOrFail();
-
-        $article->rating = round($article->ratings()->avg('rate'));
+			
+		$contributor = new Contributor();
+		$contributor_id = $requests->get('contributor_id');
+		$username = $article->contributor->username;		
+		$author = $contributor->profile($username, false, $contributor_id, true);
+		
+		$rating = round($article->ratings()->avg('rate'));
+		
+		$article = $article->toArray();
+		
+		$article['contributor'] = $author;
+        $article['rating'] = $rating;
 
         return response()->json([
             'request_id' => uniqid(),

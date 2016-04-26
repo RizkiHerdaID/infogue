@@ -45,7 +45,7 @@ class ArticleController extends Controller
      */
     public function __construct(Article $article)
     {
-        $this->middleware('auth:api', ['except' => ['show', 'index', 'rate', 'hit', 'comment']]);
+        $this->middleware('auth:api', ['only' => ['article.store', 'article.update']]);
 
         $this->article = $article;
     }
@@ -346,7 +346,7 @@ class ArticleController extends Controller
     public function comment($slug)
     {
         $article = $this->article->whereSlug($slug)->firstOrFail();
-        $comments = $article->comments;
+        $comments = $article->comments()->paginate(10);
 
         return response()->json([
             'request_id' => uniqid(),

@@ -11,6 +11,26 @@ use Infogue\Http\Controllers\Controller;
 
 class CommentController extends Controller
 {
+	/*
+    |--------------------------------------------------------------------------
+    | Comment Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller is responsible for handling showing comment page
+    | including submit and provide comment data.
+    |
+    */
+	
+	/**
+     * Create a new comment controller instance.
+     *
+     * @param Article $article
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['only' => ['comment.store']]);
+    }
+	
     /**
      * Display a listing of the resource.
      *

@@ -142,6 +142,15 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
     ];
 });
 
+$factory->define(Infogue\Comment::class, function(\Faker\Generator $faker){
+    return [
+        'article_id' => rand(1, 1000),
+        'name' => $faker->name,
+        'email' => $faker->email,
+        'comment' => implode(" ", $faker->sentences())
+    ];
+});
+
 $factory->define(Infogue\Rating::class, function(Faker\Generator $faker){
     return [
         'article_id' => rand(1, 1000),

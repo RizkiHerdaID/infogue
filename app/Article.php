@@ -78,6 +78,16 @@ class Article extends Model
     }
 
     /**
+     * One-to-many relationship article comment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('Infogue\Comment')->withTimestamps();;
+    }
+
+    /**
      * Retrieve accumulation of article rating.
      *
      * @return mixed

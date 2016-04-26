@@ -45,7 +45,7 @@ class ArticleController extends Controller
      */
     public function __construct(Article $article)
     {
-        $this->middleware('auth:api', ['except' => ['show', 'index', 'rate', 'hit']]);
+        $this->middleware('auth:api', ['except' => ['show', 'index', 'rate', 'hit', 'comment']]);
 
         $this->article = $article;
     }
@@ -306,6 +306,7 @@ class ArticleController extends Controller
     /**
      * Display the specified article.
      *
+     * @param Request $requests
      * @param $slug
      * @return \Illuminate\Http\Response
      */
@@ -333,6 +334,25 @@ class ArticleController extends Controller
             'status' => 'success',
             'timestamp' => Carbon::now(),
             'article' => $article,
+        ]);
+    }
+
+    /**
+     * Retrieve article comments by passing slug.
+     * 
+     * @param $slug
+     * @return mixed
+     */
+    public function comment($slug)
+    {
+        $article = $this->article->whereSlug($slug)->firstOrFail();
+        $comments = $article->comments;
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'comments' => $comments,
         ]);
     }
 

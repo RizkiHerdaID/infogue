@@ -70,6 +70,7 @@ class Article extends Model
 
     /**
      * Many-to-one relationship, article subcategory.
+     * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function subcategory()
@@ -84,7 +85,9 @@ class Article extends Model
      */
     public function comments()
     {
-        return $this->hasMany('Infogue\Comment')->withTimestamps();;
+        return $this->hasMany('Infogue\Comment')
+            ->selectRaw('comments.id, article_id, contributor_id, username, name, email, comment, CONCAT(\''.asset("images/contributors").'\', \'/\', avatar) AS avatar, comments.created_at')
+            ->join('contributors', 'contributor_id', '=', 'contributors.id');
     }
 
     /**

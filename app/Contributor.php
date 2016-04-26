@@ -59,6 +59,16 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * One-to-many relationship, retrieve comments by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('Infogue\Comment');
+    }
+
+    /**
      * One-to-many relationship, retrieve messages by contributor.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

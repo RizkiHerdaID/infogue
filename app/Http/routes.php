@@ -175,12 +175,13 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
         Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
-        Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
-        
+        Route::get('article/{slug}/comment', ['as' => 'api.article.comment', 'uses' => 'ArticleController@comment']);
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);
-
+        Route::post('comment', ['as' => 'api.comment.store', 'uses' => 'CommentController@store']);
+        Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
+        
 		Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
 		Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
 		Route::get('featured/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);

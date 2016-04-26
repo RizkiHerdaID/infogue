@@ -145,8 +145,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
 $factory->define(Infogue\Comment::class, function(\Faker\Generator $faker){
     return [
         'article_id' => rand(1, 1000),
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'contributor_id' => rand(1, 103),
         'comment' => implode(" ", $faker->sentences())
     ];
 });

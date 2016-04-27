@@ -206,6 +206,28 @@ class AccountController extends Controller
                 'timestamp' => Carbon::now(),
             ], 401);
         }
+		
+		$usernameExist = Contributor::whereUsername($request->input('username'))->where('id', '!=', $contributor->id)->count();
+
+        if ($usernameExist) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => 'Username has been taken',
+                'timestamp' => Carbon::now(),
+            ], 400);
+        }
+		
+		$emailExist = Contributor::whereEmail($request->input('email'))->where('id', '!=', $contributor->id)->count();
+
+        if ($emailExist) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => 'Email has been taken',
+                'timestamp' => Carbon::now(),
+            ], 400);
+        }
 
         $contributor->name = $request->input('name');
         $contributor->gender = $request->input('gender');
@@ -242,6 +264,7 @@ class AccountController extends Controller
                 'status' => 'success',
                 'message' => 'Setting was updated',
                 'timestamp' => Carbon::now(),
+				'contributor' => $contributor->profile($contributor->username, false, $request->input('contributor_id'), true),
             ]);
         } else {
             return response()->json([

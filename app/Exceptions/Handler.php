@@ -60,6 +60,9 @@ class Handler extends ExceptionHandler
                     case 401:
                         $message = 'Unauthorized';
                         break;
+					case 501:
+                        $message = 'Maintenance';
+                        break;
                 }
 
                 return response()->json([

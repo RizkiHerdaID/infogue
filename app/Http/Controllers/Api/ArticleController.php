@@ -45,7 +45,7 @@ class ArticleController extends Controller
      */
     public function __construct(Article $article)
     {
-        $this->middleware('auth:api', ['only' => ['article.store', 'article.update']]);
+        $this->middleware('auth:api', ['only' => ['store', 'update', 'destroy']]);
 
         $this->article = $article;
     }
@@ -132,10 +132,9 @@ class ArticleController extends Controller
 
                 $article = new Article();
                 $article->contributor_id = $contributor->id;
-                $article->subcategory_id = $request->input('subcategory');
+                $article->subcategory_id = $request->input('subcategory_id');
                 $article->title = $request->input('title');
                 $article->slug = $request->input('slug');
-                $article->type = $request->input('type');
                 $article->content = $request->input('content');
                 $article->excerpt = $request->input('excerpt');
                 $article->status = $status;

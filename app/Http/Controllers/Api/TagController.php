@@ -36,4 +36,25 @@ class TagController extends Controller
             'tags' => $tags
         ]);
     }
+	
+	/**
+     * Retrieve article by tag label.
+     *
+     * @return json
+     */
+	public function tag($tag)
+	{
+		$article_tag = str_replace('-', ' ', $tag);
+		
+		$tag = new Tag();
+
+        $articles = $tag->tagArticle($article_tag);
+		
+		return [
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'timestamp' => Carbon::now(),
+            'articles' => $articles
+        ];
+	}
 }

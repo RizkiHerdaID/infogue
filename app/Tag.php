@@ -39,7 +39,7 @@ class Tag extends Model
             ->where('tags.tag', 'like', $tag)
             ->where('articles.status', 'published')
             ->orderBy('articles.created_at', 'desc')
-            ->paginate(9);
+            ->paginate(12);
 
         return $article->preArticleModifier($articles);
     }

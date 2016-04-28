@@ -181,6 +181,7 @@ Route::group(['middleware' => ['web']], function () {
         ]]);
         Route::post('comment', ['as' => 'api.comment.store', 'uses' => 'CommentController@store']);
         Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
+        Route::get('tag/{tag}', ['as' => 'api.tags.article', 'uses' => 'TagController@tag']);
         
 		Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
 		Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);

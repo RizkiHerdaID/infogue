@@ -20,11 +20,9 @@ class CommentController extends Controller
     | including submit and provide comment data.
     |
     */
-	
-	/**
+
+    /**
      * Create a new comment controller instance.
-     *
-     * @param Article $article
      */
     public function __construct()
     {

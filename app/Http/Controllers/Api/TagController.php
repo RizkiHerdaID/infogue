@@ -36,10 +36,11 @@ class TagController extends Controller
             'tags' => $tags
         ]);
     }
-	
-	/**
+
+    /**
      * Retrieve article by tag label.
      *
+     * @param $tag
      * @return json
      */
 	public function tag($tag)

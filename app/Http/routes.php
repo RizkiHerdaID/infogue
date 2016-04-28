@@ -183,7 +183,11 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
         Route::get('tag/{tag}', ['as' => 'api.tags.article', 'uses' => 'TagController@tag']);
         
-		Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
+        Route::get('search', ['as' => 'api.search.article', 'uses' => 'SearchController@search']);
+        Route::get('search/contributor', ['as' => 'api.search.contributor', 'uses' => 'SearchController@searchContributor']);
+        Route::get('search/article', ['as' => 'api.search.article', 'uses' => 'SearchController@searchArticle']);
+        
+        Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
 		Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
 		Route::get('featured/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);
 		Route::get('featured/headline', ['as' => 'api.headline', 'uses' => 'CategoryController@headline']);

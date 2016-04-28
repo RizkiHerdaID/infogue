@@ -321,7 +321,7 @@ class Contributor extends Authenticatable
      * @param int $take
      * @return mixed
      */
-    public function search($query, $take = 10)
+    public function search($query, $take = 10, $includeStatistic = false)
     {
         $result = $this->relatedFollowers()->activated()
             ->where('username', 'like', "%{$query}%")
@@ -330,6 +330,6 @@ class Contributor extends Authenticatable
             ->orWhere('location', 'like', "%{$query}%")
             ->paginate($take);
 
-        return $this->preContributorModifier($result);
+        return $this->preContributorModifier($result, $includeStatistic);
     }
 }

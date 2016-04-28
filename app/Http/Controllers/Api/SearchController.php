@@ -32,7 +32,7 @@ class SearchController extends Controller
         $contributor = new Contributor();
 
         $articles = $article->search(Input::get('query'), 10);
-        $contributors = $contributor->search(Input::get('query'), 4);
+        $contributors = $contributor->search(Input::get('query'), 4, true);
 
         return response()->json([
             'request_id' => uniqid(),
@@ -52,7 +52,7 @@ class SearchController extends Controller
     {
         $contributor = new Contributor();
 
-        $contributors = $contributor->search(Input::get('query'), 12);
+        $contributors = $contributor->search(Input::get('query'), 12, true);
 
         return response()->json([
             'request_id' => uniqid(),

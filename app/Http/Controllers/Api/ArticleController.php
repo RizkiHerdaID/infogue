@@ -431,7 +431,7 @@ class ArticleController extends Controller
                     }
                 }
 
-                $article->subcategory_id = $request->input('subcategory');
+                $article->subcategory_id = $request->input('subcategory_id');
                 $article->title = $request->input('title');
                 $article->slug = $request->input('slug');
                 $article->type = $request->input('type');

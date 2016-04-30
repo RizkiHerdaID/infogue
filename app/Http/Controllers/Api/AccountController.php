@@ -105,6 +105,7 @@ class AccountController extends Controller
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'exist',
+                    'login' => 'restrict',
                     'message' => 'Email or username is already exist, registered via ' . $isInvalid->vendor,
                     'timestamp' => Carbon::now(),
                 ], 400);
@@ -126,7 +127,6 @@ class AccountController extends Controller
             $contributor->email = $request->input('email');
             $contributor->vendor = 'facebook';
             $contributor->status = 'activated';
-            $contributor->about = $request->input('about');
             $contributor->facebook = 'https://www.facebook.com/profile.php?id=' . $facebookId;
             $contributor->avatar = 'facebook-' . $facebookId . '.jpg';
             $contributor->cover = 'facebook-' . $facebookId . '.jpg';
@@ -149,7 +149,8 @@ class AccountController extends Controller
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'success',
-                    'message' => 'Registering user is success',
+                    'login' => 'granted',
+                    'message' => 'Registering facebook is success',
                     'timestamp' => Carbon::now(),
                     'user' => $user,
                 ], 200);
@@ -157,6 +158,7 @@ class AccountController extends Controller
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'failure',
+                    'login' => 'restrict',
                     'message' => Lang::get('alert.database.generic'),
                     'timestamp' => Carbon::now(),
                 ], 500);
@@ -170,6 +172,7 @@ class AccountController extends Controller
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'success',
+                'login' => 'granted',
                 'message' => 'Login facebook is success',
                 'timestamp' => Carbon::now(),
                 'user' => $user,
@@ -190,11 +193,12 @@ class AccountController extends Controller
 
         if (empty($contributor)) {
             $isInvalid = Contributor::whereEmail($request->input('email'))
-                ->orWhere('username', '=', $request->input('nickname'))->first();
+                ->orWhere('username', '=', $request->input('username'))->first();
             if($isInvalid){
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'exist',
+                    'login' => 'restrict',
                     'message' => 'Email is already exist, registered via ' . $isInvalid->vendor,
                     'timestamp' => Carbon::now(),
                 ], 400);
@@ -211,14 +215,14 @@ class AccountController extends Controller
             $contributor->token = $twitterId;
             $contributor->api_token = str_random(60);
             $contributor->name = $request->input('name');
-            $contributor->username = $request->input('nickname') . '.twitter';
+            $contributor->username = $request->input('username') . '.twitter';
             $contributor->password = Hash::make(uniqid());
             $contributor->email = $request->input('email');
             $contributor->vendor = 'twitter';
             $contributor->status = 'activated';
             $contributor->location = $request->input('location');
             $contributor->about = $request->input('description');
-            $contributor->twitter = 'https://www.twitter.com/' . $request->input('nickname');
+            $contributor->twitter = 'https://www.twitter.com/' . $request->input('username');
             $contributor->avatar = 'twitter-' . $twitterId . '.jpg';
             $contributor->cover = 'twitter-' . $twitterId . '.jpg';
 
@@ -240,7 +244,8 @@ class AccountController extends Controller
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'success',
-                    'message' => 'Registering facebook is success',
+                    'login' => 'granted',
+                    'message' => 'Registering twitter is success',
                     'timestamp' => Carbon::now(),
                     'user' => $user,
                 ], 200);
@@ -248,6 +253,7 @@ class AccountController extends Controller
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'failure',
+                    'login' => 'restrict',
                     'message' => Lang::get('alert.database.generic'),
                     'timestamp' => Carbon::now(),
                 ], 500);
@@ -261,6 +267,7 @@ class AccountController extends Controller
             return response()->json([
                 'request_id' => uniqid(),
                 'status' => 'success',
+                'login' => 'granted',
                 'message' => 'Login twitter is success',
                 'timestamp' => Carbon::now(),
                 'user' => $user,

@@ -197,6 +197,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
         Route::get('category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
 
+        Route::post('oauth/facebook', ['as' => 'api.oauth.facebook', 'uses' => 'AccountController@registerFacebook']);
+        Route::post('oauth/twitter', ['as' => 'api.oauth.twitter', 'uses' => 'AccountController@registerTwitter']);
         Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'AccountController@register']);
         Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'AccountController@login']);
         Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'AccountController@update']);

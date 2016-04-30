@@ -19,7 +19,7 @@ class CreateContrbutorsTable extends Migration
             $table->string('api_token', 60)->unique();
             $table->string('vendor', 50);
             $table->string('name', 50);
-            $table->string('username', 20)->unique();
+            $table->string('username', 30)->unique();
             $table->string('email', 50)->unique();
             $table->string('password', 60);
             $table->enum('status', ['pending', 'activated', 'suspended'])->default('pending');

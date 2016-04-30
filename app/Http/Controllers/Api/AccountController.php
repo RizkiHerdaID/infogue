@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
@@ -66,6 +67,11 @@ class AccountController extends Controller
                 'vendor' => 'mobile',
             ]);
 
+            Activity::create([
+                'contributor_id' => $contributor->id,
+                'activity' => Activity::registerActivity($contributor->username, 'mobile')
+            ]);
+
             $this->sendingActivationEmail($contributor);
 
             $this->sendAdminContributorNotification($contributor);
@@ -75,6 +81,189 @@ class AccountController extends Controller
                 'status' => 'success',
                 'message' => 'Registering user is success',
                 'timestamp' => Carbon::now(),
+            ], 200);
+        }
+    }
+
+    /**
+     * Register via facebook.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function registerFacebook(Request $request)
+    {
+        $facebookId = $request->input('id');
+        $contributor = Contributor::whereVendor('facebook')->whereToken($facebookId)->first();
+
+        if (empty($contributor)) {
+            $username = explode('@', $request->input('email'))[0] . '.fb';
+            $isInvalid = Contributor::whereEmail($request->input('email'))
+                ->orWhere('username', '=', $username)->first();
+
+            if(!empty($isInvalid)){
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'exist',
+                    'message' => 'Email or username is already exist, registered via ' . $isInvalid->vendor,
+                    'timestamp' => Carbon::now(),
+                ], 400);
+            }
+
+            $contributor = new Contributor();
+
+            $avatar = file_get_contents($request->input('avatar'));
+            file_put_contents('images/contributors/facebook-' . $facebookId . '.jpg', $avatar);
+
+            $cover = file_get_contents($request->input('cover'));
+            file_put_contents('images/covers/facebook-' . $facebookId . '.jpg', $cover);
+
+            $contributor->token = $facebookId;
+            $contributor->api_token = str_random(60);
+            $contributor->name = $request->input('name');
+            $contributor->username = $username;
+            $contributor->password = Hash::make(uniqid());
+            $contributor->email = $request->input('email');
+            $contributor->vendor = 'facebook';
+            $contributor->status = 'activated';
+            $contributor->about = $request->input('about');
+            $contributor->facebook = 'https://www.facebook.com/profile.php?id=' . $facebookId;
+            $contributor->avatar = 'facebook-' . $facebookId . '.jpg';
+            $contributor->cover = 'facebook-' . $facebookId . '.jpg';
+
+            if ($contributor->save()) {
+                Activity::create([
+                    'contributor_id' => $contributor->id,
+                    'activity' => Activity::registerActivity($contributor->username, 'facebook')
+                ]);
+
+                $this->sendAdminContributorNotification($contributor);
+
+                $facebookUser = Contributor::whereToken($facebookId)->firstOrFail();
+
+                $user = $contributor->profile($facebookUser->username, true);
+                $user->article_total = $user->articles()->where('status', 'published')->count();
+                $user->followers_total = $user->followers()->count();
+                $user->following_total = $user->following()->count();
+
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => 'Registering user is success',
+                    'timestamp' => Carbon::now(),
+                    'user' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'failure',
+                    'message' => Lang::get('alert.database.generic'),
+                    'timestamp' => Carbon::now(),
+                ], 500);
+            }
+        } else {
+            $user = $contributor->profile($contributor->username, true);
+            $user->article_total = $user->articles()->where('status', 'published')->count();
+            $user->followers_total = $user->followers()->count();
+            $user->following_total = $user->following()->count();
+
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'success',
+                'message' => 'Login facebook is success',
+                'timestamp' => Carbon::now(),
+                'user' => $user,
+            ], 200);
+        }
+    }
+
+    /**
+     * Register via twitter.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function registerTwitter(Request $request)
+    {
+        $twitterId = $request->input('id');
+        $contributor = Contributor::whereVendor('twitter')->whereToken($twitterId)->first();
+
+        if (empty($contributor)) {
+            $isInvalid = Contributor::whereEmail($request->input('email'))
+                ->orWhere('username', '=', $request->input('nickname'))->first();
+            if($isInvalid){
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'exist',
+                    'message' => 'Email is already exist, registered via ' . $isInvalid->vendor,
+                    'timestamp' => Carbon::now(),
+                ], 400);
+            }
+
+            $contributor = new Contributor();
+
+            $avatar = file_get_contents($request->input('avatar'));
+            file_put_contents('images/contributors/twitter-' . $twitterId . '.jpg', $avatar);
+
+            $cover = file_get_contents($request->input('cover'));
+            file_put_contents('images/covers/twitter-' . $twitterId . '.jpg', $cover);
+
+            $contributor->token = $twitterId;
+            $contributor->api_token = str_random(60);
+            $contributor->name = $request->input('name');
+            $contributor->username = $request->input('nickname') . '.twitter';
+            $contributor->password = Hash::make(uniqid());
+            $contributor->email = $request->input('email');
+            $contributor->vendor = 'twitter';
+            $contributor->status = 'activated';
+            $contributor->location = $request->input('location');
+            $contributor->about = $request->input('description');
+            $contributor->twitter = 'https://www.twitter.com/' . $request->input('nickname');
+            $contributor->avatar = 'twitter-' . $twitterId . '.jpg';
+            $contributor->cover = 'twitter-' . $twitterId . '.jpg';
+
+            if ($contributor->save()) {
+                Activity::create([
+                    'contributor_id' => $contributor->id,
+                    'activity' => Activity::registerActivity($contributor->username, 'twitter')
+                ]);
+
+                $this->sendAdminContributorNotification($contributor);
+
+                $facebookUser = Contributor::whereToken($twitterId)->firstOrFail();
+
+                $user = $contributor->profile($facebookUser->username, true);
+                $user->article_total = $user->articles()->where('status', 'published')->count();
+                $user->followers_total = $user->followers()->count();
+                $user->following_total = $user->following()->count();
+
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'success',
+                    'message' => 'Registering facebook is success',
+                    'timestamp' => Carbon::now(),
+                    'user' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'failure',
+                    'message' => Lang::get('alert.database.generic'),
+                    'timestamp' => Carbon::now(),
+                ], 500);
+            }
+        } else {
+            $user = $contributor->profile($contributor->username, true);
+            $user->article_total = $user->articles()->where('status', 'published')->count();
+            $user->followers_total = $user->followers()->count();
+            $user->following_total = $user->following()->count();
+
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'success',
+                'message' => 'Login twitter is success',
+                'timestamp' => Carbon::now(),
+                'user' => $user,
             ], 200);
         }
     }
@@ -151,7 +340,7 @@ class AccountController extends Controller
             if ($user->status != 'activated') {
                 $respond['login'] = 'restrict';
                 $respond['message'] = 'The account is pending or suspended';
-				$respond['token'] = $user->token;
+                $respond['token'] = $user->token;
                 $code = 403;
             } else {
                 $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -161,14 +350,14 @@ class AccountController extends Controller
                 $credentials = $request->only($field, 'password');
 
                 if (Auth::attempt($credentials)) {
-					$contributor = new Contributor();
-					$user = $contributor->profile($user->username, true);
-					$user->article_total = $user->articles()->where('status', 'published')->count();
-					$user->followers_total = $user->followers()->count();
-					$user->following_total = $user->following()->count();
+                    $contributor = new Contributor();
+                    $user = $contributor->profile($user->username, true);
+                    $user->article_total = $user->articles()->where('status', 'published')->count();
+                    $user->followers_total = $user->followers()->count();
+                    $user->following_total = $user->following()->count();
                     $respond['login'] = 'granted';
                     $respond['message'] = 'Credentials are valid';
-					$respond['user'] = $user;
+                    $respond['user'] = $user;
                     $code = 200;
                 } else {
                     $respond['login'] = 'mismatch';
@@ -206,8 +395,8 @@ class AccountController extends Controller
                 'timestamp' => Carbon::now(),
             ], 401);
         }
-		
-		$usernameExist = Contributor::whereUsername($request->input('username'))->where('id', '!=', $contributor->id)->count();
+
+        $usernameExist = Contributor::whereUsername($request->input('username'))->where('id', '!=', $contributor->id)->count();
 
         if ($usernameExist) {
             return response()->json([
@@ -217,8 +406,8 @@ class AccountController extends Controller
                 'timestamp' => Carbon::now(),
             ], 400);
         }
-		
-		$emailExist = Contributor::whereEmail($request->input('email'))->where('id', '!=', $contributor->id)->count();
+
+        $emailExist = Contributor::whereEmail($request->input('email'))->where('id', '!=', $contributor->id)->count();
 
         if ($emailExist) {
             return response()->json([
@@ -264,7 +453,7 @@ class AccountController extends Controller
                 'status' => 'success',
                 'message' => 'Setting was updated',
                 'timestamp' => Carbon::now(),
-				'contributor' => $contributor->profile($contributor->username, false, $request->input('contributor_id'), true),
+                'contributor' => $contributor->profile($contributor->username, false, $request->input('contributor_id'), true),
             ]);
         } else {
             return response()->json([

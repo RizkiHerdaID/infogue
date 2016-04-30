@@ -227,6 +227,7 @@ class Contributor extends Authenticatable
      * @param $username
      * @param bool|false $activated
      * @param null $contributor_id
+     * @param bool $includeStatistic
      * @return mixed
      */
     public function profile($username, $activated = false, $contributor_id = null, $includeStatistic = false)
@@ -289,6 +290,7 @@ class Contributor extends Authenticatable
      * Modifying contributor data for javascript template.
      *
      * @param $contributors
+     * @param bool $includeStatistic
      * @return mixed
      */
     public function preContributorModifier($contributors, $includeStatistic = false)
@@ -319,6 +321,8 @@ class Contributor extends Authenticatable
      *
      * @param $query
      * @param int $take
+     * @param bool $includeStatistic
+     * @param null $id_contributor
      * @return mixed
      */
     public function search($query, $take = 10, $includeStatistic = false, $id_contributor = null)

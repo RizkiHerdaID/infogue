@@ -80,7 +80,7 @@ class CategoryController extends Controller
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
-            'menus' => $menu
+            'categories' => $menu
         ];
     }
 

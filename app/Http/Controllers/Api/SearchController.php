@@ -3,6 +3,7 @@
 namespace Infogue\Http\Controllers\Api;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Infogue\Article;
 use Infogue\Contributor;
@@ -26,13 +27,14 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $requests)
     {
         $article = new Article();
         $contributor = new Contributor();
+		$id_contributor = $requests->get('contributor_id');
 
         $articles = $article->search(Input::get('query'), 10);
-        $contributors = $contributor->search(Input::get('query'), 4, true);
+        $contributors = $contributor->search(Input::get('query'), 4, true, $id_contributor);
 
         return response()->json([
             'request_id' => uniqid(),
@@ -48,11 +50,12 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchContributor()
+    public function searchContributor(Request $requests)
     {
         $contributor = new Contributor();
+		$id_contributor = $requests->get('contributor_id');
 
-        $contributors = $contributor->search(Input::get('query'), 12, true);
+        $contributors = $contributor->search(Input::get('query'), 12, true, $id_contributor);
 
         return response()->json([
             'request_id' => uniqid(),

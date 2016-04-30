@@ -321,9 +321,9 @@ class Contributor extends Authenticatable
      * @param int $take
      * @return mixed
      */
-    public function search($query, $take = 10, $includeStatistic = false)
+    public function search($query, $take = 10, $includeStatistic = false, $id_contributor = null)
     {
-        $result = $this->relatedFollowers()->activated()
+        $result = $this->relatedFollowers($id_contributor)->activated()
             ->where('username', 'like', "%{$query}%")
             ->orWhere('name', 'like', "%{$query}%")
             ->orWhere('email', 'like', "%{$query}%")

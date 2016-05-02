@@ -97,7 +97,7 @@ class AccountController extends Controller
         $contributor = Contributor::whereVendor('facebook')->whereToken($facebookId)->first();
 
         if (empty($contributor)) {
-            $username = explode('@', $request->input('email'))[0] . '.fb';
+            $username = explode('@', $request->input('email'))[0];
             $isInvalid = Contributor::whereEmail($request->input('email'))
                 ->orWhere('username', '=', $username)->first();
 
@@ -148,7 +148,7 @@ class AccountController extends Controller
 
                 return response()->json([
                     'request_id' => uniqid(),
-                    'status' => 'success',
+                    'status' => $user->status,
                     'login' => 'granted',
                     'message' => 'Registering facebook is success',
                     'timestamp' => Carbon::now(),
@@ -171,7 +171,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'request_id' => uniqid(),
-                'status' => 'success',
+                'status' => $user->status,
                 'login' => 'granted',
                 'message' => 'Login facebook is success',
                 'timestamp' => Carbon::now(),
@@ -206,22 +206,22 @@ class AccountController extends Controller
 
             $contributor = new Contributor();
 
+			$cover = file_get_contents($request->input('cover'));
+            file_put_contents('images/covers/twitter-' . $twitterId . '.jpg', $cover);
+			
             $avatar = file_get_contents($request->input('avatar'));
             file_put_contents('images/contributors/twitter-' . $twitterId . '.jpg', $avatar);
-
-            $cover = file_get_contents($request->input('cover'));
-            file_put_contents('images/covers/twitter-' . $twitterId . '.jpg', $cover);
-
+			
             $contributor->token = $twitterId;
             $contributor->api_token = str_random(60);
             $contributor->name = $request->input('name');
-            $contributor->username = $request->input('username') . '.twitter';
+            $contributor->username = $request->input('username');
             $contributor->password = Hash::make(uniqid());
-            $contributor->email = $request->input('email');
+            $contributor->email = $request->input('username') . '@twitter.com';
             $contributor->vendor = 'twitter';
             $contributor->status = 'activated';
             $contributor->location = $request->input('location');
-            $contributor->about = $request->input('description');
+            $contributor->about = $request->input('about');
             $contributor->twitter = 'https://www.twitter.com/' . $request->input('username');
             $contributor->avatar = 'twitter-' . $twitterId . '.jpg';
             $contributor->cover = 'twitter-' . $twitterId . '.jpg';
@@ -243,7 +243,7 @@ class AccountController extends Controller
 
                 return response()->json([
                     'request_id' => uniqid(),
-                    'status' => 'success',
+                    'status' => $user->status,
                     'login' => 'granted',
                     'message' => 'Registering twitter is success',
                     'timestamp' => Carbon::now(),
@@ -266,7 +266,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'request_id' => uniqid(),
-                'status' => 'success',
+                'status' => $user->status,
                 'login' => 'granted',
                 'message' => 'Login twitter is success',
                 'timestamp' => Carbon::now(),

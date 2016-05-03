@@ -151,6 +151,8 @@ Route::group(['middleware' => ['web']], function () {
 
             Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
             Route::match(['put', 'patch'], 'setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
+
+            Route::post('article/{article}/comment', ['as' => 'account.article.comment', 'uses' => 'CommentController@store']);
         });
 
         // Group of article routes...
@@ -175,7 +177,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('article/hit', ['as' => 'api.article.hit', 'uses' => 'ArticleController@hit']);
         Route::post('article/rate', ['as' => 'api.article.rate', 'uses' => 'ArticleController@rate']);
-        Route::get('article/{slug}/comment', ['as' => 'api.article.comment', 'uses' => 'ArticleController@comment']);
+        Route::get('article/{article}/comment', ['as' => 'api.article.comment', 'uses' => 'ArticleController@comment']);
         Route::resource('article', 'ArticleController', ['except' => [
             'create', 'edit'
         ]]);

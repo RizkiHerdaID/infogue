@@ -26,6 +26,9 @@ return [
         'delete'        => '<strong>:name</strong>\'s feedback was deleted',
         'delete_all'    => ':count feedbacks were deleted',
     ],
+    'comment'           => [
+        'send'          => 'Your comment has been submitted, Thanks!',
+    ],
     'setting'           => [
         'update'        => 'Settings have been updated by <strong>:name</strong>',
         'fail'          => 'Unable to save settings, try again!',

@@ -555,6 +555,8 @@ class ArticleController extends Controller
             $category = $article->subcategory->category->category;
 
             $subcategory = $article->subcategory->subcategory;
+            
+            $comments = $article->comments;
 
             $breadcrumb = [
                 'Archive' => route('article.archive'),
@@ -580,7 +582,7 @@ class ArticleController extends Controller
 
             $author = $contributor->profile($article->contributor->username);
 
-            return view('article.article', compact('breadcrumb', 'prev_ref', 'next_ref', 'article', 'author', 'tags', 'related', 'popular'));
+            return view('article.article', compact('breadcrumb', 'prev_ref', 'next_ref', 'article', 'author', 'comments', 'tags', 'related', 'popular'));
         } else {
             abort(404);
         }

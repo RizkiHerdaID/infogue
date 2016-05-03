@@ -1841,4 +1841,13 @@ $(function () {
             }
         }
     });
+
+    // VALIDATE MESSAGE FORM
+    $('#form-comment').validate({
+        messages: {
+            message: {
+                required: "Comment can't be blank",
+            }
+        }
+    });
 });

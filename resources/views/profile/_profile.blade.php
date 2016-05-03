@@ -1,7 +1,7 @@
 <section class="profile">
     <div class="row">
         <div class="col-md-4">
-            <img src="{{ asset('images/contributors/'.$contributor->avatar) }}" class="avatar img-circle"/>
+            <img src="{{ asset('images/contributors/'.$contributor->avatar) }}" width="125" height="125" class="avatar img-circle"/>
             <div class="text-center hidden-sm hidden-xs">
                 <a class="btn btn-primary btn-outline mtm" href="{{ route('contributor.detail', [$contributor->username]) }}">MORE INFO</a>
             </div>

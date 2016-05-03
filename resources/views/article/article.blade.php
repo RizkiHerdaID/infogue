@@ -154,6 +154,71 @@
                             <div class="panel-heading">Leave a Comment</div>
                             <div class="panel-body" id="comment-info" data-link="{{ Request::url() }}" data-identity="{{ 'article_'.$article->id }}">
 
+                                <form action="{{ route("account.article.comment", [$article->slug]) }}" method="post" id="form-comment" class="mts">
+                                    {!! csrf_field() !!}
+
+                                    @include('errors.common')
+
+                                    @if(Session::has('status'))
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="alert alert-{{ Session::get('status') }}">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    {!! '<p>'.Session::get('message').'</p>' !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if(Auth::check())
+                                        <?php $commentAble = true; ?>
+                                        <div class="mbm">
+                                            <img width="50" height="50" class="img-circle pull-left"
+                                                 style="background: url('{{ asset('images/contributors/'.Auth::user()->avatar) }}') center center / cover;">
+                                            <div style="margin-left: 70px">
+                                                <p style="margin-bottom: 5px; font-size: 1em; font-weight: bold"><a href="{{ route('contributor.stream', [Auth::user()->location]) }}">{{ Auth::user()->name }}</a></p>
+                                                <p class="mts">{{ Auth::user()->location }}</p>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <?php $commentAble = false; ?>
+                                        <p class="sub-category">Please Sign in or Register</p>
+                                        <p class="mbs">Authorization is needed to leave embedded comment, or use alternative comment with <strong>Disqus</strong> below.</p>
+                                        <div class="mbs">
+                                            <a href="{{ route("login.form") }}" class="btn btn-primary">LOGIN</a>
+                                            <a href="{{ route("register.form") }}" class="btn btn-success">REGISTER</a>
+                                        </div>
+                                    @endif
+
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
+                                                <textarea class="form-control" id="comment" name="comment" rows="4" placeholder="Type Your Comment" required maxlength="2000" @if(!$commentAble) {{ 'disabled' }} @endif>{{ old('comment') }}</textarea>
+                                                {!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary" @if(!$commentAble) {{ 'disabled' }} @endif>SUBMIT COMMENT</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="mtm mbl">
+                                    @foreach($comments as $comment)
+                                        <div class="mbm">
+                                            <img width="50" height="50" class="img-circle pull-left"
+                                                 style="background: url('{{ asset('images/contributors/'.$comment->contributor->avatar) }}') center center / cover;">
+                                            <div style="margin-left: 70px">
+                                                <p style="margin-bottom: 5px; font-size: 1em; font-weight: bold"><a href="{{ route('contributor.stream', [$comment->contributor->username]) }}">{{ $comment->contributor->name }}</a></p>
+                                                <time class="timeago text-muted" datetime="{{ $comment->created_at }}">{{ $comment->created_at }}</time>
+                                                <p class="mts">{{ $comment->comment }}</p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+
                                 <div id="disqus_thread"></div>
                                 <script>
                                      var disqus_config = function () {

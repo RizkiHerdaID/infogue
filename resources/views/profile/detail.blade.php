@@ -24,7 +24,7 @@
                         <div class="cover" style="background: url('{{ asset('images/covers/'.$contributor->cover) }}') no-repeat center / cover"></div>
                         <div class="profile-wrapper">
                             <section class="profile">
-                                <img src="{{ asset('images/contributors/'.$contributor->avatar) }}" class="avatar img-circle"/>
+                                <img src="{{ asset('images/contributors/'.$contributor->avatar) }}" width="125" height="125" class="avatar img-circle"/>
                                 <h2 class="name"><a href="{{ route('contributor.stream', [$contributor->username]) }}">{{ $contributor->name }}</a></h2>
 
                                 <p class="about">{{ $contributor->about }}</p>
@@ -92,7 +92,13 @@
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-trophy"></i>Popularity</strong>
-                                            <span class="value">{{ round($contributor->followers->count() / $contributor->following->count(), 2) }}</span>
+                                            <span class="value">
+											@if($contributor->following->count() == 0)
+												{{ '0' }}
+                                            @else
+												{{ round($contributor->followers->count() / $contributor->following->count(), 2) }}
+                                            @endif
+											</span>
                                         </li>
                                         <li class="list-group-item">
                                             <strong><i class="fa fa-eye"></i>Article Viewed</strong>

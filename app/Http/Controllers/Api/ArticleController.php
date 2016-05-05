@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Infogue\Activity;
 use Infogue\Article;
 use Infogue\Contributor;
@@ -71,6 +72,19 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'featured' => 'mimes:jpg,jpeg,gif,png|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => "Featured must image and less than 1MB",
+                'timestamp' => Carbon::now(),
+            ], 400);
+        }
+
         $exist = Article::whereSlug($request->input('slug'))->count();
 
         if ($exist) {
@@ -95,7 +109,7 @@ class ArticleController extends Controller
                  * then insert new tags and merge new inserted tag id with available tags id
                  * finally store them all into article_tags table.
                  */
-                
+
                 $availableTags = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
                 $availableTagsId = $availableTags->pluck('id')->toArray();
@@ -311,21 +325,21 @@ class ArticleController extends Controller
      */
     public function show(Request $requests, $slug)
     {
-		$article = $this->article
+        $article = $this->article
             ->whereSlug($slug)
             ->with('subcategory', 'subcategory.category', 'tags')
             ->firstOrFail();
-			
-		$contributor = new Contributor();
-		$contributor_id = $requests->get('contributor_id');
-		$username = $article->contributor->username;		
-		$author = $contributor->profile($username, false, $contributor_id, true);
-		
-		$rating = round($article->ratings()->avg('rate'));
-		
-		$article = $article->toArray();
-		
-		$article['contributor'] = $author;
+
+        $contributor = new Contributor();
+        $contributor_id = $requests->get('contributor_id');
+        $username = $article->contributor->username;
+        $author = $contributor->profile($username, false, $contributor_id, true);
+
+        $rating = round($article->ratings()->avg('rate'));
+
+        $article = $article->toArray();
+
+        $article['contributor'] = $author;
         $article['rating'] = $rating;
 
         return response()->json([
@@ -338,7 +352,7 @@ class ArticleController extends Controller
 
     /**
      * Retrieve article comments by passing slug.
-     * 
+     *
      * @param $slug
      * @return mixed
      */
@@ -364,6 +378,19 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $slug)
     {
+        $validator = Validator::make($request->all(), [
+            'featured' => 'mimes:jpg,jpeg,gif,png|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'request_id' => uniqid(),
+                'status' => 'denied',
+                'message' => "Featured must image and less than 1MB",
+                'timestamp' => Carbon::now(),
+            ], 400);
+        }
+
         $articleController = $this;
 
         $article = Article::whereSlug($slug)->firstOrFail();
@@ -389,7 +416,7 @@ class ArticleController extends Controller
                  * between new tags and tags that available in database, merge new inserted 
                  * tag id with available tags id and remove the old which is removed.
                  */
-                
+
                 $tag = Tag::whereIn('tag', explode(',', $request->get('tags')));
 
                 $tags_id = $tag->pluck('id')->toArray();
@@ -404,7 +431,7 @@ class ArticleController extends Controller
                     $newTag = new Tag();
                     $newTag->tag = $tag_label;
                     $newTag->save();
-                    
+
                     if (!$article->tags->contains($newTag->id)) {
                         $article->tags()->save($newTag);
                     }

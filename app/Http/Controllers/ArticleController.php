@@ -646,7 +646,7 @@ class ArticleController extends Controller
             'type' => 'required|in:standard,gallery,video',
             'category' => 'required',
             'subcategory' => 'required',
-            'featured' => 'mimes:jpg,jpeg,gif,png',
+            'featured' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'tags' => 'required',
             'content' => 'required',
             'excerpt' => 'max:300',

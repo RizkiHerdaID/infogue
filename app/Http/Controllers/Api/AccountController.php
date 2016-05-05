@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
@@ -390,20 +391,54 @@ class AccountController extends Controller
      */
     public function update(Request $request)
     {
-        $contributor = Contributor::findOrFail($request->input('contributor_id'));
+        $rules = [
+            'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
+            'cover' => 'mimes:jpg,jpeg,gif,png|max:1000',
+        ];
+        $validator = Validator::make($request->all(), $rules);
 
-        $credential = Hash::check($request->input('password'), $contributor->password);
+        if ($validator->fails()) {
+            $failedRules = $validator->failed();
 
-        if (!$credential) {
+            $validAvatar = isset($failedRules['avatar']);
+            $validCover = isset($failedRules['cover']);
+
+            $errorMessage = "Invalid avatar or cover";
+            if($validAvatar && $validCover){
+                $errorMessage = "Cover and Avatar is invalid";
+            } else if($validAvatar){
+                $errorMessage = "Avatar is invalid";
+            } else if($validCover){
+                $errorMessage = "Cover is invalid";
+            }
+
+            $errorMessage .= ", must image and less than 1MB";
+
             return response()->json([
                 'request_id' => uniqid(),
-                'status' => 'mismatch',
-                'message' => 'Current password is mismatch',
+                'status' => 'denied',
+                'message' => $errorMessage,
                 'timestamp' => Carbon::now(),
-            ], 401);
+            ], 400);
+        }
+        
+        $contributor = Contributor::findOrFail($request->input('contributor_id'));
+
+        if ($request->has('new_password') && !empty($request->get('new_password'))) {
+            $credential = Hash::check($request->input('password'), $contributor->password);
+
+            if (!$credential) {
+                return response()->json([
+                    'request_id' => uniqid(),
+                    'status' => 'mismatch',
+                    'message' => 'Current password is mismatch',
+                    'timestamp' => Carbon::now(),
+                ], 401);
+            }
         }
 
-        $usernameExist = Contributor::whereUsername($request->input('username'))->where('id', '!=', $contributor->id)->count();
+        $usernameExist = Contributor::whereUsername($request->input('username'))
+            ->where('id', '!=', $contributor->id)->count();
 
         if ($usernameExist) {
             return response()->json([
@@ -414,7 +449,8 @@ class AccountController extends Controller
             ], 400);
         }
 
-        $emailExist = Contributor::whereEmail($request->input('email'))->where('id', '!=', $contributor->id)->count();
+        $emailExist = Contributor::whereEmail($request->input('email'))
+            ->where('id', '!=', $contributor->id)->count();
 
         if ($emailExist) {
             return response()->json([

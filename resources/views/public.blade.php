@@ -11,8 +11,24 @@
     <meta name="url" content="{{ route('index') }}">
     <meta name="theme-color" content="#4dc4d2">
 
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="Info Gue @yield('title')">
+    <meta itemprop="description" content="@if(isset($article)){{ strip_tags(str_limit($article->content, 160)) }}@else{{ $site_settings['Description'] }}@endif">
+    <meta itemprop="image" content="@if(isset($article)){{ asset('images/featured/'.$article->featured) }}@else{{ asset('tile.png') }}@endif">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@infogue">
+    <meta name="twitter:title" content="Info Gue @yield('title')">
+    <meta name="twitter:description" content="@if(isset($article)){{ strip_tags(str_limit($article->content, 160)) }}@else{{ $site_settings['Description'] }}@endif">
+    <meta name="twitter:creator" content="@if(isset($article)){{ $article->contributor->username }}@else{{ 'Infogue' }}@endif">
+    <!-- Twitter Summary card images must be at least 120x120px -->
+    <meta name="twitter:image" content="@if(isset($article)){{ asset('images/featured/'.$article->featured) }}@else{{ asset('tile.png') }}@endif">
+
+    <!-- Open Graph data -->
+    <meta property="fb:app_id" content="577855965712128"/>
     <meta property="og:url" content="{{ Request::url() }}"/>
-    <meta property="og:type" content="website"/>
+    <meta property="og:type" content="article"/>
     <meta property="og:title" content="Info Gue @yield('title')"/>
     <meta property="og:description" content="@if(isset($article)){{ strip_tags(str_limit($article->content, 160)) }}@else{{ $site_settings['Description'] }}@endif"/>
     <meta property="og:image" content="@if(isset($article)){{ asset('images/featured/'.$article->featured) }}@else{{ asset('tile.png') }}@endif"/>

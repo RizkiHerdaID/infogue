@@ -427,6 +427,10 @@ header {
 .mobile .btn-mobile p {
   font-size: .9em;
 }
+.list-group-item.active,
+.list-group-item.active:hover {
+  z-index: inherit;
+}
 
 .section {
   display: block;
@@ -2439,7 +2443,7 @@ legend {
 }
 .account-profile.detail .profile-wrapper .profile {
   position: relative;
-  z-index: 2;
+  z-index: inherit;
   text-align: center;
 }
 .account-profile.detail .profile-wrapper .profile .name {

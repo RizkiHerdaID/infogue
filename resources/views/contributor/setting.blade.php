@@ -239,6 +239,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
+                                        @if(Auth::user()->vendor == 'web' || Auth::user()->vendor == 'mobile')
                                         <fieldset>
                                             <legend>CHANGE PASSWORD</legend>
                                             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
@@ -262,13 +263,14 @@
                                                     {!! $errors->first('new_password_confirmation', '<span class="help-block">:message</span>') !!}
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-3 col-sm-9 pts pbm">
-                                                    <button class="btn btn-primary">SAVE CHANGES</button>
-                                                    <a href="#" data-toggle="modal" data-target="#modal-discard" class="btn btn-danger">DISCARD</a>
-                                                </div>
-                                            </div>
                                         </fieldset>
+                                        @endif
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9 pts pbm">
+                                                <button class="btn btn-primary">SAVE CHANGES</button>
+                                                <a href="#" data-toggle="modal" data-target="#modal-discard" class="btn btn-danger">DISCARD</a>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </section>

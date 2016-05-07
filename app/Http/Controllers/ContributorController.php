@@ -217,9 +217,12 @@ class ContributorController extends Controller
             'cover' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'username' => 'required|alpha_dash|max:20|unique:contributors,username,' . $user->id,
             'email' => 'required|email|max:50|unique:contributors,email,' . $user->id,
-            'password' => 'required|check_password',
             'new_password' => 'confirmed|min:6'
         ];
+
+        if($user->vendor == "web" || $user->vendor == "mobile"){
+            $rules['password'] = 'required|check_password';
+        }
 
         if (!$request->has('email_subscription')) {
             $request->merge(['email_subscription' => 0]);

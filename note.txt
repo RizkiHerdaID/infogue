@@ -1,12 +1,25 @@
+// remove
 .back-gray{
-	remove z-index - conflict with select image summernote
+	z-index - conflict with select image summernote
 }
+// remove
 .css-file{
-	remove shadow inset
+	shadow inset
 }
+// remove
 .bootstrap-tagsinput {
-	remove shadow inset
+	shadow inset
 }
+// change / add
 .article-preview.single-view article img{
-  max-width: 100% !important;
+    max-width: 100% !important;
+}
+// change / add
+.list-group-item.active,
+.list-group-item.active:hover {
+  z-index: inherit;
+}
+// change / add
+.account-profile.detail .profile-wrapper .profile {
+    change index z-index: inherit;
 }

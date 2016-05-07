@@ -159,7 +159,7 @@ class CategoryController extends Controller
 	
 	public function trending(){
 		$article = new Article();
-		$trending = $article->archive('trending', 'view', 'desc');
+		$trending = $article->archive('trending', 'date', 'desc');
 		
 		return response()->json([
                     'request_id' => uniqid(),

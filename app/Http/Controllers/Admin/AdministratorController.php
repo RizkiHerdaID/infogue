@@ -102,7 +102,7 @@ class AdministratorController extends Controller
             'feedback' => 'boolean',
             'member' => 'boolean',
             'approve' => 'boolean',
-            'email_admin' => 'required|email|max:30|unique:Users,email,' . Auth::guard('admin')->user()->id,
+            'email_admin' => 'required|email|max:30|unique:users,email,' . Auth::guard('admin')->user()->id,
             'name' => 'required|max:50',
             'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'password' => 'required|check_password:admin',

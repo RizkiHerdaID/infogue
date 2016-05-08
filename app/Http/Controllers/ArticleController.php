@@ -380,6 +380,13 @@ class ArticleController extends Controller
                 }
 
                 $article->save();
+                
+                if($article->id != null && $article->id >= 0){
+                    if ($autoApprove->value) {
+                        $articleModel = new Article();
+                        $articleModel->broadcastArticle($article);
+                    }                    
+                }
 
                 /*
                  * --------------------------------------------------------------------------

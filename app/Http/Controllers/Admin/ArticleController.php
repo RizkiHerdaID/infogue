@@ -398,7 +398,7 @@ class ArticleController extends Controller
         if ($type == 'status') {
             $article->status = $label;
 
-            if ($label == 'published' && !empty(trim($article->content_update))) {
+            if ($label == 'published' && !empty(trim($article->content_update))){
                 $article->content = $article->content_update;
                 $article->content_update = '';
             }
@@ -412,7 +412,11 @@ class ArticleController extends Controller
 
         if ($result) {
             if ($type == 'status' && $label == 'published') {
-                $this->sendEmailNotification($article);
+                if (empty(trim($article->content_update))){
+                    $this->sendEmailNotification($article);
+                    $articleModel = new Article();
+                    $articleModel->broadcastArticle($article);
+                }
             }
             return redirect(route('admin.article.index'))->with([
                 'status' => ($label == 'reject' || $label == 'general') ? 'warning' : 'success',

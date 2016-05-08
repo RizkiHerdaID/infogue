@@ -532,4 +532,55 @@ class Article extends Model
 
         return $article;
     }
+
+    public function broadcastArticle($article)
+    {
+        $article->featured_ref = asset('images/featured/' . $article->featured);
+
+        $headers = array(
+            'Authorization: key=' . env('GCM_KEY'),
+            'Content-Type: application/json'
+        );
+
+        $data = [
+            "to" => "/topics/article",
+            "notification" => [
+                "body" => $article->title,
+                "title" => "Infogue Update",
+				"icon" => "ic_whatshot"
+            ],
+			"data" => [
+                "message" => "New article "+$article->title,
+                "id" => $article->id,
+                "title" => $article->title,
+                "slug" => $article->slug,
+                "featured_ref" => $article->featured_ref,
+            ]
+        ];
+
+        // Open connection
+        $ch = curl_init();
+
+        // Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, env('GCM_URL'));
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Disabling SSL Certificate support temporarily
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+        // Execute post
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            // die('Curl failed: ' . curl_error($ch));
+        }
+
+        // Close connection
+        curl_close($ch);
+
+        return $result;
+    }
 }

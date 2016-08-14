@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers\api;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Infogue\Article;
@@ -40,7 +41,7 @@ class GCMController extends Controller
             "to" => "/topics/article",
             "notification" => [
                 "title" => "Infogue.id updates",
-                "body" => "New article "+$article->title,
+                "body" => "New article " + $article->title,
                 "id" => $article->id,
                 "title" => $article->title,
                 "slug" => $article->slug,

@@ -314,7 +314,7 @@ class AuthController extends Controller
 
         $user = Contributor::where('email', $username)->orWhere('username', $username)->first();
 
-        if ($user->count()) {
+        if (count($user)) {
             if ($user->status == 'pending') {
                 $request->session()->flash('status', 'Please Activate Your Account');
 

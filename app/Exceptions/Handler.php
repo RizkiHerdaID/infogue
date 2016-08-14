@@ -83,16 +83,24 @@ class Handler extends ExceptionHandler
         }
 
         if (!config('app.debug', false) && !$this->isHttpException($e)) {
-            if ($request->segment(1) == 'api' || $request->ajax()) {
-                return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'failure',
-                    'message' => 'Internal server error',
-                    'timestamp' => Carbon::now(),
-                ], 500);
-            }
+            switch ($e->getStatusCode()) {
+                case 500:
+                    if ($request->segment(1) == 'api' || $request->ajax()) {
+                        return response()->json([
+                            'request_id' => uniqid(),
+                            'status' => 'failure',
+                            'message' => 'Internal server error',
+                            'timestamp' => Carbon::now(),
+                        ], 500);
+                    }
 
-            return response()->view('errors.500', ['exception' => $e], 500);
+                    return response()->view('errors.500', ['exception' => $e], 500);
+                    break;
+
+                case 405:
+                    return response()->view('errors.500', ['exception' => $e], 405);
+                    break;
+            }
         }
 
         return parent::render($request, $e);

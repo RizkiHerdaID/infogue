@@ -325,22 +325,67 @@ class ArticleController extends Controller
      */
     public function show(Request $requests, $slug)
     {
+        // retrieve article and related data
         $article = $this->article
             ->whereSlug($slug)
             ->with('subcategory', 'subcategory.category', 'tags')
             ->firstOrFail();
 
+        // retrieve contributor and profile
         $contributor = new Contributor();
         $contributor_id = $requests->get('contributor_id');
         $username = $article->contributor->username;
         $author = $contributor->profile($username, false, $contributor_id, true);
+        unset($author->token);
+        unset($author->api_token);
+        unset($author->email);
+        unset($author->gender);
+        unset($author->birthday);
+        unset($author->contact);
+        unset($author->facebook);
+        unset($author->twitter);
+        unset($author->googleplus);
+        unset($author->instagram);
+        unset($author->vendor);
+        unset($author->mobile_notification);
+        unset($author->email_subscription);
+        unset($author->email_message);
+        unset($author->email_follow);
+        unset($author->email_feed);
+        unset($author->created_at);
+        unset($author->updated_at);
+        unset($author->following_status);
+        unset($author->following_text);
+        unset($author->avatar);
+        unset($author->cover);
+        unset($author->contributor_ref);
 
+        // retrieve rating
         $rating = round($article->ratings()->avg('rate'));
+
+        // reduce related article data
+        $related = $this->article->related($article->id);
+        $related->map(function ($row) {
+            unset($row->id);
+            unset($row->content);
+            unset($row->view);
+            unset($row->featured);
+            unset($row->created_at);
+        });
+
+        // reduce tags data
+        $tags = $article->tags;
+        $tags->map(function ($tag) {
+            unset($tag->created_at);
+            unset($tag->updated_at);
+        });
 
         $article = $article->toArray();
 
+        $article['tags'] = $tags;
         $article['contributor'] = $author;
         $article['rating'] = $rating;
+        $article['related'] = $related;
 
         return response()->json([
             'request_id' => uniqid(),

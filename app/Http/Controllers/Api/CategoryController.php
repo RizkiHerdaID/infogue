@@ -61,18 +61,15 @@ class CategoryController extends Controller
         $filter = $request->get('filter', 'merge');
 
         $sub = explode(':', $filter);
-        if($sub[0] == 'subcategory'){
-            if(isset($sub[1]) && $sub[1] > 0){
+        if ($sub[0] == 'subcategory') {
+            if (isset($sub[1]) && $sub[1] > 0) {
                 $menu = Subcategory::whereCategoryId($sub[1])->get();
-            }
-            else{
+            } else {
                 $menu = Subcategory::all();
             }
-        }
-        else if($filter == 'category'){
+        } else if ($filter == 'category') {
             $menu = Category::all();
-        }
-        else{
+        } else {
             $menu = Category::with('subcategories')->get();
         }
 
@@ -98,11 +95,13 @@ class CategoryController extends Controller
 
         $articles = $this->category->categoryArticle($category->id);
 
+        $data = $this->reduceArticleData($articles);
+
         return [
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
-            'articles' => $articles
+            'articles' => $data
         ];
     }
 
@@ -123,73 +122,145 @@ class CategoryController extends Controller
 
         $subcategory = $category->subcategories()->where('subcategory', 'like', $subcategory_name)->firstOrFail();
 
-        $articles = $this->subcategory->subcategoryArticle($subcategory->id)->toArray();
+        $articles = $this->subcategory->subcategoryArticle($subcategory->id);
+
+        $data = $this->reduceArticleData($articles);
 
         return [
             'request_id' => uniqid(),
             'status' => 'success',
             'timestamp' => Carbon::now(),
-            'articles' => $articles
+            'articles' => $data
         ];
     }
-	
-	public function latest(){
-		$article = new Article();
-		$latest = $article->latest(false);
-		
-		return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'success',
-                    'articles' => $latest,
-                    'timestamp' => Carbon::now(),
-                ]);
-	}
-	
-	public function popular(){
-		$article = new Article();
-		$popular = $article->archive('popular', 'view', 'desc');
-		
-		return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'success',
-                    'articles' => $popular,
-                    'timestamp' => Carbon::now(),
-                ]);
-	}
-	
-	public function trending(){
-		$article = new Article();
-		$trending = $article->archive('trending', 'date', 'desc');
-		
-		return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'success',
-                    'articles' => $trending,
-                    'timestamp' => Carbon::now(),
-                ]);
-	}
-	
-	public function headline(){
-		$article = new Article();
-		$headline = $article->archive('headline', 'view', 'desc');
-		
-		return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'success',
-                    'articles' => $headline,
-                    'timestamp' => Carbon::now(),
-                ]);
-	}
-	
-	public function random(){
-		$article = new Article();
-		$random = $article->archive('all-data', 'view', 'random');
-		
-		return response()->json([
-                    'request_id' => uniqid(),
-                    'status' => 'success',
-                    'articles' => $random,
-                    'timestamp' => Carbon::now(),
-                ]);
-	}
+
+    /**
+     * Fetch latest article.
+     *
+     * @return mixed
+     */
+    public function latest()
+    {
+        $article = new Article();
+        $latest = $article->latest(false);
+        $data = $this->reduceArticleData($latest);
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'articles' => $data,
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Fetch most popular article.
+     *
+     * @return mixed
+     */
+    public function popular()
+    {
+        $article = new Article();
+        $popular = $article->archive('popular', 'view', 'desc');
+        $data = $this->reduceArticleData($popular);
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'articles' => $data,
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Fetch trending article.
+     *
+     * @return mixed
+     */
+    public function trending()
+    {
+        $article = new Article();
+        $trending = $article->archive('trending', 'date', 'desc');
+        $data = $this->reduceArticleData($trending);
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'articles' => $data,
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Fetch headline article.
+     *
+     * @return mixed
+     */
+    public function headline()
+    {
+        $article = new Article();
+        $headline = $article->archive('headline', 'view', 'desc');
+        $data = $this->reduceArticleData($headline);
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'articles' => $data,
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Fetch random article.
+     *
+     * @return mixed
+     */
+    public function random()
+    {
+        $article = new Article();
+        $random = $article->archive('all-data', 'view', 'random');
+        $data = $this->reduceArticleData($random);
+
+        return response()->json([
+            'request_id' => uniqid(),
+            'status' => 'success',
+            'articles' => $data,
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    /**
+     * Reducing article load for better network request speed.
+     *
+     * @param $articles
+     */
+    function reduceArticleData($articles)
+    {
+        $data = collect($articles->toArray());
+        $data["data"] = array_map(array($this, "alterArticle"), $data["data"]);
+        return $data;
+    }
+
+    /**
+     * Reduce article data callback function.
+     *
+     * @param $article
+     * @return mixed
+     */
+    private function alterArticle($article)
+    {
+        unset($article['contributor_id']);
+        unset($article['state']);
+        unset($article['name']);
+        unset($article['username']);
+        unset($article['avatar']);
+        unset($article['created_at']);
+        unset($article['article_ref']);
+        unset($article['contributor_ref']);
+        unset($article['avatar_ref']);
+        unset($article['category_ref']);
+        unset($article['subcategory_ref']);
+        unset($article['featured']);
+        return $article;
+    }
 }

@@ -370,7 +370,6 @@ class ArticleController extends Controller
             unset($row->content);
             unset($row->view);
             unset($row->featured);
-            unset($row->created_at);
         });
 
         // reduce tags data

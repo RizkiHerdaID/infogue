@@ -490,10 +490,21 @@ class Article extends Model
      */
     public function preArticleModifier($articles)
     {
+		include "simple_html_dom.php";
+		
         foreach ($articles as $article):
-
-            $content = preg_replace('#data:image/[^;]+;base64,#', ' ', $article->content);
-            $content_update = preg_replace('#data:image/[^;]+;base64,#', ' ', $article->content_update);
+		
+			if($article->content == null){				
+				$content = $article->content;
+			} else {
+				$content = str_get_html($article->content)->plaintext;
+			}
+			
+			if($article->content_update == null){				
+				$content_update = $article->content_update;
+			} else {
+				$content_update = str_get_html($article->content_update)->plaintext;
+			}
 
             $article->featured_ref = asset('images/featured/' . $article->featured);
             $article->article_ref = route('article.show', [$article->slug]);
@@ -502,11 +513,9 @@ class Article extends Model
             $article->category_ref = route('article.category', [str_slug($article->category)]);
             $article->subcategory_ref = route('article.subcategory', [str_slug($article->category), str_slug($article->username)]);
             $article->published_at = Carbon::parse($article->created_at)->format('d F Y');
-            $content_trim = trim(preg_replace('/\s\s+/', ' ', strip_tags(preg_replace('#<[^>]+>#', ' ', $content))));
-            $article->content = str_limit($content_trim, 160);
-            $content_update_trim = trim(preg_replace('/\s\s+/', ' ', strip_tags(preg_replace('#<[^>]+>#', ' ', $content_update))));
-            $article->content_update = str_limit($content_update_trim, 160);
-
+            $article->content = ucfirst(strtolower(str_limit(preg_replace('/\s\s+/', ' ', trim(preg_replace("/&#?[a-z0-9]+;/i", " ", $content))), 160)));
+			$article->content_update = ucfirst(strtolower(str_limit(preg_replace('/\s\s+/', ' ', trim(preg_replace("/&#?[a-z0-9]+;/i", " ", $content_update))), 160)));
+            
         endforeach;
 
         return $articles;

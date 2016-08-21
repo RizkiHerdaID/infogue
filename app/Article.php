@@ -493,17 +493,17 @@ class Article extends Model
 		include "simple_html_dom.php";
 		
         foreach ($articles as $article):
-		
+				
 			if($article->content == null){				
-				$content = $article->content;
+				$content = strip_tags($article->content);
 			} else {
-				$content = str_get_html($article->content)->plaintext;
+				$content = str_get_html(strip_tags($article->content))->plaintext;
 			}
 			
 			if($article->content_update == null){				
-				$content_update = $article->content_update;
+				$content_update = strip_tags($article->content_update);
 			} else {
-				$content_update = str_get_html($article->content_update)->plaintext;
+				$content_update = str_get_html(strip_tags($article->content_update))->plaintext;
 			}
 
             $article->featured_ref = asset('images/featured/' . $article->featured);

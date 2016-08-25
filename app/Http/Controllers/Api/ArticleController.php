@@ -381,7 +381,7 @@ class ArticleController extends Controller
 
         $article = $article->toArray();
 
-		$article['content'] = str_replace('//www.youtube.com/', 'https://www.youtube.com/', $article['content']);
+		$article['content'] = str_replace('src="//www.youtube.com/', 'src="https://www.youtube.com/', $article['content']);
         $article['tags'] = $tags;
         $article['contributor'] = $author;
         $article['rating'] = $rating;

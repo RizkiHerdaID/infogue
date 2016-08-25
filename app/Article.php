@@ -43,7 +43,7 @@ class Article extends Model
         parent::boot();
 
         static::addGlobalScope('latest', function (Builder $builder) {
-            $builder->orderBy('articles.created_at', 'desc');
+            $builder->orderBy('articles.updated_at', 'desc');
         });
     }
 
@@ -167,7 +167,7 @@ class Article extends Model
     public function mostPopular($take = 10)
     {
         $popular = $this->preArticleQuery()->published()
-            ->where('articles.created_at', '>', Carbon::now()->addMonth(-3))
+            ->where('articles.updated_at', '>', Carbon::now()->addMonth(-3))
             ->orderBy('view', 'desc')
             ->take($take)
             ->get();
@@ -411,7 +411,7 @@ class Article extends Model
          */
 
         if ($by == 'date') {
-            $articles->orderBy('created_at', $sort);
+            $articles->orderBy('articles.updated_at', $sort);
         } else if ($by == 'title') {
             $articles->orderBy('title', $sort);
         } else if ($by == 'view') {
@@ -472,7 +472,8 @@ class Article extends Model
                     subcategory,
                     category_id,
                     category,
-                    articles.created_at'
+                    articles.created_at,
+                    articles.updated_at'
             )
         )
             ->join('subcategories', 'subcategories.id', '=', 'subcategory_id')
@@ -493,18 +494,9 @@ class Article extends Model
 		include "simple_html_dom.php";
 		
         foreach ($articles as $article):
-				
-			if($article->content == null){				
-				$content = strip_tags($article->content);
-			} else {
-				$content = str_get_html(strip_tags($article->content))->plaintext;
-			}
-			
-			if($article->content_update == null){				
-				$content_update = strip_tags($article->content_update);
-			} else {
-				$content_update = str_get_html(strip_tags($article->content_update))->plaintext;
-			}
+
+            $content = strip_tags($article->content);
+            $content_update = strip_tags($article->content_update);
 
             $article->featured_ref = asset('images/featured/' . $article->featured);
             $article->article_ref = route('article.show', [$article->slug]);

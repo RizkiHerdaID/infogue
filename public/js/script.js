@@ -62,9 +62,9 @@ $(function () {
             toolbar: [
                 ['font', ['style']],
                 ['style', ['bold', 'italic', 'underline']],
-                ['para', ['ul', 'paragraph']],
+                ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['picture', 'video', 'link']],
-                ['misc', ['fullscreen']]
+                ['misc', ['codeview', 'fullscreen']]
             ],
             placeholder: 'Write here...',
             height: 200

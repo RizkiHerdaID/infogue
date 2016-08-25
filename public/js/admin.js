@@ -36,7 +36,7 @@ $(function () {
                 ['style', ['bold', 'italic', 'underline']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['insert', ['picture', 'video', 'link']],
-                ['misc', ['fullscreen']]
+                ['misc', ['codeview', 'fullscreen']]
             ],
             placeholder: 'Write here...',
             height: 200,

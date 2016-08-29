@@ -24,9 +24,13 @@
     change index z-index: inherit;
 }
 
-// change
-.navigation .sf-menu .sf-mega:after {
-  background: none;
+//change 
+.breadcrumb > li a {
+    padding: 7px 20px;
 }
-
-// remove hgroup reset and font reset
+.breadcrumb > li + li.active {
+    padding: 7px 20px;
+}
+.breadcrumb > li + li.blank {
+    padding: 7px 16.66667px;
+}

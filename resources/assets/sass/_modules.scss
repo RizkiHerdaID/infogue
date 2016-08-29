@@ -130,7 +130,7 @@
 
       &.active {
         color: $color-light;
-        padding: $space-small $space-medium;
+        padding: 7px $space-medium;
       }
 
       &.active, a {
@@ -140,7 +140,7 @@
       &.blank {
         width: 20px;
         min-height: 34px;
-        padding: $space-small ($space-large / 3);
+        padding: 7px ($space-large / 3);
 
         &:before {
           content: 'blank';

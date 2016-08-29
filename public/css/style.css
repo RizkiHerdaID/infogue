@@ -735,7 +735,7 @@ footer .bottom .social {
 }
 .breadcrumb > li + li.active {
   color: #ffffff;
-  padding: 10px 20px;
+  padding: 7px 20px;
 }
 .breadcrumb > li + li.active, .breadcrumb > li + li a {
   padding-left: 40px;
@@ -743,7 +743,7 @@ footer .bottom .social {
 .breadcrumb > li + li.blank {
   width: 20px;
   min-height: 34px;
-  padding: 10px 16.66667px;
+  padding: 7px 16.66667px;
 }
 .breadcrumb > li + li.blank:before {
   content: 'blank';

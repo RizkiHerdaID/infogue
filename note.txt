@@ -23,3 +23,10 @@
 .account-profile.detail .profile-wrapper .profile {
     change index z-index: inherit;
 }
+
+// change
+.navigation .sf-menu .sf-mega:after {
+  background: none;
+}
+
+// remove hgroup reset and font reset

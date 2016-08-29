@@ -24,7 +24,7 @@ class Article extends Model
      *
      * @var array
      */
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $guarded = ['id', 'updated_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -43,7 +43,7 @@ class Article extends Model
         parent::boot();
 
         static::addGlobalScope('latest', function (Builder $builder) {
-            $builder->orderBy('articles.updated_at', 'desc');
+            $builder->orderBy('articles.created_at', 'desc');
         });
     }
 
@@ -167,7 +167,7 @@ class Article extends Model
     public function mostPopular($take = 10)
     {
         $popular = $this->preArticleQuery()->published()
-            ->where('articles.updated_at', '>', Carbon::now()->addMonth(-3))
+            ->where('articles.created_at', '>', Carbon::now()->addMonth(-3))
             ->orderBy('view', 'desc')
             ->take($take)
             ->get();
@@ -411,7 +411,7 @@ class Article extends Model
          */
 
         if ($by == 'date') {
-            $articles->orderBy('articles.updated_at', $sort);
+            $articles->orderBy('articles.created_at', $sort);
         } else if ($by == 'title') {
             $articles->orderBy('title', $sort);
         } else if ($by == 'view') {
@@ -472,8 +472,7 @@ class Article extends Model
                     subcategory,
                     category_id,
                     category,
-                    articles.created_at,
-                    articles.updated_at'
+                    articles.created_at'
             )
         )
             ->join('subcategories', 'subcategories.id', '=', 'subcategory_id')
@@ -490,9 +489,7 @@ class Article extends Model
      * @return mixed
      */
     public function preArticleModifier($articles)
-    {
-		include "simple_html_dom.php";
-		
+    {		
         foreach ($articles as $article):
 
             $content = strip_tags($article->content);

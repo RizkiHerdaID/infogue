@@ -33,7 +33,7 @@ class Subcategory extends Model
         $articles = $article->preArticleQuery()
             ->where('articles.status', 'published')
             ->where('subcategory_id', $id)
-            ->orderBy('articles.updated_at', 'desc')
+            ->orderBy('articles.created_at', 'desc')
             ->paginate(12);
 
         return $article->preArticleModifier($articles);

@@ -2,6 +2,7 @@
 
 namespace Infogue\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -398,9 +399,12 @@ class ArticleController extends Controller
         if ($type == 'status') {
             $article->status = $label;
 
-            if ($label == 'published' && !empty(trim($article->content_update))){
-                $article->content = $article->content_update;
-                $article->content_update = '';
+            if ($label == 'published') {
+                $article->created_at = Carbon::now();
+                if (!empty(trim($article->content_update))) {
+                    $article->content = $article->content_update;
+                    $article->content_update = '';
+                }
             }
         } else if ($type == 'state') {
             $article->state = $label;
@@ -412,7 +416,7 @@ class ArticleController extends Controller
 
         if ($result) {
             if ($type == 'status' && $label == 'published') {
-                if (empty(trim($article->content_update))){
+                if (empty(trim($article->content_update))) {
                     $this->sendEmailNotification($article);
                     $articleModel = new Article();
                     $articleModel->broadcastArticle($article);

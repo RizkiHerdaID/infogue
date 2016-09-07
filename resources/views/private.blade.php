@@ -33,30 +33,21 @@
     </div>
     <!-- end of wrapper -->
 
-    <div class="modal fade" id="modal-developer" tabindex="-1" role="dialog">
+    <div class="modal fade no-line" id="modal-info" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><i class="fa fa-code"></i> DEVELOPER INFO</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">TITLE</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="mlm">
-                        <label class="mbn text-danger">This featured will be available in next version.</label>
-                        <p><small class="text-muted">This module in not available yet!</small></p>
-                        <p>CURRENT VERSION v1.0</p>
-                    </div>
-                    <hr>
-                    <div class="mtm mlm text-muted">
-                        <label class="mbn">REQUEST THIS FEATURE</label>
-                        <p><a href="mailto:anggadarkprince@gmail.com">Angga Ari Wijaya</a> (Starter of Sketch Project Studio).</p>
-                        <p>Developer <strong>Contact:</strong> (+62) 8565547868 <br>
-                            <strong>Address:</strong> Gresik, Jatim - Indonesia</p>
-                    </div>
+                    <label class="mbn modal-message">MESSAGE</label>
+                    <p class="mbn"><small class="text-muted modal-submessage">SUB MESSAGE</small></p>
                 </div>
-                <div class="modal-footer text-center">
-                    <a href="#" data-dismiss="modal" class="btn btn-default">I'VE GOT IT</a>
-                    <a href="mailto:mailto:anggadarkprince@gmail.com" class="btn btn-primary">REQUEST NEXT UPDATE</a>
+                <div class="modal-footer">
+                    <a href="#" data-dismiss="modal" class="btn btn-primary">OK</a>
                 </div>
             </div>
         </div>
@@ -70,6 +61,7 @@
     <script src="{{ asset('library/jquery.nicescroll/dist/jquery.nicescroll.min.js') }}"></script>
     <script src="{{ asset('library/jquery.timeago/jquery.timeago.js') }}"></script>
     <script src="{{ asset('library/summernote/dist/summernote.min.js') }}"></script>
+    <script src="{{ asset('library/mustache/mustache.min.js') }}"></script>
     <script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>

@@ -55,7 +55,12 @@ class Conversation extends Model
     public function retrieveConversation($id, $last = null)
     {
         $contributor_id = $id;
-        $user_id = Auth::user()->id;
+        if(Auth::guard('admin')->check()){
+            $user_id = Auth::guard('admin')->user()->id;
+        } else if(Auth::check()){
+            $user_id = Auth::user()->id;
+        }
+        
 
         /*
          * --------------------------------------------------------------------------
@@ -116,12 +121,13 @@ class Conversation extends Model
      */
     public function preConversationModifier($conversations)
     {
+        $id = Auth::guard('admin')->check() ? Auth::guard('admin')->user()->id : Auth::user()->id;
         foreach ($conversations as $conversation):
 
             $conversation->contributor_ref = route('contributor.stream', [$conversation->username]);
             $conversation->avatar_ref = asset("images/contributors/{$conversation->avatar}");
             $conversation->attachment_ref = asset("file/{$conversation->attachment}");
-            $conversation->owner = ($conversation->sender == Auth::user()->id) ? 'me' : 'they';
+            $conversation->owner = ($conversation->sender == $id) ? 'me' : 'they';
             $conversation->has_attachment = ($conversation->attachment == null) ? 'hidden' : '';
             $conversation->message = nl2br($conversation->message);
         endforeach;

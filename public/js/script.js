@@ -951,7 +951,7 @@ $(function () {
             if (jqxhr.status == 401) {
                 showInfoUnauthorized(jqxhr.status);
             }
-            else if (jqxhr.status == 401) {
+            else if (jqxhr.status == 404) {
                 showInfoNotFound(jqxhr.status);
             }
         });

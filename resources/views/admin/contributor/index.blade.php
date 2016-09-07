@@ -96,7 +96,7 @@
                     </thead>
                     <tbody>
                     @forelse($contributors as $contributor)
-                        <tr data-id="{{ $contributor->id }}">
+                        <tr data-id="{{ $contributor->id }}" data-author="{{ $contributor->name }}" data-author-id="{{ $contributor->id }}">
                             <td width="40">
                                 <div class="checkbox">
                                     <input type="checkbox" name="row[]" value="{{ $contributor->id }}" id="check-{{ $contributor->id }}" class="css-checkbox checkbox-row">
@@ -155,6 +155,7 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">CONTROL</li>
+                                        <li><a href="#" class="btn-message" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope"></i> Send Message</a></li>
                                         <li><a href="{{ route('contributor.stream', [$contributor->username]) }}" target="_blank"><i class="fa fa-eye"></i> View</a></li>
                                         <li><a href="{{ route('admin.contributor.edit', [$contributor->username]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
                                         <li><a href="#" data-label="{{ $contributor->name }}" class="btn-delete" data-target="#modal-delete" data-toggle="modal"><i class="fa fa-trash"></i> Delete</a></li>
@@ -222,6 +223,34 @@
                         </div>
                     </div>
                     <div class="modal-footer"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade color" id="send-message" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('admin.message.send') }}" id="form-message" class="form-strip form-horizontal" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" id="contributor_id" name="contributor_id" value="">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i> SEND MESSAGE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>SEND TO : </label> <span class="message-to"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="mbs">MESSAGE : </label>
+                            <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Type message here" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
+                        <button type="submit" class="btn btn-primary">SEND</button>
+                    </div>
                 </form>
             </div>
         </div>

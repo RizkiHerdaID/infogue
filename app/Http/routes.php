@@ -46,6 +46,12 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('feedback', 'FeedbackController', ['only' => ['index', 'destroy']]);
         Route::post('feedback/reply', ['as' => 'admin.feedback.reply', 'uses' => 'FeedbackController@reply']);
         Route::match(['put', 'patch'], 'feedback/mark/{label}/{id}', ['as' => 'admin.feedback.mark', 'uses' => 'FeedbackController@mark']);
+        Route::group(['as' => 'admin.message.', 'prefix' => 'message'], function () {
+            Route::get('/', ['as' => 'index', 'uses' => 'MessageController@index']);
+            Route::post('/', ['as' => 'send', 'uses' => 'MessageController@send']);
+            Route::delete('/{id}', ['as' => 'delete', 'uses' => 'MessageController@destroy']);
+            Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
+        });
     });
 
     // Group of frontend routes...

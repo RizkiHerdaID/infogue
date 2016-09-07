@@ -9,6 +9,247 @@ $(function () {
      * input tags, validation and typeahead.
      */
 
+    var page = 1;
+    var onLoading = false;
+    var isEnded = false;
+    var isFirst = true;
+
+    if ($('.loading').length) {
+        $('.loading').show();
+        $('.btn-load-more').hide();
+
+        if (isFirst) {
+            loadContent();
+        }
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > $(document).height() - $(window).height() - 500 && !onLoading && !isEnded) {
+                if (!$('#conversations').length) {
+                    loadContent();
+                }
+            }
+        });
+
+        $('.btn-load-more').click(function (e) {
+            e.preventDefault();
+            loadContent();
+        });
+    }
+
+    function loadContent() {
+        onLoading = true;
+        $('.loading').show();
+        $('.btn-load-more').hide();
+        generateContent()
+    }
+
+    function generateContent() {
+        $.getJSON($("section[data-href]").data('href') + '?page=' + page, function (data) {
+            onLoading = false;
+            $('.loading').hide();
+            $('.btn-load-more').show();
+
+            if ($('#messages').length) {
+                loadMessage(data);
+            }
+            else if ($('#conversations').length) {
+                loadConversation(data);
+            }
+        }).fail(function (jqxhr, textStatus, error) {
+            if (jqxhr.status == 401) {
+                showInfoUnauthorized(jqxhr.status);
+            }
+            else if (jqxhr.status == 404) {
+                showInfoNotFound(jqxhr.status);
+            }
+        });
+    }
+
+    // AJAX INFO
+    function showInfoUnauthorized(code) {
+        showInfo(code + ' UNAUTHORIZED', 'You don\'t have authorization to do this action', 'Please Login <a href="http://localhost:8000/auth/login">here</a> or <a href="http://localhost:8000/auth/register">register</a>');
+    }
+
+    function showInfoNotFound(code) {
+        showInfo(code + ' PAGE NOT FOUND', 'Something is getting wrong', 'Please contact out administrator');
+    }
+
+    function showInfo(title, message, submessage) {
+        $("#modal-info .modal-title").html(title);
+        $("#modal-info .modal-message").html(message);
+        $("#modal-info .modal-submessage").html(submessage);
+        $("#modal-info").modal("show");
+    }
+
+    // MESSAGES
+    $('.btn-message').click(function () {
+        var name = $(this).closest('tr').data('author');
+        var id = $(this).closest('tr').data('author-id');
+        $('#send-message').find('.message-to').text(name);
+        $('#send-message').find('#contributor_id').val(id);
+    });
+
+    function loadMessage(data) {
+        if ($('#message-row-template').length && data.data.length > 0) {
+            var template = $('#message-row-template').html();
+            var html = Mustache.to_html(template, data);
+            $('#messages').append(html);
+            $("time.timeago").timeago();
+
+            if (page == data.last_page) {
+                $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
+                isEnded = true;
+            }
+            else {
+                page++;
+            }
+        }
+        else {
+            if (data.total == 0) {
+                $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+            }
+
+            $('.btn-load-more').text("END OF MESSAGES").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    /*
+     * --------------------------------------------------------------------------
+     * Conversation Function
+     * --------------------------------------------------------------------------
+     * Setup initial form, button state, check if message box is not empty,
+     * then send message via ajax. Checking the new message from another user
+     * each 5 seconds.
+     */
+
+    var firstScroll = true;
+    var previousScrollHeightMinusTop = 0;
+    var lastConversationId = '';
+    var isCheckingNewConversation = false;
+
+    function loadConversation(data) {
+        if ($('#conversation-row-template').length && data.data.length > 0) {
+            var template = $('#conversation-row-template').html();
+            data.data.reverse();
+            var html = Mustache.to_html(template, data);
+            $('#conversations').prepend(html);
+            $("time.timeago").timeago();
+            lastConversationId = $('.conversation:last-child').data('id');
+
+            if (firstScroll) {
+                $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                firstScroll = false;
+            }
+            else {
+                $(".message-box").scrollTop($(".message-box")[0].scrollHeight - previousScrollHeightMinusTop);
+            }
+
+            if (page == data.last_page) {
+                $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+                isEnded = true;
+            }
+            else {
+                page++;
+            }
+        }
+        else {
+            if (data.total == 0) {
+                $('#messages').html("<p class='text-center mtm'>It's lonely here, send message to another Contributor</p>");
+            }
+
+            $('.btn-load-more').text("END OF CONVERSATION").addClass('disabled');
+            isEnded = true;
+        }
+    }
+
+    if ($('#conversations').length) {
+        if (isExtraSmall) {
+            $('footer').hide();
+        }
+        $(".message-box").scroll(function () {
+            previousScrollHeightMinusTop = $(".message-box")[0].scrollHeight - $(".message-box").scrollTop();
+
+            if ($(".message-box").scrollTop() < 50 && !onLoading && !isEnded) {
+                loadContent();
+            }
+        });
+
+        setInterval(function () {
+            if (!isCheckingNewConversation) {
+                checkConversation();
+            }
+        }, 5000);
+
+        var buttonSendMessage = $(".btn-send");
+        buttonSendMessage.attr('disabled', 'true');
+
+        $('#form-message').on('submit', (function (e) {
+            e.preventDefault();
+            sendMessage();
+        }));
+
+        $("#form-message #message").keyup(function () {
+            if ($(this).val() == '') {
+                buttonSendMessage.attr('disabled', 'true');
+            }
+            else {
+                buttonSendMessage.removeAttr('disabled');
+            }
+        });
+
+        function sendMessage() {
+            var form = $('#form-message').get(0);
+            var formData = new FormData(form);
+
+            $("#message").attr('readonly', '');
+            $("#attachment").attr('disabled', 'true');
+            $(".btn-send").attr('disabled', 'true');
+
+            $.ajax({
+                type: 'POST',
+                url: $(form).attr('action'),
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    console.log("message sent");
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").attr('disabled', 'true');
+                    $(".file-info").text('');
+                    if (!isCheckingNewConversation) {
+                        checkConversation();
+                    }
+                },
+                error: function (e) {
+                    $("#message").removeAttr('readonly').val('');
+                    $("#attachment").removeAttr('disabled').val('');
+                    $(".btn-send").removeAttr('disabled');
+                    console.log("send message is failed "+e.responseText);
+                }
+            });
+        }
+
+        function checkConversation() {
+            isCheckingNewConversation = true;
+            $.getJSON($("section[data-href]").data('href') + '?last=' + lastConversationId, function (data) {
+                if ($('#conversation-row-template').length && data.data.length > 0) {
+                    var template = $('#conversation-row-template').html();
+                    data.data.reverse();
+                    var html = Mustache.to_html(template, data);
+                    $('#conversations').append(html);
+                    $("time.timeago").timeago();
+                    $(".message-box").scrollTop($(".message-box")[0].scrollHeight);
+                    lastConversationId = $('.conversation:last-child').data('id');
+                }
+                isCheckingNewConversation = false;
+            });
+        }
+    }
+    
+
     // ADD NICE SCROLL EXCEPT IE:EDGE
     if (!/Edge/.test(navigator.userAgent)) {
         $("html").niceScroll({
@@ -82,12 +323,6 @@ $(function () {
      * --------------------------------------------------------------------------
      * Snippet script necessary to build this application.
      */
-
-    // SET FULL HEIGHT IF CONTENT TOO SHORT
-    if ($("#wrapper").height() < $(window).height()) {
-        $("#wrapper").css('position', 'absolute').css('height', '100%').css('width', '100%');
-        $(".content").css('min-height', $(window).height() - $('header').height() - $('breadcrumb-wrapper').height() - 40 - 40);
-    }
 
     // SIMPLE CHART HEIGHT
     $(".chart .fill").each(function () {
@@ -466,6 +701,14 @@ $(function () {
      * to sliding off-canvas navigation and chart resizing.
      */
 
+    var wrapper = $("#wrapper");
+
+    // SET FULL HEIGHT IF CONTENT TOO SHORT
+    if (wrapper.height() < $(window).height()) {
+        wrapper.css('position', 'absolute').css('height', '100%').css('width', '100%');
+        wrapper.css('min-height', $(window).height() - $('header').height() - $('breadcrumb-wrapper').height() - 40 - 40);
+    }
+
     var isLarge = false;
     var isMedium = false;
     var isSmall = false;
@@ -522,7 +765,6 @@ $(function () {
      * finally prevent event triggered on navigation container itself.
      */
 
-    var wrapper = $("#wrapper");
 
     // SET SIDE BAR MUST BE OPENED OR CLOSED
     if (isExtraSmall) {
@@ -956,6 +1198,7 @@ $(function () {
 
     // DELETE BUTTON
     $(document).on("click", ".btn-delete", function () {
+        var modal = $('#modal-delete');
         var selectedRows = new Array();
         var selectedRowSubs = new Array();
         $('input[name="selected"]').val('');
@@ -997,6 +1240,12 @@ $(function () {
         else {
             $('#modal-delete form').attr('action', $('#modal-delete form').data('url') + '/' + id);
             console.log('general ' + $('#modal-delete form').attr('action'));
+        }
+
+        if ($(this).hasClass('delete-message')) {
+            var sender = $(this).closest('*[data-id]').data('sender');
+            modal.find('input[name="sender"]').val(sender);
+            modal.find('input[name="contributor"]').val(title);
         }
 
         $('#modal-delete form .delete-title').text(title);

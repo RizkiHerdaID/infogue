@@ -30,6 +30,8 @@ class Message extends Model
 
         if (Auth::check()) {
             $id = Auth::id();
+        } else if(Auth::guard('admin')->check()){
+            $id = Auth::guard('admin')->id();
         }
 
         /*
@@ -84,10 +86,11 @@ class Message extends Model
      */
     public function preMessageModifier($messages)
     {
+        $route = Auth::guard('admin')->check() ? 'admin' : 'account';
         foreach ($messages as $message):
 
             $message->contributor_ref = route('contributor.stream', [$message->username]);
-            $message->conversation_ref = route('account.message.conversation', [$message->username]);
+            $message->conversation_ref = route($route . '.message.conversation', [$message->username]);
             $message->avatar_ref = asset("images/contributors/{$message->avatar}");
             $message->message = str_limit($message->message, 30);
             $message->following_status = ($message->is_following) ? 'btn-unfollow active' : 'btn-follow';

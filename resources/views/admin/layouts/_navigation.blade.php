@@ -34,26 +34,11 @@
             <li @if($segment == 'category') {!! 'class="active"' !!}@endif>
                 <a href="{{ route('admin.category.index') }}"><i class="fa fa-bars"></i>Category</a>
             </li>
+            <li @if($segment == 'message') {!! 'class="active"' !!}@endif>
+                <a href="{{ route('admin.message.index') }}"><i class="fa fa-envelope"></i>Messages</a>
+            </li>
             <li @if($segment == 'feedback') {!! 'class="active"' !!}@endif>
                 <a href="{{ route('admin.feedback.index') }}"><i class="fa fa-comments-o"></i>Feedback</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-line-chart"></i>Analytic</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-bullhorn"></i>Advertisement</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-file-o"></i>Static Page</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-desktop"></i>Reporting</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-dashboard"></i>SEO</a>
-            </li>
-            <li>
-                <a href="#" data-toggle="modal" data-target="#modal-developer"><i class="fa fa-save"></i>Backup</a>
             </li>
             <li @if($segment == 'about') {!! 'class="active"' !!}@endif>
                 <a href="{{ route('admin.about') }}"><i class="fa fa-info-circle"></i>About</a>

@@ -142,7 +142,7 @@
                     </thead>
                     <tbody>
                     @forelse($articles as $article)
-                        <tr data-id="{{ $article->id }}" data-article-ref="{{ $article->article_ref }}" data-title="{{ $article->title }}" data-category="{{ $article->category }}" data-subcategory="{{ $article->subcategory }}" data-category-ref="{{ $article->category_ref }}" data-subcategory-ref="{{ $article->subcategory_ref }}" data-timestamp="@datetime($article->created_at)" data-avatar="{{ $article->avatar_ref }}" data-author-ref="{{ $article->contributor_ref }}" data-author="{{ $article->name }}" data-rating="{{ $article->total_rating }}" data-tags="{{ implode(',', $article->tags()->pluck('tag')->toArray()) }}" data-view="{{ $article->view }}">
+                        <tr data-id="{{ $article->id }}" data-article-ref="{{ $article->article_ref }}" data-title="{{ $article->title }}" data-category="{{ $article->category }}" data-subcategory="{{ $article->subcategory }}" data-category-ref="{{ $article->category_ref }}" data-subcategory-ref="{{ $article->subcategory_ref }}" data-timestamp="@datetime($article->created_at)" data-avatar="{{ $article->avatar_ref }}" data-author-ref="{{ $article->contributor_ref }}" data-author="{{ $article->name }}" data-author-id="{{ $article->contributor_id }}" data-rating="{{ $article->total_rating }}" data-tags="{{ implode(',', $article->tags()->pluck('tag')->toArray()) }}" data-view="{{ $article->view }}">
                             <td width="40">
                                 <div class="checkbox">
                                     <input type="checkbox" name="check-{{ $article->id }}" value="{{ $article->id }}" id="check-{{ $article->id }}" class="css-checkbox checkbox-row">
@@ -208,6 +208,7 @@
                                             @endif
                                         @endif
                                         <li class="dropdown-header">CONTROL</li>
+                                        <li><a href="#" class="btn-message" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope"></i> Send Message</a></li>
                                         <li><a href="{{ route('admin.article.show', [$article->slug]) }}"><i class="fa fa-eye"></i> View</a></li>
                                         <li><a href="#" data-toggle="modal" data-target="#modal-detail" class="btn-article-detail"><i class="fa fa-info-circle"></i> Detail</a></li>
                                         <li><a href="{{ route('admin.article.edit', [$article->slug]) }}"><i class="fa fa-pencil"></i> Edit</a></li>
@@ -377,5 +378,33 @@
         {!! csrf_field() !!}
         {!! method_field('put') !!}
     </form>
+
+    <div class="modal fade color" id="send-message" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('admin.message.send') }}" id="form-message" class="form-strip form-horizontal" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" id="contributor_id" name="contributor_id" value="">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i> SEND MESSAGE</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>SEND TO : </label> <span class="message-to"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="mbs">MESSAGE : </label>
+                            <textarea name="message" class="form-control" id="message" cols="30" rows="5" placeholder="Type message here" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-danger">DISCARD</a>
+                        <button type="submit" class="btn btn-primary">SEND</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection

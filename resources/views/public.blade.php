@@ -44,6 +44,9 @@
     <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput.css') }}">
     <link rel="stylesheet" href="{{ asset('library/bootstrap-tagsinput/dist/bootstrap-tagsinput-typeahead.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {!! Feed::link(url('feed?type=atom'), 'atom', 'Infogue Atom Feed', 'en') !!}
+    {!! Feed::link(url('feed'), 'rss', 'Infogue RSS Feed', 'en') !!}
 </head>
 
 <body id="top">

@@ -83,6 +83,9 @@ Route::group(['middleware' => ['web']], function () {
 
         // Index routes...
         Route::get('/', ['as' => 'index', 'uses' => 'PageController@index']);
+        
+        // Feed
+        Route::get('/feed', ['as' => 'feed', 'uses' => 'FeedController@index']);
 
         // Searching routes...
         Route::get('/search', ['as' => 'search', 'uses' => 'PageController@search']);

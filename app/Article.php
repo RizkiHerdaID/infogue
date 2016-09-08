@@ -238,7 +238,7 @@ class Article extends Model
      * @param bool|true $is_featured
      * @return mixed
      */
-    public function latest($is_featured = true)
+    public function latest($is_featured = true, $take = 9)
     {
         if ($is_featured) {
             $trending = $this->select('id')
@@ -249,7 +249,7 @@ class Article extends Model
 
             $latest = $this->published()->whereNotIn('id', $trending)->take(4)->get();
         } else {
-            $articles = $this->preArticleQuery()->published()->paginate(9);
+            $articles = $this->preArticleQuery()->published()->paginate($take);
 
             $latest = $this->preArticleModifier($articles);
         }

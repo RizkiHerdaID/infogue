@@ -50,17 +50,21 @@ class Conversation extends Model
      *
      * @param $id
      * @param null $last
+     * @param null $user
      * @return array
      */
-    public function retrieveConversation($id, $last = null)
+    public function retrieveConversation($id, $last = null, $user = null)
     {
         $contributor_id = $id;
-        if(Auth::guard('admin')->check()){
+
+        if (Auth::guard('admin')->check()) {
             $user_id = Auth::guard('admin')->user()->id;
-        } else if(Auth::check()){
+        } else if (Auth::check()) {
             $user_id = Auth::user()->id;
+        } else {
+            $user_id = $user;
         }
-        
+
 
         /*
          * --------------------------------------------------------------------------
@@ -99,7 +103,7 @@ class Conversation extends Model
 
         if ($last != null || $last != 0) {
             $conversations = $conversations->where('conversations.id', '>', $last)->get();
-            return ["data" => $this->preConversationModifier($conversations)];
+            return ["data" => $this->preConversationModifier($conversations, $user_id)];
         }
 
         /*
@@ -110,18 +114,18 @@ class Conversation extends Model
          * it returned.
          */
 
-        return $this->preConversationModifier($conversations->paginate(15));
+        return $this->preConversationModifier($conversations->paginate(15), $user_id);
     }
 
     /**
      * Modifying conversation data for javascript template.
      *
      * @param $conversations
+     * @param $id
      * @return mixed
      */
-    public function preConversationModifier($conversations)
+    public function preConversationModifier($conversations, $id)
     {
-        $id = Auth::guard('admin')->check() ? Auth::guard('admin')->user()->id : Auth::user()->id;
         foreach ($conversations as $conversation):
 
             $conversation->contributor_ref = route('contributor.stream', [$conversation->username]);

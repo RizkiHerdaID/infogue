@@ -52,19 +52,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display a listing of the article.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $articles = $this->article->archive('all-data', 'date', 'desc', $request->input('contributor_id'));
-
-        return $articles;
-    }
-
-    /**
      * Store a newly created article in storage.
      *
      * @param  \Illuminate\Http\Request $request

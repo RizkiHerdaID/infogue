@@ -26,14 +26,6 @@ class Message extends Model
      */
     public function retrieveMessages($contributor_id)
     {
-        $id = 0;
-
-        if (Auth::check()) {
-            $id = Auth::id();
-        } else if(Auth::guard('admin')->check()){
-            $id = Auth::guard('admin')->id();
-        }
-
         /*
          * --------------------------------------------------------------------------
          * Retrieve message list
@@ -71,7 +63,7 @@ class Message extends Model
         $messages = $this->select(DB::raw('contributors.id AS contributor_id, name, username, avatar, conversations.*, CASE WHEN following IS NULL THEN 0 ELSE 1 END AS is_following, COUNT(*) as conversation_total'))
             ->from(DB::raw("({$conversation->toSql()}) as conversations"))
             ->join('contributors', 'contributors.id', '=', 'conversations.interact_with')
-            ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$id}) followings"), 'contributors.id', '=', 'followings.following')
+            ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$contributor_id}) followings"), 'contributors.id', '=', 'followings.following')
             ->groupBy('message_id')->orderBy('conversations.created_at', 'desc')
             ->paginate(10);
 

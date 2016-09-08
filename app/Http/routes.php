@@ -190,7 +190,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('comment', ['as' => 'api.comment.store', 'uses' => 'CommentController@store']);
         Route::get('tags', ['as' => 'api.tags.index', 'uses' => 'TagController@tags']);
         Route::get('tag/{tag}', ['as' => 'api.tags.article', 'uses' => 'TagController@tag']);
-        
+
+        Route::group(['as' => 'api.message.', 'prefix' => 'message'], function () {
+            Route::get('/', ['as' => 'list', 'uses' => 'MessageController@index']);
+            Route::post('/', ['as' => 'send', 'uses' => 'MessageController@send']);
+            Route::delete('/{id}', ['as' => 'delete', 'uses' => 'MessageController@destroy']);
+            Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
+        });
+
         Route::get('search', ['as' => 'api.search.article', 'uses' => 'SearchController@search']);
         Route::get('search/contributor', ['as' => 'api.search.contributor', 'uses' => 'SearchController@searchContributor']);
         Route::get('search/article', ['as' => 'api.search.article', 'uses' => 'SearchController@searchArticle']);

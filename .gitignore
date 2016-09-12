@@ -6,3 +6,4 @@ Homestead.json
 Thumbs.db
 .env
 .idea
+.fuse_hidden*

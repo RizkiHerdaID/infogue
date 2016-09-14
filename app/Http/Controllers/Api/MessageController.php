@@ -172,9 +172,10 @@ class MessageController extends Controller
         $result = $conversation->save();
 
         if ($result) {
+            $contributorSender = Contributor::findOrFail($sender);
             $contributor = Contributor::findOrFail($receiver);
             if ($contributor->email_message) {
-                $this->sendEmailNotification(Auth::user(), $contributor, $request->input('message'));
+                $this->sendEmailNotification($contributorSender, $contributor, $request->input('message'));
             }
         }
 
@@ -243,7 +244,7 @@ class MessageController extends Controller
         }
 
         $result = DB::transaction(function () use ($request, $message, $id) {
-            try{
+            try {
                 if ($request->input('sender') == $request->input('contributor_id')) {
                     $message->update(['is_available_sender' => 0]);
                 } else {
@@ -256,7 +257,7 @@ class MessageController extends Controller
 
                 $conversations = $message->conversations()->count();
 
-                if(!$conversations){
+                if (!$conversations) {
                     $message->delete();
                 }
 

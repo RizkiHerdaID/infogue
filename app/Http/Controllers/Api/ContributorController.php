@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Infogue\Article;
 use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
-use Infogue\Http\Requests;
 
 class ContributorController extends Controller
 {
@@ -37,6 +36,19 @@ class ContributorController extends Controller
     public function __construct(Contributor $contributor)
     {
         $this->contributor = $contributor;
+    }
+
+    /**
+     * Search top 10 suggestion by given query.
+     *
+     * @param Request $requests
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $requests)
+    {
+        $query = $requests->get('query');
+        $suggestions = $this->contributor->suggestion($query);
+        return response()->json($suggestions);
     }
 
     /**
@@ -72,7 +84,7 @@ class ContributorController extends Controller
 
         $stream = $this->contributor->stream($username);
 
-        return $this->responseData($contributor, 'stream', $stream);
+        return $this->responseData($contributor, 'articles', $stream);
     }
 
     /**
@@ -84,18 +96,17 @@ class ContributorController extends Controller
      */
     public function article(Request $requests, $username)
     {
-		$contributor_id = $requests->get('contributor_id');
-		$my_article = filter_var($requests->get('my_article'), FILTER_VALIDATE_BOOLEAN);
-		
-		if($my_article){
-			$article = new Article();
-			$articles = $article->archive('all-data', 'date', 'desc', $contributor_id);
-		}
-		else{
-			$articles = $this->contributor->contributorArticle($username);
-		}
-		
-        $contributor = $this->contributor->profile($username, true, $contributor_id, true);       
+        $contributor_id = $requests->get('contributor_id');
+        $my_article = filter_var($requests->get('my_article'), FILTER_VALIDATE_BOOLEAN);
+
+        if ($my_article) {
+            $article = new Article();
+            $articles = $article->archive('all-data', 'date', 'desc', $contributor_id);
+        } else {
+            $articles = $this->contributor->contributorArticle($username);
+        }
+
+        $contributor = $this->contributor->profile($username, true, $contributor_id, true);
 
         return $this->responseData($contributor, 'articles', $articles);
     }
@@ -138,7 +149,7 @@ class ContributorController extends Controller
      * @param $contributor
      * @param $key
      * @param $data
-     * @return array
+     * @return \Illuminate\Http\Response
      */
     private function responseData($contributor, $key, $data)
     {
@@ -146,7 +157,7 @@ class ContributorController extends Controller
             'request_id' => uniqid(),
             'status' => 'success',
             'contributor_id' => $contributor->id,
-			'api_token' => $contributor->api_token,
+            'api_token' => $contributor->api_token,
             'email' => $contributor->email,
             'username' => $contributor->username,
             'name' => $contributor->name,
@@ -154,9 +165,9 @@ class ContributorController extends Controller
             'about' => $contributor->about,
             'avatar' => $contributor->avatar_ref,
             'cover' => $contributor->cover_ref,
-			'article_total' => $contributor->article_total,
-			'followers_total' => $contributor->followers_total,
-			'following_total' => $contributor->following_total,
+            'article_total' => $contributor->article_total,
+            'followers_total' => $contributor->followers_total,
+            'following_total' => $contributor->following_total,
             'is_following' => $contributor->following_text == 'FOLLOW' ? false : true,
             'timestamp' => Carbon::now(),
             $key => $data

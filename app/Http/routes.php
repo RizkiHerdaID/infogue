@@ -83,7 +83,7 @@ Route::group(['middleware' => ['web']], function () {
 
         // Index routes...
         Route::get('/', ['as' => 'index', 'uses' => 'PageController@index']);
-        
+
         // Feed
         Route::get('/feed', ['as' => 'feed', 'uses' => 'FeedController@index']);
 
@@ -204,13 +204,13 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('search', ['as' => 'api.search.article', 'uses' => 'SearchController@search']);
         Route::get('search/contributor', ['as' => 'api.search.contributor', 'uses' => 'SearchController@searchContributor']);
         Route::get('search/article', ['as' => 'api.search.article', 'uses' => 'SearchController@searchArticle']);
-        
+
         Route::get('featured/latest', ['as' => 'api.latest', 'uses' => 'CategoryController@latest']);
-		Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
-		Route::get('featured/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);
-		Route::get('featured/headline', ['as' => 'api.headline', 'uses' => 'CategoryController@headline']);
-		Route::get('featured/random', ['as' => 'api.random', 'uses' => 'CategoryController@random']);
-		
+        Route::get('featured/popular', ['as' => 'api.popular', 'uses' => 'CategoryController@popular']);
+        Route::get('featured/trending', ['as' => 'api.trending', 'uses' => 'CategoryController@trending']);
+        Route::get('featured/headline', ['as' => 'api.headline', 'uses' => 'CategoryController@headline']);
+        Route::get('featured/random', ['as' => 'api.random', 'uses' => 'CategoryController@random']);
+
         Route::get('category', ['as' => 'api.menu', 'uses' => 'CategoryController@index']);
         Route::get('category/{category}', ['as' => 'api.category', 'uses' => 'CategoryController@category']);
         Route::get('category/{category}/{subcategory}', ['as' => 'api.subcategory', 'uses' => 'CategoryController@subcategory']);
@@ -220,13 +220,14 @@ Route::group(['middleware' => ['web']], function () {
         Route::post('account/register', ['as' => 'api.account.register', 'uses' => 'AccountController@register']);
         Route::post('account/login', ['as' => 'api.account.login', 'uses' => 'AccountController@login']);
         Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'AccountController@update']);
-        
+
         Route::match(['put', 'patch'], 'gcm/register', ['as' => 'api.gcm.register', 'uses' => 'GCMController@registerGcm']);
         Route::post('gcm/article/{slug}', ['as' => 'api.gcm.article', 'uses' => 'GCMController@broadcastArticle']);
 
         Route::post('follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
         Route::delete('unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);
 
+        Route::get('/contributor/search', ['as' => 'api.contributor.search', 'uses' => 'ContributorController@search']);
         Route::group(['as' => 'api.contributor.', 'prefix' => 'contributor/{username}'], function () {
             Route::get('/', ['as' => 'show', 'uses' => 'ContributorController@show']);
             Route::get('/stream', ['as' => 'stream', 'uses' => 'ContributorController@stream']);

@@ -109,6 +109,23 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * Retrieve top of similarity name or username with query and take 10 data.
+     *
+     * @param $query keyword of name or username
+     * @return Collection
+     */
+    public function suggestion($query)
+    {
+        $suggestion = $this->activated()
+            ->select("id", "username", "name", "avatar")
+            ->where('username', 'like', "%{$query}%")
+            ->orWhere('name', 'like', "%{$query}%")
+            ->take(10)
+            ->get();
+        return $suggestion;
+    }
+
+    /**
      * Retrieve all contributor with filter, use in admin page.
      *
      * @param $by
@@ -256,8 +273,8 @@ class Contributor extends Authenticatable
         if (Auth::check()) {
             $id = Auth::id();
         }
-        
-        if($id_contributor != null){
+
+        if ($id_contributor != null) {
             $id = $id_contributor;
         }
 
@@ -304,12 +321,12 @@ class Contributor extends Authenticatable
             $contributor->cover_ref = asset("images/covers/{$contributor->cover}");
             $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
             $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
-			
-			if($includeStatistic){
-				$contributor->article_total = $contributor->articles()->where('status', 'published')->count();
-				$contributor->followers_total = $contributor->followers()->count();
-				$contributor->following_total = $contributor->following()->count();
-			}
+
+            if ($includeStatistic) {
+                $contributor->article_total = $contributor->articles()->where('status', 'published')->count();
+                $contributor->followers_total = $contributor->followers()->count();
+                $contributor->following_total = $contributor->following()->count();
+            }
 
         endforeach;
 

@@ -15,8 +15,9 @@ class CreateContributorsTable extends Migration
         Schema::create('contributors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('token', 50)->unique();
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
             $table->string('api_token', 60)->unique();
+            $table->string('gcm_token', 250);
             $table->string('vendor', 50);
             $table->string('name', 50);
             $table->string('username', 30)->unique();

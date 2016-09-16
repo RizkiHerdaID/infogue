@@ -126,6 +126,21 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * Update GCM token for registered user so they could control mobile notifications.
+     *
+     * @param $userId contributor ID
+     * @param $gcmToken generated token from google
+     */
+    public function registerGcmToken($userId, $gcmToken)
+    {
+        $contributor = Contributor::find($userId);
+        if($contributor != null){
+            $contributor->gcm_token = $gcmToken;
+            $contributor->save();
+        }
+    }
+
+    /**
      * Retrieve all contributor with filter, use in admin page.
      *
      * @param $by

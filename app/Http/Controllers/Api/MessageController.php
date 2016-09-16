@@ -4,7 +4,6 @@ namespace Infogue\Http\Controllers\api;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 use Infogue\Activity;
 use Infogue\Contributor;
 use Infogue\Conversation;
-use Infogue\Http\Requests;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Message;
 
@@ -177,6 +175,7 @@ class MessageController extends Controller
             if ($contributor->email_message) {
                 $this->sendEmailNotification($contributorSender, $contributor, $request->input('message'));
             }
+            $conversation->broadcastConversation($contributorSender, $contributor, $request->input('message'));
         }
 
         return response()->json([

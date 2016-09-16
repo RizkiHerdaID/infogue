@@ -138,4 +138,55 @@ class Conversation extends Model
 
         return $conversations;
     }
+
+    public function broadcastConversation($sender, $receiver, $message)
+    {
+        $headers = array(
+            'Authorization: key=' . env('GCM_KEY'),
+            'Content-Type: application/json'
+        );
+
+        $data = [
+            "to" => "/topics/message",
+            "registration_ids" => [$receiver->gcm_token],
+            "notification" => [
+                "body" => $message,
+                "title" => "Infogue Message",
+                "icon" => "ic_mail"
+            ],
+            "data" => [
+                "conversation" => $message,
+                "id" => $sender->id,
+                "name" => $sender->name,
+                "username" => $sender->username,
+                "avatar" => asset("images/contributors/{$sender->avatar}"),
+                "gcm_token" => $receiver->gcm_token,
+            ]
+        ];
+
+        // Open connection
+        $ch = curl_init();
+
+        // Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, env('GCM_URL'));
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Disabling SSL Certificate support temporarily
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+        // Execute post
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            // die('Curl failed: ' . curl_error($ch));
+        }
+
+        // Close connection
+        curl_close($ch);
+
+        return $result;
+    }
 }

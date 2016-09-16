@@ -3,7 +3,6 @@
 namespace Infogue\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Mail;
 use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
-use Infogue\Http\Requests;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Message;
 use Infogue\Uploader;
@@ -139,6 +137,7 @@ class MessageController extends Controller
             if ($contributor->email_message) {
                 $this->sendEmailNotification(Auth::guard('admin')->user(), $contributor, $request->input('message'));
             }
+            $conversation->broadcastConversation(Auth::guard('admin')->user(), $contributor, $request->input('message'));
 
             if ($request->has('async') && $request->ajax()) {
                 $image = new Uploader();
@@ -256,7 +255,7 @@ class MessageController extends Controller
         }
 
         $result = DB::transaction(function () use ($request, $message, $id) {
-            try{
+            try {
                 if ($request->input('sender') == Auth::guard('admin')->user()->id) {
                     $message->update(['is_available_sender' => 0]);
                 } else {
@@ -269,7 +268,7 @@ class MessageController extends Controller
 
                 $conversations = $message->conversations()->count();
 
-                if(!$conversations){
+                if (!$conversations) {
                     $message->delete();
                 }
 

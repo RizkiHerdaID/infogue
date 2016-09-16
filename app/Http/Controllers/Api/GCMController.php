@@ -4,9 +4,8 @@ namespace Infogue\Http\Controllers\api;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
 use Infogue\Article;
-use Infogue\Http\Requests;
+use Infogue\Contributor;
 use Infogue\Http\Controllers\Controller;
 
 class GCMController extends Controller
@@ -19,6 +18,12 @@ class GCMController extends Controller
      */
     public function registerGcm(Request $request)
     {
+        $contributor = new Contributor();
+        $userId = $request->input('id');
+        if ($userId != null && $userId != 0) {
+            $contributor->registerGcmToken($userId, $request->input('gcm_token'));
+        }
+
         return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
@@ -41,7 +46,7 @@ class GCMController extends Controller
             "to" => "/topics/article",
             "notification" => [
                 "title" => "Infogue.id updates",
-                "body" => "New article " + $article->title,
+                "body" => $article->title,
                 "id" => $article->id,
                 "title" => $article->title,
                 "slug" => $article->slug,

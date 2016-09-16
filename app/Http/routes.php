@@ -222,7 +222,6 @@ Route::group(['middleware' => ['web']], function () {
         Route::match(['put', 'patch'], 'account', ['as' => 'api.account.update', 'uses' => 'AccountController@update']);
 
         Route::match(['put', 'patch'], 'gcm/register', ['as' => 'api.gcm.register', 'uses' => 'GCMController@registerGcm']);
-        Route::post('gcm/article/{slug}', ['as' => 'api.gcm.article', 'uses' => 'GCMController@broadcastArticle']);
 
         Route::post('follow', ['as' => 'api.follow', 'uses' => 'FollowerController@follow']);
         Route::delete('unfollow', ['as' => 'api.unfollow', 'uses' => 'FollowerController@unfollow']);

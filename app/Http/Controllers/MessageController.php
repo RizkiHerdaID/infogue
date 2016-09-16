@@ -12,7 +12,6 @@ use Infogue\Activity;
 use Infogue\Attachment;
 use Infogue\Contributor;
 use Infogue\Conversation;
-use Infogue\Http\Requests;
 use Infogue\Message;
 use Infogue\Uploader;
 
@@ -161,16 +160,13 @@ class MessageController extends Controller
             'receiver' => $receiver,
             'message' => $request->input('message'),
         ]);
-        //$conversation->message_id = $messageId;
-        //$conversation->sender = $sender;
-        //$conversation->receiver = $receiver;
-        //$conversation->message = $request->input('message');
 
         if ($conversation->save()) {
             $contributor = Contributor::findOrFail($receiver);
             if ($contributor->email_message) {
                 $this->sendEmailNotification(Auth::user(), $contributor, $request->input('message'));
             }
+            $conversation->broadcastConversation(Auth::user(), $contributor, $request->input('message'));
 
             if ($request->has('async') && $request->ajax()) {
                 $image = new Uploader();

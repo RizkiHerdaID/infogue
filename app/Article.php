@@ -552,7 +552,7 @@ class Article extends Model
 				"icon" => "ic_whatshot"
             ],
 			"data" => [
-                "message" => "New article "+$article->title,
+                "message" => $article->title,
                 "id" => $article->id,
                 "title" => $article->title,
                 "slug" => $article->slug,

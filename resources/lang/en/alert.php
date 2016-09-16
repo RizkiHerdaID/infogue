@@ -65,5 +65,9 @@ return [
     'subscribe'         => [
         'broadcast'     => 'Newsletter: Subscribers has been received the newsletter on <strong>:period</strong> period',
         'noupdate'      => 'Newsletter: There is no new article on <strong>:period</strong> period'
+    ],
+    'image' => [
+        'upload' => 'The :title has been uploaded',
+        'delete' => 'The :title successfully deleted',
     ]
 ];

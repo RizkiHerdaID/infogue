@@ -109,6 +109,16 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * One-to-many relationship, retrieve uploaded images by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    /**
      * Retrieve top of similarity name or username with query and take 10 data.
      *
      * @param $query keyword of name or username
@@ -234,6 +244,58 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * Check if authenticate user has follow another contributor in list of selection.
+     *
+     * @param null $id_contributor
+     * @return mixed
+     */
+    public function relatedFollowers($id_contributor = null)
+    {
+        $id = 0;
+
+        if (Auth::check()) {
+            $id = Auth::id();
+        }
+
+        if ($id_contributor != null) {
+            $id = $id_contributor;
+        }
+
+        return $this->select(DB::raw('contributors.*, CASE WHEN following IS NULL THEN 0 ELSE 1 END AS is_following'))
+            ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$id}) followings"), 'contributors.id', '=', 'followings.following');
+    }
+
+    /**
+     * Modifying contributor data for javascript template.
+     *
+     * @param $contributors
+     * @param bool $includeStatistic
+     * @return mixed
+     */
+    public function preContributorModifier($contributors, $includeStatistic = false)
+    {
+        foreach ($contributors as $contributor):
+
+            $contributor->location = (empty($contributor->location)) ? 'No Location' : $contributor->location;
+            $contributor->about = (empty($contributor->about)) ? 'No Description' : $contributor->about;
+            $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
+            $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
+            $contributor->cover_ref = asset("images/covers/{$contributor->cover}");
+            $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
+            $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
+
+            if ($includeStatistic) {
+                $contributor->article_total = $contributor->articles()->where('status', 'published')->count();
+                $contributor->followers_total = $contributor->followers()->count();
+                $contributor->following_total = $contributor->following()->count();
+            }
+
+        endforeach;
+
+        return $contributors;
+    }
+
+    /**
      * Retrieve following by contributor and check if the are users have followed.
      *
      * @param $username
@@ -276,28 +338,6 @@ class Contributor extends Authenticatable
     }
 
     /**
-     * Check if authenticate user has follow another contributor in list of selection.
-     *
-     * @param null $id_contributor
-     * @return mixed
-     */
-    public function relatedFollowers($id_contributor = null)
-    {
-        $id = 0;
-
-        if (Auth::check()) {
-            $id = Auth::id();
-        }
-
-        if ($id_contributor != null) {
-            $id = $id_contributor;
-        }
-
-        return $this->select(DB::raw('contributors.*, CASE WHEN following IS NULL THEN 0 ELSE 1 END AS is_following'))
-            ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$id}) followings"), 'contributors.id', '=', 'followings.following');
-    }
-
-    /**
      * Retrieve stream by contributor.
      *
      * @param $username
@@ -316,36 +356,6 @@ class Contributor extends Authenticatable
             ->paginate(10);
 
         return $article->preArticleModifier($articles);
-    }
-
-    /**
-     * Modifying contributor data for javascript template.
-     *
-     * @param $contributors
-     * @param bool $includeStatistic
-     * @return mixed
-     */
-    public function preContributorModifier($contributors, $includeStatistic = false)
-    {
-        foreach ($contributors as $contributor):
-
-            $contributor->location = (empty($contributor->location)) ? 'No Location' : $contributor->location;
-            $contributor->about = (empty($contributor->about)) ? 'No Description' : $contributor->about;
-            $contributor->contributor_ref = route('contributor.stream', [$contributor->username]);
-            $contributor->avatar_ref = asset("images/contributors/{$contributor->avatar}");
-            $contributor->cover_ref = asset("images/covers/{$contributor->cover}");
-            $contributor->following_status = ($contributor->is_following) ? 'btn-unfollow active' : 'btn-follow';
-            $contributor->following_text = ($contributor->is_following) ? 'UNFOLLOW' : 'FOLLOW';
-
-            if ($includeStatistic) {
-                $contributor->article_total = $contributor->articles()->where('status', 'published')->count();
-                $contributor->followers_total = $contributor->followers()->count();
-                $contributor->following_total = $contributor->following()->count();
-            }
-
-        endforeach;
-
-        return $contributors;
     }
 
     /**

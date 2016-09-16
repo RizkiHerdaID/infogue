@@ -31,7 +31,7 @@ $factory->define(Infogue\Feedback::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Infogue\Visitor::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Visitor::class, function (Faker\Generator $faker) {
     return [
         'date' => $faker->dateTimeBetween('-2 months', 'now')->format('Y-m-d'),
         'hit' => rand(0, 1000),
@@ -39,7 +39,7 @@ $factory->define(Infogue\Visitor::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Contributor::class, function (Faker\Generator $faker) {
     $vendors = ['web', 'facebook', 'twitter'];
 
     $statuses = ['pending', 'activated', 'suspended'];
@@ -56,16 +56,16 @@ $factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
         'password' => bcrypt('secret'),
         'status' => $statuses[array_rand($statuses, 1)],
         'gender' => $genders[array_rand($genders, 1)],
-        'avatar' => 'avatar_'.rand(1, 19).'.jpg',
-        'cover' => 'cover_'.rand(1, 5).'.jpg',
+        'avatar' => 'avatar_' . rand(1, 19) . '.jpg',
+        'cover' => 'cover_' . rand(1, 5) . '.jpg',
         'birthday' => $faker->date('Y-m-d', '2000-01-01'),
         'about' => $faker->paragraph(),
-        'location' => $faker->city.', '.$faker->country,
+        'location' => $faker->city . ', ' . $faker->country,
         'contact' => $faker->phoneNumber,
-        'facebook' => 'https://www.facebook.com/'.$faker->userName,
-        'twitter' => 'https://www.twitter.com/'.$faker->userName,
-        'googleplus' => 'https://plus.google.com/+'.$faker->userName,
-        'instagram' => 'https://www.instagram.com/'.$faker->userName,
+        'facebook' => 'https://www.facebook.com/' . $faker->userName,
+        'twitter' => 'https://www.twitter.com/' . $faker->userName,
+        'googleplus' => 'https://plus.google.com/+' . $faker->userName,
+        'instagram' => 'https://www.instagram.com/' . $faker->userName,
         'mobile_notification' => rand(0, 1),
         'email_subscription' => rand(0, 1),
         'email_message' => rand(0, 1),
@@ -74,25 +74,32 @@ $factory->define(Infogue\Contributor::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Activity::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Image::class, function () {
+    return [
+        'contributor_id' => rand(1, 100),
+        'source' => 'featured_' . rand(1, 10) . '.jpg',
+    ];
+});
+
+$factory->define(Infogue\Activity::class, function (Faker\Generator $faker) {
     return [
         'contributor_id' => rand(1, 100),
         'activity' => $faker->sentence()
     ];
 });
 
-$factory->define(Infogue\Follower::class, function(){
+$factory->define(Infogue\Follower::class, function () {
     return [
         'contributor_id' => rand(1, 100),
         'following' => rand(1, 100)
     ];
 });
 
-$factory->define(Infogue\Message::class, function(){
+$factory->define(Infogue\Message::class, function () {
     return [];
 });
 
-$factory->define(Infogue\Conversation::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Conversation::class, function (Faker\Generator $faker) {
     return [
         'message_id' => rand(1, 100),
         'sender' => rand(1, 100),
@@ -101,17 +108,17 @@ $factory->define(Infogue\Conversation::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Attachment::class, function(){
+$factory->define(Infogue\Attachment::class, function () {
     return [
         'conversation_id' => rand(1, 300),
-        'file' => 'attachment_'.rand(1, 5).'.zip'
+        'file' => 'attachment_' . rand(1, 5) . '.zip'
     ];
 });
 
-$factory->define(Infogue\Article::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Article::class, function (Faker\Generator $faker) {
     $title = $faker->sentence(8);
 
-    $content   = $faker->paragraphs(7);
+    $content = $faker->paragraphs(7);
 
     $wrapped = array_map(
         function ($element) {
@@ -131,7 +138,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
         'subcategory_id' => rand(1, 130),
         'title' => $title,
         'slug' => str_slug($title),
-        'featured' => 'featured_'.rand(1, 28).'.jpg',
+        'featured' => 'featured_' . rand(1, 28) . '.jpg',
         'content' => implode(' ', $wrapped),
         'content_update' => '',
         'excerpt' => (rand(0, 1)) ? '' : $faker->paragraph,
@@ -142,7 +149,7 @@ $factory->define(Infogue\Article::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Comment::class, function(\Faker\Generator $faker){
+$factory->define(Infogue\Comment::class, function (\Faker\Generator $faker) {
     return [
         'article_id' => rand(1, 1000),
         'contributor_id' => rand(1, 103),
@@ -150,7 +157,7 @@ $factory->define(Infogue\Comment::class, function(\Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Rating::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Rating::class, function (Faker\Generator $faker) {
     return [
         'article_id' => rand(1, 1000),
         'ip' => $faker->ipv4,
@@ -158,20 +165,20 @@ $factory->define(Infogue\Rating::class, function(Faker\Generator $faker){
     ];
 });
 
-$factory->define(Infogue\Tag::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Tag::class, function (Faker\Generator $faker) {
     return [
         'tag' => $faker->word,
     ];
 });
 
-$factory->define(Infogue\ArticleTag::class, function(){
+$factory->define(Infogue\ArticleTag::class, function () {
     return [
         'article_id' => rand(1, 1000),
         'tag_id' => rand(1, 20)
     ];
 });
 
-$factory->define(Infogue\Subscriber::class, function(Faker\Generator $faker){
+$factory->define(Infogue\Subscriber::class, function (Faker\Generator $faker) {
     return [
         'email' => $faker->email
     ];

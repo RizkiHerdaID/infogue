@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TagsTableSeeder::class);
         $this->call(ArticleTagsTableSeeder::class);
         $this->call(SubscribersTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
 
         Model::reguard();
     }

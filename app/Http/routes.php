@@ -234,6 +234,12 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/followers', ['as' => 'follower', 'uses' => 'ContributorController@follower']);
             Route::get('/following', ['as' => 'following', 'uses' => 'ContributorController@following']);
         });
+
+        Route::group(['as' => 'api.image.', 'prefix' => 'image'], function () {
+            Route::get('/gallery', ['as' => 'gallery', 'uses' => 'ImageController@gallery']);
+            Route::post('/upload', ['as' => 'upload', 'uses' => 'ImageController@upload']);
+            Route::delete('/delete', ['as' => 'delete', 'uses' => 'ImageController@delete']);
+        });
     });
 
 });

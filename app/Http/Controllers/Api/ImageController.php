@@ -42,14 +42,14 @@ class ImageController extends Controller
     public function gallery(Request $request)
     {
         $contributor = Contributor::findOrFail($request->input('contributor_id'));
-        $media = $contributor->images()->select('id', 'source')->paginate(15);
-        $media->map(function ($row) {
+        $gallery = $contributor->images()->select('id', 'source')->orderBy('created_at', 'desc')->paginate(12);
+        $gallery->map(function ($row) {
             $row->source = asset("images/featured/" . $row->source);
         });
         return response()->json([
             'request_id' => uniqid(),
             'status' => 'success',
-            'media' => $media,
+            'gallery' => $gallery,
             'timestamp' => Carbon::now(),
         ]);
     }
@@ -67,7 +67,7 @@ class ImageController extends Controller
          * and it must be an image and valid.
          */
         $validator = Validator::make($request->all(), [
-            'image' => 'required|mimes:jpg,jpeg,gif,png|max:2000',
+            'source' => 'required|mimes:jpg,jpeg,gif,png|max:2000',
         ]);
 
         if ($validator->fails()) {
@@ -79,7 +79,7 @@ class ImageController extends Controller
             ], 400);
         }
 
-        $uploadedImage = $request->file('image');
+        $uploadedImage = $request->file('source');
         if ($uploadedImage->isValid()) {
             /*
              * Check default name is it already exist on asset folder,
@@ -98,10 +98,12 @@ class ImageController extends Controller
             $image = new Image(['source' => $fullName]);
             $contributor = Contributor::findOrFail($request->input('contributor_id'));
             if ($contributor->images()->save($image)) {
+		$image->source = asset("images/featured/" . $image->source);
                 return response()->json([
                     'request_id' => uniqid(),
                     'status' => 'success',
                     'message' => Lang::get('alert.image.upload', ['title' => $fullName]),
+		    'image' => $image,
                     'timestamp' => Carbon::now(),
                 ]);
             }

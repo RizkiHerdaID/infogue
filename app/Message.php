@@ -40,16 +40,35 @@ class Message extends Model
          * must keep see the message, because we just update the marker 0 or 1,
          * 0 mean deleted, 1 mean available.
          */
+        $sender = "
+            SELECT
+              conversations.message_id AS message_id,
+              sender AS message_sender
+            FROM conversations
+              JOIN (SELECT message_id, MIN(created_at) AS timestamp FROM conversations GROUP BY conversations.message_id) dates_min
+                ON conversations.message_id = dates_min.message_id
+                   AND created_at = dates_min.timestamp
+            WHERE
+              (sender = " . $contributor_id . " OR receiver = " . $contributor_id . ")
+        ";
 
-        $conversation = Conversation::select(DB::raw('conversations.*, message_sender, IF(sender = ' . $contributor_id . ', receiver, sender) AS interact_with'))
-            ->join(DB::raw('
-            (SELECT message_id, sender AS message_sender
-            FROM  conversations
-            WHERE (sender = ' . $contributor_id . ' OR receiver = ' . $contributor_id . ')
-            GROUP BY message_id) senders'), 'conversations.message_id', '=', 'senders.message_id')
+        $conversation = Conversation::select(
+            DB::raw('
+                id,
+                conversations.message_id AS message_id,
+                IF(sender = ' . $contributor_id . ', receiver, sender) AS interact_with,
+                message_sender,
+                message,
+                conversation_total,
+                conversations.created_at AS created_at'))
+            ->join(DB::raw('(SELECT message_id, COUNT(*) as conversation_total, MAX(created_at) AS timestamp FROM conversations GROUP BY message_id) dates'), function ($join) {
+                $join->on('conversations.message_id', '=', 'dates.message_id');
+                $join->on('created_at', '=', 'dates.timestamp');
+            })
+            ->join(DB::raw('(' . $sender . ') AS first_sender'), 'conversations.message_id', '=', 'first_sender.message_id')
             ->whereRaw('(sender = ' . $contributor_id . ' OR receiver = ' . $contributor_id . ')')
             ->whereRaw('IF(message_sender = ' . $contributor_id . ', is_available_sender, is_available_receiver) = 1 ')
-            ->orderBy('id', 'desc');
+            ->orderBy('conversations.created_at', 'desc');
 
         /*
          * --------------------------------------------------------------------------
@@ -58,16 +77,25 @@ class Message extends Model
          * Group the conversation by message_id, it mean same result of group by
          * contributor who talk with then select the partner of conversation,
          * because we just show the opposite of us as contributor.
+         * message_sender is the one who sent email first.
          */
-
-        $messages = $this->select(DB::raw('contributors.id AS contributor_id, name, username, avatar, conversations.*, CASE WHEN following IS NULL THEN 0 ELSE 1 END AS is_following, COUNT(*) as conversation_total'))
-            ->from(DB::raw("({$conversation->toSql()}) as conversations"))
-            ->join('contributors', 'contributors.id', '=', 'conversations.interact_with')
-            ->leftJoin(DB::raw("(SELECT following FROM followers WHERE contributor_id = {$contributor_id}) followings"), 'contributors.id', '=', 'followings.following')
-            ->groupBy('message_id')->orderBy('conversations.created_at', 'desc')
+        $contributor = Contributor::select(
+            DB::raw("
+                conversations.id, 
+                message_id, 
+                message_sender, 
+                contributors.id AS contributor_id,
+                name, 
+                username,
+                avatar,
+                message,
+                conversation_total,
+                conversations.created_at"))
+            ->join(DB::raw("({$conversation->toSql()}) AS conversations"), 'conversations.interact_with', '=', 'contributors.id')
+            ->orderBy('conversations.created_at', 'desc')
             ->paginate(10);
 
-        return $this->preMessageModifier($messages);
+        return $this->preMessageModifier($contributor);
     }
 
     /**

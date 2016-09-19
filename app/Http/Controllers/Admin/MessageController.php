@@ -135,9 +135,9 @@ class MessageController extends Controller
         if ($conversation->save()) {
             $contributor = Contributor::findOrFail($receiver);
             if ($contributor->email_message) {
-                $this->sendEmailNotification(Auth::guard('admin')->user(), $contributor, $request->input('message'));
+                $this->sendEmailNotification(Contributor::find(Auth::guard('admin')->user()->id), $contributor, $request->input('message'));
             }
-            $conversation->broadcastConversation(Auth::guard('admin')->user(), $contributor, $request->input('message'));
+            $conversation->broadcastConversation(Contributor::find(Auth::guard('admin')->user()->id), $contributor, $request->input('message'));
 
             if ($request->has('async') && $request->ajax()) {
                 $image = new Uploader();
@@ -177,17 +177,7 @@ class MessageController extends Controller
      */
     public function sendEmailNotification($sender, $receiver, $message)
     {
-        /*
-         * --------------------------------------------------------------------------
-         * Create sending message activity
-         * --------------------------------------------------------------------------
-         * Create new instance of Activity and insert following activity.
-         */
-        Activity::create([
-            'contributor_id' => $sender->id,
-            'activity' => Activity::sendingMessageActivity($sender->username, $receiver->username)
-        ]);
-
+        //dd($sender->articles());
         $data = [
             'receiverName' => $receiver->name,
             'receiverUsername' => $receiver->username,

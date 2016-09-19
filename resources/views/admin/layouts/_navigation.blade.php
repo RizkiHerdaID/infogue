@@ -37,6 +37,9 @@
             <li @if($segment == 'message') {!! 'class="active"' !!}@endif>
                 <a href="{{ route('admin.message.index') }}"><i class="fa fa-envelope"></i>Messages</a>
             </li>
+            <li @if($segment == 'transaction') {!! 'class="active"' !!}@endif>
+                <a href="{{ route('admin.transaction.index') }}"><i class="fa fa-shopping-cart"></i>Transaction</a>
+            </li>
             <li @if($segment == 'feedback') {!! 'class="active"' !!}@endif>
                 <a href="{{ route('admin.feedback.index') }}"><i class="fa fa-comments-o"></i>Feedback</a>
             </li>

@@ -52,6 +52,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::delete('/{id}', ['as' => 'delete', 'uses' => 'MessageController@destroy']);
             Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
         });
+
+        Route::group(['as' => 'admin.transaction.', 'prefix' => 'transaction'], function(){
+            Route::get('/', ['as' => 'index', 'uses' => 'TransactionController@index']);
+            Route::match(['put', 'patch'], '/update/status/{status}', ['as' => 'update', 'uses' => 'TransactionController@update']);
+        });
     });
 
     // Group of frontend routes...

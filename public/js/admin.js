@@ -227,7 +227,7 @@ $(function () {
                     $("#message").removeAttr('readonly').val('');
                     $("#attachment").removeAttr('disabled').val('');
                     $(".btn-send").removeAttr('disabled');
-                    console.log("send message is failed "+e.responseText);
+                    console.log("send message is failed " + e.responseText);
                 }
             });
         }
@@ -248,7 +248,7 @@ $(function () {
             });
         }
     }
-    
+
 
     // ADD NICE SCROLL EXCEPT IE:EDGE
     if (!/Edge/.test(navigator.userAgent)) {
@@ -282,7 +282,7 @@ $(function () {
             placeholder: 'Write here...',
             height: 200,
             onImageUpload: function (files, editor, welEditable) {
-                console.log(files[0]+'  '+editor+'  '+welEditable);
+                console.log(files[0] + '  ' + editor + '  ' + welEditable);
             }
         });
 
@@ -673,9 +673,7 @@ $(function () {
     function createSlug(str) {
         var $slug;
         var trimmed = $.trim(str);
-        $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
-            replace(/-+/g, '-').
-            replace(/^-|-$/g, '');
+        $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
         return $slug.toLowerCase();
     }
 
@@ -1447,5 +1445,48 @@ $(function () {
     // ADDITIONAL DELETE INFO
     $('.btn-delete-subcategory').click(function () {
         $('#modal-delete form .title').text(' SUBCATEGORY');
+    });
+
+    // BANK DETAIL
+    $(".btn-bank-detail").on('click', function () {
+        var transactionData = $(this).closest('*[data-id]');
+        var modalBank = $('#modal-bank');
+
+        var bank = transactionData.data('bank');
+        if (bank == "") {
+            bank = "-";
+        }
+        var code = transactionData.data('bank-code');
+        if (code == "") {
+            code = "-";
+        }
+        var name = transactionData.data('bank-name');
+        if (name == "") {
+            name = "-";
+        }
+        var number = transactionData.data('bank-number');
+        if (number == "") {
+            number = "-";
+        }
+
+        modalBank.find('.acc_bank').text(bank);
+        modalBank.find('.acc_code').text(code);
+        modalBank.find('.acc_name').text(name);
+        modalBank.find('.acc_number').text(number);
+    });
+
+    $(".btn-update-transaction").on('click', function () {
+        var transactionData = $(this).closest('*[data-id]');
+        var modalTransaction = $("#modal-update-transaction");
+        var url = modalTransaction.find("form").data("url");
+
+        var value = $(this).data("value");
+        var contributor_id = transactionData.data("author-id");
+        var transaction_id = transactionData.data("id");
+
+        modalTransaction.find(".transaction-status").text(value.toUpperCase());
+        modalTransaction.find("input[name=contributor_id]").val(contributor_id);
+        modalTransaction.find("input[name=transaction_id]").val(transaction_id);
+        modalTransaction.find("form").attr("action", url + "/" + value);
     });
 });

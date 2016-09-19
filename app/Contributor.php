@@ -119,6 +119,26 @@ class Contributor extends Authenticatable
     }
 
     /**
+     * One-to-many relationship, retrieve all transactions made by contributor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Many-to-one relationship, bank data.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class);
+    }
+
+    /**
      * Retrieve top of similarity name or username with query and take 10 data.
      *
      * @param $query keyword of name or username

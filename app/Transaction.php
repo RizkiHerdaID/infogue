@@ -2,6 +2,7 @@
 
 namespace Infogue;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
@@ -78,4 +79,62 @@ class Transaction extends Model
     {
         return $query->where('transactions.status', 'cancel');
     }
+
+    /**
+     * Many-to-one relationship, transaction owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contributor()
+    {
+        return $this->belongsTo(Contributor::class);
+    }
+
+    /**
+     * Retrieve all transaction with filter and query search.
+     *
+     * @param $data
+     * @param $status
+     * @param $by
+     * @param $sort
+     * @param null $query
+     * @return mixed
+     */
+    public function retrieveTransaction($data, $status, $by, $sort, $query = null)
+    {
+        $transactions = $this
+            ->select('transactions.id', 'type', 'description', 'amount', 'transactions.status',
+                'transactions.created_at', 'contributor_id', 'name', 'username', 'avatar', 'account_name', 'account_number', 'bank', 'code')
+            ->join('contributors', 'contributors.id', '=', 'contributor_id')
+            ->leftJoin('banks', 'banks.id', '=', 'bank_id');
+
+        if ($query != null && $query != '') {
+            $transactions
+                ->where('transactions.id', 'like', "%{$query}%")
+                ->orWhere('name', 'like', "%{$query}%")
+                ->orWhere('transactions.status', 'like', "%{$query}%")
+                ->orWhere('type', 'like', "%{$query}%");
+        }
+
+        if ($data != 'all') {
+            $transactions->where('type', $data);
+        }
+
+        if ($status != 'all') {
+            $transactions->where('transactions.status', $status);
+        }
+
+        if ($by == 'date') {
+            $transactions->orderBy('transactions.created_at', $sort);
+        } else if ($by == 'name') {
+            $transactions->orderBy('name', $sort);
+        } else if ($by == 'amount') {
+            $transactions->orderBy('amount', $sort);
+        } else if ($by == 'status') {
+            $transactions->orderBy('status', $sort);
+        }
+
+        return $transactions->paginate(10);
+    }
+
 }

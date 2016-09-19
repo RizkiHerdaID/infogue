@@ -129,6 +129,12 @@ class SettingsTableSeeder extends Seeder
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ],
+            [
+                'key' => 'Article Reward',
+                'value' => '20000',
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ],
         ]);
     }
 }

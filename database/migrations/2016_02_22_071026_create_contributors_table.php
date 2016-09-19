@@ -40,10 +40,15 @@ class CreateContributorsTable extends Migration
             $table->boolean('email_message')->default(true);
             $table->boolean('email_follow')->default(true);
             $table->boolean('email_feed')->default(true);
+            $table->decimal('balance')->default(0);
+            $table->integer('bank_id')->nullable()->unsigned();
+            $table->string('account_name', 50)->nullable();
+            $table->string('account_number', 15)->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->index(['id', 'name', 'username']);
+            $table->foreign('bank_id')->references('id')->on('banks');
         });
     }
 

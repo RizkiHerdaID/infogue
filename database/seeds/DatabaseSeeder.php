@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VisitorsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(SubcategoriesTableSeeder::class);
+        $this->call(BanksTableSeeder::class);
         $this->call(ContributorsTableSeeder::class);
         $this->call(ActivitiesTableSeeder::class);
         $this->call(FollowersTableSeeder::class);
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ArticleTagsTableSeeder::class);
         $this->call(SubscribersTableSeeder::class);
         $this->call(ImagesTableSeeder::class);
+        $this->call(TransactionsTableSeeder::class);
 
         Model::reguard();
     }

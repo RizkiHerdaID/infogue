@@ -71,6 +71,10 @@ $factory->define(Infogue\Contributor::class, function (Faker\Generator $faker) {
         'email_message' => rand(0, 1),
         'email_follow' => rand(0, 1),
         'email_feed' => rand(0, 1),
+        'balance' => rand(0, 200000),
+        'bank_id' => rand(1, 80),
+        'account_name' => $faker->name,
+        'account_number' => $faker->creditCardNumber,
     ];
 });
 
@@ -145,6 +149,7 @@ $factory->define(Infogue\Article::class, function (Faker\Generator $faker) {
         'type' => $types[array_rand($types, 1)],
         'status' => $statuses[array_rand($statuses, 1)],
         'state' => $rankings[array_rand($rankings, 1)],
+        'reward' => rand(0, 20000),
         'view' => rand(0, 2000)
     ];
 });
@@ -181,5 +186,16 @@ $factory->define(Infogue\ArticleTag::class, function () {
 $factory->define(Infogue\Subscriber::class, function (Faker\Generator $faker) {
     return [
         'email' => $faker->email
+    ];
+});
+
+$factory->define(Infogue\Transactions::class, function (Faker\Generator $faker) {
+    $statuses = ['pending', 'proceed', 'cancel', 'success'];
+    return [
+        'contributor_id' => rand(1, 100),
+        'type' => (rand(0, 1) == 1) ? 'withdrawal' : 'reward',
+        'description' => $faker->paragraph,
+        'amount' => rand(20000, 50000),
+        'status' => $statuses[array_rand($statuses, 1)]
     ];
 });

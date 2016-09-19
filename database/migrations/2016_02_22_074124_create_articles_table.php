@@ -27,6 +27,7 @@ class CreateArticlesTable extends Migration
             $table->enum('status', ['pending', 'draft', 'published', 'reject'])->default('pending');
             $table->enum('state', ['general', 'headline', 'trending'])->default('general');
             $table->integer('view')->unsigned()->default(0);
+            $table->decimal('reward')->default(0);
             $table->softDeletes();
             $table->timestamps();
 

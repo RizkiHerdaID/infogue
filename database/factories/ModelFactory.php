@@ -189,7 +189,7 @@ $factory->define(Infogue\Subscriber::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Infogue\Transactions::class, function (Faker\Generator $faker) {
+$factory->define(Infogue\Transaction::class, function (Faker\Generator $faker) {
     $statuses = ['pending', 'proceed', 'cancel', 'success'];
     return [
         'contributor_id' => rand(1, 100),

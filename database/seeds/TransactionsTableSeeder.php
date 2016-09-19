@@ -11,6 +11,6 @@ class TransactionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Infogue\Transactions::class, 500)->create();
+        factory(Infogue\Transaction::class, 500)->create();
     }
 }

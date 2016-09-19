@@ -16,8 +16,10 @@ use Infogue\Category;
 use Infogue\Http\Controllers\Controller;
 use Infogue\Http\Requests;
 use Infogue\Http\Requests\CreateArticleRequest;
+use Infogue\Setting;
 use Infogue\Subcategory;
 use Infogue\Tag;
+use Infogue\Transaction;
 use Infogue\Uploader;
 
 class ArticleController extends Controller
@@ -396,6 +398,7 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
 
+        $operation = 'new';
         if ($type == 'status') {
             $article->status = $label;
 
@@ -404,6 +407,9 @@ class ArticleController extends Controller
                 if (!empty(trim($article->content_update))) {
                     $article->content = $article->content_update;
                     $article->content_update = '';
+                    $operation = 'update';
+                } else{
+                    $operation = 'new';
                 }
             }
         } else if ($type == 'state') {
@@ -416,7 +422,7 @@ class ArticleController extends Controller
 
         if ($result) {
             if ($type == 'status' && $label == 'published') {
-                if (empty(trim($article->content_update))) {
+                if ($operation == 'new') {
                     $this->sendEmailNotification($article);
                     $articleModel = new Article();
                     $articleModel->broadcastArticle($article);
@@ -444,35 +450,81 @@ class ArticleController extends Controller
     {
         $contributor = $article->contributor;
 
-        $followers = $contributor->followers;
+        // add reward
+        if($article->reward <= 0){
+            $result = DB::transaction(function () use ($article, $contributor) {
+                try{
+                    $rewardValue = Setting::whereKey('Article Reward')->first()->value;
+                    if($rewardValue > 0){
+                        $article->reward = $rewardValue;
+                        $article->save();
 
-        foreach ($followers as $follower):
-            $follower = $follower->contributor;
-            if ($follower->email_feed) {
-                $data = [
-                    'receiverName' => $follower->name,
-                    'receiverUsername' => $follower->username,
-                    'contributorName' => $contributor->name,
-                    'contributorLocation' => $contributor->location,
-                    'contributorUsername' => $contributor->username,
-                    'contributorAvatar' => $contributor->avatar,
-                    'contributorArticle' => $contributor->articles()->count(),
-                    'contributorFollower' => $contributor->followers()->count(),
-                    'contributorFollowing' => $contributor->following()->count(),
-                    'article' => $article,
-                ];
+                        $contributor->balance = $contributor->balance + $rewardValue;
+                        $contributor->save();
 
-                Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
+                        $transaction = Transaction::create([
+                            'contributor_id' => $contributor->id,
+                            'type' => Transaction::TYPE_REWARD,
+                            'description' => "You've got ". number_format($rewardValue, 0, ',', '.') ." for article ". $article->title,
+                            'amount' => $rewardValue,
+                            'status' => Transaction::STATUS_SUCCESS,
+                        ]);
+                        return $transaction;
+                    }
 
-                    $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                    return null;
+                } catch (\Exception $e) {
+                    return redirect()->back()
+                        ->withErrors(['error' => Lang::get('alert.error.transaction')])
+                        ->withInput();
+                }
+            });
 
-                    $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
-
-                    $message->to($follower->email)->subject($contributor->name . ' create new article');
-
-                });
+            if ($result instanceof RedirectResponse) {
+                return $result;
             }
-        endforeach;
+
+            // notify the contributor
+            Mail::send('emails.published', ['article' => $article, 'contributor' => $contributor], function ($message) use ($article, $contributor) {
+
+                $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                $message->to($contributor->email)->subject('Your article '.$article->title.' was published');
+
+            });
+
+            // send email
+            $followers = $contributor->followers;
+            foreach ($followers as $follower):
+                $follower = $follower->contributor;
+                if ($follower->email_feed) {
+                    $data = [
+                        'receiverName' => $follower->name,
+                        'receiverUsername' => $follower->username,
+                        'contributorName' => $contributor->name,
+                        'contributorLocation' => $contributor->location,
+                        'contributorUsername' => $contributor->username,
+                        'contributorAvatar' => $contributor->avatar,
+                        'contributorArticle' => $contributor->articles()->count(),
+                        'contributorFollower' => $contributor->followers()->count(),
+                        'contributorFollowing' => $contributor->following()->count(),
+                        'article' => $article,
+                    ];
+
+                    Mail::send('emails.stream', $data, function ($message) use ($follower, $contributor) {
+
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+
+                        $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+
+                        $message->to($follower->email)->subject($contributor->name . ' create new article');
+
+                    });
+                }
+            endforeach;
+        }
     }
 
     /**

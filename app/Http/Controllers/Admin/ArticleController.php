@@ -408,7 +408,7 @@ class ArticleController extends Controller
                     $article->content = $article->content_update;
                     $article->content_update = '';
                     $operation = 'update';
-                } else{
+                } else {
                     $operation = 'new';
                 }
             }
@@ -451,11 +451,11 @@ class ArticleController extends Controller
         $contributor = $article->contributor;
 
         // add reward
-        if($article->reward <= 0){
+        if ($article->reward <= 0) {
             $result = DB::transaction(function () use ($article, $contributor) {
-                try{
+                try {
                     $rewardValue = Setting::whereKey('Article Reward')->first()->value;
-                    if($rewardValue > 0){
+                    if ($rewardValue > 0) {
                         $article->reward = $rewardValue;
                         $article->save();
 
@@ -465,7 +465,7 @@ class ArticleController extends Controller
                         $transaction = Transaction::create([
                             'contributor_id' => $contributor->id,
                             'type' => Transaction::TYPE_REWARD,
-                            'description' => "You've got ". number_format($rewardValue, 0, ',', '.') ." for article ". $article->title,
+                            'description' => "You've got " . number_format($rewardValue, 0, ',', '.') . " for article " . $article->title,
                             'amount' => $rewardValue,
                             'status' => Transaction::STATUS_SUCCESS,
                         ]);
@@ -491,7 +491,7 @@ class ArticleController extends Controller
 
                 $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                $message->to($contributor->email)->subject('Your article '.$article->title.' was published');
+                $message->to($contributor->email)->subject('Your article ' . $article->title . ' was published');
 
             });
 

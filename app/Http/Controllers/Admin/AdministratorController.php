@@ -102,6 +102,7 @@ class AdministratorController extends Controller
             'feedback' => 'boolean',
             'member' => 'boolean',
             'approve' => 'boolean',
+            'reward' => 'required|digits_between:0,1000000',
             'email_admin' => 'required|email|max:30|unique:users,email,' . Auth::guard('admin')->user()->id,
             'name' => 'required|max:50',
             'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
@@ -160,6 +161,7 @@ class AdministratorController extends Controller
                 Setting::where('key', 'Email Feedback')->update(['value' => $request->input('feedback')]);
                 Setting::where('key', 'Email Contributor')->update(['value' => $request->input('member')]);
                 Setting::where('key', 'Auto Approve')->update(['value' => $request->input('approve')]);
+                Setting::where('key', 'Article Reward')->update(['value' => $request->input('reward')]);
 
                 $image = new Uploader();
                 if ($image->upload($request, 'favicon', base_path('public/'), 'favicon')) {

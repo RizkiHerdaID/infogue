@@ -230,6 +230,19 @@
                         </div>
                     </fieldset>
                     <fieldset>
+                        <legend>ARTICLE REWARD</legend>
+                        <div class="form-group {{ $errors->has('facebook') ? 'has-error' : '' }}">
+                            <label for="reward" class="col-sm-3 control-label">Reward per Article</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="reward" name="reward"
+                                       value="{{ old('reward', $site_settings['Article Reward']) }}"
+                                       placeholder="Reward nominal for published article" required max="1000000">
+                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>If you don't want to give reward just put 0</span>
+                                {!! $errors->first('reward', '<span class="help-block">:message</span>') !!}
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
                         <legend>ADMIN ACCOUNT</legend>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Username</label>

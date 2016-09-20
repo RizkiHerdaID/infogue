@@ -1489,4 +1489,10 @@ $(function () {
         modalTransaction.find("input[name=transaction_id]").val(transaction_id);
         modalTransaction.find("form").attr("action", url + "/" + value);
     });
+
+    $(".btn-transaction-detail").on('click', function(){
+        var transactionData = $(this).closest('*[data-id]');
+        var modalTransaction = $("#modal-transaction-detail");
+        modalTransaction.find(".detail").text(transactionData.data('detail'));
+    });
 });

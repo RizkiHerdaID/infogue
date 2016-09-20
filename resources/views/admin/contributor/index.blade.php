@@ -89,7 +89,7 @@
                         <th>Contributor</th>
                         <th>Email</th>
                         <th>Article</th>
-                        <th>Popularity</th>
+                        <th>Balance</th>
                         <th>Status</th>
                         <th class="text-center">Action</th>
                     </tr>
@@ -132,7 +132,8 @@
                                     $popularity = 5;
                                 }
                             ?>
-                            <td><div class="rating-wrapper pn" data-rating="{{ $popularity }}"></div></td>
+                            <!--<td><div class="rating-wrapper pn" data-rating="{{ $popularity }}"></div></td>-->
+                            <td>IDR {{ number_format($contributor->balance, 0, ',', '.') }}</td>
                             <?php
                             $label = 'default';
 

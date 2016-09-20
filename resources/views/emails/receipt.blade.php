@@ -15,13 +15,13 @@
 
     <div style="text-align: center">
         <h2>Hi, {{ $contributor->name }}</h2>
-        <p>Transaction ID : {{ $transaction->id }}</p>
-        <p>Transaction Description : {{ $transaction->description }}</p>
+        <p style="font-size: 18px">Transaction ID : {{ $transaction->id }}</p>
+        <p style="font-size: 14px">{{ $transaction->description }}</p>
         <p style="margin-bottom: 5px">We recently received a request to withdraw money with amount.</p>
-        <p style="color: #00aced; text-decoration: none; font-size: 18px">{{ $transaction->amount }}</p>
+        <p style="color: #00aced; text-decoration: none; font-size: 22px">IDR {{ number_format($transaction->amount, '0', ',', '.') }}</p>
 
-        <p style="margin-bottom: 50px">
-            Now the process is <strong>{{ $transaction->status }}</strong>.
+        <p style="margin-bottom: 50px; font-size: 18px">
+            Now the process is <b>{{ $transaction->status }}</b>. Your balance is IDR {{ number_format($contributor->balance, '0', ',', '.') }}
         </p>
 
         <div style="text-align: center; font-size: 12px; color: #aaa">

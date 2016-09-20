@@ -231,7 +231,7 @@
                     </fieldset>
                     <fieldset>
                         <legend>ARTICLE REWARD</legend>
-                        <div class="form-group {{ $errors->has('facebook') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('reward') ? 'has-error' : '' }}">
                             <label for="reward" class="col-sm-3 control-label">Reward per Article</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control" id="reward" name="reward"
@@ -239,6 +239,16 @@
                                        placeholder="Reward nominal for published article" required max="1000000">
                                 <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>If you don't want to give reward just put 0</span>
                                 {!! $errors->first('reward', '<span class="help-block">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="form-group {{ $errors->has('withdrawal') ? 'has-error' : '' }}">
+                            <label for="withdrawal" class="col-sm-3 control-label">Withdrawal minimum</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="withdrawal" name="withdrawal"
+                                       value="{{ old('withdrawal', $site_settings['Withdrawal Minimum']) }}"
+                                       placeholder="Withdrawal minimum value" required min="10000" max="5000000">
+                                <span class="help-block"><i class="fa fa-info-circle mrs mts"></i>Amount contributor could withdraw their reward.</span>
+                                {!! $errors->first('withdrawal', '<span class="help-block">:message</span>') !!}
                             </div>
                         </div>
                     </fieldset>

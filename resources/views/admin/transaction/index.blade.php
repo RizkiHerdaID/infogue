@@ -134,6 +134,7 @@
                         <tr data-id="{{ $transaction->id }}"
                             data-author="{{ $transaction->name }}"
                             data-author-id="{{ $transaction->contributor_id }}"
+                            data-detail="{{ $transaction->description }}"
                             data-bank="{{ $transaction->bank }}"
                             data-bank-code="{{ $transaction->code }}"
                             data-bank-name="{{ $transaction->account_name }}"
@@ -153,10 +154,10 @@
                                 </div>
                             </td>
                             <?php
-                                $type = "success";
+                                $type = "info";
                                 $transType = $transaction->type;
                                 if($transType == \Infogue\Transaction::TYPE_WITHDRAWAL){
-                                    $type = "danger";
+                                    $type = "primary";
                                 }
                             ?>
                             <td><span class="label label-{{ $type }}">{{ strtoupper($transType) }}</span></td>
@@ -176,28 +177,39 @@
                             <td class="text-center">
                                 @if($transaction->type == \Infogue\Transaction::TYPE_WITHDRAWAL)
                                 <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <button class="btn btn-danger dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         ACTION
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
                                         <li class="dropdown-header">INFO</li>
                                         <li><a href="#" class="btn-bank-detail" data-toggle="modal" data-target="#modal-bank"><i class="fa fa-credit-card"></i> Bank Info</a></li>
+                                        <li><a href="#" class="btn-transaction-detail" data-toggle="modal" data-target="#modal-transaction-detail"><i class="fa fa-info-circle"></i> Transaction Info</a></li>
                                         <li><a href="#" class="btn-message" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope"></i> Send Message</a></li>
                                         @if($tranStatus == \Infogue\Transaction::STATUS_PENDING)
-                                            <li class="dropdown-header">TRANSACTION ACTION</li>
+                                            <li class="dropdown-header">TRANSACTION</li>
                                             <li><a href="#" class="btn-update-transaction" data-value="proceed" data-toggle="modal" data-target="#modal-update-transaction"><i class="fa fa-spinner"></i> Proceed</a></li>
                                             <li><a href="#" class="btn-update-transaction" data-value="success" data-toggle="modal" data-target="#modal-update-transaction"><i class="fa fa-check"></i> Complete</a></li>
                                             <li><a href="#" class="btn-update-transaction" data-value="cancel" data-toggle="modal" data-target="#modal-update-transaction"><i class="fa fa-close"></i> Cancel</a></li>
                                         @elseif($tranStatus == \Infogue\Transaction::STATUS_PROCEED)
-                                            <li class="dropdown-header">TRANSACTION ACTION</li>
+                                            <li class="dropdown-header">TRANSACTION</li>
                                             <li><a href="#" class="btn-update-transaction" data-value="success" data-toggle="modal" data-target="#modal-update-transaction"><i class="fa fa-check"></i> Complete</a></li>
                                             <li><a href="#" class="btn-update-transaction" data-value="cancel" data-toggle="modal" data-target="#modal-update-transaction"><i class="fa fa-close"></i> Cancel</a></li>
                                         @endif
                                     </ul>
                                 </div>
                                 @else
-                                    -
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            INFO
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-sort-type">
+                                            <li class="dropdown-header">INFO</li>
+                                            <li><a href="#" class="btn-transaction-detail" data-toggle="modal" data-target="#modal-transaction-detail"><i class="fa fa-info-circle"></i> Transaction Info</a></li>
+                                            <li><a href="#" class="btn-message" data-target="#send-message" data-toggle="modal"><i class="fa fa-envelope"></i> Send Message</a></li>
+                                        </ul>
+                                    </div>
                                 @endif
                             </td>
                         </tr>
@@ -267,6 +279,34 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <p class="acc_number">Acc number</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">CLOSE</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade color" id="modal-transaction-detail" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#" class="form-strip form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-file-text-o"></i> TRANSACTION INFO</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>TRANSSACTION DETAIL</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <p class="detail">Transaction detail</p>
                                 </div>
                             </div>
                         </div>

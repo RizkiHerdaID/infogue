@@ -18,7 +18,7 @@
         <p style="font-size: 16px; margin-bottom: 0">Your article have been published</p>
         <p style="margin-top: 0; margin-bottom: 20px">a little information about your new stream</p>
         <div style="margin-bottom: 20px">
-            <img src="{{ asset('images/featured/'.$article->featured) }}" width="80" style="float: left">
+            <img src="{{ asset('images/featured/'.$article->featured) }}" alt="article featured" width="80" style="float: left">
             <div class="info" style="padding-left: 100px">
                 <h3 style="margin-bottom: 0"><a href="{{ route('article.show', [$article->slug]) }}" style="color: #4dc4d2; text-decoration: none">{{ $article->title }}</a></h3>
                 <p style="margin-top: 0; margin-bottom: 5px">{{ $article->subcategory->category->category }}  |  {{ $article->subcategory->subcategory }}</p>
@@ -26,9 +26,8 @@
             </div>
         </div>
         <div style="margin-bottom: 10px; margin-top: 20px; padding: 8px 15px; background: #f5f5f5;">
-            <h4 style="float: left">You earn <strong>{{ number_format($article->reward, 0, ',', '.') }}</strong></h4>
-            <p style="float: left">Checkout your billing</p>
-            <a href="{{ route('account.stream') }}" style="float: right; padding: 10px 15px; font-size: 14px; background: #4dc4d2; text-decoration: none; color: #ffffff; margin: 2px; display: inline-block; vertical-align: middle; font-weight: 600;">SEE MY BILLING</a>
+            <h3 style="float: left">You earn <b>IDR {{ number_format($article->reward, 0, ',', '.') }}</b></h3>
+            <a href="{{ route('account.stream') }}" style="float: right; padding: 10px 15px; font-size: 14px; background: #4dc4d2; text-decoration: none; color: #ffffff; margin: 5px 2px; display: inline-block; vertical-align: middle; font-weight: 600;">CHECKOUT MY BILLING</a>
             <div style="clear: both"></div>
         </div>
         <div style="text-align: center; font-size: 12px; color: #aaa">

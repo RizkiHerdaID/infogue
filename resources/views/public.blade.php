@@ -127,6 +127,11 @@
                                                     <i class="glyphicon glyphicon-arrow-left"></i>Following
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a href="{{ route('account.wallet') }}">
+                                                    <i class="glyphicon glyphicon-credit-card"></i>Wallet
+                                                </a>
+                                            </li>
                                             <li class="menu-label">CONTROL</li>
                                             <li>
                                                 <a href="{{ route('account.setting') }}">

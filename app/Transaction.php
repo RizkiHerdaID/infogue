@@ -16,6 +16,13 @@ class Transaction extends Model
     const STATUS_CANCEL = "cancel";
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'transactions';
+
+    /**
      * The attributes that aren't mass assignable.
      *
      * @var array

@@ -1364,6 +1364,13 @@ $(function () {
         $('#form-draft').submit();
     });
 
+    $('.btn-cancel-transaction').on('click', function () {
+        var modal = $('#modal-cancel-transaction');
+        var transactionId = $(this).data('id');
+
+        modal.find('input[name=transaction_id]').val(transactionId);
+    });
+
     $('select[name="category"]').change(function () {
         var url = websiteUrl + "/account/article/subcategory/" + $(this).val();
         var category = $('select[name="category"] option:selected').text();
@@ -1850,4 +1857,7 @@ $(function () {
             }
         }
     });
+
+    // VALIDATE MESSAGE FORM
+    $('#form-withdraw').validate();
 });

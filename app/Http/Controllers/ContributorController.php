@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
+use Infogue\Bank;
 use Infogue\Contributor;
 use Infogue\Http\Requests;
 use Infogue\Uploader;
@@ -176,8 +177,9 @@ class ContributorController extends Controller
     public function setting()
     {
         $contributor = $this->contributor->findOrFail(Auth::user()->id);
+        $banks = Bank::pluck('bank', 'id');
 
-        return view('contributor.setting', compact('contributor'));
+        return view('contributor.setting', compact('contributor', 'banks'));
     }
 
     /**
@@ -213,6 +215,8 @@ class ContributorController extends Controller
             'email_follow' => 'boolean',
             'email_feed' => 'boolean',
             'mobile_notification' => 'boolean',
+            'account_name' => 'max:50',
+            'account_number' => 'min:7|max:15',
             'avatar' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'cover' => 'mimes:jpg,jpeg,gif,png|max:1000',
             'username' => 'required|alpha_dash|max:20|unique:contributors,username,' . $user->id,
@@ -298,6 +302,9 @@ class ContributorController extends Controller
             $request->merge(['password' => Hash::make($request->input('new_password'))]);
             $contributor->password = $request->input('password');
         }
+        $contributor->bank_id = $request->input('bank');
+        $contributor->account_name = $request->input('account_name');
+        $contributor->account_number = $request->input('account_number');
 
         if ($contributor->save()) {
             return redirect(route('account.setting'))->with([

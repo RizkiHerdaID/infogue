@@ -166,6 +166,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('wallet', ['as' => 'account.wallet', 'uses' => 'TransactionController@index']);
             Route::get('wallet/withdraw', ['as' => 'account.wallet.withdrawal', 'uses' => 'TransactionController@withdrawal']);
             Route::post('wallet/withdraw', ['as' => 'account.wallet.withdraw', 'uses' => 'TransactionController@withdraw']);
+            Route::delete('wallet/withdraw', ['as' => 'account.wallet.delete', 'uses' => 'TransactionController@delete']);
 
             Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
             Route::match(['put', 'patch'], 'setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);

@@ -16,10 +16,26 @@
                             <section class="list-data" data-href="{{ Request::url() }}">
                                 <h3 class="title">WALLET</h3>
                                 <div class="content" id="wallet">
+                                    @if(Session::has('status'))
+                                        <div class="alert alert-{{ Session::get('status') }}" style="border-radius: 0; margin-bottom: 0">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <i class="fa fa-check"></i> &nbsp; {!! Session::get('message') !!}
+                                        </div>
+                                    @endif
                                     <div class="contributor-profile mini bg-primary" style="color: white">
                                         <div class="info pln">
                                             <h4 class="mbs"><strong>YOUR BALANCE</strong></h4>
-                                            <h2 style="color: #fff;"><strong>IDR {{ number_format(Auth::user()->balance, 0, ',', '.') }}</strong></h2>
+                                            <h2 style="color: #fff;"><strong>IDR {{ number_format(Auth::user()->balance, 0, ',', '.') }}</strong>
+                                                @if($deferred > 0)
+                                                    /
+                                                    <small class="text-muted" style="color: white">
+                                                        IDR -{{ number_format($deferred, 0, ',', '.') }}
+                                                        Still processed
+                                                    </small>
+                                                @endif
+                                            </h2>
                                         </div>
                                         <button onclick="window.location = '{{ route('account.wallet.withdrawal') }}'" class="btn btn-primary btn-outline btn-light">
                                             <i class="fa fa-arrow-down"></i> &nbsp; WITHDRAW
@@ -91,8 +107,12 @@
                                                     $label = "warning";
                                                 }
                                             ?>
-                                            <h4 class="mbs"><i class="fa {{ $icon }}"></i> &nbsp; <strong>{{ strtoupper($transaction->type) }}</strong></h4>
-                                            <p class="mbs">{{ $transaction->description }}</p>
+                                            <h4 class="mbs"><i class="fa {{ $icon }}"></i> &nbsp; <strong>{{ strtoupper($transaction->type) }}</strong>
+                                                @if($transaction->status == \Infogue\Transaction::STATUS_PENDING)
+                                                    <a href="#" data-id="{{ $transaction->id }}" data-target="#modal-cancel-transaction" data-toggle="modal" class="pull-right btn btn-danger btn-sm btn-cancel-transaction">CANCEL WITHDRAW</a>
+                                                @endif
+                                            </h4>
+                                            <p class="mbs"><strong>Trans. ID #{{ $transaction->id }}</strong> &nbsp; {{ $transaction->description }}</p>
                                             <h2 class="text-primary">IDR {{ number_format($transaction->amount, 0, ',', '.') }}
                                                 <span class="label label-{{ $label }} pull-right" style="font-size: 10px; padding: 7px 10px">{{ strtoupper($transaction->status) }}</span>
                                             </h2>
@@ -111,6 +131,30 @@
                 </div>
             </div>
         </section>
+    </div>
+
+    <div class="modal fade no-line" id="modal-cancel-transaction" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('account.wallet.delete') }}" method="post">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="transaction_id" value="DELETE">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><i class="fa fa-trash"></i> CANCEL TRANSACTION</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label class="mbn">Are you sure cancel this transaction?</label>
+                        <p class="mbn"><small class="text-muted">Admin will notify this cancel process.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
+                        <button type="submit" class="btn btn-danger">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 @endsection

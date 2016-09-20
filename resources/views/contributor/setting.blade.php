@@ -206,7 +206,7 @@
                                                 </div>
                                             </div>
                                         </fieldset>
-                                        <fieldset>
+                                        <fieldset id="subscription">
                                             <legend>SUBSCRIPTION</legend>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Notification</label>
@@ -236,6 +236,37 @@
                                                         <input type="checkbox" name="mobile_notification" value="1" id="mobile_notification" class="css-checkbox" @if(old('mobile_notification', $contributor->mobile_notification)){{ 'checked' }}@endif>
                                                         <label for="mobile_notification" class="css-label">Enable Push Notification</label>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
+                                            <legend>BILLING PAYMENT</legend>
+                                            <div class="form-group {{ $errors->has('bank') ? 'has-error' : '' }}">
+                                                <label for="bank" class="col-sm-3 control-label">BANK ACCOUNT</label>
+                                                <div class="col-sm-9">
+                                                    <label for="bank" class="css-select">
+                                                        <select name="bank" id="bank" class="form-control">
+                                                            <option value="">Select Bank</option>
+                                                            @foreach($banks as $id => $bank)
+                                                                <option value="{{ $id }}" @if(old('bank', $contributor->bank_id) == $id) selected @endif>{{ $bank }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </label>
+                                                    {!! $errors->first('bank', '<span class="help-block">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                            <div class="form-group {{ $errors->has('account_name') ? 'has-error' : '' }}">
+                                                <label for="account_name" class="col-sm-3 control-label">Account Name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" maxlength="50" class="form-control" id="account_name" name="account_name" value="{{ old('account_name', $contributor->account_name) }}" placeholder="Bank account name">
+                                                    {!! $errors->first('account_name', '<span class="help-block">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                            <div class="form-group {{ $errors->has('account_number') ? 'has-error' : '' }}">
+                                                <label for="account_number" class="col-sm-3 control-label">Account Number</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" maxlength="15" class="form-control" id="account_number" name="account_number" value="{{ old('account_number', $contributor->account_number) }}" placeholder="Bank account number">
+                                                    {!! $errors->first('account_number', '<span class="help-block">:message</span>') !!}
                                                 </div>
                                             </div>
                                         </fieldset>

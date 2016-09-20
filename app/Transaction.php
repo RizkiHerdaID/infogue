@@ -116,11 +116,11 @@ class Transaction extends Model
                 ->orWhere('type', 'like', "%{$query}%");
         }
 
-        if ($data != 'all') {
+        if ($data != 'all' && $data != 'all-data') {
             $transactions->where('type', $data);
         }
 
-        if ($status != 'all') {
+        if ($status != 'all' && $data != 'all-data') {
             $transactions->where('transactions.status', $status);
         }
 
@@ -134,7 +134,7 @@ class Transaction extends Model
             $transactions->orderBy('status', $sort);
         }
 
-        return $transactions->paginate(10);
+        return $transactions;
     }
 
 }

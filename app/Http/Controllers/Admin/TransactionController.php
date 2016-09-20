@@ -40,7 +40,8 @@ class TransactionController extends Controller
         $sumReward = Transaction::where('type', Transaction::TYPE_REWARD)->sum('amount');
 
         $transaction = new Transaction();
-        $transactions = $transaction->retrieveTransaction($filter_data, $filter_status, $filter_by, $filter_sort, $query);
+        $transactions = $transaction->retrieveTransaction($filter_data, $filter_status, $filter_by, $filter_sort, $query)
+            ->paginate(10);
 
         return view('admin.transaction.index', compact('transactions', 'countWithdrawal', 'countReward', 'sumWithdrawal', 'sumReward'));
     }

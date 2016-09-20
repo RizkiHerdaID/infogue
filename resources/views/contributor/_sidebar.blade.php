@@ -19,6 +19,7 @@
                 <li @if(Request::segment(2) == 'message') class='active' @endif><a href="{{ route('account.message.list') }}"><i class="fa fa-envelope"></i>Message</a></li>
                 <li @if(Request::segment(2) == 'follower') class='active' @endif><a href="{{ route('account.follower') }}"><i class="fa fa-chevron-left"></i>Follower</a></li>
                 <li @if(Request::segment(2) == 'following') class='active' @endif><a href="{{ route('account.following') }}"><i class="fa fa-chevron-right"></i>Following</a></li>
+                <li @if(Request::segment(2) == 'billing') class='active' @endif><a href="{{ route('account.wallet') }}"><i class="fa fa-credit-card"></i>Wallet</a></li>
                 <li @if(Request::segment(2) == 'setting') class='active' @endif><a href="{{ route('account.setting') }}"><i class="fa fa-wrench"></i>Setting</a></li>
                 <li><a href="{{ route('login.destroy') }}"><i class="fa fa-sign-out"></i>Sign Out</a></li>
             </ul>

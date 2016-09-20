@@ -163,6 +163,10 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('follow', ['as' => 'account.follow', 'uses' => 'FollowerController@follow']);
             Route::delete('unfollow/{id}', ['as' => 'account.unfollow', 'uses' => 'FollowerController@unfollow']);
 
+            Route::get('wallet', ['as' => 'account.wallet', 'uses' => 'TransactionController@index']);
+            Route::get('wallet/withdraw', ['as' => 'account.wallet.withdrawal', 'uses' => 'TransactionController@withdrawal']);
+            Route::post('wallet/withdraw', ['as' => 'account.wallet.withdraw', 'uses' => 'TransactionController@withdraw']);
+
             Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
             Route::match(['put', 'patch'], 'setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
 

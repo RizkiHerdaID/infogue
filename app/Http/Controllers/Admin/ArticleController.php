@@ -491,7 +491,7 @@ class ArticleController extends Controller
 
                 $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
 
-                $message->to('anggadarkprince@gmail.com')->subject('Your article ' . $article->title . ' was published');
+                $message->to($contributor->email)->subject('Your article ' . $article->title . ' was published');
 
             });
 

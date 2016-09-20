@@ -16,11 +16,11 @@ class Transaction extends Model
     const STATUS_CANCEL = "cancel";
 
     /**
-     * The table associated with the model.
+     * The attributes that should be hidden for arrays.
      *
-     * @var string
+     * @var array
      */
-    protected $table = 'transactions';
+    protected $hidden = ['update_at'];
 
     /**
      * The attributes that aren't mass assignable.

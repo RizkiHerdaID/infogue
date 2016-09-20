@@ -65,7 +65,7 @@ class TransactionController extends Controller
 
         $minWithdraw = Setting::whereKey('Withdrawal Minimum')->first()->value;
         $maxWithdraw = $balance - $deferred;
-        if ($maxWithdraw < 5000000) {
+        if ($maxWithdraw > 5000000) {
             $maxWithdraw = 5000000;
         }
         $validator = Validator::make($request->all(), [
@@ -78,8 +78,7 @@ class TransactionController extends Controller
             );
         }
 
-        $withdrawMax = $balance - $deferred;
-        if ($withdrawMax - $withdraw >= 0) {
+        if ($maxWithdraw - $withdraw >= 0) {
             if ($request->has('confirm')) {
                 $transaction = new Transaction();
                 $transaction->type = Transaction::TYPE_WITHDRAWAL;

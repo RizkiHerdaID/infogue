@@ -53,7 +53,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/conversation/{username}', ['as' => 'conversation', 'uses' => 'MessageController@conversation']);
         });
 
-        Route::group(['as' => 'admin.transaction.', 'prefix' => 'transaction'], function(){
+        Route::group(['as' => 'admin.transaction.', 'prefix' => 'transaction'], function () {
             Route::get('/', ['as' => 'index', 'uses' => 'TransactionController@index']);
             Route::match(['put', 'patch'], '/update/status/{status}', ['as' => 'update', 'uses' => 'TransactionController@update']);
         });
@@ -250,6 +250,14 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/upload', ['as' => 'upload', 'uses' => 'ImageController@upload']);
             Route::delete('/delete', ['as' => 'delete', 'uses' => 'ImageController@delete']);
         });
+
+        Route::group(['as' => 'api.wallet.', 'prefix' => 'wallet'], function () {
+            Route::get('/transaction', ['as' => 'transaction', 'uses' => 'TransactionController@index']);
+            Route::post('/withdraw', ['as' => 'withdraw', 'uses' => 'TransactionController@withdraw']);
+            Route::delete('/withdraw', ['as' => 'delete', 'uses' => 'TransactionController@delete']);
+        });
+
+        Route::get('bank', ['as' => 'api.bank', 'uses' => 'BankController@index']);
     });
 
 });

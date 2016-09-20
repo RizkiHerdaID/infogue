@@ -62,8 +62,10 @@
                                                 $bank = Auth::user()->bank;
                                                 $name = Auth::user()->account_name;
                                                 $number = Auth::user()->account_number;
+                                                $incomplete = false;
                                             ?>
                                             @if(empty(trim($bank)) || empty(trim($bank)) || empty(trim($number)))
+                                                <?php $incomplete = true ?>
                                                 <div class="alert alert-danger }}" style="border-radius: 0">
                                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 16px">
                                                         <span aria-hidden="true">&times;</span>
@@ -151,7 +153,7 @@
                                         </fieldset>
                                         <div class="form-group">
                                             <div class="col-sm-offset-3 col-sm-9 pts pbm">
-                                                <button class="btn btn-primary">WITHDRAW</button>
+                                                <button class="btn btn-primary" @if($incomplete) disabled @endif>WITHDRAW</button>
                                                 <a href="#" data-toggle="modal" data-target="#modal-discard" class="btn btn-danger">DISCARD</a>
                                             </div>
                                         </div>

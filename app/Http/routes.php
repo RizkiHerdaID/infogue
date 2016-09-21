@@ -166,7 +166,7 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('wallet', ['as' => 'account.wallet', 'uses' => 'TransactionController@index']);
             Route::get('wallet/withdraw', ['as' => 'account.wallet.withdrawal', 'uses' => 'TransactionController@withdrawal']);
             Route::post('wallet/withdraw', ['as' => 'account.wallet.withdraw', 'uses' => 'TransactionController@withdraw']);
-            Route::delete('wallet/withdraw', ['as' => 'account.wallet.delete', 'uses' => 'TransactionController@delete']);
+            Route::match(['put', 'patch'], 'wallet/withdraw', ['as' => 'account.wallet.cancel', 'uses' => 'TransactionController@cancel']);
 
             Route::get('setting', ['as' => 'account.setting', 'uses' => 'ContributorController@setting']);
             Route::match(['put', 'patch'], 'setting', ['as' => 'account.update', 'uses' => 'ContributorController@update']);
@@ -254,7 +254,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::group(['as' => 'api.wallet.', 'prefix' => 'wallet'], function () {
             Route::get('/transaction', ['as' => 'transaction', 'uses' => 'TransactionController@index']);
             Route::post('/withdraw', ['as' => 'withdraw', 'uses' => 'TransactionController@withdraw']);
-            Route::delete('/withdraw', ['as' => 'delete', 'uses' => 'TransactionController@delete']);
+            Route::match(['put', 'patch'], '/withdraw', ['as' => 'cancel', 'uses' => 'TransactionController@cancel']);
         });
 
         Route::get('bank', ['as' => 'api.bank', 'uses' => 'BankController@index']);

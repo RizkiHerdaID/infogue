@@ -489,7 +489,7 @@ class AccountController extends Controller
             $request->merge(['password' => Hash::make($request->input('new_password'))]);
             $contributor->password = $request->input('password');
         }
-        $contributor->bank_id = $request->input('bank');
+        $contributor->bank_id = $request->input('bank_id');
         $contributor->account_name = $request->input('account_name');
         $contributor->account_number = $request->input('account_number');
 

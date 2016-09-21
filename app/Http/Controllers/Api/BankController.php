@@ -24,7 +24,7 @@ class BankController extends Controller
      */
     public function index()
     {
-        $banks = Bank::all(['id', 'bank']);
+        $banks = Bank::all(['id', 'bank', 'logo']);
 
         return response()->json([
             'request_id' => uniqid(),

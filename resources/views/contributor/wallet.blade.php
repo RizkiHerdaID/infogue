@@ -136,10 +136,10 @@
     <div class="modal fade no-line" id="modal-cancel-transaction" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('account.wallet.delete') }}" method="post">
+                <form action="{{ route('account.wallet.cancel') }}" method="post">
                     {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="transaction_id" value="DELETE">
+                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="transaction_id">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title"><i class="fa fa-trash"></i> CANCEL TRANSACTION</h4>
@@ -149,8 +149,8 @@
                         <p class="mbn"><small class="text-muted">Admin will notify this cancel process.</small></p>
                     </div>
                     <div class="modal-footer">
-                        <a href="#" data-dismiss="modal" class="btn btn-primary">CANCEL</a>
-                        <button type="submit" class="btn btn-danger">CANCEL</button>
+                        <a href="#" data-dismiss="modal" class="btn btn-primary">DISMISS</a>
+                        <button type="submit" class="btn btn-danger">CANCEL TRANSACTION</button>
                     </div>
                 </form>
             </div>

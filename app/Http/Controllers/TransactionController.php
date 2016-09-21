@@ -125,14 +125,36 @@ class TransactionController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request)
+    public function cancel(Request $request)
     {
         $transactionId = $request->input('transaction_id');
-        $transaction = Auth::user()->transactions()->findOrFail($transactionId);
-        if ($transaction->delete()) {
+        $contributor = Auth::user();
+        $transaction = $contributor->transactions()->findOrFail($transactionId);
+        $transaction->status = Transaction::STATUS_CANCEL;
+
+        if ($transaction->save()) {
+            // notify the contributor
+            Mail::send('emails.receipt', ['transaction' => $transaction, 'contributor' => $contributor], function ($message) use ($transaction, $contributor) {
+                $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                $message->replyTo('no-reply@infogue.id', env('MAIL_NAME', 'Infogue.id'));
+                $message->to($contributor->email)->subject('Withdrawal status transaction ID ' . $transaction->id . ' is cancelled');
+            });
+
+            // notify all admins via email so they could proceed the transaction as soon as possible
+            $admins = User::all(['name', 'email']);
+            foreach ($admins as $admin) {
+                if ($admin->email != 'anggadarkprince@gmail.com' && $admin->email != 'sketchprojectstudio@gmail.com') {
+                    Mail::send('emails.admin.cancel', ['contributor' => $contributor, 'transaction' => $transaction], function ($message) use ($admin, $contributor, $transaction) {
+                        $message->from(env('MAIL_ADDRESS', 'no-reply@infogue.id'), env('MAIL_NAME', 'Infogue.id'));
+                        $message->replyTo($contributor->email, $contributor->name);
+                        $message->to($admin->email)->subject($contributor->name . " cancel their withdrawal ID #" . $transaction->id);
+                    });
+                }
+            }
+
             return redirect(route('account.wallet'))->with([
                 'status' => 'warning',
-                'message' => 'Transaction ' . $transactionId . ' was deleted',
+                'message' => 'Transaction ' . $transactionId . ' was cancelled',
             ]);
         }
 
